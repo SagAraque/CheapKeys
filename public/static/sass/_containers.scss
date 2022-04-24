@@ -1,0 +1,50 @@
+@use 'mixins' as mixin;
+@use 'var';
+
+.container{
+    width: 100%;
+    height: min-content;
+
+    &--form{
+        @extend .container;
+        height: calc(100vh - 100px);
+        @include mixin.flex-style($align:center, $justify:center);
+    }
+}
+
+.main{
+    width: 1480px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.game{
+    width: 250px;
+    @include mixin.flex-style($align:center, $justify:start, $direction:column);
+    border-radius: 10px;
+    overflow: hidden;
+    &__img{
+        width: 250px; 
+    }
+
+    &__info{
+        @include mixin.flex-style($align:center, $justify:start, $direction:column);
+        background-color: var.$background_body;
+        padding: 0px 12px 10px 12px;
+        box-sizing: border-box;
+    }
+
+    &__title{
+        font-size: 16px;
+        color: var.$white;
+        text-align: center;
+    }
+
+    &__price{
+        font-size: 30px;
+        font-weight: 400;
+        text-align: left;
+        color: white;
+        margin: 0;
+    }
+}

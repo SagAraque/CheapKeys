@@ -1,0 +1,62 @@
+<header class="header">
+            <!-- Header top containere start -->
+            <div class="header__top">
+                <!-- Header logo start -->
+                <a class="header__logo" href="{{ path('index') }}">
+                    <img src="{{ asset('static/img/logo.png') }}" alt="CheapKeys white logo">
+                </a>
+                <!-- Header search bar start -->
+                <form action="" class="header__form">
+                    <input type="text" name="" class="header__input" aria-label="Buscar" placeholder="Buscar...">
+                    <svg class="header__search" viewBox="0 0 20 20">
+                            <path fill="none" d="M19.129,18.164l-4.518-4.52c1.152-1.373,1.852-3.143,1.852-5.077c0-4.361-3.535-7.896-7.896-7.896
+                                c-4.361,0-7.896,3.535-7.896,7.896s3.535,7.896,7.896,7.896c1.934,0,3.705-0.698,5.078-1.853l4.52,4.519
+                                c0.266,0.268,0.699,0.268,0.965,0C19.396,18.863,19.396,18.431,19.129,18.164z M8.567,15.028c-3.568,0-6.461-2.893-6.461-6.461
+                                s2.893-6.461,6.461-6.461c3.568,0,6.46,2.893,6.46,6.461S12.135,15.028,8.567,15.028z">
+                            </path>
+                        </svg>
+                </form>
+                <!-- Header search bar end -->
+                <div class="header__container">
+                    <!-- Header user section start -->
+                    <a class="header__user" href="./login.php">
+                        <svg class="header__userIcon" viewBox="0 0 20 20">
+                            <path fill="none" d="M14.023,12.154c1.514-1.192,2.488-3.038,2.488-5.114c0-3.597-2.914-6.512-6.512-6.512
+                                c-3.597,0-6.512,2.916-6.512,6.512c0,2.076,0.975,3.922,2.489,5.114c-2.714,1.385-4.625,4.117-4.836,7.318h1.186
+                                c0.229-2.998,2.177-5.512,4.86-6.566c0.853,0.41,1.804,0.646,2.813,0.646c1.01,0,1.961-0.236,2.812-0.646
+                                c2.684,1.055,4.633,3.568,4.859,6.566h1.188C18.648,16.271,16.736,13.539,14.023,12.154z M10,12.367
+                                c-2.943,0-5.328-2.385-5.328-5.327c0-2.943,2.385-5.328,5.328-5.328c2.943,0,5.328,2.385,5.328,5.328
+                                C15.328,9.982,12.943,12.367,10,12.367z">
+                            </path>
+                        </svg>
+                        <p class="header__link--m10">Iniciar sesión</p>
+                    </a>
+                    <!-- Header user section end -->
+                    <!-- Header cart section start -->
+                    <a class="header__cart">
+                        <svg class="header__cartIcon" viewBox="0 0 20 20">
+                            <path fill="none" d="M17.671,13.945l0.003,0.002l1.708-7.687l-0.008-0.002c0.008-0.033,0.021-0.065,0.021-0.102c0-0.236-0.191-0.428-0.427-0.428H5.276L4.67,3.472L4.665,3.473c-0.053-0.175-0.21-0.306-0.403-0.306H1.032c-0.236,0-0.427,0.191-0.427,0.427c0,0.236,0.191,0.428,0.427,0.428h2.902l2.667,9.945l0,0c0.037,0.119,0.125,0.217,0.239,0.268c-0.16,0.26-0.257,0.562-0.257,0.891c0,0.943,0.765,1.707,1.708,1.707S10,16.068,10,15.125c0-0.312-0.09-0.602-0.237-0.855h4.744c-0.146,0.254-0.237,0.543-0.237,0.855c0,0.943,0.766,1.707,1.708,1.707c0.944,0,1.709-0.764,1.709-1.707c0-0.328-0.097-0.631-0.257-0.891C17.55,14.182,17.639,14.074,17.671,13.945 M15.934,6.583h2.502l-0.38,1.709h-2.312L15.934,6.583zM5.505,6.583h2.832l0.189,1.709H5.963L5.505,6.583z M6.65,10.854L6.192,9.146h2.429l0.19,1.708H6.65z M6.879,11.707h2.027l0.189,1.709H7.338L6.879,11.707z M8.292,15.979c-0.472,0-0.854-0.383-0.854-0.854c0-0.473,0.382-0.855,0.854-0.855s0.854,0.383,0.854,0.855C9.146,15.596,8.763,15.979,8.292,15.979 M11.708,13.416H9.955l-0.189-1.709h1.943V13.416z M11.708,10.854H9.67L9.48,9.146h2.228V10.854z M11.708,8.292H9.386l-0.19-1.709h2.512V8.292z M14.315,13.416h-1.753v-1.709h1.942L14.315,13.416zM14.6,10.854h-2.037V9.146h2.227L14.6,10.854z M14.884,8.292h-2.321V6.583h2.512L14.884,8.292z M15.978,15.979c-0.471,0-0.854-0.383-0.854-0.854c0-0.473,0.383-0.855,0.854-0.855c0.473,0,0.854,0.383,0.854,0.855C16.832,15.596,16.45,15.979,15.978,15.979 M16.917,13.416h-1.743l0.189-1.709h1.934L16.917,13.416z M15.458,10.854l0.19-1.708h2.218l-0.38,1.708H15.458z"></path>
+                        </svg>
+                        <p class="header__link--m10">Ver carrito</p>
+                    </a>
+                    <!-- Header cart section end -->
+                </div>
+            </div>
+            <!-- Header top container end -->
+            <!-- Header bottom container start -->
+            <div class="header__bottom">
+                <!-- Header nav start -->
+                <nav class="header__nav">
+                    <ul class="header__list">
+                        <li class="header__item"><a href="" class="header__link">PC</a></li>
+                        <li class="header__item"><a href="" class="header__link">PlayStation</a></li>
+                        <li class="header__item"><a href="" class="header__link">XBOX</a></li>
+                        <li class="header__item"><a href="" class="header__link">Nintendo</a></li>
+                        <li class="header__item"><a href="" class="header__link">Ofertas</a></li>
+                        <li class="header__item"><a href="" class="header__link">Proximamente</a></li>
+                    </ul>
+                </nav>
+                <!-- Header nav end -->
+            </div>
+            <!-- Header bottom container end -->
+        </header>

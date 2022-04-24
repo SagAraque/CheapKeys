@@ -1,0 +1,130 @@
+@use 'mixins' as mixin;
+@use 'var';
+
+.header{
+    width: 100%;
+    height: 160px;
+    background:  linear-gradient(180deg, var.$background_primary 60%, var.$background_secondary 40%);
+    @include mixin.flex-style($direction:column, $align:center);
+    box-sizing: border-box;
+
+    &__container{
+        width: 450px;
+        @include mixin.flex-style($justify:space-around);
+    }
+
+    &__top, &__bottom{
+        height: 60%;
+        width: 1480px;
+        @include mixin.flex-style($align:center, $justify:space-around);
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    &__bottom{
+        height: 40%;
+        background-color: var.$background_secondary;
+    }
+
+    &__logo{
+        height: 100%;
+        width: 450px;
+    }
+
+    &__form{
+        height: 50px;
+        width: 450px;
+        @include mixin.flex-style($align:center, $justify:space-between);
+        background-color: var.$white;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    &__input{
+        height: 45px;
+        width: 400px;
+        padding: 0px 20px;
+        border: none;
+        outline: none;
+    }
+
+    &__search{
+        width: 50px;
+        height: 1.5em;
+        & path,
+        &  polygon,
+        & rect {
+            fill: var.$black;
+        }
+        
+        & circle {
+            stroke: var.$black;
+            stroke-width: 1;
+        }
+    }
+
+    &__user, &__cart{
+        height: 50px;
+        width: min-content;
+        text-decoration: none;
+        @include mixin.flex-style($align:center, $justify:start);
+        cursor: pointer;
+    }
+    
+    &__user:hover &__link--m10, &__cart:hover &__link--m10{
+        color: var.$background_pink;
+    }
+
+    &__user:hover &__userIcon  path, &__cart:hover &__cartIcon  path{
+        fill: var.$background_pink;
+    }
+
+    &__userIcon, &__cartIcon{
+        width: 50px;
+        height: 30px;
+        & path {
+            fill: var.$white;
+        }
+    }
+
+    &__login{
+        color: var.$white;
+        font-size: 20px;
+        margin: 0px 10px;
+    }
+
+    &__nav{
+        width: 700px;
+    }
+
+    &__list{
+        width: 100%;
+        list-style: none;
+        @include mixin.flex-style($align:center, $justify:space-between);
+    }
+
+    &__link, &__link--m10{
+        font-size: 20px;
+        color: var.$white;
+        text-decoration: none;
+        white-space: nowrap;
+        &:hover{
+            color: var.$background_pink;
+        }
+    }
+
+    &__link--m10{
+        margin-left: 10px;
+    }
+}
+
+.header--min{
+    height: 100px;
+    width: 100%;
+    @include mixin.flex-style($align:center, $justify:center);
+    background-color: var.$background_primary;
+    padding: 10px 0px;
+    box-sizing: border-box;
+}
+  
+  

@@ -1,0 +1,21 @@
+@mixin flex-style($direction: none, $align: none, $justify: none, $wrap: none){
+    display: flex;
+    @if($direction != none){
+        flex-direction: $direction;
+    }
+    @if($align != none){
+        align-items: $align;
+    }
+    @if($justify != none){
+        justify-content: $justify;
+    }
+    @if($wrap != none){
+        flex-wrap: $wrap;
+    }
+}
+
+@mixin text-style($color, $font, $weight){
+    color: $color;
+    font-size: $font;
+    font-weight: $weight;
+}
