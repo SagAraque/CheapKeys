@@ -47,19 +47,20 @@ class GamesRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Games[] Returns an array of Games objects
-    //  */
+    /**
+     * @return Games[] Returns an array of Games objects
+    */
     
-    public function findBySlug($value)
+    public function findBySlug($slug)
     {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.gameSlug = :val')
-            ->setParameter('val', $value)
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT g FROM App\Entity\Games g
+             WHERE g.gameSlug = :value'
+        )->setParameter('value', $slug);
+
+        return $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
     
 

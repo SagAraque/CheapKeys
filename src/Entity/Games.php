@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Games
  *
  * @ORM\Table(name="games")
- * @ORM\Entity(repositoryClass="App\Repository\GamesRepository")
+ * @ORM\Entity
  */
 class Games
 {
@@ -43,6 +45,13 @@ class Games
     private $gamePrice;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="game_discount", type="integer", nullable=false)
+     */
+    private $gameDiscount;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="game_plataform", type="string", length=150, nullable=false)
@@ -52,9 +61,16 @@ class Games
     /**
      * @var string
      *
-     * @ORM\Column(name="game_developer", type="string", length=100, nullable=false)
+     * @ORM\Column(name="game_developer", type="string", length=50, nullable=false)
      */
     private $gameDeveloper;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="game_distributor", type="string", length=50, nullable=false)
+     */
+    private $gameDistributor;
 
     /**
      * @var \DateTime
@@ -62,6 +78,27 @@ class Games
      * @ORM\Column(name="game_date", type="date", nullable=false, options={"default"="current_timestamp()"})
      */
     private $gameDate = 'current_timestamp()';
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="game_pegi", type="integer", nullable=false, options={"unsigned"=true})
+     */
+    private $gamePegi;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="game_valoration", type="decimal", precision=3, scale=1, nullable=false, options={"default"="0.0"})
+     */
+    private $gameValoration = '0.0';
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="game_stock", type="integer", nullable=false, options={"unsigned"=true})
+     */
+    private $gameStock = '0';
 
     /**
      * @var string
@@ -90,6 +127,21 @@ class Games
      * @ORM\Column(name="game_slug", type="string", length=250, nullable=false)
      */
     private $gameSlug;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Users", mappedBy="idGame")
+     */
+    private $idUser;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idUser = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getIdGame(): ?int
     {
@@ -132,6 +184,18 @@ class Games
         return $this;
     }
 
+    public function getGameDiscount(): ?int
+    {
+        return $this->gameDiscount;
+    }
+
+    public function setGameDiscount(int $gameDiscount): self
+    {
+        $this->gameDiscount = $gameDiscount;
+
+        return $this;
+    }
+
     public function getGamePlataform(): ?string
     {
         return $this->gamePlataform;
@@ -156,6 +220,18 @@ class Games
         return $this;
     }
 
+    public function getGameDistributor(): ?string
+    {
+        return $this->gameDistributor;
+    }
+
+    public function setGameDistributor(string $gameDistributor): self
+    {
+        $this->gameDistributor = $gameDistributor;
+
+        return $this;
+    }
+
     public function getGameDate(): ?\DateTimeInterface
     {
         return $this->gameDate;
@@ -164,6 +240,42 @@ class Games
     public function setGameDate(\DateTimeInterface $gameDate): self
     {
         $this->gameDate = $gameDate;
+
+        return $this;
+    }
+
+    public function getGamePegi(): ?int
+    {
+        return $this->gamePegi;
+    }
+
+    public function setGamePegi(int $gamePegi): self
+    {
+        $this->gamePegi = $gamePegi;
+
+        return $this;
+    }
+
+    public function getGameValoration(): ?string
+    {
+        return $this->gameValoration;
+    }
+
+    public function setGameValoration(string $gameValoration): self
+    {
+        $this->gameValoration = $gameValoration;
+
+        return $this;
+    }
+
+    public function getGameStock(): ?int
+    {
+        return $this->gameStock;
+    }
+
+    public function setGameStock(int $gameStock): self
+    {
+        $this->gameStock = $gameStock;
 
         return $this;
     }
@@ -216,10 +328,31 @@ class Games
         return $this;
     }
 
-    public function __toString()
+    /**
+     * @return Collection<int, Users>
+     */
+    public function getIdUser(): Collection
     {
-        return $this->getGameName();
+        return $this->idUser;
     }
 
+    public function addIdUser(Users $idUser): self
+    {
+        if (!$this->idUser->contains($idUser)) {
+            $this->idUser[] = $idUser;
+            $idUser->addIdGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdUser(Users $idUser): self
+    {
+        if ($this->idUser->removeElement($idUser)) {
+            $idUser->removeIdGame($this);
+        }
+
+        return $this;
+    }
 
 }

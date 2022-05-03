@@ -1,0 +1,178 @@
+{% extends 'base.html.twig' %}
+
+{% set desc =  json_decode(game.gameDesc) %}
+{% set minSpec =  json_decode(game.minReq, true) %}
+{% set maxSpec =  json_decode(game.maxReq, true) %}
+{% set discount = game.gamePrice - (game.gameDiscount * game.gamePrice / 100) %}
+
+{% block title %} Producto {% endblock %}
+
+{% block body %} 
+    <main class="main" role="main">
+        <h2 class="title">{{ game.gameName }}</h2>
+        {# Gallery Start #}
+        <section class="gallery">
+            {# Gallery img start #}
+            <div class="gallery__img">
+                <img src="{{ asset(media[0].mediaUrl) }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset">
+            </div>
+            {# Gallery img end #}
+            {# Gallery min container start #}
+            <div class="gallery__container">
+                {# Gallery arrow start #}
+                <div class="gallery__arrow">
+                    <svg class="gallery__icon" viewBox="0 0 20 20">
+							<path fill="none" d="M8.388,10.049l4.76-4.873c0.303-0.31,0.297-0.804-0.012-1.105c-0.309-0.304-0.803-0.293-1.105,0.012L6.726,9.516c-0.303,0.31-0.296,0.805,0.012,1.105l5.433,5.307c0.152,0.148,0.35,0.223,0.547,0.223c0.203,0,0.406-0.08,0.559-0.236c0.303-0.309,0.295-0.803-0.012-1.104L8.388,10.049z"></path>
+					</svg>
+                </div>
+                {# Gallery arrow end #}
+                <div class="gallery__min--selected">
+                    <img src="{{ asset(media[0].mediaUrl) }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset">
+                </div>
+                <div class="gallery__min">
+                    <img src="{{ asset(media[0].mediaUrl) }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset">
+                </div>
+                <div class="gallery__min">
+                    <img src="{{ asset(media[0].mediaUrl) }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset">
+                </div>
+                <div class="gallery__min">
+                    <img src="{{ asset(media[0].mediaUrl) }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset">
+                </div>
+                {# Gallery arrow start #}
+                <div class="gallery__arrow">
+                    <svg class="gallery__icon" viewBox="0 0 20 20">
+							<path fill="none"  d="M11.611,10.049l-4.76-4.873c-0.303-0.31-0.297-0.804,0.012-1.105c0.309-0.304,0.803-0.293,1.105,0.012l5.306,5.433c0.304,0.31,0.296,0.805-0.012,1.105L7.83,15.928c-0.152,0.148-0.35,0.223-0.547,0.223c-0.203,0-0.406-0.08-0.559-0.236c-0.303-0.309-0.295-0.803,0.012-1.104L11.611,10.049z"></path>
+					</svg>
+                </div>
+                {# Gallery arrow end #}
+            </div>
+            {# Gallery min container end #}
+        </section>
+        {# Gallery end #}
+        {# Info section start #}
+        <section class="info">
+            <img src="{{ asset(medIaInfo.mediaUrl) }}" alt="{{ medIaInfo.mediaAlt }}" class="info__asset">
+            <div class="info__container">
+                {% if game.gameDiscount == 0 %}
+                    <h3 class="info__price">{{ game.gamePrice }}€</h3>
+                {% else %}
+                    <span class="info__span--discount">{{ game.gameDiscount}}%</span>
+                    <h3 class="info__price"><span class="info__price--discount">{{ game.gamePrice }}€</span>{{ discount | round(2, 'floor') }}€</h3>
+                {% endif %}
+            </div>
+            {# Info button container start #}
+            <div class="info__container">
+                <button class="info__button--buy">{{ game.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito' }}</button>
+                <button class="info__button--wish">
+                    <svg class="info__icon"  viewBox="0 0 20 20">
+						<path d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61"></path>
+					</svg>
+                </button>
+            </div>
+            {# Info button container end #}
+            <ul class="info__list">
+                    <li class="info__item"><span class="info__span">Desarrolladora:</span><span class="info__span--data">{{ game.gameDeveloper }}</span></li>
+                    <li class="info__item"><span class="info__span">Distribuidor:</span><span class="info__span--data">{{ game.gameDistributor }}</span></li>
+                    <li class="info__item"><span class="info__span">Fecha de lanzamiento:</span><span class="info__span--data">{{ game.gameDate | date('d-m-Y') }}</span></li>
+                    <li class="info__item"><span class="info__span">Plataforma:</span><span class="info__span--data">{{ game.gamePlataform }}</span></li>
+            </ul>
+            {# Info cards start #}
+            <div class="info__cards">
+                <div class="info__card">
+                    <svg class="info__icon--stock" viewBox="0 0 20 20">
+                    {% if game.gameStock != 0 %}
+							<path fill="none" d="M9.917,0.875c-5.086,0-9.208,4.123-9.208,9.208c0,5.086,4.123,9.208,9.208,9.208s9.208-4.122,9.208-9.208
+								C19.125,4.998,15.003,0.875,9.917,0.875z M9.917,18.141c-4.451,0-8.058-3.607-8.058-8.058s3.607-8.057,8.058-8.057
+								c4.449,0,8.057,3.607,8.057,8.057S14.366,18.141,9.917,18.141z M13.851,6.794l-5.373,5.372L5.984,9.672
+								c-0.219-0.219-0.575-0.219-0.795,0c-0.219,0.22-0.219,0.575,0,0.794l2.823,2.823c0.02,0.028,0.031,0.059,0.055,0.083
+								c0.113,0.113,0.263,0.166,0.411,0.162c0.148,0.004,0.298-0.049,0.411-0.162c0.024-0.024,0.036-0.055,0.055-0.083l5.701-5.7
+								c0.219-0.219,0.219-0.575,0-0.794C14.425,6.575,14.069,6.575,13.851,6.794z"></path>
+                    {% else %}
+                            <path fill="none" d="M13.864,6.136c-0.22-0.219-0.576-0.219-0.795,0L10,9.206l-3.07-3.07c-0.219-0.219-0.575-0.219-0.795,0
+								c-0.219,0.22-0.219,0.576,0,0.795L9.205,10l-3.07,3.07c-0.219,0.219-0.219,0.574,0,0.794c0.22,0.22,0.576,0.22,0.795,0L10,10.795
+								l3.069,3.069c0.219,0.22,0.575,0.22,0.795,0c0.219-0.22,0.219-0.575,0-0.794L10.794,10l3.07-3.07
+								C14.083,6.711,14.083,6.355,13.864,6.136z M10,0.792c-5.086,0-9.208,4.123-9.208,9.208c0,5.085,4.123,9.208,9.208,9.208
+								s9.208-4.122,9.208-9.208C19.208,4.915,15.086,0.792,10,0.792z M10,18.058c-4.451,0-8.057-3.607-8.057-8.057
+								c0-4.451,3.606-8.057,8.057-8.057c4.449,0,8.058,3.606,8.058,8.057C18.058,14.45,14.449,18.058,10,18.058z"></path>
+                    {% endif %}
+					</svg>
+                    <span class="info__span--data">Stock</span>
+                </div>
+                <img src="{{ asset('static/img/pegi/pegi'~ game.gamePegi ~'.png') }}" alt="" class="info__card--pegi">
+                <div class="info__card">
+                    <span class="info__span--val">{{ game.gameValoration | replace({".0" : ""}) }}</span>
+                    <span class="info__span--data">Valoraciones</span>
+                </div>
+            </div>
+            {# Info cards end #}
+        </section>
+        {# Info section end #}
+        {# Description container start #}
+        <section class="desc">
+            <h2 class="desc__title--primary">Acerca del juego</h2>
+            {% for i in 1..desc.title | length %}
+                {# Display title #}
+                {% if desc.title[i - 1] != null %}
+
+                    <h3 class="desc__title">
+                        {{ desc.title[i - 1] }}
+                    </h3>
+
+                {% endif %}
+                {# Display desciption content #}
+                <p class="desc__text">
+                    {{ desc.content[i - 1] }}
+                </p>
+            {% endfor %}
+        </section>
+        {# Description container end #}
+        {# Specs container start #}
+        <section class="specs">
+            <h2 class="specs__title--primary">Requisitos</h2>
+            <div class="specs__container">
+                <h3 class="specs__title">Mínimos</h3>
+                <ul class="specs__list">
+                    {% for key, value in minSpec %}
+                        <li class="specs__item"><span class="specs__span"> {{ key }}:</span><span class="specs__span--data">{{ value }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="specs__container">
+                <h3 class="specs__title">Recomendados</h3>
+                <ul class="specs__list">
+                   {% for key , value in maxSpec %}
+                        <li class="specs__item"><span class="specs__span"> {{ key }}:</span><span class="specs__span--data">{{ value }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+        {# Specs container end #}
+        {# Reviews container start #}
+        <section class="reviews">
+            <h2 class="reviews__title">Opiniones</h2>
+            {% for review in reviews %}
+                <article class="reviews__card">
+                    <div class="reviews__container--val">
+                        <span class="reviews__span--val">{{ review.reviewCalification | replace({".0" : ""}) }}</span>
+                    </div>
+                    <div class="reviews__container--content">
+                        <div class="reviews__content">
+                            <p class="reviews__text">
+                                {{ review.reviewDesc }}
+                            </p>
+                        </div>
+                        <div class="reviews__info">
+                            <span class="reviews__text--info">
+                                 <img src="{{ asset('static/img/users/default.jpg') }}" alt="User image" class="reviews__img">
+                                {{ review.idUser.userName }}
+                            </span>
+                            <span class="reviews__text--date">{{ review.reviewDate | date('d-m-Y H:m') }}</span>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+        {# Reviews container end #}
+    </main>
+
+{% endblock %}

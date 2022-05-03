@@ -1,4 +1,4 @@
-@mixin flex-style($direction: none, $align: none, $justify: none, $wrap: none){
+@mixin flex-style($direction: none, $align: none, $alignC: none, $justify: none, $wrap: none){
     display: flex;
     @if($direction != none){
         flex-direction: $direction;
@@ -11,6 +11,10 @@
     }
     @if($wrap != none){
         flex-wrap: $wrap;
+    }
+
+    @if($alignC != none){
+        align-content: $alignC;
     }
 }
 

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,7 +17,7 @@ class Users
     /**
      * @var int
      *
-     * @ORM\Column(name="id_user", type="integer", nullable=false)
+     * @ORM\Column(name="id_user", type="integer", nullable=false, options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -55,6 +57,29 @@ class Users
      * @ORM\Column(name="user_age", type="integer", nullable=false, options={"unsigned"=true})
      */
     private $userAge;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Games", inversedBy="idUser")
+     * @ORM\JoinTable(name="reviews",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="id_user", referencedColumnName="id_user")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="id_game", referencedColumnName="id_game")
+     *   }
+     * )
+     */
+    private $idGame;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idGame = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getIdUser(): ?int
     {
@@ -121,5 +146,28 @@ class Users
         return $this;
     }
 
+    /**
+     * @return Collection<int, Games>
+     */
+    public function getIdGame(): Collection
+    {
+        return $this->idGame;
+    }
+
+    public function addIdGame(Games $idGame): self
+    {
+        if (!$this->idGame->contains($idGame)) {
+            $this->idGame[] = $idGame;
+        }
+
+        return $this;
+    }
+
+    public function removeIdGame(Games $idGame): self
+    {
+        $this->idGame->removeElement($idGame);
+
+        return $this;
+    }
 
 }

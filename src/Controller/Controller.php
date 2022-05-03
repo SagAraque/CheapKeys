@@ -5,30 +5,71 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Games;
+use App\Entity\Media;
+use App\Entity\Reviews;
 
 class Controller extends AbstractController
 {
-    #[Route('/', name: 'index')]
-    public function index(): Response
+    /**
+     *  @Route("/", name="index")
+     */
+    public function index(Request $request): Response
     {
-        return $this->render('/index.html.twig', [
-            'controller_name' => 'Controller',
-        ]);
+
+        $response = $this->render('/index.html.twig');
+
+        $response->setEtag(md5($response->getContent()));
+        $response->setPublic();
+        $response->isNotModified($request);
+
+        return $response;
     }
 
-    #[Route('/{game_slug}', name:'product')]
-    public function product($game_slug, ManagerRegistry $doctrine):Response
+    /**
+     *  @Route("/{game_slug}", name="product")
+     */
+    public function product($game_slug, ManagerRegistry $doctrine, Request $request):Response
     {
-        $game = $doctrine->getRepository(Games::class)->find(1);
-        // $game = $doctrine->getRepository(Games::class)->findBy(array(
-        //     "gameSlug" => $game_slug
-        // ));
+        $game = $doctrine->getRepository(Games::class)->findBy(array(
+            "gameSlug" => $game_slug
+        ));
+
+        $media = $doctrine->getRepository(Media::class)->findByGame(array(
+            "id" => $game[0]->getIdGame(),
+        ));
+
+        $mediaInfo = $doctrine->getRepository(Media::class)->findOneByInfo(array(
+            "id" => $game[0]->getIdGame(),
+        ));
+        $reviews = $doctrine->getRepository(Reviews::class)->findByGame(array(
+            "id" => $game[0]->getIdGame(),
+        ));
         
-        // echo "<script>alert(". count($game) .")</script>";
+        $response = $this->render('/product.html.twig',[
+            'game' => $game[0],
+            'media' => $media,
+            'medIaInfo' => $mediaInfo,
+            'reviews' => $reviews
+        ]);
+
+        $response->setEtag(md5($response->getContent()));
+        $response->setPublic();
+        $response->isNotModified($request);
+
+        return $response;
+    }
+
+    /**
+     * @Route("/store/{data}", requirements={"data"="pc|playstation|xbox|nintendo|ofertas|proximamente"}, name="category")
+     */
+    public function category($data):Response
+    {
+
         return $this->render('/producto.html.twig',[
-            'game' => $game,
+            'data' => $data,
         ]);
     }
 }

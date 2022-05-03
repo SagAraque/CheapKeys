@@ -1,0 +1,358 @@
+@use 'mixins' as mixin;
+@use 'var';
+
+.gallery{
+    height: 620px;
+    width: 70%;
+    @include mixin.flex-style($direction:column, $align:center, $justify:space-between);
+
+    &__img{
+        height: 500px;
+        width: 100%;
+        background-color: green;
+        border-radius: 5px;
+        overflow: hidden;
+        @include mixin.flex-style($justify:center);
+    }
+
+    &__asset{
+        height: 100%;
+    }
+
+    &__container{
+        height: 100px;
+        width: 100%;
+        @include mixin.flex-style($align:center, $justify:space-between);
+    }
+
+    &__arrow{
+        height: 45px;
+        width: 45px;
+        border-radius: 100%;
+        background-color: var.$background_pink;
+        @include mixin.flex-style($align:center, $justify:center);
+    }
+
+    &__icon{
+        width: 35px;
+        height: 35px;
+
+        path{
+            fill:  var.$white;
+        }
+    }
+
+    &__min{
+        width: 175px;
+        height: 100%;
+        border-radius: 5px;
+        overflow: hidden;
+
+        &--selected{
+            @extend .gallery__min;
+            border:  2px solid var.$background_pink;
+        }
+    }
+}
+
+.title{
+    width: 100%;
+    font-size: 35px;
+    color: var.$white;
+}
+
+.info{
+    height: 650px;
+    width: 28%;
+    @include mixin.flex-style($align:center, $direction:column);
+    background-color: var.$background_secondary;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20px;
+    border-radius: 5px;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    &__title{
+        @extend .title;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    &__price{
+        color: var.$white;
+        font-size: 40px;
+        font-weight: 400;
+        margin: 15px;
+
+        &--discount{
+            @extend .info__price;
+            color: var.$light_white;
+            font-size: 1.2rem;
+            position: relative;
+
+            &::after{
+                content:  "";
+                width: 100%;
+                border: 1px solid var.$background_pink;
+                background-color: var.$background_pink;
+                transform: rotate(180deg);
+                position: absolute;
+                bottom: 10px;
+                left: 0px;
+            }
+        }
+    }
+
+
+    &__asset{
+        width: calc(100% + 40px);
+        margin: -20px -20px 0px -20px;
+    }
+
+    &__button{
+        height: 40px;
+        width: 100%;
+        font-size: 18px;
+        font-weight: 600;
+        background-color: var.$background_pink;
+        color: var.$white;
+        border: none;
+        border-radius: 5px;
+
+        &--buy{
+            @extend .info__button;
+            width: 80%;
+        }
+
+        &--wish{
+            @extend .info__button;
+            width: 15%;
+            @include mixin.flex-style($justify:center, $align:center);
+        }
+    }
+
+    &__icon{
+        width: 30px;
+        height: 30px;
+        stroke-width: 3px;
+
+        path {
+            fill: var.$white;
+            background-color: var.$background_body;
+        }
+
+        &--stock{
+            @extend .info__icon;
+            width: 55px;
+            height: 55px;
+
+            path{
+                fill: var.$background_pink;
+            }
+        }
+    }
+
+    &__container{
+        width: 100%;
+        @include mixin.flex-style($justify:space-around, $align:center);
+    }
+
+    &__list{
+        width: 100%;
+        list-style: none;
+        margin: 45px 0px;
+        padding: 0;
+    }
+
+    &__item{
+        color: var.$light_white;
+        margin: 10px 0px;
+        @include mixin.flex-style($justify:space-between);
+    }
+
+    &__span--data{
+        color: var.$white;
+    }
+
+    &__span--val{
+        font-size: 25px;
+        width: 50px;
+        height: 50px;
+        font-weight: 600;
+        @include mixin.flex-style($justify:center, $align:center);
+        color: var.$background_pink;
+        border-radius: 100%;
+        border: 3px solid var.$background_pink;
+    }
+
+    &__span--discount{
+        color: var.$white;
+        font-size: 16px;
+        background-color: var.$background_pink;
+        padding: 5px 15px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    &__cards{
+        width: 100%;
+        @include mixin.flex-style($justify:space-between);
+        margin: 10px 0px;
+    }
+
+    &__card{
+        height: 80px;
+        width: 90px;
+        @include mixin.flex-style($justify:space-between, $direction:column, $align:center);
+        &--pegi{
+            height: 80px;
+        }
+    }
+}
+
+.desc{
+    width: 70%;
+
+    &__title{
+        color: var.$white;
+        font-size: 22px;
+
+        &--primary{
+            @extend .desc__title;
+            font-size: 35px;
+        }
+    }
+
+    &__text{
+        color: var.$light_white;
+        font-size: 16px;
+        line-height: 30px;
+    }
+}
+
+.specs{
+    height: min-content;
+    width: 70%;
+    @include mixin.flex-style($justify:space-between, $wrap:wrap);
+
+    &__container{
+        width: 45%;
+    }
+
+    &__list{
+        @extend .info__list;
+        margin: 0;
+    }
+
+    &__item{
+        @extend .info__item;
+    }
+
+    &__title{
+        color: var.$light_white;
+        margin-bottom: 20px;
+
+        &--primary{
+            @extend .desc__title--primary;
+            width: 100%;
+        }
+    }
+
+    &__span--data{
+        color: var.$white;
+    }
+}
+
+.reviews
+{
+    height: min-content;
+    width: 70%;
+    @include mixin.flex-style($justify:space-between, $direction:column);
+
+    &__title
+    {
+        @extend .desc__title--primary;
+    }
+
+    &__card
+    {
+        height: 170px;
+        width: 100%;
+        @include mixin.flex-style($justify:space-between);
+        background-color: var.$background_secondary;
+        border-radius: 5px;
+        padding: 10px 20px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+    }
+
+    &__span--val
+    {
+        @extend .info__span--val;
+        width: 80px;
+        height: 80px;
+        font-size: 35px;
+    }
+
+    &__container
+    {
+        &--val
+        {
+            height: 100%;
+            width: 10%;
+            @include mixin.flex-style($justify:center, $align:center);
+        }
+        
+        &--content
+        {
+            height: 100%;
+            width: 85%;
+            @include mixin.flex-style($direction:column, $align:end);
+        }
+    }
+
+    &__content
+    {
+        width: 100%;
+        height: 80%;
+        @include mixin.flex-style($align:center);
+    }
+
+    &__text
+    {
+        color: var.$white;
+        line-height: 25px;
+
+        &--info
+        {
+            @extend .reviews__text;
+            color: var.$light_white;
+            @include mixin.flex-style($align:center);
+            width: min-content;
+            white-space: nowrap;
+            margin: 0px 50px 0px 10px;
+        }
+
+        &--date
+        {
+            @extend .reviews__text--info;
+            margin: 0px 0px 0px 10px;
+        }
+    }
+
+    &__info
+    {
+        width: 50%;
+        height: 20%;
+        @include mixin.flex-style($justify:space-between);
+    }
+
+    &__img
+    {
+        height: 30px;
+        border-radius: 100%;
+        margin-right: 10px;
+    }
+}
