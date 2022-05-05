@@ -222,7 +222,6 @@ body {
 .gallery__img {
   height: 500px;
   width: 100%;
-  background-color: green;
   border-radius: 5px;
   overflow: hidden;
   display: flex;
@@ -239,13 +238,21 @@ body {
   justify-content: space-between;
 }
 .gallery__arrow {
+  transition: all 0.25s;
   height: 45px;
   width: 45px;
   border-radius: 100%;
+  border: 5px solid #FF346D;
   background-color: #FF346D;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.gallery__arrow:hover {
+  transition: all 0.25s;
+  background-color: #e43869;
 }
 .gallery__icon {
   width: 35px;
@@ -271,7 +278,7 @@ body {
 }
 
 .info {
-  height: 650px;
+  height: min-content;
   width: 28%;
   display: flex;
   flex-direction: column;
@@ -313,8 +320,10 @@ body {
 .info__asset {
   width: calc(100% + 40px);
   margin: -20px -20px 0px -20px;
+  object-fit: cover;
 }
 .info__button, .info__button--wish, .info__button--buy {
+  transition: all 0.25s;
   height: 40px;
   width: 100%;
   font-size: 18px;
@@ -323,15 +332,26 @@ body {
   color: #fff;
   border: none;
   border-radius: 5px;
+  border: 5px solid #FF346D;
+  box-sizing: border-box;
+  cursor: pointer;
 }
 .info__button--buy {
   width: 80%;
+}
+.info__button--buy:hover {
+  transition: all 0.25s;
+  background-color: #e43869;
 }
 .info__button--wish {
   width: 15%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.info__button--wish:hover {
+  transition: all 0.25s;
+  background-color: #e43869;
 }
 .info__icon, .info__icon--stock {
   width: 30px;
@@ -348,6 +368,9 @@ body {
 }
 .info__icon--stock path {
   fill: #FF346D;
+}
+.info__icon--data {
+  margin-right: 5px;
 }
 .info__container {
   width: 100%;
@@ -516,6 +539,20 @@ body {
   height: 30px;
   border-radius: 100%;
   margin-right: 10px;
+}
+
+@media (max-width: 1480px) {
+  .header__top, .header__bottom {
+    width: 1280px;
+  }
+  .header__input {
+    width: 350px;
+  }
+}
+@media (max-width: 1480px) {
+  .info__asset {
+    height: 150px;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -9,7 +9,6 @@
     &__img{
         height: 500px;
         width: 100%;
-        background-color: green;
         border-radius: 5px;
         overflow: hidden;
         @include mixin.flex-style($justify:center);
@@ -26,11 +25,20 @@
     }
 
     &__arrow{
+        transition: all 0.25s;
         height: 45px;
         width: 45px;
         border-radius: 100%;
+        border: 5px solid var.$background_pink;
         background-color: var.$background_pink;
         @include mixin.flex-style($align:center, $justify:center);
+        box-sizing: border-box;
+        cursor: pointer;
+
+        &:hover{
+            transition: all 0.25s;
+            background-color: var.$background_pink_dark;
+        }
     }
 
     &__icon{
@@ -62,7 +70,7 @@
 }
 
 .info{
-    height: 650px;
+    height: min-content;
     width: 28%;
     @include mixin.flex-style($align:center, $direction:column);
     background-color: var.$background_secondary;
@@ -109,9 +117,11 @@
     &__asset{
         width: calc(100% + 40px);
         margin: -20px -20px 0px -20px;
+        object-fit: cover;
     }
 
     &__button{
+        transition: all 0.25s;
         height: 40px;
         width: 100%;
         font-size: 18px;
@@ -120,16 +130,29 @@
         color: var.$white;
         border: none;
         border-radius: 5px;
+        border: 5px solid var.$background_pink;
+        box-sizing: border-box;
+        cursor: pointer;
 
         &--buy{
             @extend .info__button;
             width: 80%;
+
+            &:hover{
+                transition: all 0.25s;
+                background-color: var.$background_pink_dark;
+            }
         }
 
         &--wish{
             @extend .info__button;
             width: 15%;
             @include mixin.flex-style($justify:center, $align:center);
+
+            &:hover{
+                transition: all 0.25s;
+                background-color: var.$background_pink_dark;
+            }
         }
     }
 
@@ -152,6 +175,11 @@
                 fill: var.$background_pink;
             }
         }
+
+        &--data{
+            margin-right: 5px;
+        }
+
     }
 
     &__container{

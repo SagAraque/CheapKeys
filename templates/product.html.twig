@@ -4,6 +4,14 @@
 {% set minSpec =  json_decode(game.minReq, true) %}
 {% set maxSpec =  json_decode(game.maxReq, true) %}
 {% set discount = game.gamePrice - (game.gameDiscount * game.gamePrice / 100) %}
+{% set galleryMax = media | length >= 4 ? 4 : media | length %}
+
+
+{% if game.gamePlataform == 'Windows' %}
+    {% set platform = 'windows' %}
+{% elseif game.gamePlataform == 'Switch' %}
+    {% set platform = 'nintendo-switch' %}
+{% endif %}
 
 {% block title %} Producto {% endblock %}
 
@@ -14,32 +22,31 @@
         <section class="gallery">
             {# Gallery img start #}
             <div class="gallery__img">
-                <img src="{{ asset(media[0].mediaUrl) }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset">
+                <img src="{{ asset('static/img/games/' ~ media[0].mediaUrl ~ '.jpg') }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset">
             </div>
             {# Gallery img end #}
             {# Gallery min container start #}
             <div class="gallery__container">
                 {# Gallery arrow start #}
-                <div class="gallery__arrow">
+                <div class="gallery__arrow" slide="left">
                     <svg class="gallery__icon" viewBox="0 0 20 20">
 							<path fill="none" d="M8.388,10.049l4.76-4.873c0.303-0.31,0.297-0.804-0.012-1.105c-0.309-0.304-0.803-0.293-1.105,0.012L6.726,9.516c-0.303,0.31-0.296,0.805,0.012,1.105l5.433,5.307c0.152,0.148,0.35,0.223,0.547,0.223c0.203,0,0.406-0.08,0.559-0.236c0.303-0.309,0.295-0.803-0.012-1.104L8.388,10.049z"></path>
 					</svg>
                 </div>
                 {# Gallery arrow end #}
-                <div class="gallery__min--selected">
-                    <img src="{{ asset(media[0].mediaUrl) }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset">
-                </div>
-                <div class="gallery__min">
-                    <img src="{{ asset(media[0].mediaUrl) }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset">
-                </div>
-                <div class="gallery__min">
-                    <img src="{{ asset(media[0].mediaUrl) }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset">
-                </div>
-                <div class="gallery__min">
-                    <img src="{{ asset(media[0].mediaUrl) }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset">
-                </div>
+                {% for i in 0 .. galleryMax - 1 %}
+                    {% if i == 0 %}
+                        <div class="gallery__min--selected">
+                            <img src="{{ asset('static/img/games/' ~ media[i].mediaUrl ~ '-min.jpg') }}" alt="{{ media[i].mediaAlt }}" class="gallery__asset">
+                        </div>
+                    {% else %}
+                        <div class="gallery__min">
+                            <img src="{{ asset('static/img/games/' ~ media[i].mediaUrl ~ '-min.jpg') }}" alt="{{ media[i].mediaAlt }}" class="gallery__asset">
+                        </div>
+                    {% endif %}
+                {% endfor %}
                 {# Gallery arrow start #}
-                <div class="gallery__arrow">
+                <div class="gallery__arrow" slide="right">
                     <svg class="gallery__icon" viewBox="0 0 20 20">
 							<path fill="none"  d="M11.611,10.049l-4.76-4.873c-0.303-0.31-0.297-0.804,0.012-1.105c0.309-0.304,0.803-0.293,1.105,0.012l5.306,5.433c0.304,0.31,0.296,0.805-0.012,1.105L7.83,15.928c-0.152,0.148-0.35,0.223-0.547,0.223c-0.203,0-0.406-0.08-0.559-0.236c-0.303-0.309-0.295-0.803,0.012-1.104L11.611,10.049z"></path>
 					</svg>
@@ -64,9 +71,7 @@
             <div class="info__container">
                 <button class="info__button--buy">{{ game.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito' }}</button>
                 <button class="info__button--wish">
-                    <svg class="info__icon"  viewBox="0 0 20 20">
-						<path d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61"></path>
-					</svg>
+                    <i class="bi bi-heart info_icon--wish"></i>
                 </button>
             </div>
             {# Info button container end #}
@@ -74,7 +79,7 @@
                     <li class="info__item"><span class="info__span">Desarrolladora:</span><span class="info__span--data">{{ game.gameDeveloper }}</span></li>
                     <li class="info__item"><span class="info__span">Distribuidor:</span><span class="info__span--data">{{ game.gameDistributor }}</span></li>
                     <li class="info__item"><span class="info__span">Fecha de lanzamiento:</span><span class="info__span--data">{{ game.gameDate | date('d-m-Y') }}</span></li>
-                    <li class="info__item"><span class="info__span">Plataforma:</span><span class="info__span--data">{{ game.gamePlataform }}</span></li>
+                    <li class="info__item"><span class="info__span">Plataforma:</span><span class="info__span--data"><i class="{{'bi bi-' ~ platform ~ ' info__icon--data'}}"></i> {{ game.gamePlataform }}</span></li>
             </ul>
             {# Info cards start #}
             <div class="info__cards">
@@ -149,7 +154,7 @@
         {# Specs container end #}
         {# Reviews container start #}
         <section class="reviews">
-            <h2 class="reviews__title">Opiniones</h2>
+            <h2 class="reviews__title">Opiniones ({{ reviews | length }})</h2>
             {% for review in reviews %}
                 <article class="reviews__card">
                     <div class="reviews__container--val">
@@ -175,4 +180,14 @@
         {# Reviews container end #}
     </main>
 
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var images = [];
+        {% for image in media %}
+            images.push('{{image.mediaUrl}}');
+        {% endfor %}
+    </script>
+    <script src="{{ asset('static/javascript/gallery.js') }}"></script>
 {% endblock %}

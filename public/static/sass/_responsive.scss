@@ -1,0 +1,28 @@
+@use 'mixins' as mixin;
+@use 'var';
+
+// Responsive header
+
+@media (max-width: 1480px) {
+    .header{
+        &__top, &__bottom{
+            width: 1280px;
+        }
+
+        &__input{
+            width: 350px;
+        }
+    }
+}
+
+// Responsive product
+
+@media (max-width: 1480px) {
+    .info{
+        // width: 25%;
+
+        &__asset{
+            height: 150px;
+        }
+    }
+}
