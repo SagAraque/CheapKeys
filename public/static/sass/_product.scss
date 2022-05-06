@@ -304,6 +304,25 @@
         @extend .desc__title--primary;
     }
 
+    &__container{
+        @include mixin.flex-style($justify:space-between, $direction:column);
+        position: relative;
+
+        &--val
+        {
+            height: 100%;
+            width: 10%;
+            @include mixin.flex-style($justify:center, $align:center);
+        }
+        
+        &--content
+        {
+            height: 100%;
+            width: 85%;
+            @include mixin.flex-style($direction:column, $align:end);
+        }
+    }
+
     &__card
     {
         height: 170px;
@@ -322,23 +341,6 @@
         width: 80px;
         height: 80px;
         font-size: 35px;
-    }
-
-    &__container
-    {
-        &--val
-        {
-            height: 100%;
-            width: 10%;
-            @include mixin.flex-style($justify:center, $align:center);
-        }
-        
-        &--content
-        {
-            height: 100%;
-            width: 85%;
-            @include mixin.flex-style($direction:column, $align:end);
-        }
     }
 
     &__content
@@ -382,5 +384,34 @@
         height: 30px;
         border-radius: 100%;
         margin-right: 10px;
+    }
+
+    &__paginator
+    {
+        width: 100%;
+        height: 30px;
+        @include mixin.flex-style($justify:center, $align:center);
+    }
+
+    &__page
+    {
+        font-size: 18px;
+        font-weight: 600;
+        background-color: transparent;
+        border: none;
+        margin: 0px 10px;
+        color: var.$white;
+        cursor: pointer;
+
+        &:hover
+        {
+            color: var.$background_pink;
+        }
+
+        &--selected
+        {
+            @extend .reviews__page;
+            color:var.$background_pink;
+        }
     }
 }

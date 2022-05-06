@@ -13,7 +13,7 @@
     {% set platform = 'nintendo-switch' %}
 {% endif %}
 
-{% block title %} Producto {% endblock %}
+{% block title %} CheapKeys | {{ game.gameName }} {% endblock %}
 
 {% block body %} 
     <main class="main" role="main">
@@ -153,29 +153,24 @@
         </section>
         {# Specs container end #}
         {# Reviews container start #}
-        <section class="reviews">
-            <h2 class="reviews__title">Opiniones ({{ reviews | length }})</h2>
-            {% for review in reviews %}
-                <article class="reviews__card">
-                    <div class="reviews__container--val">
-                        <span class="reviews__span--val">{{ review.reviewCalification | replace({".0" : ""}) }}</span>
-                    </div>
-                    <div class="reviews__container--content">
-                        <div class="reviews__content">
-                            <p class="reviews__text">
-                                {{ review.reviewDesc }}
-                            </p>
-                        </div>
-                        <div class="reviews__info">
-                            <span class="reviews__text--info">
-                                 <img src="{{ asset('static/img/users/default.jpg') }}" alt="User image" class="reviews__img">
-                                {{ review.idUser.userName }}
-                            </span>
-                            <span class="reviews__text--date">{{ review.reviewDate | date('d-m-Y H:m') }}</span>
-                        </div>
-                    </div>
-                </article>
-            {% endfor %}
+        <section class="reviews" target="{{ game.idGame }}">
+            <h2 class="reviews__title">Opiniones ({{ reviews.total }})</h2>
+            
+            {% if reviews.total != 0 %}
+                <div class="reviews__container">
+                    {{ include('ajax/reviews.html.twig') }}
+                </div>
+                <div class="reviews__paginator">
+                    {% for i in 1 .. reviews.lastPage %}
+                        {% if i == 1 %}
+                            <button class="reviews__page--selected">{{ i }}</button>
+                        {% else %}
+                            <button class="reviews__page">{{ i }}</button>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
         </section>
         {# Reviews container end #}
     </main>
@@ -190,4 +185,5 @@
         {% endfor %}
     </script>
     <script src="{{ asset('static/javascript/gallery.js') }}"></script>
+    <script src="{{ asset('static/javascript/ajax.js') }}"></script>
 {% endblock %}

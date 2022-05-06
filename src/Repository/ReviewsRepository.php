@@ -6,6 +6,7 @@ use App\Entity\Reviews;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -57,5 +58,17 @@ class ReviewsRepository extends ServiceEntityRepository
         )->setParameter('value', $id_game);
 
         return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+    }
+
+    public function findByGameNoResults($id_game)
+    {
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT r FROM App\Entity\Reviews r
+             WHERE r.idGame = :value'
+        )->setParameter('value', $id_game);
+
+        return $sql;
     }
 }

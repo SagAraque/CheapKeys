@@ -1,0 +1,29 @@
+{% for review in reviews.items %}
+    <article class="reviews__card">
+        {# Calification container start #}
+        <div class="reviews__container--val">
+            <span class="reviews__span--val">{{ review.reviewCalification | replace({".0" : ""}) }}</span>
+        </div>
+        {# Calification container end #}
+        {# Review container start #}
+        <div class="reviews__container--content">
+            {# Review content start #}
+            <div class="reviews__content">
+                <p class="reviews__text">
+                    {{ review.reviewDesc }}
+                </p>
+            </div>
+            {# Review content end #}
+            {# Reviews info start #}
+            <div class="reviews__info">
+                <span class="reviews__text--info">
+                    <img src="{{ asset('static/img/users/default.jpg') }}" alt="User image" class="reviews__img">
+                    {{ review.idUser.userName }}
+                </span>
+                <span class="reviews__text--date">{{ review.reviewDate | date('d-m-Y H:m') }}</span>
+            </div>
+            {# Reviews info end #}
+        </div>
+        {# Review container end #}
+    </article>
+{% endfor %}
