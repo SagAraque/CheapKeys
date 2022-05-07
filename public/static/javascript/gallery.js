@@ -9,7 +9,7 @@ min.forEach(element => {
             changeGalleryImg(element);
             let img = element.querySelector('.gallery__asset').getAttribute('src');
             img = img.replace('/static/img/games/', '');
-            img = img.replace('-min.jpg', '');
+            img = img.replace('-min.webp', '');
             objectIndex = Array.prototype.indexOf.call(images, img);
         } 
     });
@@ -77,7 +77,7 @@ function changeMinImg(init, max)
     let minindex = 0;
     for (let i = init; i < max; i++) {
         img = min[minindex].querySelector('.gallery__asset');
-        img.setAttribute('src', `/static/img/games/${images[i]}-min.jpg`);
+        img.setAttribute('src', `/static/img/games/${images[i]}-min.webp`);
         minindex +=1;
     }
 }

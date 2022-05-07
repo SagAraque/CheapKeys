@@ -266,6 +266,7 @@ body {
   height: 100%;
   border-radius: 5px;
   overflow: hidden;
+  cursor: pointer;
 }
 .gallery__min--selected {
   border: 2px solid #FF346D;
@@ -354,20 +355,10 @@ body {
   background-color: #e43869;
 }
 .info__icon, .info__icon--stock {
-  width: 30px;
-  height: 30px;
-  stroke-width: 3px;
-}
-.info__icon path, .info__icon--stock path {
-  fill: #fff;
-  background-color: #231b36;
-}
-.info__icon--stock {
-  width: 55px;
-  height: 55px;
-}
-.info__icon--stock path {
-  fill: #FF346D;
+  width: min-content;
+  height: min-content;
+  font-size: 50px;
+  color: #FF346D;
 }
 .info__icon--data {
   margin-right: 5px;
@@ -553,22 +544,62 @@ body {
   align-items: center;
   justify-content: center;
 }
-.reviews__page, .reviews__page--selected {
+.reviews__page {
   font-size: 18px;
   font-weight: 600;
-  background-color: transparent;
-  border: none;
-  margin: 0px 10px;
   color: #fff;
+  margin: 0px 10px;
+}
+.reviews__button, .reviews__button--disabled {
+  width: 35px;
+  height: 35px;
+  font-size: 20px;
+  color: #fff;
+  background-color: #FF346D;
+  margin: 0px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
   cursor: pointer;
 }
-.reviews__page:hover, .reviews__page--selected:hover {
-  color: #FF346D;
+.reviews__button--disabled {
+  filter: contrast(50%);
+  cursor: default;
 }
-.reviews__page--selected {
-  color: #FF346D;
+.reviews__loading {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: relative;
+  animation: ring 2s linear infinite;
+  margin: 50px auto;
+}
+.reviews__loading::before {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 5px #362958;
 }
 
+@keyframes ring {
+  0% {
+    transform: rotate(0deg);
+    box-shadow: 1px 2px 1px #FF346D;
+  }
+  50% {
+    transform: rotate(180deg);
+    box-shadow: 1px 2px 1px #FF346D;
+  }
+  100% {
+    transform: rotate(360deg);
+    box-shadow: 1px 2px 1px #FF346D;
+  }
+}
 @media (max-width: 1480px) {
   .header__top, .header__bottom {
     width: 1280px;

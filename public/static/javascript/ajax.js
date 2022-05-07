@@ -1,25 +1,37 @@
-let pageBtn = document.querySelectorAll('[class*="reviews__page"]');
+let pageBtn = document.querySelectorAll('[class*="reviews__button"]');
 let reviewsSection = document.querySelector('.reviews');
 let reviewsContainer = document.querySelector('.reviews__container');
+let lastPage = document.querySelector('.reviews__last').textContent;
+let actual = document.querySelector('.reviews__actual');
+let page = 1;
 
 pageBtn.forEach(btn => {
     btn.addEventListener('click', ()=>{
+
         let id = reviewsSection.getAttribute('target');
-        getReviews(btn.textContent, id, btn);
+        let direction = btn.getAttribute('direction');
+
+        if (!btn.classList.contains('reviews__button--disabled')) getReviews(direction, id);
+
     });
 });
 
 
-function getReviews(page, id, button)
+function getReviews(direction, id)
 {
+    direction == 'left'  ?     page -= 1 :     page += 1;
+
     xhr = new XMLHttpRequest();
     xhr.open('GET', `/ajax/reviews?id=${id}&page=${page}`, true);
     xhr.send();
 
+    setLoading();
+
     xhr.onreadystatechange = ()=>{
         if(xhr.readyState == 4 && xhr.status == 200)
             reviewsContainer.innerHTML = xhr.responseText;
-            changeSelected(button);
+            actual.innerHTML = page;
+            changeButtons();
     }
 
     reviewsSection.scrollIntoView({
@@ -27,9 +39,26 @@ function getReviews(page, id, button)
     });
 }
 
-function changeSelected(button)
+function changeButtons()
 {
-    let selected = document.querySelector('.reviews__page--selected');
-    selected.classList.replace('reviews__page--selected', 'reviews__page');
-    button.classList.replace('reviews__page', 'reviews__page--selected');
+    if(page == 1){
+        pageBtn[0].classList.replace('reviews__button', 'reviews__button--disabled');
+    }else{
+        pageBtn[0].classList.replace('reviews__button--disabled', 'reviews__button');
+    }
+
+    if(page == lastPage){
+        pageBtn[1].classList.replace('reviews__button', 'reviews__button--disabled');
+    }else{
+        pageBtn[1].classList.replace('reviews__button--disabled', 'reviews__button');
+    }
+}
+
+function setLoading()
+{
+    let loading = document.createElement('div');
+    loading.classList.add('reviews__loading');
+    console.log(loading);
+    reviewsContainer.innerHTML = "";
+    reviewsContainer.appendChild(loading);
 }

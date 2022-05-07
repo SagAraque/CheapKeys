@@ -55,6 +55,7 @@
         height: 100%;
         border-radius: 5px;
         overflow: hidden;
+        cursor: pointer;
 
         &--selected{
             @extend .gallery__min;
@@ -157,23 +158,13 @@
     }
 
     &__icon{
-        width: 30px;
-        height: 30px;
-        stroke-width: 3px;
-
-        path {
-            fill: var.$white;
-            background-color: var.$background_body;
-        }
-
+        width: min-content;
+        height: min-content;
+        font-size: 50px;
+        color: var.$background_pink;
+        
         &--stock{
             @extend .info__icon;
-            width: 55px;
-            height: 55px;
-
-            path{
-                fill: var.$background_pink;
-            }
         }
 
         &--data{
@@ -397,21 +388,68 @@
     {
         font-size: 18px;
         font-weight: 600;
-        background-color: transparent;
-        border: none;
-        margin: 0px 10px;
         color: var.$white;
+        margin: 0px 10px;
+    }
+
+    &__button
+    {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+        color: var.$white;
+        background-color: var.$background_pink;
+        margin: 0px 10px;
+        @include mixin.flex-style($justify:center, $align:center);
+        border-radius: 5px;
         cursor: pointer;
 
-        &:hover
+        &--disabled
         {
-            color: var.$background_pink;
-        }
-
-        &--selected
-        {
-            @extend .reviews__page;
-            color:var.$background_pink;
+            @extend .reviews__button;
+            filter: contrast(50%);
+            cursor:default;
         }
     }
+
+    &__loading
+    {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        position: relative;
+        animation: ring 2s linear infinite;
+        margin: 50px auto;
+
+        &::before
+        {
+            position: absolute;
+            content: "";
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 5px var.$background_secondary;
+        }
+    }
+}
+
+@keyframes ring 
+{
+    0%{
+        transform: rotate(0deg);
+        box-shadow: 1px 2px 1px var.$background_pink;
+    }
+
+    50%{
+        transform: rotate(180deg);
+        box-shadow: 1px 2px 1px var.$background_pink;
+    }
+
+    100%{
+        transform: rotate(360deg);
+        box-shadow: 1px 2px 1px var.$background_pink;
+    }
+
 }
