@@ -6,7 +6,6 @@
     height: 230px;
     background:  linear-gradient(180deg, var.$background_secondary 80%, var.$background_primary 20%);
     @include mixin.flex-style($align:center,  $direction:column);
-    margin-top: 30px;
 
     &__top{
         width: 960px;
