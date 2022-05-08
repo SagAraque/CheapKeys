@@ -1,15 +1,54 @@
 @use 'mixins' as mixin;
 @use 'var';
 
-.container{
+.container
+{
     width: 100%;
     height: min-content;
+
+    &__login, &__img
+    {
+        width: 30%;
+        height: calc(100vh - 300px);
+    }
+
+    &__img
+    {  
+        width: 70%;
+        background-image: url('../img/loginBackground.webp');
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+
+        &::after
+        {
+            content: "";
+            height: 100%;
+            width: 20%;
+            background-color: var.$background_body;
+            position: absolute;
+            left: -2px;
+            top: 0;
+            webkit-clip-path: polygon(100% 0, 0 0, 0 100%);
+            clip-path: polygon(100% 0, 0 0, 0 100%);
+        }
+    }
 }
 
-.main{
+.main
+{
     width: 1280px;
     height: min-content;
     padding: 10px;
     box-sizing: border-box;
     @include mixin.flex-style($justify: space-between, $wrap: wrap);
+    margin-bottom: 30px;
+
+    &__login
+    {
+        width: 100%;
+        height: min-content;
+        @include mixin.flex-style($justify: space-between);
+    }
+
 }

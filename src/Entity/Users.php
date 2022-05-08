@@ -2,17 +2,19 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Users
  *
- * @ORM\Table(name="users")
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(columns={"user_name", "user_email"})})
  * @ORM\Entity
  */
-class Users
+class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @var int
@@ -27,6 +29,7 @@ class Users
      * @var string
      *
      * @ORM\Column(name="user_name", type="string", length=30, nullable=false)
+     * @Assert\Unique
      */
     private $userName;
 
@@ -48,6 +51,7 @@ class Users
      * @var string
      *
      * @ORM\Column(name="user_email", type="string", length=100, nullable=false)
+     * @Assert\Unique
      */
     private $userEmail;
 
@@ -57,6 +61,13 @@ class Users
      * @ORM\Column(name="user_age", type="integer", nullable=false, options={"unsigned"=true})
      */
     private $userAge;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_rol", type="string", length=45, nullable=false)
+     */
+    private $userRol;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -166,6 +177,35 @@ class Users
     public function removeIdGame(Games $idGame): self
     {
         $this->idGame->removeElement($idGame);
+
+        return $this;
+    }
+
+    public function getRoles() :array
+    {
+        $rol =  $this->userRol;
+
+        return [$rol];
+    }
+
+    public function eraseCredentials()
+    {
+
+    }
+
+    public function getUserIdentifier(): String
+    {
+        return $this->userEmail;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->userPass;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->userPass = $password;
 
         return $this;
     }

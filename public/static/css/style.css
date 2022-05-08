@@ -130,6 +130,28 @@ body {
   width: 100%;
   height: min-content;
 }
+.container__login, .container__img {
+  width: 30%;
+  height: calc(100vh - 300px);
+}
+.container__img {
+  width: 70%;
+  background-image: url("../img/loginBackground.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+.container__img::after {
+  content: "";
+  height: 100%;
+  width: 20%;
+  background-color: #231b36;
+  position: absolute;
+  left: -2px;
+  top: 0;
+  webkit-clip-path: polygon(100% 0, 0 0, 0 100%);
+  clip-path: polygon(100% 0, 0 0, 0 100%);
+}
 
 .main {
   width: 1280px;
@@ -139,6 +161,13 @@ body {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+.main__login {
+  width: 100%;
+  height: min-content;
+  display: flex;
+  justify-content: space-between;
 }
 
 .footer {
@@ -148,7 +177,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 30px;
 }
 .footer__top {
   width: 960px;
