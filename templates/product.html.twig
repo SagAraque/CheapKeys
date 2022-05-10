@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% set desc =  json_decode(game.gameDesc) %}
-{% set minSpec =  json_decode(game.minReq, true) %}
-{% set maxSpec =  json_decode(game.maxReq, true) %}
-{% set discount = game.gamePrice - (game.gameDiscount * game.gamePrice / 100) %}
+{% set desc =  json_decode(features.idFeature.gameDesc) %}
+{% set minSpec =  json_decode(features.idFeature.minReq, true) %}
+{% set maxSpec =  json_decode(features.idFeature.maxReq, true) %}
+{% set discount = features.idFeature.gamePrice - (features.idFeature.gameDiscount * features.idFeature.gamePrice / 100) %}
 {% set galleryMax = media | length >= 4 ? 4 : media | length %}
 
 
-{% if game.gamePlataform == 'Windows' %}
+{% if features.idPlatform.platformName == 'windows' %}
     {% set platform = 'windows' %}
-{% elseif game.gamePlataform == 'Switch' %}
+{% elseif features.idPlatform.platformName == 'switch' %}
     {% set platform = 'nintendo-switch' %}
-{% endif %}
+{% endif %} 
 
 {% block title %} CheapKeys | {{ game.gameName }} {% endblock %}
 
@@ -22,7 +22,7 @@
         <section class="gallery">
             {# Gallery img start #}
             <div class="gallery__img">
-                <img src="{{ asset('static/img/games/' ~ media[0].mediaUrl ~ '.webp') }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset">
+                <img src="{{ asset('static/img/games/' ~ media[0].mediaUrl ~ '.webp') }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset" loading="lazy">
             </div>
             {# Gallery img end #}
             {# Gallery min container start #}
@@ -30,7 +30,7 @@
                 {# Gallery arrow start #}
                 <div class="gallery__arrow" slide="left">
                     <svg class="gallery__icon" viewBox="0 0 20 20">
-							<path fill="none" d="M8.388,10.049l4.76-4.873c0.303-0.31,0.297-0.804-0.012-1.105c-0.309-0.304-0.803-0.293-1.105,0.012L6.726,9.516c-0.303,0.31-0.296,0.805,0.012,1.105l5.433,5.307c0.152,0.148,0.35,0.223,0.547,0.223c0.203,0,0.406-0.08,0.559-0.236c0.303-0.309,0.295-0.803-0.012-1.104L8.388,10.049z"></path>
+						<path fill="none" d="M8.388,10.049l4.76-4.873c0.303-0.31,0.297-0.804-0.012-1.105c-0.309-0.304-0.803-0.293-1.105,0.012L6.726,9.516c-0.303,0.31-0.296,0.805,0.012,1.105l5.433,5.307c0.152,0.148,0.35,0.223,0.547,0.223c0.203,0,0.406-0.08,0.559-0.236c0.303-0.309,0.295-0.803-0.012-1.104L8.388,10.049z"></path>
 					</svg>
                 </div>
                 {# Gallery arrow end #}
@@ -48,7 +48,7 @@
                 {# Gallery arrow start #}
                 <div class="gallery__arrow" slide="right">
                     <svg class="gallery__icon" viewBox="0 0 20 20">
-							<path fill="none"  d="M11.611,10.049l-4.76-4.873c-0.303-0.31-0.297-0.804,0.012-1.105c0.309-0.304,0.803-0.293,1.105,0.012l5.306,5.433c0.304,0.31,0.296,0.805-0.012,1.105L7.83,15.928c-0.152,0.148-0.35,0.223-0.547,0.223c-0.203,0-0.406-0.08-0.559-0.236c-0.303-0.309-0.295-0.803,0.012-1.104L11.611,10.049z"></path>
+						<path fill="none"  d="M11.611,10.049l-4.76-4.873c-0.303-0.31-0.297-0.804,0.012-1.105c0.309-0.304,0.803-0.293,1.105,0.012l5.306,5.433c0.304,0.31,0.296,0.805-0.012,1.105L7.83,15.928c-0.152,0.148-0.35,0.223-0.547,0.223c-0.203,0-0.406-0.08-0.559-0.236c-0.303-0.309-0.295-0.803,0.012-1.104L11.611,10.049z"></path>
 					</svg>
                 </div>
                 {# Gallery arrow end #}
@@ -58,42 +58,42 @@
         {# Gallery end #}
         {# Info section start #}
         <section class="info">
-            <img src="{{ asset(medIaInfo.mediaUrl) }}" alt="{{ medIaInfo.mediaAlt }}" class="info__asset">
+            <img src="{{ asset('static/img/games/' ~ medIaInfo.mediaUrl ~ '.webp') }}" alt="{{ medIaInfo.mediaAlt }}" class="info__asset" loading="lazy">
             <div class="info__container">
-                {% if game.gameDiscount == 0 %}
-                    <h3 class="info__price">{{ game.gamePrice }}€</h3>
+                {% if features.idFeature.gameDiscount == 0 %}
+                    <h3 class="info__price">{{ features.idFeature.gamePrice }}€</h3>
                 {% else %}
-                    <span class="info__span--discount">{{ game.gameDiscount}}%</span>
-                    <h3 class="info__price"><span class="info__price--discount">{{ game.gamePrice }}€</span>{{ discount | round(2, 'floor') }}€</h3>
+                    <span class="info__span--discount">{{ features.idFeature.gameDiscount}}%</span>
+                    <h3 class="info__price"><span class="info__price--discount">{{ features.idFeature.gamePrice }}€</span>{{ discount | round(2, 'floor') }}€</h3>
                 {% endif %}
             </div>
             {# Info button container start #}
             <div class="info__container">
-                <button class="info__button--buy">{{ game.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito' }}</button>
+                <button class="info__button--buy">{{ features.idFeature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito' }}</button>
                 <button class="info__button--wish">
                     <i class="bi bi-heart info_icon--wish"></i>
                 </button>
             </div>
             {# Info button container end #}
             <ul class="info__list">
-                    <li class="info__item"><span class="info__span">Desarrolladora:</span><span class="info__span--data">{{ game.gameDeveloper }}</span></li>
-                    <li class="info__item"><span class="info__span">Distribuidor:</span><span class="info__span--data">{{ game.gameDistributor }}</span></li>
-                    <li class="info__item"><span class="info__span">Fecha de lanzamiento:</span><span class="info__span--data">{{ game.gameDate | date('d-m-Y') }}</span></li>
-                    <li class="info__item"><span class="info__span">Plataforma:</span><span class="info__span--data"><i class="{{'bi bi-' ~ platform ~ ' info__icon--data'}}"></i> {{ game.gamePlataform }}</span></li>
+                <li class="info__item"><span class="info__span">Desarrolladora:</span><span class="info__span--data">{{ features.idFeature.gameDeveloper }}</span></li>
+                <li class="info__item"><span class="info__span">Distribuidor:</span><span class="info__span--data">{{ features.idFeature.gameDistributor }}</span></li>
+                <li class="info__item"><span class="info__span">Fecha de lanzamiento:</span><span class="info__span--data">{{ features.idFeature.gameDate | date('d-m-Y') }}</span></li>
+                <li class="info__item"><span class="info__span">Plataforma:</span><span class="info__span--data"><i class="{{'bi bi-' ~ platform ~ ' info__icon--data'}}"></i> {{ features.idPlatform.platformName }}</span></li>
             </ul>
             {# Info cards start #}
             <div class="info__cards">
                 <div class="info__card">
-                    {% if game.gameStock != 0 %}
+                    {% if features.idFeature.gameStock != 0 %}
 							<i class="bi bi-check-circle info__icon--stock"></i>
                     {% else %}
                             <i class="bi bi-x-circle info__icon--stock"></i>
                     {% endif %}
                     <span class="info__span--data">Stock</span>
                 </div>
-                <img src="{{ asset('static/img/pegi/pegi'~ game.gamePegi ~'.png') }}" alt="" class="info__card--pegi">
+                <img src="{{ asset('static/img/pegi/pegi'~ features.idFeature.gamePegi ~'.png') }}" alt="" class="info__card--pegi" loading="lazy">
                 <div class="info__card">
-                    <span class="info__span--val">{{ game.gameValoration | replace({".0" : ""}) }}</span>
+                    <span class="info__span--val">{{ features.idFeature.gameValoration | replace({".0" : ""}) }}</span>
                     <span class="info__span--data">Valoraciones</span>
                 </div>
             </div>

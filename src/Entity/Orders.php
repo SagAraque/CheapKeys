@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Orders
  *
- * @ORM\Table(name="orders", indexes={@ORM\Index(name="fk_id_user_order", columns={"id_user"})})
+ * @ORM\Table(name="orders", indexes={@ORM\Index(name="FK2", columns={"id_user"}), @ORM\Index(name="FK3", columns={"id_billing"})})
  * @ORM\Entity
  */
 class Orders
@@ -24,7 +24,7 @@ class Orders
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="order_date", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="order_date", type="date", nullable=false, options={"default"="current_timestamp()"})
      */
     private $orderDate = 'current_timestamp()';
 
@@ -44,6 +44,16 @@ class Orders
      * })
      */
     private $idUser;
+
+    /**
+     * @var \Billing
+     *
+     * @ORM\ManyToOne(targetEntity="Billing")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_billing", referencedColumnName="id_billing")
+     * })
+     */
+    private $idBilling;
 
     public function getIdOrder(): ?int
     {
@@ -82,6 +92,18 @@ class Orders
     public function setIdUser(?Users $idUser): self
     {
         $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    public function getIdBilling(): ?Billing
+    {
+        return $this->idBilling;
+    }
+
+    public function setIdBilling(?Billing $idBilling): self
+    {
+        $this->idBilling = $idBilling;
 
         return $this;
     }

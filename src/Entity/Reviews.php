@@ -7,44 +7,22 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Reviews
  *
- * @ORM\Table(name="reviews")
+ * @ORM\Table(name="reviews", indexes={@ORM\Index(name="FK14", columns={"id_game"}), @ORM\Index(name="FK15", columns={"id_user"}), @ORM\Index(name="FK16", columns={"id_plaftorm"})})
  * @ORM\Entity(repositoryClass="App\Repository\ReviewsRepository")
  */
 class Reviews
 {
     /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\OneToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     * @ORM\JoinColumn(name="id_user", referencedColumnName="id_user")
-     * })
-     */
-    private $idUser;
-
-    /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\OneToOne(targetEntity="Games")
-     * @ORM\JoinColumns({
-     *  @ORM\JoinColumn(name="id_game", referencedColumnName="id_game")
-     * })
-     */
-    private $idGame;
-
-    /**
      * @var string
      *
-     * @ORM\Column(name="review_calification", type="decimal", precision=3, scale=1, nullable=false)
+     * @ORM\Column(name="review_calification", type="decimal", precision=2, scale=1, nullable=false)
      */
     private $reviewCalification;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="review_desc", type="string", length=250, nullable=false)
+     * @ORM\Column(name="review_desc", type="string", length=255, nullable=false)
      */
     private $reviewDesc;
 
@@ -55,15 +33,41 @@ class Reviews
      */
     private $reviewDate = 'current_timestamp()';
 
-    public function getIdUser(): ?Users
-    {
-        return $this->idUser;
-    }
+    /**
+     * @var \Games
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Games")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_game", referencedColumnName="id_game")
+     * })
+     */
+    private $idGame;
 
-    public function getIdGame(): ?Games
-    {
-        return $this->idGame;
-    }
+    /**
+     * @var \Platforms
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Platforms")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_plaftorm", referencedColumnName="id_platform")
+     * })
+     */
+    private $idPlaftorm;
+
+    /**
+     * @var \Users
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id_user")
+     * })
+     */
+    private $idUser;
 
     public function getReviewCalification(): ?string
     {
@@ -97,6 +101,42 @@ class Reviews
     public function setReviewDate(\DateTimeInterface $reviewDate): self
     {
         $this->reviewDate = $reviewDate;
+
+        return $this;
+    }
+
+    public function getIdGame(): ?Games
+    {
+        return $this->idGame;
+    }
+
+    public function setIdGame(?Games $idGame): self
+    {
+        $this->idGame = $idGame;
+
+        return $this;
+    }
+
+    public function getIdPlaftorm(): ?Platforms
+    {
+        return $this->idPlaftorm;
+    }
+
+    public function setIdPlaftorm(?Platforms $idPlaftorm): self
+    {
+        $this->idPlaftorm = $idPlaftorm;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?Users
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(?Users $idUser): self
+    {
+        $this->idUser = $idUser;
 
         return $this;
     }

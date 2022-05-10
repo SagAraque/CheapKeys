@@ -17,7 +17,7 @@
             {# Reviews info start #}
             <div class="reviews__info">
                 <span class="reviews__text--info">
-                    <img src="{{ asset('static/img/users/default.jpg') }}" alt="User image" class="reviews__img">
+                    <img src="{{ asset('static/img/users/'~ review.idUser.userImg ~'.webp') }}" alt="User image" class="reviews__img" loading="lazy">
                     {{ review.idUser.userName }}
                 </span>
                 <span class="reviews__text--date">{{ review.reviewDate | date('d-m-Y H:m') }}</span>

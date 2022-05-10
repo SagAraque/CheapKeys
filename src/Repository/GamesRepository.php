@@ -4,8 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Games;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,56 +21,33 @@ class GamesRepository extends ServiceEntityRepository
         parent::__construct($registry, Games::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(Games $entity, bool $flush = true): void
+    public function add(Games $entity, bool $flush = false): void
     {
-        $this->_em->persist($entity);
+        $this->getEntityManager()->persist($entity);
+
         if ($flush) {
-            $this->_em->flush();
+            $this->getEntityManager()->flush();
         }
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function remove(Games $entity, bool $flush = true): void
+    public function remove(Games $entity, bool $flush = false): void
     {
-        $this->_em->remove($entity);
+        $this->getEntityManager()->remove($entity);
+
         if ($flush) {
-            $this->_em->flush();
+            $this->getEntityManager()->flush();
         }
     }
 
-    /**
-     * @return Games[] Returns an array of Games objects
-    */
-    
-    public function findBySlug($slug)
+    public function findByGamePlatform($game, $platform)
     {
         $em = $this->getEntityManager();
 
         $sql =  $em->createQuery(
-            'SELECT g FROM App\Entity\Games g
-             WHERE g.gameSlug = :value'
+            'SELECT f FROM App\Entity\Features f
+            WHERE f.game = :value'
         )->setParameter('value', $slug);
 
         return $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
-    
-
-    /*
-    public function findOneBySomeField($value): ?Games
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

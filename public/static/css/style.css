@@ -132,7 +132,7 @@ body {
 }
 .container__login, .container__img {
   width: 30%;
-  height: calc(100vh - 300px);
+  height: calc(100vh - 100px);
 }
 .container__img {
   width: 70%;

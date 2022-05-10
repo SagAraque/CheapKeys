@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Users
  *
- * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(columns={"user_name", "user_email"})})
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="EmailIndex", columns={"user_email"}), @ORM\UniqueConstraint(name="user_name", columns={"user_name"})}, indexes={@ORM\Index(name="FK4", columns={"user_wishlist"})})
  * @ORM\Entity
  */
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
@@ -28,10 +28,16 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="user_name", type="string", length=30, nullable=false)
-     * @Assert\Unique
+     * @ORM\Column(name="user_name", type="string", length=100, nullable=false)
      */
     private $userName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="user_email", type="string", length=100, nullable=false)
+     */
+    private $userEmail;
 
     /**
      * @var string
@@ -43,54 +49,33 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="user_img", type="string", length=60, nullable=false)
+     * @ORM\Column(name="user_img", type="string", length=50, nullable=false, options={"default"="'default.webp'"})
      */
-    private $userImg;
+    private $userImg = '\'default.webp\'';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="user_email", type="string", length=100, nullable=false)
-     * @Assert\Unique
+     * @ORM\Column(name="user_rol", type="string", length=0, nullable=false, options={"default"="'ROLE_USER'"})
      */
-    private $userEmail;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="user_age", type="integer", nullable=false, options={"unsigned"=true})
-     */
-    private $userAge;
+    private $userRol = '\'ROLE_USER\'';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="user_rol", type="string", length=45, nullable=false)
+     * @ORM\Column(name="user_state", type="string", length=0, nullable=false, options={"default"="'ACTIVE'"})
      */
-    private $userRol;
+    private $userState = '\'ACTIVE\'';
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Wishlist
      *
-     * @ORM\ManyToMany(targetEntity="Games", inversedBy="idUser")
-     * @ORM\JoinTable(name="reviews",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="id_user", referencedColumnName="id_user")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="id_game", referencedColumnName="id_game")
-     *   }
-     * )
+     * @ORM\ManyToOne(targetEntity="Wishlist")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_wishlist", referencedColumnName="id_wishlist")
+     * })
      */
-    private $idGame;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->idGame = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    private $userWishlist;
 
     public function getIdUser(): ?int
     {
@@ -105,6 +90,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUserName(string $userName): self
     {
         $this->userName = $userName;
+
+        return $this;
+    }
+
+    public function getUserEmail(): ?string
+    {
+        return $this->userEmail;
+    }
+
+    public function setUserEmail(string $userEmail): self
+    {
+        $this->userEmail = $userEmail;
 
         return $this;
     }
@@ -133,50 +130,38 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUserEmail(): ?string
+    public function getUserRol(): ?string
     {
-        return $this->userEmail;
+        return $this->userRol;
     }
 
-    public function setUserEmail(string $userEmail): self
+    public function setUserRol(string $userRol): self
     {
-        $this->userEmail = $userEmail;
+        $this->userRol = $userRol;
 
         return $this;
     }
 
-    public function getUserAge(): ?int
+    public function getUserState(): ?string
     {
-        return $this->userAge;
+        return $this->userState;
     }
 
-    public function setUserAge(int $userAge): self
+    public function setUserState(string $userState): self
     {
-        $this->userAge = $userAge;
+        $this->userState = $userState;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Games>
-     */
-    public function getIdGame(): Collection
+    public function getUserWishlist(): ?Wishlist
     {
-        return $this->idGame;
+        return $this->userWishlist;
     }
 
-    public function addIdGame(Games $idGame): self
+    public function setUserWishlist(?Wishlist $userWishlist): self
     {
-        if (!$this->idGame->contains($idGame)) {
-            $this->idGame[] = $idGame;
-        }
-
-        return $this;
-    }
-
-    public function removeIdGame(Games $idGame): self
-    {
-        $this->idGame->removeElement($idGame);
+        $this->userWishlist = $userWishlist;
 
         return $this;
     }
@@ -209,5 +194,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 
 }

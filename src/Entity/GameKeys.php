@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * GameKeys
  *
- * @ORM\Table(name="game_keys", uniqueConstraints={@ORM\UniqueConstraint(name="unique_key", columns={"key_value"})}, indexes={@ORM\Index(name="fk_id_order_key", columns={"Id_order"}), @ORM\Index(name="fk_id_game_key", columns={"Id_game"})})
+ * @ORM\Table(name="game_keys", uniqueConstraints={@ORM\UniqueConstraint(name="key_value", columns={"key_value"})}, indexes={@ORM\Index(name="FK8", columns={"id_game"}), @ORM\Index(name="FK9", columns={"id_order"}), @ORM\Index(name="FK7", columns={"id_platform"})})
  * @ORM\Entity
  */
 class GameKeys
@@ -15,11 +15,11 @@ class GameKeys
     /**
      * @var int
      *
-     * @ORM\Column(name="key_id", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="id_key", type="integer", nullable=false, options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $keyId;
+    private $idKey;
 
     /**
      * @var string
@@ -29,35 +29,38 @@ class GameKeys
     private $keyValue;
 
     /**
-     * @var string
+     * @var \Platforms
      *
-     * @ORM\Column(name="Platform", type="string", length=0, nullable=false)
-     */
-    private $platform;
-
-    /**
-     * @var \Games
-     *
-     * @ORM\ManyToOne(targetEntity="Games")
+     * @ORM\ManyToOne(targetEntity="Platforms")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Id_game", referencedColumnName="id_game")
+     *   @ORM\JoinColumn(name="id_platform", referencedColumnName="id_platform")
      * })
      */
-    private $idGame;
+    private $idPlatform;
 
     /**
      * @var \Orders
      *
      * @ORM\ManyToOne(targetEntity="Orders")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Id_order", referencedColumnName="id_order")
+     *   @ORM\JoinColumn(name="id_order", referencedColumnName="id_order")
      * })
      */
     private $idOrder;
 
-    public function getKeyId(): ?int
+    /**
+     * @var \Games
+     *
+     * @ORM\ManyToOne(targetEntity="Games")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_game", referencedColumnName="id_game")
+     * })
+     */
+    private $idGame;
+
+    public function getIdKey(): ?int
     {
-        return $this->keyId;
+        return $this->idKey;
     }
 
     public function getKeyValue(): ?string
@@ -72,26 +75,14 @@ class GameKeys
         return $this;
     }
 
-    public function getPlatform(): ?string
+    public function getIdPlatform(): ?Platforms
     {
-        return $this->platform;
+        return $this->idPlatform;
     }
 
-    public function setPlatform(string $platform): self
+    public function setIdPlatform(?Platforms $idPlatform): self
     {
-        $this->platform = $platform;
-
-        return $this;
-    }
-
-    public function getIdGame(): ?Games
-    {
-        return $this->idGame;
-    }
-
-    public function setIdGame(?Games $idGame): self
-    {
-        $this->idGame = $idGame;
+        $this->idPlatform = $idPlatform;
 
         return $this;
     }
@@ -104,6 +95,18 @@ class GameKeys
     public function setIdOrder(?Orders $idOrder): self
     {
         $this->idOrder = $idOrder;
+
+        return $this;
+    }
+
+    public function getIdGame(): ?Games
+    {
+        return $this->idGame;
+    }
+
+    public function setIdGame(?Games $idGame): self
+    {
+        $this->idGame = $idGame;
 
         return $this;
     }

@@ -11,6 +11,8 @@ use App\Utils\Paginator;
 use App\Entity\Games;
 use App\Entity\Media;
 use App\Entity\Reviews;
+use App\Entity\Platforms;
+use App\Entity\GamesPlatform;
 
 class Controller extends AbstractController
 {
@@ -34,8 +36,15 @@ class Controller extends AbstractController
      */
     public function product($game_slug, Paginator $paginator, ManagerRegistry $doctrine, Request $request):Response
     {
+        $platform = substr($game_slug, strripos($game_slug, '_') + 1);
+        $gameSlug = substr($game_slug, 0, strripos($game_slug, '_'));
+
         $game = $doctrine->getRepository(Games::class)->findBy(array(
-            "gameSlug" => $game_slug
+            "gameSlug" => $gameSlug
+        ));
+
+        $platform = $doctrine->getRepository(Platforms::class)->findByName(array(
+            'platform' => $platform
         ));
 
         $media = $doctrine->getRepository(Media::class)->findByGame(array(
@@ -45,6 +54,8 @@ class Controller extends AbstractController
         $mediaInfo = $doctrine->getRepository(Media::class)->findOneByInfo(array(
             "id" => $game[0]->getIdGame(),
         ));
+
+        $features = $doctrine->getRepository(GamesPlatform::class)->findFeature($game[0], $platform);
 
         $reviews = $doctrine->getRepository(Reviews::class)->findByGameNoResults(array(
             "id_game" => $game[0]->getIdGame(),
@@ -56,7 +67,8 @@ class Controller extends AbstractController
             'game' => $game[0],
             'media' => $media,
             'medIaInfo' => $mediaInfo,
-            'reviews' => $paginator
+            'reviews' => $paginator,
+            'features' => $features
         ]);
 
         $response->setEtag(md5($response->getContent()));
