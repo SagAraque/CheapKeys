@@ -50,4 +50,16 @@ class GamesRepository extends ServiceEntityRepository
 
         return $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
+
+    public function findBySlug($slug)
+    {
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT g FROM App\Entity\Games g
+            WHERE g.gameSlug = :value'
+        )->setParameter('value', $slug);
+
+        return $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+    }
 }

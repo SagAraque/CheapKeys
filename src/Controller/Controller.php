@@ -7,12 +7,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 use App\Utils\Paginator;
 use App\Entity\Games;
 use App\Entity\Media;
 use App\Entity\Reviews;
 use App\Entity\Platforms;
 use App\Entity\GamesPlatform;
+use App\Entity\WishlistGames;
 
 class Controller extends AbstractController
 {
@@ -34,10 +36,13 @@ class Controller extends AbstractController
     /**
      *  @Route("/{game_slug}", name="product")
      */
-    public function product($game_slug, Paginator $paginator, ManagerRegistry $doctrine, Request $request):Response
+    public function product($game_slug, Paginator $paginator, ManagerRegistry $doctrine, Request $request, Security $security):Response
     {
+        $wish = false;
         $platform = substr($game_slug, strripos($game_slug, '_') + 1);
         $gameSlug = substr($game_slug, 0, strripos($game_slug, '_'));
+        
+        $user = $security->getUser();
 
         $game = $doctrine->getRepository(Games::class)->findBy(array(
             "gameSlug" => $gameSlug
@@ -46,6 +51,11 @@ class Controller extends AbstractController
         $platform = $doctrine->getRepository(Platforms::class)->findByName(array(
             'platform' => $platform
         ));
+
+        if($user != null){
+            $wishlist = $doctrine->getRepository(WishlistGames::class)->findGameByUser($game[0]->getIdGame(), $platform->getIdPlatform(), $user->getUserWishlist());
+            $wish = $wishlist == null ? false : true;
+        }
 
         $media = $doctrine->getRepository(Media::class)->findByGame(array(
             "id" => $game[0]->getIdGame(),
@@ -68,7 +78,8 @@ class Controller extends AbstractController
             'media' => $media,
             'medIaInfo' => $mediaInfo,
             'reviews' => $paginator,
-            'features' => $features
+            'features' => $features,
+            'wish' => $wish
         ]);
 
         $response->setEtag(md5($response->getContent()));

@@ -71,7 +71,11 @@
             <div class="info__container">
                 <button class="info__button--buy">{{ features.idFeature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito' }}</button>
                 <button class="info__button--wish">
-                    <i class="bi bi-heart info_icon--wish"></i>
+                    {% if wish == true %}
+                        <i class="bi bi-heart-fill info_icon--wish"></i>
+                    {% else %}
+                        <i class="bi bi-heart info_icon--wish"></i>
+                    {% endif %}
                 </button>
             </div>
             {# Info button container end #}
@@ -172,9 +176,12 @@
         {% for image in media %}
             images.push('{{image.mediaUrl}}');
         {% endfor %}
+        
+        var product = [{{ game.idGame }}, {{features.idPlatform.idPlatform}}];
+
     </script>
     
-    <script src="{{ asset('static/javascript/gallery.js') }}"></script>
+    <script src="{{ asset('static/javascript/product.js') }}"></script>
 
     {% if reviews.total != 0 %}
         <script src="{{ asset('static/javascript/ajax.js') }}"></script>

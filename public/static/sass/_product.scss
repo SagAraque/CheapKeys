@@ -2,12 +2,9 @@
 @use 'var';
 
 .gallery{
-    height: 620px;
-    width: 70%;
-    @include mixin.flex-style($direction:column, $align:center, $justify:space-between);
 
     &__img{
-        height: 500px;
+        height: 80%;
         width: 100%;
         border-radius: 5px;
         overflow: hidden;
@@ -19,7 +16,7 @@
     }
 
     &__container{
-        height: 100px;
+        height: 15%;
         width: 100%;
         @include mixin.flex-style($align:center, $justify:space-between);
     }
@@ -51,7 +48,7 @@
     }
 
     &__min{
-        width: 175px;
+        width: min-content;
         height: 100%;
         border-radius: 5px;
         overflow: hidden;
@@ -66,7 +63,7 @@
 
 .title{
     width: 100%;
-    font-size: 35px;
+    font-size: var.$title;
     color: var.$white;
 }
 
@@ -91,7 +88,7 @@
 
     &__price{
         color: var.$white;
-        font-size: 40px;
+        font-size: clamp(20px, 2.5vw, 40px);
         font-weight: 400;
         margin: 15px;
 
@@ -125,7 +122,7 @@
         transition: all 0.25s;
         height: 40px;
         width: 100%;
-        font-size: 18px;
+        font-size: var.$label;
         font-weight: 600;
         background-color: var.$background_pink;
         color: var.$white;
@@ -160,7 +157,7 @@
     &__icon{
         width: min-content;
         height: min-content;
-        font-size: 50px;
+        font-size: clamp(30px, 3vw, 50px);
         color: var.$background_pink;
         
         &--stock{
@@ -191,14 +188,20 @@
         @include mixin.flex-style($justify:space-between);
     }
 
+    &__span
+    {
+        font-size: var.$text;
+    }
+
     &__span--data{
+        font-size: var.$text;
         color: var.$white;
     }
 
     &__span--val{
-        font-size: 25px;
-        width: 50px;
-        height: 50px;
+        font-size: clamp(15px, 1.7vw, 25px);
+        width: clamp(30px, 3.3vw, 50px);
+        height: clamp(30px, 3.3vw, 50px);
         font-weight: 600;
         @include mixin.flex-style($justify:center, $align:center);
         color: var.$background_pink;
@@ -208,7 +211,7 @@
 
     &__span--discount{
         color: var.$white;
-        font-size: 16px;
+        font-size: var.$text;
         background-color: var.$background_pink;
         padding: 5px 15px;
         border-radius: 5px;
@@ -240,13 +243,13 @@
 
         &--primary{
             @extend .desc__title;
-            font-size: 35px;
+            font-size: var.$title;
         }
     }
 
     &__text{
         color: var.$light_white;
-        font-size: 16px;
+        font-size: var.$text;
         line-height: 30px;
     }
 }
@@ -262,6 +265,7 @@
 
     &__list{
         @extend .info__list;
+        font-size: clamp(11px, 1.1vw, 16px);
         margin: 0;
     }
 
@@ -302,7 +306,7 @@
         &--val
         {
             height: 100%;
-            width: 10%;
+            width: 13%;
             @include mixin.flex-style($justify:center, $align:center);
         }
         
@@ -329,9 +333,9 @@
     &__span--val
     {
         @extend .info__span--val;
-        width: 80px;
-        height: 80px;
-        font-size: 35px;
+        width: calc(clamp(50px, 5.3vw, 80px));
+        height: calc(clamp(50px, 5vw, 80px));
+        font-size: calc(clamp(15px, 1.7vw, 25px) + 10px)
     }
 
     &__content
@@ -343,6 +347,7 @@
 
     &__text
     {
+        font-size: clamp(12px, 1.15vw, 16px);
         color: var.$white;
         line-height: 25px;
 
@@ -386,7 +391,7 @@
 
     &__page
     {
-        font-size: 18px;
+        font-size: var.$label;
         font-weight: 600;
         color: var.$white;
         margin: 0px 10px;

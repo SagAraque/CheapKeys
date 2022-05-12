@@ -2,6 +2,17 @@ let min = document.querySelectorAll('[class*="gallery__min"]'),
 gallery = document.querySelector('.gallery__asset'),
 arrows = document.querySelectorAll('.gallery__arrow'),
 objectIndex = 0;
+wishlist = document.querySelector('.info__button--wish');
+wishlistIcon = document.querySelector('.info_icon--wish');
+
+
+// Wishlist button
+
+wishlist.addEventListener('click', ()=>{
+   setWishlist(product);
+});
+
+// Gallery buttons
 
 min.forEach(element => {
     element.addEventListener('click', ()=>{
@@ -20,6 +31,8 @@ arrows.forEach(arrow =>{
         slide(arrow.getAttribute('slide'));
     });
 });
+
+
 
 // Gallery functions
 
@@ -83,3 +96,29 @@ function changeMinImg(init, max)
 }
 
 
+// Wishlist functions
+
+
+function setWishlist(gameData)
+{
+    let xhr = new XMLHttpRequest();
+
+    let data = new FormData()
+    data.append('_game', gameData[0]);
+    data.append('_platform', gameData[1]);
+
+    xhr.open('POST', `/ajax/wishlist`, true);
+    xhr.send(data);
+
+    if(wishlistIcon.classList.contains('bi-heart-fill')){
+        wishlistIcon.classList.replace('bi-heart-fill', 'bi-heart');
+    }else{
+        wishlistIcon.classList.replace('bi-heart', 'bi-heart-fill');
+    }
+
+    xhr.onreadystatechange = ()=>{
+        if(xhr.readyState == 4 && xhr.status == 302){
+            window.location.href = '/users/login'; 
+        }
+    }
+}
