@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Reviews;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Component\Cache\Adapter\PhpFilesAdapter;
+use Doctrine\ORM\Configuration;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +21,10 @@ class ReviewsRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Reviews::class);
+        
+        $cache = new PhpFilesAdapter('doctrine_queries');
+        $config = new Configuration();
+        $config -> setQueryCache($cache);
     }
 
     public function add(Reviews $entity, bool $flush = false): void
