@@ -302,15 +302,16 @@ CREATE TABLE `users` (
   `user_email` varchar(100) NOT NULL,
   `user_pass` varchar(100) NOT NULL,
   `user_img` varchar(50) NOT NULL DEFAULT 'default',
-  `user_rol` enum('ROLE_USER','ROLE_ADMIN','','') NOT NULL DEFAULT 'ROLE_USER',
-  `user_state` enum('ACTIVE','DELETED','','') NOT NULL DEFAULT 'ACTIVE',
+  `user_rol` enum('ROLE_USER','ROLE_ADMIN') NOT NULL DEFAULT 'ROLE_USER',
+  `user_state` enum('ACTIVE','DELETED') NOT NULL DEFAULT 'ACTIVE',
   `user_wishlist` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `EmailIndex` (`user_email`),
   UNIQUE KEY `user_name` (`user_name`),
+  UNIQUE KEY `user_name_2` (`user_name`,`user_email`),
   KEY `FK4` (`user_wishlist`),
   CONSTRAINT `FK4` FOREIGN KEY (`user_wishlist`) REFERENCES `wishlist` (`id_wishlist`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -319,7 +320,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Usuario 1','usuario1@gmail.com','$2a$10$NtMZFSrmd.019BOAs7PldukRbmUO2ufEdOHFejhHhFEX0MMEgxHe2','default','ROLE_USER','ACTIVE',1),(2,'Usuario 2','usuario2@gmail.com','$2a$10$rtRzzL0PtMXebGJjlQTpbuLWNSpdfyjYjLIu8P.s95UcbMNghSfDi','default','ROLE_USER','ACTIVE',2),(3,'Usuario 3','usuario3@gmail.com','$2a$10$RBTzjNTPCn6AelYEaGYcRu/PKadqFXczCyorGbNOSNQGhs6H6uRa.','default','ROLE_USER','ACTIVE',3),(4,'Usuario 4','usuario4@gmail.com','$2a$10$Y8lklhtnC7Ca9/Um8xLR6uqQUehBdh3qFkLayAHwf7FCAltETI1hm','default','ROLE_USER','ACTIVE',4),(5,'Usuario 5','usuario5@gmail.com',' $2a$10$JBQktfx3fF17/ZSs9iGhUe/VOZcXpiYCF9GY4cXxbAhw6gxEOkvH','default','ROLE_USER','ACTIVE',5),(6,'Usuario 6','usuario6@gmail.com',' $2a$10$5yLnm6EsTPQ0DtoHINa.FuH8M6PxRchhle2KbT.giS5QVHvS6UN2','default','ROLE_USER','ACTIVE',6),(7,'Usuario 7','usuario7@gmail.com',' $2a$10$cVRvLqM0eGR45kYXIWm/SeBGv29mPKmFv0GIAJoaiazWpmyb7R5a','default','ROLE_USER','ACTIVE',7),(8,'Usuario 8','usuario8@gmail.com',' $2a$10$E139RnijNmvzLRuIDDTFmeGA/cT69NWfdxbno6nXMBv470GjcLnI','default','ROLE_USER','ACTIVE',8);
+INSERT INTO `users` VALUES (1,'Usuario 1','usuario1@gmail.com','$2a$10$NtMZFSrmd.019BOAs7PldukRbmUO2ufEdOHFejhHhFEX0MMEgxHe2','default','ROLE_USER','ACTIVE',1),(2,'Usuario 2','usuario2@gmail.com','$2a$10$rtRzzL0PtMXebGJjlQTpbuLWNSpdfyjYjLIu8P.s95UcbMNghSfDi','default','ROLE_USER','ACTIVE',2),(3,'Usuario 3','usuario3@gmail.com','$2a$10$RBTzjNTPCn6AelYEaGYcRu/PKadqFXczCyorGbNOSNQGhs6H6uRa.','default','ROLE_USER','ACTIVE',3),(4,'Usuario 4','usuario4@gmail.com','$2a$10$Y8lklhtnC7Ca9/Um8xLR6uqQUehBdh3qFkLayAHwf7FCAltETI1hm','default','ROLE_USER','ACTIVE',4),(5,'Usuario 5','usuario5@gmail.com',' $2a$10$JBQktfx3fF17/ZSs9iGhUe/VOZcXpiYCF9GY4cXxbAhw6gxEOkvH','default','ROLE_USER','ACTIVE',5),(6,'Usuario 6','usuario6@gmail.com',' $2a$10$5yLnm6EsTPQ0DtoHINa.FuH8M6PxRchhle2KbT.giS5QVHvS6UN2','default','ROLE_USER','ACTIVE',6),(7,'Usuario 7','usuario7@gmail.com',' $2a$10$cVRvLqM0eGR45kYXIWm/SeBGv29mPKmFv0GIAJoaiazWpmyb7R5a','default','ROLE_USER','ACTIVE',7),(8,'Usuario 8','usuario8@gmail.com',' $2a$10$E139RnijNmvzLRuIDDTFmeGA/cT69NWfdxbno6nXMBv470GjcLnI','default','ROLE_USER','ACTIVE',8),(9,'registro','registro@gmail.com','$2y$13$f2XP065Sh3.Vpld1M1O8PucTIlsFo6wt5T9jCGygsBpmAZJbCPBEm','default','ROLE_USER','ACTIVE',9),(10,'pruebaRegistro','pruebaregistro@gmail.com','$2y$13$WMWDtr.PgDhino9XoXDGVe18CpPXR2PY74fglPakZ4rW3WhnKxTtm','default','ROLE_USER','ACTIVE',10),(11,'prueba2','prueba2@gmail.com','$2y$13$QrOv8jP/jbMKEiiXgrV09epUuxXc9vILd4bGzSu9PeJ8dFdUlGGTy','default','','',11),(12,'prueba3','prueba3@gmail.com','$2y$13$bxzyaaIhsOyvA9L9whB0Fuf03JOoj4NDNl3DRakV.l7UNyW7LA4zC','default','','',12),(13,'prueba4','prueba4@gmail.com','$2y$13$7rjR1LENH8hoPCiqWhCk7uNLBE2nNC7bGAgWAy6fO/Aa0b8sGGwgK','default','ROLE_USER','ACTIVE',13),(14,'prueba5','prueba5@gmail.com','$2y$13$IXnsJErSNNt1A2HP2oU4Ouj8gfJL3PJUbd7Ajnp4dhQHHyy.NC3Hm','\'default\'','','',15),(15,'prueba6','prueba6@gmail.com','$2y$13$/618bAQK4RebmKfC4INzfewzKfN7NnRJdIVXstaCUB7BOVJtyrYB6','default','ROLE_USER','ACTIVE',16),(16,'prueba7','prueba7@gmail.com','$2y$13$UjEp9CY9JciwrsDmPP2xDejqGHI3KWr5WPX0xhumiir9zMX6k.lFW','default','ROLE_USER','ACTIVE',17),(17,'prueba8','prueba8@gmail.com','$2y$13$12D9Tg9lRPeFDbwcqC5WP.WlYFEgHMxqODGSvG6BdWdBLN9Ib91aS','default','ROLE_USER','ACTIVE',18),(18,'12345','usuario1@gamil.com','$2y$13$/sps0OxO9ta0neudIqegxuCoyWWCdZP6gInp9UVj6KPvPmkWleIdK','default','ROLE_USER','ACTIVE',19);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -333,7 +334,7 @@ DROP TABLE IF EXISTS `wishlist`;
 CREATE TABLE `wishlist` (
   `id_wishlist` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id_wishlist`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -342,7 +343,7 @@ CREATE TABLE `wishlist` (
 
 LOCK TABLES `wishlist` WRITE;
 /*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
-INSERT INTO `wishlist` VALUES (1),(2),(3),(4),(5),(6),(7),(8);
+INSERT INTO `wishlist` VALUES (1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12),(13),(15),(16),(17),(18),(19);
 /*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,6 +373,7 @@ CREATE TABLE `wishlist_games` (
 
 LOCK TABLES `wishlist_games` WRITE;
 /*!40000 ALTER TABLE `wishlist_games` DISABLE KEYS */;
+INSERT INTO `wishlist_games` VALUES (1,1,1),(1,3,1),(2,1,2);
 /*!40000 ALTER TABLE `wishlist_games` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -384,4 +386,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-10 16:08:03
+-- Dump completed on 2022-05-13 14:29:40
