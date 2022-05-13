@@ -58,7 +58,6 @@ function setLoading()
 {
     let loading = document.createElement('div');
     loading.classList.add('reviews__loading');
-    console.log(loading);
     reviewsContainer.innerHTML = "";
     reviewsContainer.appendChild(loading);
 }
