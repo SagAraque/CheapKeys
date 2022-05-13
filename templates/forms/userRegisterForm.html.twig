@@ -1,0 +1,36 @@
+{% extends "users/formUser.html.twig" %}
+
+{% block title %} CheapKeys | Registro {% endblock %}
+
+{% block form %}
+
+    {{ form_start(form, {'attr' : {'class' : 'form--login', 'action' : path("app_register") }}) }}
+
+            <h2 class="form__title">Registro</h2>
+
+            {{ form_label(form.userEmail) }}
+            {{ form_errors(form.userEmail, {'attr': {'class' : 'form__error'}}) }}
+            {{ form_widget(form.userEmail) }}
+
+            {{ form_label(form.userName) }}
+            {{ form_errors(form.userName, {'attr': {'class' : 'form__error'}}) }}
+            {{ form_widget(form.userName) }}
+            
+            {{ form_label(form.userPass.first) }}
+            {{ form_errors(form.userPass.first, {'attr': {'class' : 'form__error'}}) }}
+            {{ form_widget(form.userPass.first) }}
+
+            {{ form_label(form.userPass.second) }}
+            {{ form_errors(form.userPass.second, {'attr': {'class' : 'form__error'}}) }}
+            {{ form_widget(form.userPass.second) }}
+            
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <button type="submit" class="form__button">Registrarse</button>
+            {# {% if error %}
+                <span class="form__error">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+            {% endif %} #}
+        {{ form_end(form) }}
+
+{% endblock %}

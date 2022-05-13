@@ -124,6 +124,7 @@
         width: 100%;
         font-size: var.$label;
         font-weight: 600;
+        @include mixin.flex-style($justify: center, $align: center);
         background-color: var.$background_pink;
         color: var.$white;
         border: none;

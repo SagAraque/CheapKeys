@@ -1,9 +1,18 @@
 $background_primary: #21173f;
 $background_secondary:#362958;
 $background_body:#231b36;
+$input_border:#413b4e;
 $background_pink: #FF346D;
 $background_pink_dark: #e43869;
 $white: #fff;
 $light_white: #cecece;
 $black:#000;
 $green:#34aa34;
+$red: #fc4141;
+
+// Fonts
+
+$text: clamp(12px, 1.1vw, 16px);
+$link: clamp(14px, 1.5vw, 20px);
+$label: clamp(14px, 1.2vw, 18px);
+$title: clamp(16px, 2.2vw, 35px);

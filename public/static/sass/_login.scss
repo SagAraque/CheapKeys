@@ -1,3 +1,70 @@
 @use 'mixins' as mixin;
 @use 'var';
 
+.form
+{
+    &--login
+    {   
+        width: 80%;
+        background-color: var.$background_secondary;
+        @include mixin.flex-style($justify: center, $align: center, $direction: column);
+        padding: 20px 45px;
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    &__label
+    {   
+        font-size: var.$label;
+        color:var.$white;
+        margin: 15px 0px 5px 0px;
+    }
+
+    &__button
+    {
+        @extend .info__button;
+        margin-top: 10px;
+        text-decoration: none;
+        box-sizing: border-box;
+    }
+
+    &__input
+    {
+        width: 100%;
+        color:var.$white;
+        background-color: var.$background_body;
+        border-radius: 10px;
+        border: 3px solid var.$input_border;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+
+    &__error
+    {
+        width: 100%;
+        font-weight: 600;
+        margin: 20px 0px;
+        color: var.$red;
+        background-color: var.$white;
+        border: 2px solid var.$red;
+        border-left: 7px solid var.$red;
+        padding: 5px 5px;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    &__register
+    {
+        width: 250px;
+        @include mixin.flex-style($justify: center, $align: center, $direction: column);
+    }
+
+    &__title
+    {
+        font-size: var.$title;
+        font-weight: 600;
+        color: var.$white;
+        margin: 5px 0px 20px 0px;
+    }
+
+}

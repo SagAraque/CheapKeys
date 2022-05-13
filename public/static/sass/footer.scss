@@ -38,7 +38,7 @@
     &__item, &__item--networks{
         margin-bottom: 10px;
         &--title{
-            font-size: 18px;
+            font-size: var.$label;
             margin-bottom: 20px;
         }
     }
@@ -48,6 +48,7 @@
     }
 
     &__link, &__copy{
+        font-size: var.$text;
         color: var.$white;
         text-decoration: none;
     }

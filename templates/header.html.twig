@@ -20,7 +20,7 @@
         <div class="header__container">
             <!-- Header user section start -->
             {% if is_granted('ROLE_USER') %}
-                <a class="header__user" href="{{ path('user_login') }}">
+                <a class="header__user" href="{{ path('user_control_panel') }}">
                     <img src="{{ asset('static/img/users/' ~ app.user.userimg ~ '.webp') }}" alt="Imagen de usuario" class="reviews__img">
                     <p class="header__link">{{ app.user.username }}</p>
                 </a>

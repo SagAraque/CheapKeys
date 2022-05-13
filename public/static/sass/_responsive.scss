@@ -1,9 +1,16 @@
 @use 'mixins' as mixin;
 @use 'var';
 
-// Responsive header
+
 
 @media (max-width: 1480px) {
+
+    .main
+    {
+        width: 1100px;
+    }
+
+    // Responsive header
     .header{
         &__top, &__bottom{
             width: 1280px;
@@ -13,16 +20,59 @@
             width: 350px;
         }
     }
-}
 
-// Responsive product
+    // Responsive product
 
-@media (max-width: 1480px) {
     .info{
         // width: 25%;
 
         &__asset{
             height: 150px;
+        }
+
+        &__list
+        {
+            margin:30px 0px ;
+        }
+
+        &__card
+        {
+            height: 70px;
+            width: 60px;
+
+            &--pegi
+            {
+                height: 70px;
+            }
+        }
+    }
+
+    .gallery
+    {
+        height: 520px;
+    }
+}
+
+@media (max-width: 1250px) 
+{
+    .gallery
+    {
+        height: 480px;
+    }
+
+    .info
+    {
+        &__asset
+        {
+            height: 120px;
+        }
+    }
+
+    .desc
+    {
+        &__text
+        {
+            line-height: 25px;
         }
     }
 }
