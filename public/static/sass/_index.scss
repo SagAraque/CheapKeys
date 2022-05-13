@@ -1,0 +1,21 @@
+.index
+{
+    &__card
+    {
+        width: 30%;
+        height: 350px;
+        background-color: yellow;
+        border-radius: 5px;
+        margin: 10px 0px;
+
+        &__img
+        {
+            &--container
+            {
+                height: 40%;
+                width: 100%;
+            }
+            object-fit: cover;
+        }
+    }
+}
