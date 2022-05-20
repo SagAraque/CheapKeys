@@ -79,9 +79,26 @@ body {
 .header__userIcon, .header__cartIcon {
   width: 50px;
   height: 30px;
+  position: relative;
 }
 .header__userIcon path, .header__cartIcon path {
   fill: #fff;
+}
+.header__cartCant {
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background-color: #FF346D;
+  position: absolute;
+  border-radius: 100%;
+  padding: 2px;
+  bottom: 0;
+  left: 30px;
 }
 .header__login {
   color: #fff;
@@ -165,7 +182,7 @@ body {
   margin: 15px 0px;
 }
 
-.main, .index {
+.main, .index, .control {
   width: 1280px;
   height: min-content;
   padding: 10px;
@@ -173,7 +190,7 @@ body {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-bottom: 30px;
+  margin: 30px 0px;
 }
 .main__form {
   width: 100%;
@@ -284,21 +301,6 @@ body {
   stroke-width: 1;
 }
 
-.index__card {
-  width: 30%;
-  height: 350px;
-  background-color: yellow;
-  border-radius: 5px;
-  margin: 10px 0px;
-}
-.index__card__img {
-  object-fit: cover;
-}
-.index__card__img--container {
-  height: 40%;
-  width: 100%;
-}
-
 .gallery__img {
   height: 80%;
   width: 100%;
@@ -403,7 +405,7 @@ body {
   margin: -20px -20px 0px -20px;
   object-fit: cover;
 }
-.info__button, .form__button, .info__button--wish, .info__button--buy {
+.info__button, .control__link, .control__button, .form__button, .card__button, .info__button--wish, .info__button--buy {
   transition: all 0.25s;
   height: 40px;
   width: 100%;
@@ -471,7 +473,7 @@ body {
   font-size: clamp(12px, 1.1vw, 16px);
   color: #fff;
 }
-.info__span--val, .reviews__span--val {
+.info__span--val, .card__val, .reviews__span--val {
   font-size: clamp(15px, 1.7vw, 25px);
   width: clamp(30px, 3.3vw, 50px);
   height: clamp(30px, 3.3vw, 50px);
@@ -689,6 +691,69 @@ body {
     box-shadow: 1px 2px 1px #FF346D;
   }
 }
+.index__card {
+  width: 320px;
+  height: 380px;
+  background-color: #362958;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 5px;
+  margin: 10px 0px;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card__img {
+  width: 100%;
+  object-fit: contain;
+}
+.card__img--container {
+  height: 45%;
+  width: 100%;
+  position: relative;
+}
+.card__img--span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-bottom-right-radius: 5px;
+  background-color: #FF346D;
+  color: #fff;
+  padding: 8px 12px;
+}
+.card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+  padding: 15px;
+  flex-grow: 1;
+}
+.card__content--container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card__title {
+  color: #fff;
+  text-align: center;
+  margin-top: 10px;
+}
+.card__price {
+  font-size: 30px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+}
+.card__val {
+  font-size: clamp(15px, 1.7vw, 20px);
+  width: clamp(30px, 3.3vw, 42px);
+  height: clamp(30px, 3.3vw, 42px);
+}
+
 .form--login {
   width: 80%;
   background-color: #362958;
@@ -700,7 +765,7 @@ body {
   box-sizing: border-box;
   border-radius: 5px;
 }
-.form__label {
+.form__label, .control__label {
   font-size: clamp(14px, 1.2vw, 18px);
   color: #fff;
   margin: 15px 0px 5px 0px;
@@ -710,7 +775,7 @@ body {
   text-decoration: none;
   box-sizing: border-box;
 }
-.form__input {
+.form__input, .control__input {
   width: 100%;
   color: #fff;
   background-color: #231b36;
@@ -745,8 +810,113 @@ body {
   margin: 5px 0px 20px 0px;
 }
 
+.control__menu {
+  width: 25%;
+  height: min-content;
+  background-color: #362958;
+  text-align: center;
+  padding: 20px 0px;
+  border-radius: 5px;
+}
+.control__content {
+  width: 70%;
+  min-height: 500px;
+  background-color: #362958;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+.control__list {
+  list-style: none;
+  padding: 10px 20px 0px 20px;
+}
+.control__link, .control__button {
+  margin: 15px 0px;
+  text-decoration: none;
+}
+.control__link:hover, .control__button:hover {
+  transition: all 0.25s;
+  background-color: #e43869;
+}
+.control__img {
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+}
+.control__img--card {
+  height: calc(100% + 40px);
+  width: auto;
+  margin: -5px 0px -5px -20px;
+}
+.control__title, .control__title--card {
+  color: #fff;
+  margin: 10px 0px 30px 0px;
+}
+.control__title--card {
+  font-size: clamp(14px, 1.5vw, 20px);
+  white-space: nowrap;
+}
+.control__container {
+  width: 80%;
+  display: flex;
+  align-items: end;
+  justify-content: start;
+}
+.control__container--column {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.control__container--card {
+  width: min-content;
+  height: 100%;
+  margin-left: 20px;
+}
+.control__label {
+  font-weight: 600;
+}
+.control__input {
+  width: 200px;
+  margin: 15px 20px 15px 0px;
+}
+.control__button {
+  width: 150px;
+}
+.control__card, .control__card--wish {
+  height: 120px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #21173f;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin: 15px 0px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.control__card--wish {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  padding: 5px 20px;
+}
+.control__text {
+  color: #fff;
+}
+.control__x {
+  font-size: 35px;
+  color: #fc4141;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
 @media (max-width: 1480px) {
-  .main, .index {
+  .main, .control, .index {
     width: 1100px;
   }
 

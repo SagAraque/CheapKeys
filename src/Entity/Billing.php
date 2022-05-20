@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Billing
  *
  * @ORM\Table(name="billing", indexes={@ORM\Index(name="FK1", columns={"id_user"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\BillingRepository")
  */
 class Billing
 {
@@ -20,6 +20,13 @@ class Billing
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $idBilling;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="billing_name", type="text", length=65535, nullable=false)
+     */
+    private $billingName;
 
     /**
      * @var string
@@ -177,6 +184,18 @@ class Billing
     public function setIdUser(?Users $idUser): self
     {
         $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    public function getBillingName(): ?string
+    {
+        return $this->billingName;
+    }
+
+    public function setBillingName(string $billingName): self
+    {
+        $this->billingName = $billingName;
 
         return $this;
     }

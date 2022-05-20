@@ -12,21 +12,23 @@ use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Security\UsersAuthAuthenticator;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
-use App\Validator\EmailValidator;
+use Doctrine\Persistence\ManagerRegistry;
 use App\Form\LoginType;
 use App\Form\RegisterFormType;
 use App\Entity\Wishlist;
 use App\Entity\Users;
+use App\Utils\CartCount;
 
 class SecurityController extends AbstractController
 {
 
     /**
-     * @Route("/users/login", name="app_login")
+     * @Route("/users/login", name="user_login")
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils,Security $security, ManagerRegistry $doctrine): Response
     {
         $user = new Users();
         $loginForm = $this->createForm(LoginType::class, $user);
@@ -34,17 +36,21 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils -> getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        $cartCount = new CartCount($doctrine, $security);
+        $cart = $cartCount->getCount();
+
         return $this->render('forms/userLoginForm.html.twig',[
             'last_username' => $lastUsername,
             'error' => $error,
-            'form' => $loginForm->createView()
+            'form' => $loginForm->createView(),
+            'cartCant' => $cart
         ]);
     }
 
     /**
      * @Route("/users/registro", name="app_register")
      */
-    public function register(UserPasswordHasherInterface $passwordHasher, Request $request, UsersAuthAuthenticator $authenticator, UserAuthenticatorInterface $userAuthenticator , EntityManagerInterface $entityManager):Response
+    public function register(UserPasswordHasherInterface $passwordHasher,Security $security, ManagerRegistry $doctrine, Request $request, UsersAuthAuthenticator $authenticator, UserAuthenticatorInterface $userAuthenticator , EntityManagerInterface $entityManager):Response
     {
         $user = new Users();
         $registerForm = $this->createForm(RegisterFormType::class, $user);
@@ -69,9 +75,6 @@ class SecurityController extends AbstractController
 
             $user->setUserWishlist($wishlist);
 
-            // $user->setUserRol('ROLE_USER');
-            // $user->setUserState('ACTIVE');
-
             $entityManager -> persist($user);
 
             $entityManager -> flush();
@@ -81,11 +84,14 @@ class SecurityController extends AbstractController
                 $authenticator,
                 $request
             );
-            
         }
 
+        $cartCount = new CartCount($doctrine, $security);
+        $cart = $cartCount->getCount();
+
         return $this->render('forms/userRegisterForm.html.twig',[
-            'form' => $registerForm->createView()
+            'form' => $registerForm->createView(),
+            'cartCant' => $cart
         ]);
     }
 

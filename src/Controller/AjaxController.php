@@ -9,10 +9,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
+use App\Utils\CartCount;
 use App\Entity\Reviews;
+use App\Entity\Users;
+use App\Entity\Cart;
+use App\Entity\CartProducts;
 use App\Entity\Games;
 use App\Entity\Platforms;
+use App\Entity\Billing;
+use App\Entity\GamesPlatform;
 use App\Utils\Paginator;
 use App\Entity\WishlistGames;
 
@@ -75,6 +82,106 @@ class AjaxController extends AbstractController
 
             return new Response("Deleted", 200);
         }
+    }
+
+
+    /**
+     * @Route("/ajax/deleteBilling")
+     */
+    public function deleteBilling(ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $bd = $doctrine->getRepository(Billing::class)->find($request->get('id'));
+        $bd->setBillingState('DELETED');
+
+        $entityManager->persist($bd);
+        $entityManager->flush();
+
+        return new Response("", 200);
+    }
+
+    /**
+     * @Route("/ajax/addProductCart")
+     */
+    public function addProductCart(ManagerRegistry $doctrine, Request $request, Security $security, EntityManagerInterface $entityManager)
+    {
+        $user = $security->getUser();
+
+        if($user == null){
+            return new Response("", 302);
+        }
+
+        $game = $doctrine->getRepository(Games::class)->find($request->get('game'));
+        $platform = $doctrine->getRepository(Platforms::class)->find($request->get('platform'));
+
+        $cart = $doctrine->getRepository(Cart::class)->findBy(array(
+            'idUser' => $user->getIdUser(),
+            'cartState' => 1
+        ));
+
+        if($cart == null) $cart = $this->createCart($user, $entityManager, $doctrine);
+
+        $productCart = $doctrine->getRepository(CartProducts::class)->findBy(array(
+            'idCart' => $cart[0]->getIdCart(),
+            'idGame' => $game->getIdGame(),
+            'idPlatform' => $platform->getIdPlatform()
+        ));
+
+        $this->setProduct($cart[0], $game, $platform, $productCart, $entityManager, $doctrine);
+
+        $count = intval($request->get('cartCount'));
+        return new Response($count + 1, 200);
+
+    }
+
+    private function createCart($user, EntityManagerInterface $entityManager, ManagerRegistry $doctrine)
+    {
+        $cart = new Cart();
+        $cart->setIdUser($user);
         
+        $entityManager->persist($cart);
+        $entityManager->flush($cart);
+
+        $cart = $doctrine->getRepository(Cart::class)->findBy(array(
+            'idUser' => $user->getIdUser(),
+            'cartState' => 1
+        ));
+
+        return $cart;
+    }
+
+    private function setProduct($cart, $game, $platform, $productCart, EntityManagerInterface $entityManager, ManagerRegistry $doctrine)
+    {
+        if($productCart == null){
+            $newProduct = new CartProducts();
+            
+            $newProduct -> setIdCart($cart);
+            $newProduct -> setIdGame($game);
+            $newProduct -> setIdPlatform($platform);
+
+            $entityManager->persist($newProduct);
+            $entityManager->flush($newProduct);
+
+        }else{
+            $cant = $productCart[0]->getCant();
+            $productCart[0]->setCant($cant + 1);
+
+            $entityManager->persist($productCart[0]);
+            $entityManager->flush($productCart[0]);
+        }
+
+        $gamePlatform = $doctrine->getRepository(GamesPlatform::class)->findBy(array(
+            'idPlatform' => $platform->getIdPlatform(),
+            'game' => $game->getIdGame(),
+        ));
+
+        $price = $gamePlatform[0]->getIdFeature()->getGamePrice();
+        $discount = $gamePlatform[0]->getIdFeature()->getGameDiscount();
+        $total = $cart->getCartTotal();
+        
+        $cart->setCartTotal($total + ($price - ($price * ($discount / 100))));
+
+        $entityManager->persist($cart);
+        $entityManager->flush($cart);
+
     }
 }

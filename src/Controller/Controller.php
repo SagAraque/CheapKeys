@@ -9,22 +9,30 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Security;
 use App\Utils\Paginator;
+use App\Utils\CartCount;
 use App\Entity\Games;
 use App\Entity\Media;
 use App\Entity\Reviews;
 use App\Entity\Platforms;
+use App\Entity\CartProducts;
+use App\Entity\Cart;
 use App\Entity\GamesPlatform;
 use App\Entity\WishlistGames;
+use App\Controller\HeaderController;
 
 class Controller extends AbstractController
 {
     /**
      *  @Route("/", name="index")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, ManagerRegistry $doctrine, Security $security): Response
     {
+        $cartCount = new CartCount($doctrine, $security);
+        $cart = $cartCount->getCount();
 
-        $response = $this->render('/index.html.twig');
+        $response = $this->render('/index.html.twig', [
+            'cartCant' => $cart
+        ]);
 
         $response->setEtag(md5($response->getContent()));
         $response->setPublic();
@@ -72,6 +80,9 @@ class Controller extends AbstractController
         ));
 
         $paginator->paginate($reviews, 1);
+
+        $cartCount = new CartCount($doctrine, $security);
+        $cart = $cartCount->getCount();
         
         $response = $this->render('/product.html.twig',[
             'game' => $game[0],
@@ -79,12 +90,13 @@ class Controller extends AbstractController
             'medIaInfo' => $mediaInfo,
             'reviews' => $paginator,
             'features' => $features,
-            'wish' => $wish
+            'wish' => $wish,
+            'cartCant' => $cart
         ]);
 
-        $response->setEtag(md5($response->getContent()));
-        $response->setPublic();
-        $response->isNotModified($request);
+        // $response->setEtag(md5($response->getContent()));
+        // $response->setPublic();
+        // $response->isNotModified($request);
 
         return $response;
     }

@@ -73,6 +73,11 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @var string
+     */
+    private $newPass;
+
+    /**
+     * @var string
      *
      * @ORM\Column(name="user_img", type="string", length=50, nullable=false, options={"default": "default"})
      */
@@ -161,6 +166,24 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUserPass(string $userPass): self
     {
         $this->userPass = $userPass;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNewPass(): ?string
+    {
+        return $this->newPass;
+    }
+
+    /**
+     * @param string
+     */
+    public function setNewPass(string $newPass): self
+    {
+        $this->userPass = password_hash($newPass, PASSWORD_BCRYPT, [null, 10] );
 
         return $this;
     }

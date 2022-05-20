@@ -18,7 +18,7 @@ class Paginator
 
         $paginator
             ->getQuery()
-            ->setFirstResult($limit * ($page - 1))
+            ->setFirstResult(abs($limit * ($page - 1)))
             ->setMaxResults($limit);
 
         $this->total = $paginator->count();

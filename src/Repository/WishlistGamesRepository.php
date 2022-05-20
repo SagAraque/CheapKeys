@@ -56,6 +56,23 @@ class WishlistGamesRepository extends ServiceEntityRepository
         return $sql->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
 
+    public function findByGamesWishlist($value): array
+    {
+
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT w FROM App\Entity\WishlistGames w
+            JOIN App\Entity\GamesPlatform g
+            WHERE w.idPlatform = g.idPlatform
+            AND w.idGame = g.game
+            AND w.idWishlist = :wishlist
+            GROUP BY w.idGame'
+        )->setParameter('wishlist', $value);
+
+        return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+    }
+
 //    /**
 //     * @return WishlistGames[] Returns an array of WishlistGames objects
 //     */

@@ -1,4 +1,5 @@
-@mixin flex-style($direction: none, $align: none, $alignC: none, $justify: none, $wrap: none){
+@mixin flex-style($direction: none, $align: none, $alignC: none, $justify: none, $wrap: none)
+{
     display: flex;
     @if($direction != none){
         flex-direction: $direction;
@@ -18,8 +19,15 @@
     }
 }
 
-@mixin text-style($color, $font, $weight){
+@mixin text-style($color, $font, $weight)
+{
     color: $color;
     font-size: $font;
     font-weight: $weight;
+}
+
+@mixin button-hover()
+{
+    transition: all 0.25s;
+    background-color: #e43869;
 }

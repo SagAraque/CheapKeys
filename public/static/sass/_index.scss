@@ -1,21 +1,86 @@
+@use 'mixins' as mixin;
+@use 'var';
+
 .index
 {
     &__card
     {
-        width: 30%;
-        height: 350px;
-        background-color: yellow;
+        width: 320px;
+        height: 380px;
+        background-color: var.$background-secondary;
+        @include mixin.flex-style($justify:space-between, $direction:column);
         border-radius: 5px;
         margin: 10px 0px;
+        text-decoration: none;
+        overflow: hidden; 
+        cursor: pointer;
+    }
+}
 
-        &__img
+.card
+{
+    &__img
+    {
+        width: 100%;
+        object-fit:contain;
+
+        &--container
         {
-            &--container
-            {
-                height: 40%;
-                width: 100%;
-            }
-            object-fit: cover;
+            height: 45%;
+            width: 100%;
+            position: relative;
         }
+
+        &--span
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-bottom-right-radius: 5px;
+            background-color: var.$background_pink;
+            color: var.$white;
+            padding: 8px 12px;
+        }
+    }
+
+    &__content
+    {
+        @include mixin.flex-style($justify:space-between, $align:start, $direction:column);
+        padding: 15px;
+        flex-grow: 1;
+        
+        &--container
+        {
+            width: 100%;
+            @include mixin.flex-style($justify:space-between, $align:center); 
+        }
+    }
+
+    &__title
+    {
+        color:var.$white;
+        text-align: center;
+        margin-top: 10px
+    }
+
+    &__button
+    {
+        @extend .info__button;
+    }
+
+    &__price
+    {
+        font-size: 30px;
+        font-weight: 500;
+        color: var.$white;
+        margin: 0;
+    }
+
+    &__val
+    {
+        @extend .info__span--val;
+        font-size: clamp(15px, 1.7vw, 20px);
+        width: clamp(30px, 3.3vw, 42px);
+        height: clamp(30px, 3.3vw, 42px);
     }
 }

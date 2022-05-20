@@ -3,41 +3,101 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Security;
 use App\Form\LoginType;
+use App\Form\UserNameType;
+use App\Form\UserPassType;
+use App\Form\UserMailType;
 use App\Entity\Users;
+use App\Entity\WishlistGames;
+use App\Entity\Billing;
+use App\Entity\Media;
+use App\Utils\CartCount;
 
 class UserController extends AbstractController
 {
     /**
-     *  @Route("/users/login", name="user_login")
+     *  @Route("/users/control_panel/mis_datos", name="user_control_panel_data")
      */
-    public function loginForm(AuthenticationUtils $auth): Response
+    public function controlPanelData(Request $request, Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
+        $user = $this->getUser();
+        $lastUserName = $user->getUserName();
 
-        $user = new User();
-        $loginForm = $this->createForm(LoginType::class);
+        $userNameForm = $this->createForm(UserNameType::class, $user);
+        $userPassForm = $this->createForm(UserPassType::class, $user);
+        $userMailForm = $this->createForm(UserMailType::class, $user);
 
-        $error = $auth -> getLastAuthenticationError();
-        $lastUsername = $auth->getLastUsername();
+        $userNameForm -> handleRequest($request);
+        $userPassForm -> handleRequest($request);
+        $userMailForm -> handleRequest($request);
 
-        var_dump($form);
-        return $this->render('users/login.html.twig',[
-            'last_username' => $lastUsername,
-            'error' => $error,
-            'form' => $loginForm->createView()
+        if($userNameForm->isSubmitted() && $userNameForm->isValid() && $request->request->has('user_name')){
+            $entityManager -> persist($user);
+            $entityManager ->flush();
+        }else{
+            $user->setUserName($lastUserName);
+        }
+
+        if($userPassForm->isSubmitted() && $userPassForm->isValid() && $request->request->has('user_pass')){
+            $entityManager -> persist($user);
+            $entityManager ->flush();
+        }
+
+        if($userMailForm->isSubmitted() && $userMailForm->isValid() && $request->request->has('user_mail')){
+            $entityManager -> persist($user);
+            $entityManager ->flush();
+        }
+
+        $billing = $doctrine -> getRepository(Billing::class)->findBy(array(
+            "idUser" => $user->getIdUser(),
+            "billingState" => 'ACTIVE'
+        ));
+
+        $cartCount = new CartCount($doctrine, $security);
+        $cart = $cartCount->getCount();
+
+        return $this->render('forms/userDataForm.html.twig', [
+            'userNameForm' => $userNameForm->createView(),
+            'userPassForm' => $userPassForm->createView(),
+            'userMailForm' => $userMailForm->createView(),
+            'billings' => $billing,
+            'cartCant' => $cart
         ]);
     }
-    
+
 
     /**
-     *  @Route("/users/control_panel", name="user_control_panel")
+     * @Route("/users/control_panel/wishlist", name="user_control_panel_wish")
      */
-    public function controlPanel(AuthenticationUtils $auth): Response
+    public function controlPanelWish(Request $request, ManagerRegistry $doctrine, Security $security): Response
     {
-        return $this->render('users/control_panel.html.twig');
+
+        $wishGames = $doctrine->getRepository(WishlistGames::class)->findByGamesWishlist(array(
+            'idWishlist' => $this->getUser()->getUserWishlist()
+        ));
+
+        $gamesId = [];
+
+        foreach ($wishGames as $game) {
+            array_push($gamesId, strval($game->getIdGame()));
+        }
+
+        $images = $doctrine->getRepository(Media::class)->findOnePerGame( $gamesId);
+
+        $cartCount = new CartCount($doctrine, $security);
+        $cart = $cartCount->getCount();
+
+        return $this->render('users/wishlist.html.twig',[
+            'games' => $wishGames,
+            'images' => $images,
+            'cartCant' => $cart
+        ]);
     }
-    
 }

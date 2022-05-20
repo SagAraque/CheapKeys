@@ -1,0 +1,144 @@
+@use 'mixins' as mixin;
+@use 'var';
+
+.control
+{
+    &__menu
+    {
+        width: 25%;
+        height: min-content;
+        background-color: var.$background_secondary;
+        text-align: center;
+        padding: 20px 0px;
+        border-radius: 5px;
+    }
+
+    &__content
+    {
+        width: 70%;
+        min-height: 500px;
+        background-color: var.$background_secondary;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        border-radius: 5px;
+    }
+
+    &__list
+    {
+        list-style: none;
+        padding: 10px 20px 0px 20px;
+    }
+
+    &__link
+    {
+        @extend .info__button;
+        margin: 15px 0px;
+        text-decoration: none;
+        
+        &:hover
+        {
+            @include mixin.button-hover;
+        }
+    }
+
+    &__img
+    {
+        width: 150px;
+        height: 150px;
+        border-radius: 100%;
+
+        &--card
+        {
+            height: calc(100% + 40px);
+            width: auto;
+            margin: -5px 0px -5px -20px;
+        }
+    }
+
+    &__title
+    {
+        color: var.$white;
+        margin: 10px 0px 30px 0px;
+
+        &--card
+        {
+            @extend .control__title;
+            font-size: var.$link;
+            white-space: nowrap;
+        }
+    }
+
+    &__container
+    {
+        width: 80%;
+        @include mixin.flex-style($justify:start, $align:end);
+
+        &--column
+        {
+            width: 100%;
+            @include mixin.flex-style($direction:column,$justify:space-between)
+        }
+
+        &--card
+        {
+            width: min-content;
+            height: 100%;
+            margin-left:20px;
+        }
+    }
+
+    &__label
+    {
+        @extend .form__label;
+        font-weight: 600;
+    }
+
+    &__input
+    {
+        @extend .form__input;
+        width: 200px;
+        margin: 15px 20px 15px 0px;
+    }
+
+    &__button
+    {
+        @extend .control__link;
+        width: 150px;
+    }
+
+    &__card
+    {
+        height: 120px;
+        width: 100%;
+        position: relative;
+        @include mixin.flex-style($direction:column,$justify:space-between);
+        background-color: var.$background_primary;
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin: 15px 0px;
+        box-sizing: border-box;
+        overflow: hidden;
+
+        &--wish
+        {
+            @extend .control__card;
+            @include mixin.flex-style($direction:row,$justify:start);
+            padding: 5px 20px;
+        }
+    }
+
+    &__text
+    {
+        color: var.$white;
+    }
+
+    &__x
+    {   
+        font-size: 35px;
+        color: var.$red;
+        cursor: pointer;
+        position: absolute;
+        top: 5px;
+        right: 10px
+    }
+}

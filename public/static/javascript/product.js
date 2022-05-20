@@ -1,9 +1,11 @@
 let min = document.querySelectorAll('[class*="gallery__min"]'),
 gallery = document.querySelector('.gallery__asset'),
 arrows = document.querySelectorAll('.gallery__arrow'),
-objectIndex = 0;
-wishlist = document.querySelector('.info__button--wish');
-wishlistIcon = document.querySelector('.info_icon--wish');
+objectIndex = 0,
+wishlist = document.querySelector('.info__button--wish'),
+wishlistIcon = document.querySelector('.info_icon--wish'),
+cartButton = document.querySelector('.info__button--buy'),
+cartNum = document.querySelector('.header__cartCant');
 
 
 // Wishlist button
@@ -30,6 +32,12 @@ arrows.forEach(arrow =>{
     arrow.addEventListener('click', ()=>{
         slide(arrow.getAttribute('slide'));
     });
+});
+
+// Cart button
+
+cartButton.addEventListener('click', ()=>{
+    setGameCart(product);
 });
 
 
@@ -103,7 +111,7 @@ function setWishlist(gameData)
 {
     let xhr = new XMLHttpRequest();
 
-    let data = new FormData()
+    let data = new FormData();
     data.append('_game', gameData[0]);
     data.append('_platform', gameData[1]);
 
@@ -119,6 +127,29 @@ function setWishlist(gameData)
     xhr.onreadystatechange = ()=>{
         if(xhr.readyState == 4 && xhr.status == 302){
             window.location.href = '/users/login'; 
+        }
+    }
+}
+
+// Cart functions
+
+function setGameCart(gameData)
+{
+    let xhr = new XMLHttpRequest();
+
+    let data = new FormData();
+    data.append('game', gameData[0]);
+    data.append('platform', gameData[1]);
+    data.append('cartCount', cartNum.textContent);
+
+    xhr.open('POST', '/ajax/addProductCart', true);
+    xhr.send(data);
+
+    xhr.onreadystatechange = ()=>{
+        if(xhr.readyState == 4 && xhr.status == 302){
+            window.location.href = '/users/login'; 
+        }else if(xhr.readyState == 4 && xhr.status == 200){
+            cartNum.textContent = xhr.responseText;
         }
     }
 }

@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block title %} CheapKeys | Panel de usuario {% endblock %}
+
+{% block body %}
+
+<main class="control">
+    <aside class="control__menu">
+        <img src="{{ asset('static/img/users/' ~ app.user.userimg ~ '.webp') }}" alt="" class="control__img">
+        <h2 class="control__title">{{app.user.username}}</h2>
+        <ul class="control__list">
+            <li class="control__item"><a href="{{ path('user_control_panel_data') }}" class="control__link">Mis datos</a></li>
+            <li class="control__item"><a href="{{ path('user_control_panel_wish') }}" class="control__link">Lista de deseos</a></li>
+            <li class="control__item"><a href="" class="control__link">Opiniones</a></li>
+            <li class="control__item"><a href="" class="control__link">Compras</a></li>
+            <li class="control__item"><a href="{{ path('app_logout') }}" class="control__link">Cerrar sesión</a></li>
+        </ul>
+    </aside>
+    <section class="control__content">
+        {% block content %}
+
+        {% endblock %}
+    </section>
+</main>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script src="{{ asset('static/javascript/users.js') }}"></script>
+
+{% endblock %}
