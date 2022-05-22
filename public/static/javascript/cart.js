@@ -1,4 +1,7 @@
 let deleteButton = document.querySelectorAll('.cart__icon--delete'),
+cartPrice = document.querySelector('.cart__text--total'),
+cartTotal = document.querySelector('.cart__text'),
+cartTotalHeader = document.querySelector('.header__cartCant'),
 cardsContainer = document.querySelector('.cart__products');
 
 deleteButton.forEach(button => {
@@ -6,7 +9,6 @@ deleteButton.forEach(button => {
         let container = button.parentNode;
         let card = container.parentNode;
         removeGame(card);
-        
     })
 });
 
@@ -26,7 +28,12 @@ function removeGame(card)
         if(xhr.readyState == 4 && xhr.status == 302){
             window.location.href = '/users/login'; 
         }else if(xhr.readyState == 4 && xhr.status == 200){
-            // cardsContainer.removeChild(card);
+            let response = JSON.parse(xhr.responseText);
+
+            cartPrice.textContent = parseFloat(response.totalPrice).toFixed(2) + ' €';
+            cartTotalHeader.textContent = response.cartTotal;
+            cartTotal.textContent = response.cartTotal;
+            cardsContainer.removeChild(card);
         }
     }
 }

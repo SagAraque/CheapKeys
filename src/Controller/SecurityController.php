@@ -20,6 +20,7 @@ use App\Form\LoginType;
 use App\Form\RegisterFormType;
 use App\Entity\Wishlist;
 use App\Entity\Users;
+use App\Entity\Cart;
 use App\Utils\CartCount;
 
 class SecurityController extends AbstractController
@@ -53,6 +54,8 @@ class SecurityController extends AbstractController
     public function register(UserPasswordHasherInterface $passwordHasher,Security $security, ManagerRegistry $doctrine, Request $request, UsersAuthAuthenticator $authenticator, UserAuthenticatorInterface $userAuthenticator , EntityManagerInterface $entityManager):Response
     {
         $user = new Users();
+        $cart = new Cart();
+
         $registerForm = $this->createForm(RegisterFormType::class, $user);
 
         $registerForm -> handleRequest($request);
@@ -75,7 +78,11 @@ class SecurityController extends AbstractController
 
             $user->setUserWishlist($wishlist);
 
+            $cart->setIdUser($user);
+
             $entityManager -> persist($user);
+
+            $entityManager -> persist($cart);
 
             $entityManager -> flush();
 

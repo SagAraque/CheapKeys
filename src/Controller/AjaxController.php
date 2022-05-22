@@ -112,7 +112,7 @@ class AjaxController extends AbstractController
             'cartState' => 1
         ));
 
-        if($cart == null) return new Response ('Cart not found', 404);
+        if($cart == null) return new Response ('', 404);
 
         $game = $doctrine->getRepository(CartProducts::class)->findBy(array(
             'idGame' => $request->get('game'),
@@ -120,7 +120,7 @@ class AjaxController extends AbstractController
             'idCart' => $cart[0]->getIdCart()
         ));
 
-        if($game == null) return new Response ('Game not found', 404);
+        if($game == null) return new Response ('', 404);
 
         $gamePlatform = $doctrine->getRepository(GamesPlatform::class)->findBy(array(
             'game' => $request->get('game'),
@@ -129,7 +129,8 @@ class AjaxController extends AbstractController
 
         $gamePrice = $gamePlatform[0]->getIdFeature()->getGamePrice();
         $discount = $gamePlatform[0]->getIdFeature()->getGameDiscount();
-        $gameTotal = ($gamePrice - ($gamePrice * ($discount / 100))) * $game[0]->getCant();
+        $discount =  round($gamePrice - ($gamePrice * ($discount / 100)), 2);
+        $gameTotal = $discount * $game[0]->getCant();
         $cartTotal = $cart[0]->getCartTotal();
 
         $cart[0]->setCartTotal($cartTotal - $gameTotal);
@@ -142,7 +143,7 @@ class AjaxController extends AbstractController
         $count = $cartCount->getCount();
 
 
-        return new JsonResponse(array('cartTotal' => $count, 'total' => ($cartTotal - $gameTotal)));
+        return new JsonResponse(array('cartTotal' => $count, 'totalPrice' => ($cartTotal - $gameTotal)));
     }
 
     /**
@@ -164,8 +165,6 @@ class AjaxController extends AbstractController
             'cartState' => 1
         ));
 
-        if($cart == null) $cart = $this->createCart($user, $entityManager, $doctrine);
-
         $productCart = $doctrine->getRepository(CartProducts::class)->findBy(array(
             'idCart' => $cart[0]->getIdCart(),
             'idGame' => $game->getIdGame(),
@@ -179,21 +178,6 @@ class AjaxController extends AbstractController
 
     }
 
-    private function createCart($user, EntityManagerInterface $entityManager, ManagerRegistry $doctrine)
-    {
-        $cart = new Cart();
-        $cart->setIdUser($user);
-        
-        $entityManager->persist($cart);
-        $entityManager->flush($cart);
-
-        $cart = $doctrine->getRepository(Cart::class)->findBy(array(
-            'idUser' => $user->getIdUser(),
-            'cartState' => 1
-        ));
-
-        return $cart;
-    }
 
     private function setProduct($cart, $game, $platform, $productCart, EntityManagerInterface $entityManager, ManagerRegistry $doctrine)
     {

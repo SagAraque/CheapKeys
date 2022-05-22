@@ -24,17 +24,16 @@ class CartCount
         $cant = 0;
 
         if($user != null){
-
             $cart = $this->manager->getRepository(Cart::class)->findBy(array(
                 'idUser' => $user->getIdUser(),
                 'cartState' => 1
             ));
     
-            if($cart != null){
-                $products = $this->manager->getRepository(CartProducts::class)->findBy(array(
+            $products = $this->manager->getRepository(CartProducts::class)->findBy(array(
                     'idCart' => $cart[0]->getIdCart()
-                ));
+             ));
 
+            if($products != null){
                 foreach ($products as $product) {
                     $cant = $cant + $product->getCant();
                 }
