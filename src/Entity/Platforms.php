@@ -45,5 +45,10 @@ class Platforms
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->idPlatform;
+    }
+
 
 }

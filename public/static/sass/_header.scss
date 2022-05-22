@@ -4,7 +4,7 @@
 .header{
     width: 100%;
     height: 160px;
-    background:  linear-gradient(180deg, var.$background_primary 60%, var.$background_secondary 40%);
+    background:  linear-gradient(180deg, var(--background_primary) 60%, var(--background_secondary) 40%);
     @include mixin.flex-style($direction:column, $align:center);
     box-sizing: border-box;
 
@@ -18,7 +18,7 @@
 
     &__bottom{
         height: 40%;
-        background-color: var.$background_secondary;
+        background-color: var(--background_secondary);
     }
 
     &__logo{
@@ -30,7 +30,7 @@
         height: 50px;
         width: 450px;
         @include mixin.flex-style($align:center, $justify:space-between);
-        background-color: var.$white;
+        background-color: var(--white);
         border-radius: 20px;
         overflow: hidden;
     }
@@ -49,11 +49,11 @@
         & path,
         &  polygon,
         & rect {
-            fill: var.$black;
+            fill: var(--black);
         }
         
         & circle {
-            stroke: var.$black;
+            stroke: var(--black);
             stroke-width: 1;
         }
     }
@@ -68,11 +68,11 @@
     }
     
     &__user:hover &__link--m10, &__cart:hover &__link--m10{
-        color: var.$background_pink;
+        color: var(--background_pink);
     }
 
     &__user:hover &__userIcon  path, &__cart:hover &__cartIcon  path{
-        fill: var.$background_pink;
+        fill: var(--background_pink);
     }
 
     &__userIcon, &__cartIcon{
@@ -81,7 +81,7 @@
         position: relative;
 
         & path {
-            fill: var.$white;
+            fill: var(--white);
         }
     }
 
@@ -92,8 +92,8 @@
         font-size: 13px;
         font-weight: 700;
         @include mixin.flex-style($align:center, $justify:center);
-        color: var.$white;
-        background-color: var.$background_pink;
+        color: var(--white);
+        background-color: var(--background_pink);
         position: absolute;
         border-radius: 100%;
         padding: 2px;
@@ -102,8 +102,8 @@
     }
 
     &__login{
-        color: var.$white;
-        font-size: var.$link;
+        color: var(--white);
+        font-size: var.$text20;
         margin: 0px 10px;
     }
 
@@ -118,12 +118,12 @@
     }
 
     &__link, &__link--m10{
-        font-size: var.$link;
-        color: var.$white;
+        font-size: var.$text20;
+        color: var(--white);
         text-decoration: none;
         white-space: nowrap;
         &:hover{
-            color: var.$background_pink;
+            color: var(--background_pink);
         }
     }
 
@@ -136,7 +136,7 @@
     height: 100px;
     width: 100%;
     @include mixin.flex-style($align:center, $justify:center);
-    background-color: var.$background_primary;
+    background-color: var(--background_primary);
     padding: 10px 0px;
     box-sizing: border-box;
 }

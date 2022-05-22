@@ -37,8 +37,8 @@
             top: 0;
             left: 0;
             border-bottom-right-radius: 5px;
-            background-color: var.$background_pink;
-            color: var.$white;
+            background-color: var(--background_pink);
+            color: var(--white);
             padding: 8px 12px;
         }
     }
@@ -58,7 +58,7 @@
 
     &__title
     {
-        color:var.$white;
+        color:var(--white);
         text-align: center;
         margin-top: 10px
     }
@@ -72,7 +72,7 @@
     {
         font-size: 30px;
         font-weight: 500;
-        color: var.$white;
+        color: var(--white);
         margin: 0;
     }
 

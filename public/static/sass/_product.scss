@@ -26,15 +26,15 @@
         height: 45px;
         width: 45px;
         border-radius: 100%;
-        border: 5px solid var.$background_pink;
-        background-color: var.$background_pink;
+        border: 5px solid var(--background_pink);
+        background-color: var(--background_pink);
         @include mixin.flex-style($align:center, $justify:center);
         box-sizing: border-box;
         cursor: pointer;
 
         &:hover{
             transition: all 0.25s;
-            background-color: var.$background_pink_dark;
+            background-color: var(--background_pink)_dark;
         }
     }
 
@@ -43,7 +43,7 @@
         height: 35px;
 
         path{
-            fill:  var.$white;
+            fill:  var(--white);
         }
     }
 
@@ -56,7 +56,7 @@
 
         &--selected{
             @extend .gallery__min;
-            border:  2px solid var.$background_pink;
+            border:  2px solid var(--background_pink);
         }
     }
 }
@@ -64,14 +64,14 @@
 .title{
     width: 100%;
     font-size: var.$title;
-    color: var.$white;
+    color: var(--white);
 }
 
 .info{
     height: min-content;
     width: 28%;
     @include mixin.flex-style($align:center, $direction:column);
-    background-color: var.$background_secondary;
+    background-color: var(--background_secondary);
     position: -webkit-sticky;
     position: sticky;
     top: 20px;
@@ -87,22 +87,22 @@
     }
 
     &__price{
-        color: var.$white;
+        color: var(--white);
         font-size: clamp(20px, 2.5vw, 40px);
         font-weight: 400;
         margin: 15px;
 
         &--discount{
             @extend .info__price;
-            color: var.$light_white;
+            color: var(--light_white);
             font-size: 1.2rem;
             position: relative;
 
             &::after{
                 content:  "";
                 width: 100%;
-                border: 1px solid var.$background_pink;
-                background-color: var.$background_pink;
+                border: 1px solid var(--background_pink);
+                background-color: var(--background_pink);
                 transform: rotate(180deg);
                 position: absolute;
                 bottom: 10px;
@@ -125,11 +125,11 @@
         font-size: var.$label;
         font-weight: 600;
         @include mixin.flex-style($justify: center, $align: center);
-        background-color: var.$background_pink;
-        color: var.$white;
+        background-color: var(--background_pink);
+        color: var(--white);
         border: none;
         border-radius: 5px;
-        border: 5px solid var.$background_pink;
+        border: 5px solid var(--background_pink);
         box-sizing: border-box;
         cursor: pointer;
 
@@ -139,7 +139,7 @@
 
             &:hover{
                 transition: all 0.25s;
-                background-color: var.$background_pink_dark;
+                background-color: var(--background_pink)_dark;
             }
         }
 
@@ -150,7 +150,7 @@
 
             &:hover{
                 transition: all 0.25s;
-                background-color: var.$background_pink_dark;
+                background-color: var(--background_pink)_dark;
             }
         }
     }
@@ -159,7 +159,7 @@
         width: min-content;
         height: min-content;
         font-size: clamp(30px, 3vw, 50px);
-        color: var.$background_pink;
+        color: var(--background_pink);
         
         &--stock{
             @extend .info__icon;
@@ -184,7 +184,7 @@
     }
 
     &__item{
-        color: var.$light_white;
+        color: var(--light_white);
         margin: 10px 0px;
         @include mixin.flex-style($justify:space-between);
     }
@@ -196,7 +196,7 @@
 
     &__span--data{
         font-size: var.$text;
-        color: var.$white;
+        color: var(--white);
     }
 
     &__span--val{
@@ -205,15 +205,15 @@
         height: clamp(30px, 3.3vw, 50px);
         font-weight: 600;
         @include mixin.flex-style($justify:center, $align:center);
-        color: var.$background_pink;
+        color: var(--background_pink);
         border-radius: 100%;
-        border: 3px solid var.$background_pink;
+        border: 3px solid var(--background_pink);
     }
 
     &__span--discount{
-        color: var.$white;
+        color: var(--white);
         font-size: var.$text;
-        background-color: var.$background_pink;
+        background-color: var(--background_pink);
         padding: 5px 15px;
         border-radius: 5px;
         margin-top: 10px;
@@ -239,7 +239,7 @@
     width: 70%;
 
     &__title{
-        color: var.$white;
+        color: var(--white);
         font-size: 22px;
 
         &--primary{
@@ -249,7 +249,7 @@
     }
 
     &__text{
-        color: var.$light_white;
+        color: var(--light_white);
         font-size: var.$text;
         line-height: 30px;
     }
@@ -275,7 +275,7 @@
     }
 
     &__title{
-        color: var.$light_white;
+        color: var(--light_white);
         margin-bottom: 20px;
 
         &--primary{
@@ -285,7 +285,7 @@
     }
 
     &__span--data{
-        color: var.$white;
+        color: var(--white);
     }
 }
 
@@ -324,7 +324,7 @@
         height: 170px;
         width: 100%;
         @include mixin.flex-style($justify:space-between);
-        background-color: var.$background_secondary;
+        background-color: var(--background_secondary);
         border-radius: 5px;
         padding: 10px 20px;
         margin-bottom: 15px;
@@ -349,13 +349,13 @@
     &__text
     {
         font-size: clamp(12px, 1.15vw, 16px);
-        color: var.$white;
+        color: var(--white);
         line-height: 25px;
 
         &--info
         {
             @extend .reviews__text;
-            color: var.$light_white;
+            color: var(--light_white);
             @include mixin.flex-style($align:center);
             width: min-content;
             white-space: nowrap;
@@ -394,7 +394,7 @@
     {
         font-size: var.$label;
         font-weight: 600;
-        color: var.$white;
+        color: var(--white);
         margin: 0px 10px;
     }
 
@@ -403,8 +403,8 @@
         width: 35px;
         height: 35px;
         font-size: 20px;
-        color: var.$white;
-        background-color: var.$background_pink;
+        color: var(--white);
+        background-color: var(--background_pink);
         margin: 0px 10px;
         @include mixin.flex-style($justify:center, $align:center);
         border-radius: 5px;
@@ -436,7 +436,7 @@
             height: 100%;
             width: 100%;
             border-radius: 50%;
-            box-shadow: 0 0 5px var.$background_secondary;
+            box-shadow: 0 0 5px var(--background_secondary);
         }
     }
 }
@@ -445,17 +445,17 @@
 {
     0%{
         transform: rotate(0deg);
-        box-shadow: 1px 2px 1px var.$background_pink;
+        box-shadow: 1px 2px 1px var(--background_pink);
     }
 
     50%{
         transform: rotate(180deg);
-        box-shadow: 1px 2px 1px var.$background_pink;
+        box-shadow: 1px 2px 1px var(--background_pink);
     }
 
     100%{
         transform: rotate(360deg);
-        box-shadow: 1px 2px 1px var.$background_pink;
+        box-shadow: 1px 2px 1px var(--background_pink);
     }
 
 }

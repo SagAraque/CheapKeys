@@ -4,7 +4,7 @@
 .footer{
     width: 100%;
     height: 230px;
-    background:  linear-gradient(180deg, var.$background_secondary 80%, var.$background_primary 20%);
+    background:  linear-gradient(180deg, var(--background_secondary) 80%, var(--background_primary) 20%);
     @include mixin.flex-style($align:center,  $direction:column);
 
     &__top{
@@ -26,7 +26,7 @@
     &__list{
         height: min-content;
         list-style: none;
-        color: var.$white;
+        color: var(--white);
         margin: 15px 15px;
 
         &--networks{
@@ -49,13 +49,13 @@
 
     &__link, &__copy{
         font-size: var.$text;
-        color: var.$white;
+        color: var(--white);
         text-decoration: none;
     }
 
     &__link{
         &:hover{
-            color: var.$background_pink;
+            color: var(--background_pink);
         }
     }
 
@@ -69,11 +69,11 @@
         height: 50px;
 
         path{
-            fill: var.$white;
+            fill: var(--white);
         }
 
         circle{
-            stroke: var.$white;
+            stroke: var(--white);
             stroke-width: 1;
         }
     }

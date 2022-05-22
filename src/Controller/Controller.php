@@ -18,7 +18,6 @@ use App\Entity\CartProducts;
 use App\Entity\Cart;
 use App\Entity\GamesPlatform;
 use App\Entity\WishlistGames;
-use App\Controller\HeaderController;
 
 class Controller extends AbstractController
 {
@@ -39,6 +38,48 @@ class Controller extends AbstractController
         $response->isNotModified($request);
 
         return $response;
+    }
+
+    /**
+     * @Route("/cart", name="cart")
+     */
+    public function cart(ManagerRegistry $doctrine, Security $security):Response
+    {
+        $user = $this->getUser();
+
+        $cartCount = new CartCount($doctrine, $security);
+        $cartCant = $cartCount->getCount();
+
+        $cart = $doctrine->getRepository(Cart::class)->findBy(array(
+            'idUser' =>  $user->getIdUser(),
+            'cartState' => 1
+        ));
+
+        $cartContent = $doctrine->getRepository(CartProducts::class)->findBy(array(
+            'idCart' => $cart[0]->getIdCart()
+        ));
+
+        $gamesId = [];
+        $platformsId = [];
+
+        foreach ($cartContent as $game) {
+            array_push($gamesId, strval($game->getIdGame()));
+            array_push($platformsId, strval($game->getIdPlatform()));
+        }
+
+        $images = $doctrine->getRepository(Media::class)->findOnePerGame( $gamesId);
+        $features = $doctrine->getRepository(GamesPlatform::class)->findBy(array(
+            'game' => $gamesId,
+            'idPlatform' => $platformsId,
+        ));
+        
+        return $this->render('/cart.html.twig', [
+            'cartCant' => $cartCant,
+            'cart' => $cart[0],
+            'cartContent' => $cartContent,
+            'images' => $images,
+            'features' => $features,
+        ]);
     }
 
     /**

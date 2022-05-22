@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,6 +20,7 @@ use App\Entity\Billing;
 use App\Entity\GamesPlatform;
 use App\Utils\Paginator;
 use App\Entity\WishlistGames;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AjaxController extends AbstractController
 {
@@ -97,6 +96,53 @@ class AjaxController extends AbstractController
         $entityManager->flush();
 
         return new Response("", 200);
+    }
+
+    /**
+     * @Route("/ajax/removeCartProduct")
+     */
+    public function removeCartProduct(ManagerRegistry $doctrine, Request $request, Security $security, EntityManagerInterface $entityManager): Response
+    {
+        $user = $security->getUser();
+
+        if($user == null) return new Response('', 302);
+
+        $cart = $doctrine->getRepository((Cart::class))->findBy(array(
+            'idUser' => $user->getIdUser(),
+            'cartState' => 1
+        ));
+
+        if($cart == null) return new Response ('Cart not found', 404);
+
+        $game = $doctrine->getRepository(CartProducts::class)->findBy(array(
+            'idGame' => $request->get('game'),
+            'idPlatform' => $request->get('platform'),
+            'idCart' => $cart[0]->getIdCart()
+        ));
+
+        if($game == null) return new Response ('Game not found', 404);
+
+        $gamePlatform = $doctrine->getRepository(GamesPlatform::class)->findBy(array(
+            'game' => $request->get('game'),
+            'idPlatform' => $request->get('platform'),
+        ));
+
+        $gamePrice = $gamePlatform[0]->getIdFeature()->getGamePrice();
+        $discount = $gamePlatform[0]->getIdFeature()->getGameDiscount();
+        $gameTotal = ($gamePrice - ($gamePrice * ($discount / 100))) * $game[0]->getCant();
+        $cartTotal = $cart[0]->getCartTotal();
+
+        $cart[0]->setCartTotal($cartTotal - $gameTotal);
+        $entityManager->persist($cart[0]);
+        $entityManager->remove($game[0]);
+
+        $entityManager->flush();
+
+        $cartCount = new CartCount($doctrine, $security);
+        $count = $cartCount->getCount();
+
+
+        return new JsonResponse(array('cartTotal' => $count, 'total' => ($cartTotal - $gameTotal)));
     }
 
     /**
@@ -178,7 +224,9 @@ class AjaxController extends AbstractController
         $discount = $gamePlatform[0]->getIdFeature()->getGameDiscount();
         $total = $cart->getCartTotal();
         
-        $cart->setCartTotal($total + ($price - ($price * ($discount / 100))));
+        $priceDiscount = $price - ($price * ($discount / 100));
+
+        $cart->setCartTotal($total + $priceDiscount);
 
         $entityManager->persist($cart);
         $entityManager->flush($cart);

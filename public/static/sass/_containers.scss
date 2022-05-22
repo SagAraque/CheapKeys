@@ -32,7 +32,7 @@
             content: "";
             height: 100%;
             width: 15%;
-            background-color: var.$background_body;
+            background-color: var(--background_body);
             position: absolute;
             left: -2px;
             top: 0;
@@ -113,4 +113,10 @@
         height: 200px;
         background-color: aqua;
     }
+}
+
+.cart
+{
+    @extend .main;
+    height: calc(100vh - 400px);
 }

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} CheapKeys | Carrito {% endblock %}
+
+
+{% block body %}
+
+    <main class="cart" role="main">
+        {# Cart products section start #}
+        <section class="cart__products">
+            {% for product in cartContent %}
+
+                {% if product.idPlatform.platformName == 'switch' %}
+                    {% set platform = 'nintendo-switch' %}
+                {% else %}
+                    {% set platform =  product.idPlatform.platformName %}
+                {% endif %} 
+
+                {% set counter = ( counter | default(0) ) + 1 %}
+
+                <article class="cart__product" targetgame = " {{ product.idGame }} " targetplatform = " {{ product.idPlatform }} ">
+                    <img src="{{ asset('static/img/games/' ~ images[counter - 1].mediaUrl ~ '.webp') }}" alt="" class="cart__img">
+                    <div class="cart__info">
+                        <h3 class="cart__title--game">{{ product.idGame.gameName }}</h3>
+                        <i class="bi bi-x cart__icon--delete"></i>
+                        <span class="cart__platform"><i class="{{'bi bi-' ~ platform ~ ' cart__icon'}}"></i> {{ product.idPlatform.platformName | capitalize }}</span>
+                        <div class="cart__selector">
+                            <i class="bi bi-plus-square cart__icon--selector"></i>
+                            <span class="cart__cant">{{ product.cant }}</span>
+                            <i class="bi bi-dash-square cart__icon--selector"></i>
+                        </div>
+                        <span class="cart__price">{{ features[counter - 1].idFeature.gamePrice }} €</span>
+                    </div>
+                </article>
+
+            {% endfor %}
+        </section>
+        {# Cart products section end #}
+        {# Cart info section start #}
+        <section class="cart__data">
+            <h2 class="cart__title">Detalles del carrito</h2>
+            <ul class="cart__list">
+                <li class="cart__item"><span class="cart__text--light">Productos</span><span class="cart__text">{{ cartCant }}</span></li>
+                <li class="cart__item"><span class="cart__text--light">Total</span><span class="cart__text--total">{{ cart.cartTotal }} €</span></li>
+            </ul>
+            <a href="" class="cart__button">Pagar</a>
+        </section>
+        {# Cart indo section end #}
+    </main>
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script src="{{ asset('static/javascript/cart.js') }}"></script>
+
+{% endblock %}
