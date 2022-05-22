@@ -140,7 +140,12 @@ function setGameCart(gameData)
     let data = new FormData();
     data.append('game', gameData[0]);
     data.append('platform', gameData[1]);
-    data.append('cartCount', cartNum.textContent);
+    try {
+         data.append('cartCount', cartNum.textContent);
+    } catch (error) {
+        data.append('cartCount', 0);
+    }
+   
 
     xhr.open('POST', '/ajax/addProductCart', true);
     xhr.send(data);
