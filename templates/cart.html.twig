@@ -2,7 +2,6 @@
 
 {% block title %} CheapKeys | Carrito {% endblock %}
 
-
 {% block body %}
 
     <main class="cart" role="main">
@@ -17,19 +16,29 @@
                 {% endif %} 
 
                 {% set counter = ( counter | default(0) ) + 1 %}
+                {% set feature = features[counter - 1].idFeature %}
+                {% set discount =  feature.gamePrice * (feature.gameDiscount / 100) | number_format(2) %}
+                {% set price = feature.gamePrice - discount | number_format(2)  %}
 
                 <article class="cart__product" targetgame = " {{ product.idGame }} " targetplatform = " {{ product.idPlatform }} ">
-                    <img src="{{ asset('static/img/games/' ~ images[counter - 1].mediaUrl ~ '.webp') }}" alt="" class="cart__img">
+                    <img src="{{ asset('static/img/games/' ~ images[counter - 1].mediaUrl ~ '.webp') }}" alt="{{ images[counter - 1].mediaAlt }}" class="cart__img">
+                    {% if feature.gameDiscount != 0 %}
+                        <span class="cart__discount">{{ feature.gameDiscount }} %</span>
+                    {% endif %}
                     <div class="cart__info">
                         <h3 class="cart__title--game">{{ product.idGame.gameName }}</h3>
                         <i class="bi bi-x cart__icon--delete"></i>
                         <span class="cart__platform"><i class="{{'bi bi-' ~ platform ~ ' cart__icon'}}"></i> {{ product.idPlatform.platformName | capitalize }}</span>
                         <div class="cart__selector">
-                            <i class="bi bi-plus-square cart__icon--selector"></i>
-                            <span class="cart__cant">{{ product.cant }}</span>
                             <i class="bi bi-dash-square cart__icon--selector"></i>
+                            <span class="cart__cant">{{ product.cant }}</span>
+                            <i class="bi bi-plus-square cart__icon--selector"></i>
                         </div>
-                        <span class="cart__price">{{ features[counter - 1].idFeature.gamePrice }} €</span>
+                        {% if discount == 0 %}
+                            <span class="cart__price">{{ feature.gamePrice }} €</span>
+                        {% else %}
+                            <span class="cart__price"><span class="cart__price--discount">{{ feature.gamePrice }} €</span>{{ price }} €</span>
+                        {% endif %}
                     </div>
                 </article>
 

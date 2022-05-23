@@ -127,10 +127,9 @@ class AjaxController extends AbstractController
             'idPlatform' => $request->get('platform'),
         ));
 
-        $gamePrice = $gamePlatform[0]->getIdFeature()->getGamePrice();
-        $discount = $gamePlatform[0]->getIdFeature()->getGameDiscount();
-        $discount =  round($gamePrice - ($gamePrice * ($discount / 100)), 2);
-        $gameTotal = $discount * $game[0]->getCant();
+        $gamePrice = $this->getDiscountPrice($gamePlatform[0]);
+
+        $gameTotal = $gamePrice * $game[0]->getCant();
         $cartTotal = $cart[0]->getCartTotal();
 
         $cart[0]->setCartTotal($cartTotal - $gameTotal);
@@ -153,12 +152,16 @@ class AjaxController extends AbstractController
     {
         $user = $security->getUser();
 
-        if($user == null){
-            return new Response("", 302);
-        }
-
+        if($user == null) return new Response("", 302);
+        
         $game = $doctrine->getRepository(Games::class)->find($request->get('game'));
         $platform = $doctrine->getRepository(Platforms::class)->find($request->get('platform'));
+        $gamePlatform = $doctrine->getRepository(GamesPlatform::class)->findBy(array(
+            'game' => $request->get('game'),
+            'idPlatform' => $request->get('platform'),
+        ));
+
+        if($gamePlatform[0]->getIdFeature()->getGameStock() == 0) return new Response('', 418);
 
         $cart = $doctrine->getRepository(Cart::class)->findBy(array(
             'idUser' => $user->getIdUser(),
@@ -213,7 +216,70 @@ class AjaxController extends AbstractController
         $cart->setCartTotal($total + $priceDiscount);
 
         $entityManager->persist($cart);
-        $entityManager->flush($cart);
+        $entityManager->flush();
 
+    }
+
+    /**
+     * @Route("/ajax/changeCartCant", name="changeCartCant")
+     */
+    public function changeCartCant(ManagerRegistry $doctrine, Request $request, Security $security, EntityManagerInterface $entityManager): Response
+    {
+        $user = $security->getUser();
+
+        if($user == null) return new Response('', 302);
+
+        $cart = $doctrine->getRepository((Cart::class))->findBy(array(
+            'idUser' => $user->getIdUser(),
+            'cartState' => 1
+        ));
+
+        if($cart == null) return new Response ('', 404);
+
+        $game = $doctrine->getRepository(CartProducts::class)->findBy(array(
+            'idGame' => $request->get('game'),
+            'idPlatform' => $request->get('platform'),
+            'idCart' => $cart[0]->getIdCart()
+        ));
+
+        $gamePlatform = $doctrine->getRepository(GamesPlatform::class)->findBy(array(
+            'game' => $request->get('game'),
+            'idPlatform' => $request->get('platform'),
+        ));
+
+        $gameCant = $game[0]->getCant();
+        $changeValue = $request->get('changeValue');
+        $newCant = $gameCant + $changeValue;
+
+        if($newCant <= 0){
+            $entityManager->remove($game[0]);
+        }else{
+            $game[0]->setCant($newCant);
+            $entityManager->persist($game[0]);
+        }
+
+        $gamePrice = $this->getDiscountPrice($gamePlatform[0]);
+
+        $cart[0]->setCartTotal($changeValue > 0 ? $cart[0]->getCartTotal() + $gamePrice : $cart[0]->getCartTotal() - $gamePrice);
+
+        $entityManager->persist($cart[0]);
+
+        $entityManager->flush();
+
+        $cartCount = new CartCount($doctrine, $security);
+        $count = $cartCount->getCount();
+
+        return new JsonResponse(array('cartTotal' => $count, 'totalPrice' => $cart[0]->getCartTotal()));
+    }
+
+
+    private function getDiscountPrice($game)
+    {
+        $gamePrice = $game->getIdFeature()->getGamePrice();
+        $gameDiscount = $game->getIdFeature()->getGameDiscount();
+        $gameDiscount = $gameDiscount / 100;
+        $gamePrice = round($gamePrice - ($gamePrice * $gameDiscount), 2);
+        
+        return $gamePrice;
     }
 }
