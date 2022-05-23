@@ -76,6 +76,12 @@
         position:relative;
     }
 
+    &__user:hover  &__link, &__cart:hover &__link--m10, &__cart:hover &__icon
+    {
+        color: var(--background_pink);
+    }
+
+
     &__user
     {
         &--img

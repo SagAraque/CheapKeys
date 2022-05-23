@@ -89,6 +89,9 @@ body {
   cursor: pointer;
   position: relative;
 }
+.header__user:hover .header__link, .header__user:hover .header__link--list, .header__user:hover .header__link--m10--list, .header__cart:hover .header__link--m10, .header__cart:hover .header__icon, .header__cart:hover .header__icon--search, .header__cart:hover .header__icon--menu {
+  color: var(--background_pink);
+}
 .header__user--img {
   height: clamp(25px, 4vw, 30px) !important;
 }
@@ -124,7 +127,7 @@ body {
 }
 .header__login {
   color: var(--white);
-  font-size: clamp(14px, 2vw, 20px);
+  font-size: clamp(16px, 2vw, 20px);
   margin: 0px 10px;
 }
 .header__nav {
@@ -143,7 +146,7 @@ body {
   justify-content: space-between;
 }
 .header__link, .header__link--list, .header__link--m10--list, .header__link--m10 {
-  font-size: clamp(14px, 2vw, 20px);
+  font-size: clamp(16px, 2vw, 20px);
   color: var(--white);
   text-decoration: none;
   white-space: nowrap;
@@ -914,7 +917,7 @@ body {
   margin: 10px 0px 30px 0px;
 }
 .control__title--card {
-  font-size: clamp(14px, 2vw, 20px);
+  font-size: clamp(16px, 2vw, 20px);
   white-space: nowrap;
 }
 .control__container {
@@ -1000,7 +1003,7 @@ body {
 }
 .cart__title--game {
   margin: 0px;
-  font-size: clamp(14px, 2vw, 20px);
+  font-size: clamp(16px, 2vw, 20px);
   text-align: start;
   font-weight: 500;
 }
@@ -1017,7 +1020,7 @@ body {
 .cart__item {
   display: flex;
   justify-content: space-between;
-  font-size: clamp(14px, 2vw, 20px);
+  font-size: clamp(16px, 2vw, 20px);
 }
 .cart__text--light {
   color: var(--light_white);
@@ -1028,7 +1031,7 @@ body {
 }
 .cart__button {
   width: 100%;
-  font-size: clamp(14px, 2vw, 20px);
+  font-size: clamp(16px, 2vw, 20px);
   background-color: var(--background_pink);
   color: var(--white);
   padding: 8px 0px;
@@ -1062,7 +1065,7 @@ body {
 }
 .cart__icon--selector {
   color: var(--background_pink);
-  font-size: clamp(14px, 2vw, 20px);
+  font-size: clamp(16px, 2vw, 20px);
   margin: 0;
   cursor: pointer;
 }
@@ -1076,12 +1079,12 @@ body {
   cursor: pointer;
 }
 .cart__cant {
-  font-size: clamp(14px, 2vw, 20px);
+  font-size: clamp(16px, 2vw, 20px);
   margin: 0px 10px;
 }
 .cart__price {
   color: var(--white);
-  font-size: clamp(14px, 2vw, 20px);
+  font-size: clamp(16px, 2vw, 20px);
   position: absolute;
   bottom: 10px;
   right: 10px;
