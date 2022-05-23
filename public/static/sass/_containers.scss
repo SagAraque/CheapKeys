@@ -118,5 +118,5 @@
 .cart
 {
     @extend .main;
-    height: calc(100vh - 400px);
+    min-height: calc(100vh - 400px);
 }

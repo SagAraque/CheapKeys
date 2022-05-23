@@ -34,7 +34,7 @@
 
         &:hover{
             transition: all 0.25s;
-            background-color: var(--background_pink)_dark;
+            background-color: var(--background_pink_dark);
         }
     }
 
@@ -88,14 +88,17 @@
 
     &__price{
         color: var(--white);
-        font-size: clamp(20px, 2.5vw, 40px);
+        font-size: clamp(20px, 2vw, 40px);
         font-weight: 400;
         margin: 15px;
+        flex-grow: 1;
+        text-align: center;
 
         &--discount{
             @extend .info__price;
             color: var(--light_white);
             font-size: 1.2rem;
+            margin-left: 0;
             position: relative;
 
             &::after{
@@ -139,7 +142,7 @@
 
             &:hover{
                 transition: all 0.25s;
-                background-color: var(--background_pink)_dark;
+                background-color: var(--background_pink_dark);
             }
         }
 
@@ -150,7 +153,7 @@
 
             &:hover{
                 transition: all 0.25s;
-                background-color: var(--background_pink)_dark;
+                background-color: var(--background_pink_dark);
             }
         }
     }
@@ -173,7 +176,7 @@
 
     &__container{
         width: 100%;
-        @include mixin.flex-style($justify:space-around, $align:center);
+        @include mixin.flex-style($justify:space-between, $align:center);
     }
 
     &__list{

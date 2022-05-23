@@ -12,11 +12,14 @@
 
     // Responsive header
     .header{
-        &__top, &__bottom{
+        &__top, &__bottom
+        {
             width: 1280px;
+            position: relative;
         }
 
-        &__input{
+        &__input
+        {
             width: 350px;
         }
     }
@@ -51,10 +54,27 @@
     {
         height: 520px;
     }
+
+    //Responsive cart
+    .cart
+    {
+        &__products
+        {
+            width: unset;
+            flex-grow: 1;
+            margin-right: 20px;
+        }
+    }
+    
 }
 
 @media (max-width: 1250px) 
 {
+    .main
+    {
+        width: 100%;
+    }
+
     .gallery
     {
         height: 480px;
@@ -75,4 +95,188 @@
             line-height: 25px;
         }
     }
+
+    .header
+    {
+        height: 140px;
+
+        &__top
+        {
+            width: 100%;
+        }
+
+        &__bottom
+        {
+            width: 100%;
+        }
+    }
+
+    // Footer responsive
+
+    .footer
+    {
+        &__top, &__bottom
+        {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 992px) 
+{
+    .main
+    {
+        margin-top: 110px;
+    }
+
+    .header
+    {
+        height: 80px;
+        background:  linear-gradient(180deg, var(--background_primary) 98%, var(--background_secondary) 2%);
+        position: fixed;
+        z-index: 4;
+
+        &__top
+        {
+            height: 98%;
+            @include mixin.flex-style($align:center, $justify:space-between);
+            padding: 10px 30px;
+            box-sizing: border-box;
+            }
+
+        &__bottom
+        {
+            height: 2%;
+        }
+
+        &__nav
+        {   
+            width: 250px;
+            height: calc(100vh - 80px);
+            @include mixin.flex-style($align:top, $justify:center);
+            background-color: var(--background_secondary);
+            position: absolute;
+            display: none;
+            top: 0px;
+            left: 0;
+
+            &::before
+            {
+                content: "";
+                height: calc(100vh - 80px);
+                width: calc(100vw - 250px);
+                position: absolute;
+                top: 0;
+                left: 250px;
+                background-color: rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        &__list
+        {
+            height: min-content;
+            @include mixin.flex-style($align:center, $justify:space-between, $direction: column);
+            padding: 0;
+        }
+
+        &__container
+        {
+            width: min-content;
+        }
+
+        &__user
+        {
+            &--img
+            {
+                margin: 0px 15px;
+            }
+            
+        }
+
+        &__link, &__link--m10
+        {
+            display: none;
+
+           &--list
+           {
+                display: block;
+                margin: 20px 0px;
+            }
+         }
+
+        &__cartCant
+        {
+            bottom: -10px;
+        }
+
+        &__container
+        {
+            &--movile
+            {
+               display: flex;
+            }
+        }
+
+        &__logo
+        {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 600px) 
+{
+    .main
+    {
+        margin-top: 110px;
+    }
+
+    .header{
+
+        height: 60px;
+
+        &__form
+        {
+            width: 100%;
+            display: none;
+            position: absolute;
+            left: -10px;
+            z-index: 4;
+        }
+
+        &__input
+        {
+            width: calc(100% - 50px);
+        }
+
+        &__icon
+        {
+            &--search
+            {
+                display: block;
+            }
+        }
+    }
+}
+
+.header
+{   
+    &__form
+    {
+        &--visible
+        {
+            display: flex;
+            width: calc(100% - 20px);
+        }
+    }
+}
+
+.displayNone
+{
+    display: none;
+}
+
+.opacityNone
+{
+    opacity: 0;
 }

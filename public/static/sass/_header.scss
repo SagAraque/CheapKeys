@@ -23,7 +23,16 @@
 
     &__logo{
         height: 100%;
-        width: 450px;
+
+        &--img
+        {
+            height: 100%;
+        }
+
+        &--movile
+        {
+            height: 100%;
+        }
     }
 
     &__form{
@@ -33,6 +42,7 @@
         background-color: var(--white);
         border-radius: 20px;
         overflow: hidden;
+        margin: 0px 20px;
     }
 
     &__input{
@@ -59,23 +69,31 @@
     }
 
     &__user, &__cart{
-        height: 50px;
         width: min-content;
         text-decoration: none;
         @include mixin.flex-style($align:center, $justify:start);
         cursor: pointer;
         position:relative;
     }
+
+    &__user
+    {
+        &--img
+        {
+            @extend .reviews__img;
+            height: clamp(25px, 4vw, 30px) !important;
+        }
+    }
     
     &__user:hover &__link--m10, &__cart:hover &__link--m10{
         color: var(--background_pink);
     }
 
-    &__user:hover &__userIcon  path, &__cart:hover &__cartIcon  path{
+    &__user:hover &__userIcon  path{
         fill: var(--background_pink);
     }
 
-    &__userIcon, &__cartIcon{
+    &__userIcon{
         width: 50px;
         height: 30px;
         position: relative;
@@ -97,7 +115,7 @@
         position: absolute;
         border-radius: 100%;
         padding: 2px;
-        bottom: 0;
+        bottom: 0px;
         left: 30px;
     }
 
@@ -109,6 +127,14 @@
 
     &__nav{
         width: 700px;
+
+        &--visible
+        {
+            display: flex !important;
+            transition: opacity 0.3s;
+            opacity: 1 !important;
+        }
+
     }
 
     &__list{
@@ -122,14 +148,62 @@
         color: var(--white);
         text-decoration: none;
         white-space: nowrap;
+
         &:hover{
             color: var(--background_pink);
         }
+
+        &--list
+        {
+            @extend .header__link;
+
+            &:hover
+            {
+                color: var(--background_pink);
+            }
+        }
     }
+
 
     &__link--m10{
         margin-left: 10px;
     }
+
+    &__icon
+    {
+        font-size: clamp(25px, 4vw, 30px);
+        color: var(--white);
+        margin: 0px 15px;
+        cursor: pointer;
+
+        &:hover
+        {
+            color: var(--background_pink);
+        }
+
+        &--menu
+        {
+            @extend .header__icon;
+            font-size: clamp(30px, 4vw, 40px);
+            margin: 0px; 
+        }
+
+        &--search
+        {
+            @extend .header__icon;
+            display: none;
+        }
+    }
+
+    &__container
+        {
+            &--movile{
+                height: 100%;
+                width: min-content;
+                @include mixin.flex-style($align:center, $justify:space-between);
+                display: none;
+            }
+        }
 }
 
 .header--min{
