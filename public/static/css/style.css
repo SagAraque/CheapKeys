@@ -852,6 +852,7 @@ body {
   width: 100%;
   font-weight: 600;
   margin: 20px 0px;
+  list-style: none;
   color: var(--red);
   background-color: var(--white);
   border: 2px solid var(--red);
