@@ -5,7 +5,7 @@
 {
     &__data
     {
-        width: 415px;
+        width:clamp(200px, 35vw, 415px);
         height: 250px;
         @include mixin.flex-style($justify: space-between, $direction:column);
         background-color:var(--background_secondary);
@@ -152,5 +152,20 @@
         position: absolute;
         bottom: 10px;
         right: 10px;
+
+        &--discount
+        {
+            @extend .info__price--discount;
+        }
+    }
+
+    &__discount
+    {
+        @extend .info__span--discount;
+        position: absolute;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 0;
+        left: 0;
+        top: -10px;
     }
 }
