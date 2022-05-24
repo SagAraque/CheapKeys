@@ -37,7 +37,7 @@
 
     &__form{
         height: 50px;
-        width: 450px;
+        width: clamp(350px, 40vw, 450px);
         @include mixin.flex-style($align:center, $justify:space-between);
         background-color: var(--white);
         border-radius: 20px;
@@ -47,14 +47,15 @@
 
     &__input{
         height: 45px;
-        width: 400px;
-        padding: 0px 20px;
+        width: 90%;
+        padding: 0px 10px;
         border: none;
         outline: none;
+        box-sizing: border-box;
     }
 
     &__search{
-        width: 50px;
+        width: 10%;
         height: 1.5em;
         & path,
         &  polygon,

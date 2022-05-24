@@ -17,11 +17,6 @@
             width: 1280px;
             position: relative;
         }
-
-        &__input
-        {
-            width: 350px;
-        }
     }
 
     // Responsive product
@@ -221,19 +216,6 @@
         {
             display: none;
         }
-    }
-}
-
-@media (max-width: 600px) 
-{
-    .main
-    {
-        margin-top: 110px;
-    }
-
-    .header{
-
-        height: 60px;
 
         &__form
         {

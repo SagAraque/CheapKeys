@@ -5,8 +5,8 @@
 {
     &__card
     {
-        width: 320px;
-        height: 380px;
+        width: 280px;
+        height: 350px;
         background-color: var.$background-secondary;
         @include mixin.flex-style($justify:space-between, $direction:column);
         border-radius: 5px;
@@ -46,7 +46,7 @@
     &__content
     {
         @include mixin.flex-style($justify:space-between, $align:start, $direction:column);
-        padding: 15px;
+        padding: 0px 15px 15px 15px;
         flex-grow: 1;
         
         &--container
