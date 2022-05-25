@@ -9,12 +9,17 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use App\Utils\CartCount;
 use App\Entity\Reviews;
+use App\Entity\Media;
 use App\Entity\Users;
 use App\Entity\Cart;
 use App\Entity\CartProducts;
 use App\Entity\Games;
+use App\Entity\Features;
 use App\Entity\Platforms;
 use App\Entity\Billing;
 use App\Entity\GamesPlatform;
@@ -270,6 +275,43 @@ class AjaxController extends AbstractController
         $count = $cartCount->getCount();
 
         return new JsonResponse(array('cartTotal' => $count, 'totalPrice' => $cart[0]->getCartTotal()));
+    }
+
+    /**
+     * @Route("/ajax/changeStoreProducts", name="changeStoreProducts")
+     */
+    public function changeStoreProducts(Paginator $paginator, ManagerRegistry $doctrine, Request $request, Security $security, EntityManagerInterface $entityManager): Response
+    {
+        $gameFeatures = $doctrine->getRepository(Features::class)->findBy(array(
+            'gameDeveloper' => explode(',', $request->get("dev"))
+        ));
+
+        $features = [];
+        foreach ($gameFeatures as $feature) {
+            array_push($features, intval($feature->getIdFeature()));
+        }
+
+
+        $games = $doctrine->getRepository(GamesPlatform::class)->findByFeatureNoQuery(array(
+            'idFeature' => [1,2]
+        ));
+
+        $paginator->paginate($games, 1, 16);
+        // var_dump(count($games));
+        var_dump(count($paginator->getItems()));
+
+        $gamesId = [];
+
+        foreach ($paginator->getItems() as $game) {
+            array_push($gamesId, strval($game->getGame()->getIdGame()));
+        }
+
+        $images = $doctrine->getRepository(Media::class)->findOnePerGame($gamesId);
+        
+        return $this->render('ajax/cardGame.html.twig',[
+            'paginator' => $paginator,
+            'media' => $images,
+        ]);
     }
 
 

@@ -52,4 +52,43 @@ class GamesPlatformRepository extends ServiceEntityRepository
 
         return $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
+
+    public function getPlatforms()
+    {
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT p.platformName as platform, COUNT(DISTINCT gp.idPlatform) as total, IDENTITY(gp.idPlatform)
+            FROM App\Entity\GamesPlatform gp
+            JOIN App\Entity\Platforms p
+            WHERE p.idPlatform = gp.idPlatform
+            GROUP BY gp.idPlatform'
+        );
+
+        return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_SCALAR);
+    }
+
+    public function findAllNoQuery()
+    {
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT p FROM App\Entity\GamesPlatform p'
+        );
+
+        return $sql;
+    }
+
+    public function findByFeatureNoQuery(?array $id)
+    {
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT p FROM App\Entity\GamesPlatform p
+            WHERE p.idFeature in (:value)'
+        )
+        ->setParameter('value', $id, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
+
+        return $sql;
+    }
 }

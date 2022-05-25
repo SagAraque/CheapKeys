@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Cheapkeys | Tienda {% endblock %}
+
+{% block body %}
+
+<main class="store" role="main">
+    {# Store top container start #}
+    <div class="store__container--title">
+        <h2 class="store__title">Todos los productos</h2>
+        <span class="store__count">1560 videojuegos</span>
+        <span class="store__container--select">
+            Ordenar por 
+            <select name="orderBy" class="store__select">
+                <option value="lowPrice">Precio más bajo</option>
+                <option value="highPrice">Precio más alto</option>
+                <option value="valoration">Valoración</option>
+                <option value=""></option>
+            </select>
+        </span>
+    </div>
+    {# Store top container end #}
+    {# Store menu container start #}
+    <section class="store__container--menu">
+        <ul class="store__list">
+            <li class="store__title--list">Desarrollador</li>
+            {% for dev in developers %}
+
+                <li class="store__item">
+                    <span class="store__span"><input type="checkbox"class="store__checkBox" value="{{dev.gameDeveloper}}">{{dev.gameDeveloper}}</span> 
+                    <span class="store__span--light">{{ dev.total }}</span>
+                </li>
+
+            {% endfor %}
+        </ul>
+
+        <ul class="store__list">
+            <li class="store__title--list">Plataforma</li>
+            {% for platform in platforms %}
+
+                <li class="store__item">
+                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox">{{platform.platform | capitalize}}</span> 
+                    <span class="store__span--light">{{ platform.total }}</span>
+                </li>
+
+            {% endfor %}
+        </ul>
+
+        <ul class="store__list">
+            <li class="store__title--list">Disponibilidad</li>
+            {% for value in stock %}
+
+                <li class="store__item">
+                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox">{{ value.title }}</span> 
+                    <span class="store__span--light">{{ value.value }}</span>
+                </li>
+
+            {% endfor %}
+        </ul>
+
+        <ul class="store__list">
+            <li class="store__title--list">Pegi</li>
+            {% for value in pegi %}
+
+                <li class="store__item">
+                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox">{{value.gamePegi}}</span> 
+                    <span class="store__span--light">{{ value.value }}</span>
+                </li>
+
+            {% endfor %}
+        </ul>
+    </section>
+    {# Store menu container end #}
+    {# Store products container start #}
+    <section class="store__container--products">
+        {% for game in paginator.items %}
+
+            {% set platform = game.idPlatform %}
+            {% set product = game.game %}
+            {% set feature = game.idFeature %}
+            {% set counter = ( counter | default(0) ) + 1 %}
+
+            {% set discount =  feature.gamePrice -  ((feature.gamePrice * (feature.gameDiscount / 100)) | number_format(2)) %}
+
+            {% if platform.platformName == 'windows' %}
+                {% set platformIcon = 'windows' %}
+            {% elseif platform.platformName == 'switch' %}
+                {% set platformIcon = 'nintendo-switch' %}
+            {% endif %} 
+
+            <a href="{{path('product', {'game_slug': product.gameSlug ~ '_' ~ platform.platformName})}}" class="store__card">
+                {# Card image start #}
+                <div class="card__img--container">
+                    <img src="{{ asset('static/img/games/'~ media[counter - 1].mediaUrl ~'.webp') }}" alt="{{ media[counter - 1].mediaAlt }}" class="card__img">
+                    <span class="card__img--span"><i class="{{'bi bi-' ~ platformIcon ~ ' info__icon--data'}}"></i>{{ platform.platformName }}</span>
+                </div>
+                {# Card image end #}
+                {# Card content start #}
+                <div class="card__content">
+                    <h3 class="card__title"> {{ product.gameName }}</h3>
+                    <div class="card__content--container">
+                        {% if feature.gameDiscount != 0 %}
+                            <h3 class="card__price"><span class="info__price--discount">{{ feature.gamePrice }}€</span>{{discount}}€</h3>
+                        {% else %}
+                            <h3 class="card__price">{{ feature.gamePrice }}€</h3>
+                        {% endif %}
+                        <span class="card__val">{{ feature.gameValoration }}</span>
+                    </div>
+                    <button class="card__button">
+                        {{feature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito'}}
+                    </button>
+                </div>
+                {# Card content end #}
+            </a>
+        {% endfor %}
+    </section>
+    {# Store products container end #}
+</main>
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script src="{{ asset('static/javascript/store.js') }}"></script>
+
+{% endblock %}

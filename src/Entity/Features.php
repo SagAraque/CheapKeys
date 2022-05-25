@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Features
  *
  * @ORM\Table(name="features")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\FeaturesRepository")
  */
 class Features
 {
@@ -271,6 +271,11 @@ class Features
         $this->gamePegi = $gamePegi;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->idFeature;
     }
 
 

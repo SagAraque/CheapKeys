@@ -50,4 +50,51 @@ class FeaturesRepository extends ServiceEntityRepository
 
         return $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
+
+    public function getDeveloper()
+    {
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT f.gameDeveloper, COUNT(f.gameDeveloper) as total
+            FROM App\Entity\Features f GROUP BY f.gameDeveloper'
+        );
+
+        return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_SCALAR);
+    }
+
+    public function getStock()
+    {
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT COUNT(f.gameStock) as stock
+            FROM App\Entity\Features f
+            WHERE f.gameStock != 0'
+        );
+
+        $firstResult  = $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+
+        $sql =  $em->createQuery(
+            'SELECT COUNT(f.gameStock) as stock
+            FROM App\Entity\Features f
+            WHERE f.gameStock = 0'
+        );
+
+        $secondResult = $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+
+        return [['value' => $firstResult['stock'], 'title' => 'En Stock'], ['value' => $secondResult['stock'], 'title' => 'Sin Stock']];
+    }
+
+    public function getPegi()
+    {
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT f.gamePegi, COUNT(f.gamePegi) as value
+            FROM App\Entity\Features f GROUP BY f.gamePegi'
+        );
+
+        return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_SCALAR);
+    }
 }

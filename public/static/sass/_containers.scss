@@ -120,3 +120,50 @@
     @extend .main;
     min-height: calc(100vh - 400px);
 }
+
+.store
+{
+    @extend .main;
+
+    &__container
+    {
+        height: min-content;
+       
+        &--title
+        {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(2, auto);
+        }
+
+        &--select
+        {
+            color: var(--white);
+            grid-area: 2 / 4 / 3 / 7;
+            justify-self: end;
+        }
+
+        &--menu
+        {
+            width: 20%;
+            height: min-content;
+            background-color: var(--background_secondary);
+            @include mixin.flex-style($justify:start, $direction:column);
+            margin-top: 20px;
+            padding: 0px 20px;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        &--products
+        {
+            width: 74%;
+            height: min-content;
+            margin-top: 20px;
+            @include mixin.flex-style($justify:start, $wrap: wrap);
+            gap: 25px;
+        }
+    }
+}
+

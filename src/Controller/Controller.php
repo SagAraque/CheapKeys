@@ -13,6 +13,7 @@ use App\Utils\CartCount;
 use App\Entity\Games;
 use App\Entity\Media;
 use App\Entity\Reviews;
+use App\Entity\Features;
 use App\Entity\Platforms;
 use App\Entity\CartProducts;
 use App\Entity\Cart;
@@ -145,11 +146,37 @@ class Controller extends AbstractController
     /**
      * @Route("/store/{data}", requirements={"data"="pc|playstation|xbox|nintendo|ofertas|proximamente"}, name="category")
      */
-    public function category($data):Response
+    public function category($data, Paginator $paginator, ManagerRegistry $doctrine, Request $request, Security $security):Response
     {
 
-        return $this->render('/producto.html.twig',[
+        $developer = $doctrine -> getRepository(Features::class) -> getDeveloper();
+        $platforms = $doctrine -> getRepository(GamesPlatform::class) -> getPlatforms();
+        $stock = $doctrine -> getRepository(Features::class) -> getStock();
+        $pegi = $doctrine -> getRepository(Features::class) -> getPegi();
+        $games = $doctrine -> getRepository(GamesPlatform::class) -> findAllNoQuery();
+
+        $paginator->paginate($games, 1, 16);
+
+        $cartCount = new CartCount($doctrine, $security);
+        $cart = $cartCount->getCount();
+
+        $gamesId = [];
+
+        foreach ($paginator->getItems() as $game) {
+            array_push($gamesId, strval($game->getGame()->getIdGame()));
+        }
+
+        $images = $doctrine->getRepository(Media::class)->findOnePerGame($gamesId);
+
+        return $this->render('/store/store.html.twig',[
             'data' => $data,
+            'developers' => $developer,
+            'platforms' => $platforms,
+            'stock' => $stock,
+            'pegi' => $pegi,
+            'paginator' => $paginator,
+            'media' => $images,
+            'cartCant' => $cart
         ]);
     }
 }

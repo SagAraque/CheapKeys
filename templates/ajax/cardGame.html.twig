@@ -1,0 +1,39 @@
+{% for game in paginator.items %}
+        {% set platform = game.idPlatform %}
+        {% set product = game.game %}
+        {% set feature = game.idFeature %}
+        {% set counter = ( counter | default(0) ) + 1 %}
+
+        {% set discount =  feature.gamePrice -  ((feature.gamePrice * (feature.gameDiscount / 100)) | number_format(2)) %}
+
+        {% if platform.platformName == 'windows' %}
+            {% set platformIcon = 'windows' %}
+        {% elseif platform.platformName == 'switch' %}
+            {% set platformIcon = 'nintendo-switch' %}
+        {% endif %} 
+
+        <a href="{{path('product', {'game_slug': product.gameSlug ~ '_' ~ platform.platformName})}}" class="store__card">
+            {# Card image start #}
+            <div class="card__img--container">
+                <img src="{{ asset('static/img/games/'~ media[counter - 1].mediaUrl ~'.webp') }}" alt="{{ media[counter - 1].mediaAlt }}" class="card__img">
+                <span class="card__img--span"><i class="{{'bi bi-' ~ platformIcon ~ ' info__icon--data'}}"></i>{{ platform.platformName }}</span>
+            </div>
+            {# Card image end #}
+            {# Card content start #}
+            <div class="card__content">
+                <h3 class="card__title"> {{ product.gameName }}</h3>
+                <div class="card__content--container">
+                    {% if feature.gameDiscount != 0 %}
+                        <h3 class="card__price"><span class="info__price--discount">{{ feature.gamePrice }}€</span>{{discount}}€</h3>
+                    {% else %}
+                        <h3 class="card__price">{{ feature.gamePrice }}€</h3>
+                    {% endif %}
+                    <span class="card__val">{{ feature.gameValoration }}</span>
+                </div>
+                <button class="card__button">
+                    {{feature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito'}}
+                </button>
+            </div>
+            {# Card content end #}
+        </a>
+{% endfor %}
