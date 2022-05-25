@@ -128,7 +128,7 @@
     &__container
     {
         height: min-content;
-       
+        
         &--title
         {
             width: 100%;
@@ -158,11 +158,19 @@
 
         &--products
         {
+            width: 100%;
+            height: min-content;
+            @include mixin.flex-style($justify:start, $wrap: wrap);
+            gap: 25px;
+        }
+
+        &--content
+        {
+            @include mixin.flex-style($justify:start, $direction:column);
             width: 74%;
             height: min-content;
             margin-top: 20px;
-            @include mixin.flex-style($justify:start, $wrap: wrap);
-            gap: 25px;
+            position: relative;
         }
     }
 }

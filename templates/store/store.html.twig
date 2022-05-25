@@ -72,7 +72,8 @@
     </section>
     {# Store menu container end #}
     {# Store products container start #}
-    <section class="store__container--products">
+    <section class="store__container--content">
+        <div class="store__container--products">
         {% for game in paginator.items %}
 
             {% set platform = game.idPlatform %}
@@ -113,6 +114,8 @@
                 {# Card content end #}
             </a>
         {% endfor %}
+        </div>
+        
     </section>
     {# Store products container end #}
 </main>

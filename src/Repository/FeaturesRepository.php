@@ -97,4 +97,20 @@ class FeaturesRepository extends ServiceEntityRepository
 
         return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_SCALAR);
     }
+
+    public function findMultipleFeatures($id)
+    {
+        $em = $this->getEntityManager();
+
+        $sql = $em->createQueryBuilder()
+        ->select('f')
+        ->from(Features::class, 'f');
+
+        if(count(array_filter($id)) != 0){
+            $sql->where('f.gameDeveloper in (:developer)')
+            ->setParameter('developer', $id,\Doctrine\DBAL\Connection::PARAM_INT_ARRAY );
+        }
+
+        return $sql->getQuery()->getResult();
+    }
 }

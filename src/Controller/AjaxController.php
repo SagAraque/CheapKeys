@@ -282,9 +282,9 @@ class AjaxController extends AbstractController
      */
     public function changeStoreProducts(Paginator $paginator, ManagerRegistry $doctrine, Request $request, Security $security, EntityManagerInterface $entityManager): Response
     {
-        $gameFeatures = $doctrine->getRepository(Features::class)->findBy(array(
-            'gameDeveloper' => explode(',', $request->get("dev"))
-        ));
+        $gameFeatures = $doctrine->getRepository(Features::class)->findMultipleFeatures(
+            explode(',', $request->get("dev"))
+        );
 
         $features = [];
         foreach ($gameFeatures as $feature) {
@@ -292,13 +292,9 @@ class AjaxController extends AbstractController
         }
 
 
-        $games = $doctrine->getRepository(GamesPlatform::class)->findByFeatureNoQuery(array(
-            'idFeature' => [1,2]
-        ));
+        $games = $doctrine->getRepository(GamesPlatform::class)->findByFeatureNoQuery($features);
 
         $paginator->paginate($games, 1, 16);
-        // var_dump(count($games));
-        var_dump(count($paginator->getItems()));
 
         $gamesId = [];
 

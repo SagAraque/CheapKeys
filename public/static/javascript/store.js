@@ -1,4 +1,5 @@
 let checkbox = document.querySelectorAll('.store__checkBox'),
+container = document.querySelector('.store__container--products')
 developerData = [];
 
 
@@ -30,9 +31,22 @@ function getData()
     xhr.open('POST', '/ajax/changeStoreProducts', true);
     xhr.send(data);
 
+    let loading = setTimeout(()=>{
+        setLoading();
+    },200);
+
     xhr.onreadystatechange = ()=>{
         if(xhr.readyState == 4 && xhr.status == 200){
-            let response = xhr.responseText
+            clearTimeout(loading);
+            container.innerHTML = xhr.responseText;
         }
     }
+}
+
+function setLoading()
+{
+    let loading = document.createElement('div');
+    loading.classList.add('reviews__loading');
+    container.innerHTML = "";
+    container.appendChild(loading);
 }

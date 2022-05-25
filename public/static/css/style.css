@@ -320,13 +320,21 @@ body {
   box-sizing: border-box;
 }
 .store__container--products {
-  width: 74%;
+  width: 100%;
   height: min-content;
-  margin-top: 20px;
   display: flex;
   justify-content: start;
   flex-wrap: wrap;
   gap: 25px;
+}
+.store__container--content {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  width: 74%;
+  height: min-content;
+  margin-top: 20px;
+  position: relative;
 }
 
 .footer {
