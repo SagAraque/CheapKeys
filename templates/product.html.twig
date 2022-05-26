@@ -6,11 +6,10 @@
 {% set discount =  features.idFeature.gamePrice -  ((features.idFeature.gamePrice * (features.idFeature.gameDiscount / 100)) | number_format(2)) %}
 {% set galleryMax = media | length >= 4 ? 4 : media | length %}
 
-
-{% if features.idPlatform.platformName == 'windows' %}
-    {% set platform = 'windows' %}
-{% elseif features.idPlatform.platformName == 'switch' %}
+{% if features.idPlatform.platformName == 'switch' %}
     {% set platform = 'nintendo-switch' %}
+{% else %}
+    {% set platform = features.idPlatform.platformName %}
 {% endif %} 
 
 {% block title %} CheapKeys | {{ game.gameName }} {% endblock %}
@@ -22,7 +21,7 @@
         <section class="gallery">
             {# Gallery img start #}
             <div class="gallery__img">
-                <img src="{{ asset('static/img/games/' ~ media[0].mediaUrl ~ '.webp') }}" alt="{{ media[0].mediaAlt }}" class="gallery__asset" loading="lazy">
+                <img src="{{ asset('static/img/games/' ~ media[0].idMedia.mediaUrl ~ '.webp') }}" alt="{{ media[0].idMedia.mediaAlt }}" class="gallery__asset" loading="lazy">
             </div>
             {# Gallery img end #}
             {# Gallery min container start #}
@@ -37,11 +36,11 @@
                 {% for i in 0 .. galleryMax - 1 %}
                     {% if i == 0 %}
                         <div class="gallery__min--selected">
-                            <img src="{{ asset('static/img/games/' ~ media[i].mediaUrl ~ '-min.webp') }}" alt="{{ media[i].mediaAlt }}" class="gallery__asset">
+                            <img src="{{ asset('static/img/games/' ~ media[i].idMedia.mediaUrl ~ '-min.webp') }}" alt="{{ media[i].idMedia.mediaAlt }}" class="gallery__asset">
                         </div>
                     {% else %}
                         <div class="gallery__min">
-                            <img src="{{ asset('static/img/games/' ~ media[i].mediaUrl ~ '-min.webp') }}" alt="{{ media[i].mediaAlt }}" class="gallery__asset">
+                            <img src="{{ asset('static/img/games/' ~ media[i].idMedia.mediaUrl ~ '-min.webp') }}" alt="{{ media[i].idMedia.mediaAlt }}" class="gallery__asset">
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -176,7 +175,7 @@
     <script>
         var images = [];
         {% for image in media %}
-            images.push('{{image.mediaUrl}}');
+            images.push('{{image.idMedia.mediaUrl}}');
         {% endfor %}
         
         var product = [{{ game.idGame }}, {{features.idPlatform.idPlatform}}];

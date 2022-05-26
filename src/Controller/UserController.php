@@ -8,16 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Security;
-use App\Form\LoginType;
 use App\Form\UserNameType;
 use App\Form\UserPassType;
 use App\Form\UserMailType;
-use App\Entity\Users;
 use App\Entity\WishlistGames;
 use App\Entity\Billing;
-use App\Entity\Media;
+use App\Entity\MediaGames;
 use App\Utils\CartCount;
 
 class UserController extends AbstractController
@@ -84,12 +81,14 @@ class UserController extends AbstractController
         ));
 
         $gamesId = [];
+        $platformsId = [];
 
         foreach ($wishGames as $game) {
             array_push($gamesId, strval($game->getIdGame()));
+            array_push($platformsId, strval($game->getIdPlatform()));
         }
 
-        $images = $doctrine->getRepository(Media::class)->findOnePerGame( $gamesId);
+        $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
 
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();

@@ -21,7 +21,7 @@
                 {% set price = feature.gamePrice - discount | number_format(2)  %}
 
                 <article class="cart__product" targetgame = " {{ product.idGame }} " targetplatform = " {{ product.idPlatform }} ">
-                    <img src="{{ asset('static/img/games/' ~ images[counter - 1].mediaUrl ~ '.webp') }}" alt="{{ images[counter - 1].mediaAlt }}" class="cart__img">
+                    <img src="{{ asset('static/img/games/' ~ images[counter - 1].idMedia.mediaUrl ~ '.webp') }}" alt="{{ images[counter - 1].idMedia.mediaAlt }}" class="cart__img">
                     {% if feature.gameDiscount != 0 %}
                         <span class="cart__discount">{{ feature.gameDiscount }} %</span>
                     {% endif %}

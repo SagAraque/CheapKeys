@@ -9,13 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 use App\Utils\CartCount;
 use App\Entity\Reviews;
-use App\Entity\Media;
-use App\Entity\Users;
+use App\Entity\MediaGames;
 use App\Entity\Cart;
 use App\Entity\CartProducts;
 use App\Entity\Games;
@@ -317,12 +313,15 @@ class AjaxController extends AbstractController
         if($paginator->getTotal() == 0) return new Response("No data", 404);
 
         $gamesId = [];
+        $platformsId = [];
     
         foreach ($paginator->getItems() as $game) {
             array_push($gamesId, strval($game->getGame()->getIdGame()));
+            array_push($platformsId, strval($game->getIdPlatform()->getIdPlatform()));
         }
+
     
-        $images = $doctrine->getRepository(Media::class)->findOnePerGame($gamesId);
+        $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
             
         return $this->render('ajax/cardGame.html.twig',[
             'paginator' => $paginator,

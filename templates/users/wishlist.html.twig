@@ -8,7 +8,7 @@
 
         {% set counter = ( counter | default(0) ) + 1 %}
         <div class="control__card--wish">
-            <img src="{{ asset('static/img/games/' ~ images[counter - 1].mediaUrl ~ '.webp') }}" alt="{{ images[counter - 1].mediaAlt }}" class="control__img--card"> 
+            <img src="{{ asset('static/img/games/' ~ images[counter - 1].idMedia.mediaUrl ~ '.webp') }}" alt="{{ images[counter - 1].idMedia.mediaAlt }}" class="control__img--card"> 
             <div class="control__container--card">
                 <h2 class="control__title--card">{{game.idGame.gameName}}</h2> 
             </div>

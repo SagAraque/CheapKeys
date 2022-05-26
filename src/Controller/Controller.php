@@ -11,13 +11,13 @@ use Symfony\Component\Security\Core\Security;
 use App\Utils\Paginator;
 use App\Utils\CartCount;
 use App\Entity\Games;
-use App\Entity\Media;
 use App\Entity\Reviews;
 use App\Entity\Features;
 use App\Entity\Platforms;
 use App\Entity\CartProducts;
 use App\Entity\Cart;
 use App\Entity\GamesPlatform;
+use App\Entity\MediaGames;
 use App\Entity\WishlistGames;
 
 class Controller extends AbstractController
@@ -68,7 +68,7 @@ class Controller extends AbstractController
             array_push($platformsId, strval($game->getIdPlatform()));
         }
 
-        $images = $doctrine->getRepository(Media::class)->findOnePerGame( $gamesId);
+        $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
         $features = $doctrine->getRepository(GamesPlatform::class)->findBy(array(
             'game' => $gamesId,
             'idPlatform' => $platformsId,
@@ -107,13 +107,15 @@ class Controller extends AbstractController
             $wish = $wishlist == null ? false : true;
         }
 
-        $media = $doctrine->getRepository(Media::class)->findByGame(array(
-            "id" => $game[0]->getIdGame(),
-        ));
+        $media = $doctrine->getRepository(MediaGames::class)->findNoInfo(
+            $game[0]->getIdGame(),
+            $platform->getIdPlatform(),
+        );
 
-        $mediaInfo = $doctrine->getRepository(Media::class)->findOneByInfo(array(
-            "id" => $game[0]->getIdGame(),
-        ));
+        $mediaInfo = $doctrine->getRepository(MediaGames::class)->findOneByInfo(
+            $game[0]->getIdGame(),
+            $platform->getIdPlatform(),
+        );
 
         $features = $doctrine->getRepository(GamesPlatform::class)->findFeature($game[0], $platform);
 
@@ -161,12 +163,14 @@ class Controller extends AbstractController
         $cart = $cartCount->getCount();
 
         $gamesId = [];
+        $platformId = [];
 
         foreach ($paginator->getItems() as $game) {
             array_push($gamesId, strval($game->getGame()->getIdGame()));
+            array_push($platformId, strval($game->getIdPlatform()->getIdPlatform()));
         }
 
-        $images = $doctrine->getRepository(Media::class)->findOnePerGame($gamesId);
+        $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformId);
 
         return $this->render('/store/store.html.twig',[
             'data' => $data,

@@ -39,47 +39,7 @@ class MediaRepository extends ServiceEntityRepository
         }
     }
 
-    public function findByGame($id)
-    {
-        $em = $this->getEntityManager();
 
-        $sql =  $em->createQuery(
-            'SELECT m FROM App\Entity\Media m
-             WHERE m.idGame = :value
-             AND m.mediaInfoimg = 0'
-        )->setParameter('value', $id);
-
-        return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
-    }
-
-    public function findOneByInfo($id)
-    {
-        $em = $this->getEntityManager();
-
-        $sql =  $em->createQuery(
-            'SELECT m FROM App\Entity\Media m
-             WHERE m.idGame = :value
-             AND m.mediaInfoimg = 1'
-        )->setParameter('value', $id);
-
-        return $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
-    }
-
-    public function findOnePerGame($id)
-    {
-
-         $em = $this->getEntityManager();
-
-         $sql =  $em->createQuery(
-            'SELECT DISTINCT m FROM App\Entity\Media m
-            WHERE m.idGame in ( :value )
-            AND m.mediaInfoimg = 0
-            GROUP BY m.idGame'
-        )->setParameter('value', $id);
-
-        return $sql->getResult();
-
-    }
 
 
 }

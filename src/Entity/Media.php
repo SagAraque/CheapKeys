@@ -42,15 +42,6 @@ class Media
      */
     private $mediaInfoimg = '0';
 
-    /**
-     * @var \Games
-     *
-     * @ORM\ManyToOne(targetEntity="Games")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_game", referencedColumnName="id_game")
-     * })
-     */
-    private $idGame;
 
     public function getIdMedia(): ?int
     {
@@ -92,18 +83,5 @@ class Media
 
         return $this;
     }
-
-    public function getIdGame(): ?Games
-    {
-        return $this->idGame;
-    }
-
-    public function setIdGame(?Games $idGame): self
-    {
-        $this->idGame = $idGame;
-
-        return $this;
-    }
-
 
 }

@@ -83,16 +83,17 @@
 
             {% set discount =  feature.gamePrice -  ((feature.gamePrice * (feature.gameDiscount / 100)) | number_format(2)) %}
 
-            {% if platform.platformName == 'windows' %}
-                {% set platformIcon = 'windows' %}
-            {% elseif platform.platformName == 'switch' %}
+            {% if platform.platformName == 'switch' %}
                 {% set platformIcon = 'nintendo-switch' %}
+            {% else %}
+                {% set platformIcon = platform.platformName %}
             {% endif %} 
+
 
             <a href="{{path('product', {'game_slug': product.gameSlug ~ '_' ~ platform.platformName})}}" class="store__card">
                 {# Card image start #}
                 <div class="card__img--container">
-                    <img src="{{ asset('static/img/games/'~ media[counter - 1].mediaUrl ~'-min.webp') }}" alt="{{ media[counter - 1].mediaAlt }}" class="card__img">
+                    <img src="{{ asset('static/img/games/'~ media[counter - 1].idMedia.mediaUrl ~'-min.webp') }}" alt="{{ media[counter - 1].idMedia.mediaAlt }}" class="card__img">
                     <span class="card__img--span"><i class="{{'bi bi-' ~ platformIcon ~ ' info__icon--data'}}"></i>{{ platform.platformName }}</span>
                 </div>
                 {# Card image end #}
