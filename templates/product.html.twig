@@ -155,11 +155,13 @@
                 </div>
                 {# Reviews paginator  start#}
                 <div class="reviews__paginator">
+                {% if reviews.lastPage != 1 %}
                     <i class="bi bi-chevron-left reviews__button--disabled" direction="left"></i>
                     <span class="reviews__page">
                         Página <span class="reviews__actual">1</span> de <span class="reviews__last">{{ reviews.lastPage }}</span>
                     </span>
                     <i class="bi bi-chevron-right reviews__button" direction="right"></i>
+                {% endif %}
                 </div>
                 {# Reviews paginator end #}
             {% endif %}
