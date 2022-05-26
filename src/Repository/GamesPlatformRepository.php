@@ -79,15 +79,29 @@ class GamesPlatformRepository extends ServiceEntityRepository
         return $sql;
     }
 
-    public function findByFeatureNoQuery(?array $id)
+    public function findByFeatureNoQuery($params)
     {
+        $first = 0;
+        $index = 0;
         $em = $this->getEntityManager();
+        
+        $sql = $em->createQueryBuilder()
+        ->select('p')
+        ->from(GamesPlatform::class, 'p');
 
-        $sql =  $em->createQuery(
-            'SELECT p FROM App\Entity\GamesPlatform p
-            WHERE p.idFeature in (:value)'
-        )
-        ->setParameter('value', $id, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
+        foreach ($params as $key => $value) {
+            $index++;
+            if(count(array_filter($value)) != 0){
+                if($first == 0){
+                    $sql -> where('p.'.$key.' in (:field'.$index.')');
+                }else{
+                    $sql->andWhere('p.'.$key.' in (:field'.$index.')');
+                }
+                
+                $sql->setParameter('field'.$index, $value, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
+                $first = 1;
+            }
+        }
 
         return $sql;
     }

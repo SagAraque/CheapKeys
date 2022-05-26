@@ -282,28 +282,48 @@ class AjaxController extends AbstractController
      */
     public function changeStoreProducts(Paginator $paginator, ManagerRegistry $doctrine, Request $request, Security $security, EntityManagerInterface $entityManager): Response
     {
-        $gameFeatures = $doctrine->getRepository(Features::class)->findMultipleFeatures(
-            explode(',', $request->get("dev"))
+        $gameFeatures = $doctrine->getRepository(Features::class)->findMultipleFeatures(array(
+            "gameDeveloper" => explode(',', $request->get("dev")),
+            "gamePegi" => explode(',', $request->get("pegi")),
+            ),
+            explode(',', $request->get("stock"))
         );
 
         $features = [];
         foreach ($gameFeatures as $feature) {
-            array_push($features, intval($feature->getIdFeature()));
+            array_push($features, intval($feature['idFeature']));
         }
 
+        $platforms = $doctrine->getRepository(Platforms::class)->findPlatformArrayId(
+            explode(',', $request->get("platform")),
+        );
 
-        $games = $doctrine->getRepository(GamesPlatform::class)->findByFeatureNoQuery($features);
+        $platformName = [];
+        foreach ($platforms as $name) {
+            array_push($platformName, intval($name['idPlatform']));
+        }
 
-        $paginator->paginate($games, 1, 16);
+        if(count($features) == 0) return new Response("No data", 404);
+
+        $games = $doctrine->getRepository(GamesPlatform::class)->findByFeatureNoQuery(array(
+            "idFeature" => $features, 
+            "idPlatform" => $platformName
+        ));
+
+        $page = $request->get('page');
+    
+        $paginator->paginate($games, intval($page), 16);
+        
+        if($paginator->getTotal() == 0) return new Response("No data", 404);
 
         $gamesId = [];
-
+    
         foreach ($paginator->getItems() as $game) {
             array_push($gamesId, strval($game->getGame()->getIdGame()));
         }
-
+    
         $images = $doctrine->getRepository(Media::class)->findOnePerGame($gamesId);
-        
+            
         return $this->render('ajax/cardGame.html.twig',[
             'paginator' => $paginator,
             'media' => $images,

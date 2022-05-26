@@ -50,4 +50,21 @@ class PlatformsRepository extends ServiceEntityRepository
 
         return $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
+
+    public function findPlatformArrayId($name)
+    {
+        $em = $this->getEntityManager();
+
+        $sql = $em->createQueryBuilder()
+        ->select('p.idPlatform')
+        ->from(Platforms::class, 'p');
+
+        if(count(array_filter($name)) != 0){
+            $sql->where('p.platformName in (:name)')
+            ->setParameter('name', $name,\Doctrine\DBAL\Connection::PARAM_STR_ARRAY );
+        }
+
+        return $sql->getQuery()->getArrayResult();
+    }
+    
 }

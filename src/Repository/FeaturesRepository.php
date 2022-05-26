@@ -98,19 +98,36 @@ class FeaturesRepository extends ServiceEntityRepository
         return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_SCALAR);
     }
 
-    public function findMultipleFeatures($id)
+    public function findMultipleFeatures($params, $stock)
     {
+        $first = 0;
+        $index = 0;
         $em = $this->getEntityManager();
 
         $sql = $em->createQueryBuilder()
-        ->select('f')
+        ->select('f.idFeature')
         ->from(Features::class, 'f');
 
-        if(count(array_filter($id)) != 0){
-            $sql->where('f.gameDeveloper in (:developer)')
-            ->setParameter('developer', $id,\Doctrine\DBAL\Connection::PARAM_INT_ARRAY );
+        foreach ($params as $key => $value) {
+            $index++;
+            if(count(array_filter($value)) != 0){
+                $query = 'f.'.$key.' in (:field'.$index.')';
+                $first == 0 ? $sql -> where($query) : $sql->andWhere($query);
+                
+                $sql->setParameter('field'.$index, $value, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
+                $first = 1;
+            }
         }
 
-        return $sql->getQuery()->getResult();
+        if(count(array_filter($stock)) != 2 && count(array_filter($stock)) != 0)
+        {
+            foreach($stock as $value){
+                strcmp($value, "En Stock") ? $query = 'f.gameStock = 0' : $query = 'f.gameStock > 0';
+                    
+                $first == 0 ? $sql ->where($query) : $sql ->andWhere($query);
+                $first = 1;
+            }
+        }
+        return $sql->getQuery()->getArrayResult();
     }
 }

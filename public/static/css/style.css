@@ -336,6 +336,14 @@ body {
   margin-top: 20px;
   position: relative;
 }
+.store__container--paginator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: min-content;
+  margin-top: 20px;
+}
 
 .footer {
   width: 100%;
@@ -744,13 +752,13 @@ body {
   align-items: center;
   justify-content: center;
 }
-.reviews__page {
+.reviews__page, .store__page {
   font-size: clamp(14px, 1.2vw, 18px);
   font-weight: 600;
   color: var(--white);
   margin: 0px 10px;
 }
-.reviews__button, .reviews__button--disabled {
+.reviews__button, .store__button, .reviews__button--disabled, .store__button--disabled {
   width: 35px;
   height: 35px;
   font-size: 20px;
@@ -763,7 +771,7 @@ body {
   border-radius: 5px;
   cursor: pointer;
 }
-.reviews__button--disabled {
+.reviews__button--disabled, .store__button--disabled {
   filter: contrast(50%);
   cursor: default;
 }
@@ -1179,7 +1187,25 @@ body {
 .store__checkBox {
   margin-right: 10px;
 }
-
+.store__error {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+.store__error--text {
+  color: var(--white);
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+.store__error--icon {
+  color: var(--background_pink);
+  font-size: 80px;
+}
 @media (max-width: 1480px) {
   .header__top, .header__bottom {
     width: 1280px;

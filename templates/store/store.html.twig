@@ -22,8 +22,8 @@
     {# Store top container end #}
     {# Store menu container start #}
     <section class="store__container--menu">
-        <ul class="store__list">
-            <li class="store__title--list">Desarrollador</li>
+        <ul class="store__list" data-type="developer">
+            <li class="store__title--list" >Desarrollador</li>
             {% for dev in developers %}
 
                 <li class="store__item">
@@ -34,36 +34,36 @@
             {% endfor %}
         </ul>
 
-        <ul class="store__list">
+        <ul class="store__list" data-type="platform">
             <li class="store__title--list">Plataforma</li>
             {% for platform in platforms %}
 
                 <li class="store__item">
-                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox">{{platform.platform | capitalize}}</span> 
+                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox" value="{{platform.platform}}">{{platform.platform | capitalize}}</span> 
                     <span class="store__span--light">{{ platform.total }}</span>
                 </li>
 
             {% endfor %}
         </ul>
 
-        <ul class="store__list">
+        <ul class="store__list" data-type="stock">
             <li class="store__title--list">Disponibilidad</li>
             {% for value in stock %}
 
                 <li class="store__item">
-                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox">{{ value.title }}</span> 
+                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox" value="{{value.title}}">{{ value.title }}</span> 
                     <span class="store__span--light">{{ value.value }}</span>
                 </li>
 
             {% endfor %}
         </ul>
 
-        <ul class="store__list">
+        <ul class="store__list" data-type="pegi">
             <li class="store__title--list">Pegi</li>
             {% for value in pegi %}
 
                 <li class="store__item">
-                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox">{{value.gamePegi}}</span> 
+                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox" value="{{value.gamePegi}}">{{value.gamePegi}}</span> 
                     <span class="store__span--light">{{ value.value }}</span>
                 </li>
 
@@ -92,7 +92,7 @@
             <a href="{{path('product', {'game_slug': product.gameSlug ~ '_' ~ platform.platformName})}}" class="store__card">
                 {# Card image start #}
                 <div class="card__img--container">
-                    <img src="{{ asset('static/img/games/'~ media[counter - 1].mediaUrl ~'.webp') }}" alt="{{ media[counter - 1].mediaAlt }}" class="card__img">
+                    <img src="{{ asset('static/img/games/'~ media[counter - 1].mediaUrl ~'-min.webp') }}" alt="{{ media[counter - 1].mediaAlt }}" class="card__img">
                     <span class="card__img--span"><i class="{{'bi bi-' ~ platformIcon ~ ' info__icon--data'}}"></i>{{ platform.platformName }}</span>
                 </div>
                 {# Card image end #}
@@ -115,7 +115,17 @@
             </a>
         {% endfor %}
         </div>
-        
+        {# Paginator container start #}
+        <div class="store__container--paginator">
+        {% if paginator.lastPage != 1 %}
+            <i class="bi bi-chevron-left store__button--disabled" direction="left"></i>
+            <span class="store__page">
+                Página <span class="store__actual">1</span> de <span class="store__last">{{paginator.lastPage}}</span>
+            </span>
+            <i class="bi bi-chevron-right store__button" direction="right"></i>
+        {% endif %}
+        </div>
+        {# Paginator container end #}
     </section>
     {# Store products container end #}
 </main>
