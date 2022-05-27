@@ -51,18 +51,6 @@ class FeaturesRepository extends ServiceEntityRepository
         return $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
 
-    public function getDeveloper()
-    {
-        $em = $this->getEntityManager();
-
-        $sql =  $em->createQuery(
-            'SELECT f.gameDeveloper, COUNT(f.gameDeveloper) as total
-            FROM App\Entity\Features f GROUP BY f.gameDeveloper'
-        );
-
-        return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_SCALAR);
-    }
-
     public function getStock()
     {
         $em = $this->getEntityManager();
@@ -84,18 +72,6 @@ class FeaturesRepository extends ServiceEntityRepository
         $secondResult = $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 
         return [['value' => $firstResult['stock'], 'title' => 'En Stock'], ['value' => $secondResult['stock'], 'title' => 'Sin Stock']];
-    }
-
-    public function getPegi()
-    {
-        $em = $this->getEntityManager();
-
-        $sql =  $em->createQuery(
-            'SELECT f.gamePegi, COUNT(f.gamePegi) as value
-            FROM App\Entity\Features f GROUP BY f.gamePegi'
-        );
-
-        return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_SCALAR);
     }
 
     public function findMultipleFeatures($params, $stock)

@@ -124,6 +124,7 @@
 .store
 {
     @extend .main;
+    margin: 0;
 
     &__container
     {

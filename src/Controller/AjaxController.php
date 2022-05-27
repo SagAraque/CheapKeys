@@ -292,6 +292,7 @@ class AjaxController extends AbstractController
 
         $platforms = $doctrine->getRepository(Platforms::class)->findPlatformArrayId(
             explode(',', $request->get("platform")),
+            $request->get("platformLimit")
         );
 
         $platformName = [];
@@ -301,10 +302,13 @@ class AjaxController extends AbstractController
 
         if(count($features) == 0) return new Response("No data", 404);
 
-        $games = $doctrine->getRepository(GamesPlatform::class)->findByFeatureNoQuery(array(
-            "idFeature" => $features, 
-            "idPlatform" => $platformName
-        ));
+        $games = $doctrine->getRepository(GamesPlatform::class)->findByFeatureNoQuery(
+            array(
+                "idFeature" => $features, 
+                "idPlatform" => $platformName
+            ),
+            $request->get('order')
+        );
 
         $page = $request->get('page');
     
@@ -322,10 +326,24 @@ class AjaxController extends AbstractController
 
     
         $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
+
+        $gamesImages = [];
+
+        foreach ($paginator->getItems() as $game) {
+            $idG = $game->getGame()->getIdGame();
+            $idP = $game->getIdPlatform()->getIdPlatform();
+
+            foreach ($images as $img) {
+                if ($img->getIdGame()->getIdGame() == $idG && $img->getIdPlatform()->getIdPlatform() == $idP){
+                    array_push($gamesImages, $img);
+                }
+            }
+        }
+
             
         return $this->render('ajax/cardGame.html.twig',[
             'paginator' => $paginator,
-            'media' => $images,
+            'media' => $gamesImages,
         ]);
     }
 

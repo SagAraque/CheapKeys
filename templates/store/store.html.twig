@@ -12,10 +12,11 @@
         <span class="store__container--select">
             Ordenar por 
             <select name="orderBy" class="store__select">
-                <option value="lowPrice">Precio más bajo</option>
-                <option value="highPrice">Precio más alto</option>
-                <option value="valoration">Valoración</option>
-                <option value=""></option>
+                <option value="rel">Relevancia</option>
+                <option value="lowPrice">Precio ascendente</option>
+                <option value="highPrice">Precio descendente</option>
+                <option value="lowValoration">Valoración ascendente</option>
+                <option value="highValoration">Valoración descendente</option>
             </select>
         </span>
     </div>
@@ -24,35 +25,36 @@
     <section class="store__container--menu">
         <ul class="store__list" data-type="developer">
             <li class="store__title--list" >Desarrollador</li>
-            {% for dev in developers %}
+            {% for key,value in developers %}
 
                 <li class="store__item">
-                    <span class="store__span"><input type="checkbox"class="store__checkBox" value="{{dev.gameDeveloper}}">{{dev.gameDeveloper}}</span> 
-                    <span class="store__span--light">{{ dev.total }}</span>
+                    <span class="store__span"><input type="checkbox"class="store__checkBox" value="{{key}}">{{key}}</span> 
+                    <span class="store__span--light">{{ value }}</span>
                 </li>
 
             {% endfor %}
         </ul>
+        {% if platformFilter == 1 %}
+            <ul class="store__list" data-type="platform">
+                <li class="store__title--list">Plataforma</li>
+                {% for key,value in platforms %}
 
-        <ul class="store__list" data-type="platform">
-            <li class="store__title--list">Plataforma</li>
-            {% for platform in platforms %}
+                    <li class="store__item">
+                        <span class="store__span"><input type="checkbox" name="" class="store__checkBox" value="{{key}}">{{key | capitalize}}</span> 
+                        <span class="store__span--light">{{ value }}</span>
+                    </li>
 
-                <li class="store__item">
-                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox" value="{{platform.platform}}">{{platform.platform | capitalize}}</span> 
-                    <span class="store__span--light">{{ platform.total }}</span>
-                </li>
-
-            {% endfor %}
-        </ul>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
         <ul class="store__list" data-type="stock">
             <li class="store__title--list">Disponibilidad</li>
-            {% for value in stock %}
+            {% for key,value in stock %}
 
                 <li class="store__item">
-                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox" value="{{value.title}}">{{ value.title }}</span> 
-                    <span class="store__span--light">{{ value.value }}</span>
+                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox" value="{{key}}">{{ key }}</span> 
+                    <span class="store__span--light">{{ value }}</span>
                 </li>
 
             {% endfor %}
@@ -60,11 +62,11 @@
 
         <ul class="store__list" data-type="pegi">
             <li class="store__title--list">Pegi</li>
-            {% for value in pegi %}
+            {% for key,value in pegi %}
 
                 <li class="store__item">
-                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox" value="{{value.gamePegi}}">{{value.gamePegi}}</span> 
-                    <span class="store__span--light">{{ value.value }}</span>
+                    <span class="store__span"><input type="checkbox" name="" class="store__checkBox" value="{{key}}">{{key}}</span> 
+                    <span class="store__span--light">{{ value }}</span>
                 </li>
 
             {% endfor %}
@@ -90,35 +92,37 @@
             {% endif %} 
 
 
-            <a href="{{path('product', {'game_slug': product.gameSlug ~ '_' ~ platform.platformName})}}" class="store__card">
-                {# Card image start #}
-                <div class="card__img--container">
-                    <img src="{{ asset('static/img/games/'~ media[counter - 1].idMedia.mediaUrl ~'-min.webp') }}" alt="{{ media[counter - 1].idMedia.mediaAlt }}" class="card__img">
-                    <span class="card__img--span"><i class="{{'bi bi-' ~ platformIcon ~ ' info__icon--data'}}"></i>{{ platform.platformName }}</span>
-                </div>
-                {# Card image end #}
-                {# Card content start #}
-                <div class="card__content">
-                    <h3 class="card__title"> {{ product.gameName }}</h3>
-                    <div class="card__content--container">
-                        {% if feature.gameDiscount != 0 %}
-                            <h3 class="card__price"><span class="info__price--discount">{{ feature.gamePrice }}€</span>{{discount}}€</h3>
-                        {% else %}
-                            <h3 class="card__price">{{ feature.gamePrice }}€</h3>
-                        {% endif %}
-                        <span class="card__val">{{ feature.gameValoration }}</span>
+            <div class="store__card">
+                <a href="{{path('product', {'game_slug': product.gameSlug ~ '_' ~ platform.platformName})}}" class="card__link">
+                    {# Card image start #}
+                    <div class="card__img--container">
+                        <img src="{{ asset('static/img/games/'~ media[counter - 1].idMedia.mediaUrl ~'-min.webp') }}" alt="{{ media[counter - 1].idMedia.mediaAlt }}" class="card__img">
+                        <span class="card__img--span"><i class="{{'bi bi-' ~ platformIcon ~ ' info__icon--data'}}"></i>{{ platform.platformName }}</span>
                     </div>
-                    <button class="card__button">
-                        {{feature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito'}}
-                    </button>
-                </div>
-                {# Card content end #}
-            </a>
+                    {# Card image end #}
+                    {# Card content start #}
+                    <div class="card__content">
+                        <h3 class="card__title"> {{ product.gameName }}</h3>
+                        <div class="card__content--container">
+                            {% if feature.gameDiscount != 0 %}
+                                <h3 class="card__price"><span class="info__price--discount">{{ feature.gamePrice }}€</span>{{discount}}€</h3>
+                            {% else %}
+                                <h3 class="card__price">{{ feature.gamePrice }}€</h3>
+                            {% endif %}
+                            <span class="card__val">{{ feature.gameValoration }}</span>
+                        </div>
+                    </div>
+                    {# Card content end #}
+                </a>
+                <button class="card__button" game="{{ product.idGame }}" platform="{{ platform.idPlatform }}">
+                    {{feature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito'}}
+                </button>
+            </div>
         {% endfor %}
         </div>
         {# Paginator container start #}
         <div class="store__container--paginator">
-        {% if paginator.lastPage != 1 %}
+        {% if paginator.lastPage > 1 %}
             <i class="bi bi-chevron-left store__button--disabled" direction="left"></i>
             <span class="store__page">
                 Página <span class="store__actual">1</span> de <span class="store__last">{{paginator.lastPage}}</span>
@@ -134,7 +138,9 @@
 {% endblock %}
 
 {% block javascript %}
-
+    <script>
+        var platformLimit = '{{data}}'
+    </script>
     <script src="{{ asset('static/javascript/store.js') }}"></script>
 
 {% endblock %}

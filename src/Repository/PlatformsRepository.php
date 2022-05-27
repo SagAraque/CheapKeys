@@ -51,9 +51,10 @@ class PlatformsRepository extends ServiceEntityRepository
         return $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
 
-    public function findPlatformArrayId($name)
+    public function findPlatformArrayId($name, $platform)
     {
         $em = $this->getEntityManager();
+        $first = 0;
 
         $sql = $em->createQueryBuilder()
         ->select('p.idPlatform')
@@ -62,6 +63,16 @@ class PlatformsRepository extends ServiceEntityRepository
         if(count(array_filter($name)) != 0){
             $sql->where('p.platformName in (:name)')
             ->setParameter('name', $name,\Doctrine\DBAL\Connection::PARAM_STR_ARRAY );
+            $first = 1;
+        }
+
+        if($platform == 'pc'){
+            $query = "p.platformName NOT IN ('playstation', 'xbox', 'switch')";
+            $first == 1 ? $sql -> andWhere($query) : $sql->where($query);
+        }elseif($platform != 'all'){
+            $query = 'p.platformName = :platform';
+            $first == 1 ? $sql -> andWhere($query) : $sql->where($query);
+            $sql->setParameter('platform', $platform);
         }
 
         return $sql->getQuery()->getArrayResult();

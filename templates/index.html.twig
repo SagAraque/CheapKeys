@@ -9,35 +9,39 @@
     <section class="container__index">
         <h2 class="index__title">Últimas ofertas</h2>
         <div class="index__container">
-            <a href="{{path('product', {'game_slug': 'minecraft_java_edition_windows'})}}" class="index__card">
-                <div class="card__img--container">
-                    <img src="{{ asset('static/img/games/minecraft-min.webp') }}" alt="" class="card__img">
-                    <span class="card__img--span"><i class="bi bi-windows info__icon--data"></i>Windows</span>
-                </div>
-                <div class="card__content">
-                    <h3 class="card__title"> Minecraft Java Edition</h3>
-                    <div class="card__content--container">
-                        <h3 class="card__price">19.95€</h3>
-                        <span class="card__val">7.5</span>
+            <div href="{{path('product', {'game_slug': 'minecraft_java_edition_windows'})}}" class="index__card">
+                <a href="{{path('product', {'game_slug': 'minecraft_java_edition_windows'})}}" class="card__link">
+                    <div class="card__img--container">
+                        <img src="{{ asset('static/img/games/minecraft-min.webp') }}" alt="" class="card__img">
+                        <span class="card__img--span"><i class="bi bi-windows info__icon--data"></i>Windows</span>
                     </div>
-                    <button class="card__button">Añadir al carrito</button>
-                </div>
-            </a>
+                    <div class="card__content">
+                        <h3 class="card__title"> Minecraft Java Edition</h3>
+                        <div class="card__content--container">
+                            <h3 class="card__price">19.95€</h3>
+                            <span class="card__val">7.5</span>
+                        </div>
+                    </div>
+                </a>
+                <button class="card__button">Añadir al carrito</button>
+            </div>
 
-            <a href="{{path('product', {'game_slug': 'bioshock_the_collection_switch'})}}" class="index__card">
-                <div class="card__img--container">
-                    <img src="{{ asset('static/img/games/bioshock-min.webp') }}" alt="" class="card__img">
-                    <span class="card__img--span"><i class="bi bi-nintendo-switch info__icon--data"></i>Switch</span>
-                </div>
-                <div class="card__content">
-                    <h3 class="card__title"> Bioshock The Collection</h3>
-                    <div class="card__content--container">
-                        <h3 class="card__price"><span class="info__price--discount">22.65€</span>16.98€</h3>
-                        <span class="card__val">0</span>
+            <div href="{{path('product', {'game_slug': 'minecraft_java_edition_windows'})}}" class="index__card">
+                <a href="{{path('product', {'game_slug': 'bioshock_the_collection_switch'})}}" class="card__link">
+                    <div class="card__img--container">
+                        <img src="{{ asset('static/img/games/bioshock-min.webp') }}" alt="" class="card__img">
+                        <span class="card__img--span"><i class="bi bi-nintendo-switch info__icon--data"></i>Switch</span>
                     </div>
-                    <button class="card__button">Añadir al carrito</button>
-                </div>
-            </a>
+                    <div class="card__content">
+                        <h3 class="card__title"> Bioshock The Collection</h3>
+                        <div class="card__content--container">
+                            <h3 class="card__price"><span class="info__price--discount">22.65€</span>16.98€</h3>
+                            <span class="card__val">0</span>
+                        </div>
+                    </div>
+                </a>
+                <button class="card__button">Añadir al carrito</button>
+            </div>
             {% for i in 0..3 %}
                 <a class="index__card">GAME CARD</a>
             {% endfor %}

@@ -4,13 +4,13 @@
         <div class="header__container--movile">
             <i class="bi bi-list header__icon--menu"></i>
             <a class="header__logo--movile" href="{{ path('index') }}">
-                <img src="{{ asset('static/img/logo.png') }}" alt="CheapKeys white logo" class="header__logo--img">
+                <img src="{{ asset('static/img/logo.webp') }}" alt="CheapKeys white logo" class="header__logo--img">
             </a>
         </div>
         
         <!-- Header logo start -->
         <a class="header__logo" href="{{ path('index') }}">
-            <img src="{{ asset('static/img/logo.png') }}" alt="CheapKeys white logo" class="header__logo--img">
+            <img src="{{ asset('static/img/logo.webp') }}" alt="CheapKeys white logo" class="header__logo--img">
         </a>
         <!-- Header search bar start -->
         <form action="" class="header__form">
@@ -68,9 +68,9 @@
                 <li class="header__item"><a href="{{ path('category', { 'data':'pc' }) }}" class="header__link--list">PC</a></li>
                 <li class="header__item"><a href="{{ path('category', { 'data':'playstation' }) }}" class="header__link--list">PlayStation</a></li>
                 <li class="header__item"><a href="{{ path('category', { 'data':'xbox' }) }}" class="header__link--list">XBOX</a></li>
-                <li class="header__item"><a href="{{ path('category', { 'data':'nintendo' }) }}" class="header__link--list">Nintendo</a></li>
+                <li class="header__item"><a href="{{ path('category', { 'data':'switch' }) }}" class="header__link--list">Nintendo</a></li>
                 <li class="header__item"><a href="{{ path('category', { 'data':'ofertas' }) }}" class="header__link--list">Ofertas</a></li>
-                <li class="header__item"><a href="{{ path('category', { 'data':'proximamente' }) }}" class="header__link--list">Proximamente</a></li>
+                <li class="header__item"><a href="{{ path('category', { 'data':'all' }) }}" class="header__link--list">Todos los productos</a></li>
             </ul>
         </nav>
         <!-- Header nav end -->

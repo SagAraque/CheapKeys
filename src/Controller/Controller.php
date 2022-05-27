@@ -44,7 +44,7 @@ class Controller extends AbstractController
     /**
      * @Route("/cart", name="cart")
      */
-    public function cart(ManagerRegistry $doctrine, Security $security):Response
+    public function cart(ManagerRegistry $doctrine, Security $security, Request $request):Response
     {
         $user = $this->getUser();
 
@@ -74,13 +74,19 @@ class Controller extends AbstractController
             'idPlatform' => $platformsId,
         ));
         
-        return $this->render('/cart.html.twig', [
+        $response = $this->render('/cart.html.twig', [
             'cartCant' => $cartCant,
             'cart' => $cart[0],
             'cartContent' => $cartContent,
             'images' => $images,
             'features' => $features,
         ]);
+
+        $response->setEtag(md5($response->getContent()));
+        $response->setPrivate();
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     /**
@@ -138,24 +144,20 @@ class Controller extends AbstractController
             'cartCant' => $cart
         ]);
 
-        // $response->setEtag(md5($response->getContent()));
-        // $response->setPublic();
-        // $response->isNotModified($request);
+        $response->setEtag(md5($response->getContent()));
+        $response->setPublic();
+        $response->isNotModified($request);
 
         return $response;
     }
 
     /**
-     * @Route("/store/{data}", requirements={"data"="pc|playstation|xbox|nintendo|ofertas|proximamente"}, name="category")
+     * @Route("/store/{data}", requirements={"data"="pc|playstation|xbox|switch|ofertas|all"}, name="category")
      */
     public function category($data, Paginator $paginator, ManagerRegistry $doctrine, Request $request, Security $security):Response
     {
-
-        $developer = $doctrine -> getRepository(Features::class) -> getDeveloper();
-        $platforms = $doctrine -> getRepository(GamesPlatform::class) -> getPlatforms();
-        $stock = $doctrine -> getRepository(Features::class) -> getStock();
-        $pegi = $doctrine -> getRepository(Features::class) -> getPegi();
-        $games = $doctrine -> getRepository(GamesPlatform::class) -> findAllNoQuery();
+        $games = $doctrine -> getRepository(GamesPlatform::class) -> findAllNoQueryByPlatform($data);
+        $platformFilter = 0;
 
         $paginator->paginate($games, 1, 16);
 
@@ -164,23 +166,47 @@ class Controller extends AbstractController
 
         $gamesId = [];
         $platformId = [];
+        $devs = [];
+        $platformsName = [];
+        $pegi = [];
+        $stock = ["En Stock" => 0, "Sin Stock" => 0];
 
         foreach ($paginator->getItems() as $game) {
+            // Get games id
             array_push($gamesId, strval($game->getGame()->getIdGame()));
+            // Get platforms id
             array_push($platformId, strval($game->getIdPlatform()->getIdPlatform()));
+            // Gat game developers
+            array_push($devs, $game->getIdFeature()->getGameDeveloper());
+            // Get platform names
+            array_push($platformsName, $game->getIdPlatform()->getPlatformName());
+            // Get games pegi
+            array_push($pegi, $game->getIdFeature()->getGamePegi());
+            // Get games stock
+            $gameStock = $game->getIdFeature()->getGamestock();
+            $gameStock > 0 ? $stock['En Stock'] += 1 : $stock['Sin Stock'] += 1;
         }
-
+        
         $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformId);
 
-        return $this->render('/store/store.html.twig',[
+        if($data == 'all'  || $data == 'pc') $platformFilter = 1;
+
+        $response =  $this->render('/store/store.html.twig',[
             'data' => $data,
-            'developers' => $developer,
-            'platforms' => $platforms,
+            'developers' => array_count_values($devs),
+            'platforms' => array_count_values($platformsName),
             'stock' => $stock,
-            'pegi' => $pegi,
+            'pegi' => array_count_values($pegi),
             'paginator' => $paginator,
             'media' => $images,
-            'cartCant' => $cart
+            'cartCant' => $cart,
+            'platformFilter' => $platformFilter
         ]);
+
+        $response->setEtag(md5($response->getContent()));
+        $response->setPublic();
+        $response->isNotModified($request);
+        
+        return $response;
     }
 }

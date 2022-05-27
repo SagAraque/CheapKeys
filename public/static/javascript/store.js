@@ -1,5 +1,8 @@
 let checkbox = document.querySelectorAll('.store__checkBox'),
-container = document.querySelector('.store__container--products')
+container = document.querySelector('.store__container--products'),
+select = document.querySelector('.store__select'),
+cardButtons = document.querySelectorAll('.card__button'),
+cartNum = document.querySelector('.header__cartCant'),
 developerData = [],
 platformData = [],
 pegiData = [],
@@ -33,6 +36,22 @@ checkbox.forEach(input => {
 });
 
 
+select.addEventListener('change', ()=>{
+    getData();
+});
+
+// Cart button
+
+cardButtons.forEach(button => {
+    button.addEventListener('click', ()=>{
+        let game = button.getAttribute('game');
+        let platform = button.getAttribute('platform');
+        setGameCart([game, platform]);
+    });
+});
+
+
+
 function modifyArray(value, arr)
 {
     let i = arr.indexOf(value);
@@ -49,6 +68,8 @@ function getData()
     data.append('pegi', pegiData);
     data.append('stock', stockData)
     data.append('page', actualPage == null ? 1: actualPage.textContent);
+    data.append('platformLimit', platformLimit)
+    data.append('order', select.value);
 
     xhr.open('POST', '/ajax/changeStoreProducts', true);
     xhr.send(data);
@@ -95,4 +116,30 @@ function setError()
     
     container.innerHTML = "";
     container.appendChild(div);
+}
+
+function setGameCart(gameData)
+{
+    let xhr = new XMLHttpRequest();
+
+    let data = new FormData();
+    data.append('game', gameData[0]);
+    data.append('platform', gameData[1]);
+    try {
+        data.append('cartCount', cartNum.textContent);
+    } catch (error) {
+        data.append('cartCount', 0);
+    }
+   
+
+    xhr.open('POST', '/ajax/addProductCart', true);
+    xhr.send(data);
+
+    xhr.onreadystatechange = ()=>{
+        if(xhr.readyState == 4 && xhr.status == 302){
+            window.location.href = '/users/login'; 
+        }else if(xhr.readyState == 4 && xhr.status == 200){
+            cartNum.textContent = xhr.responseText;
+        }
+    }
 }

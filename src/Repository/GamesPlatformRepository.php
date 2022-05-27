@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\GamesPlatform;
+use App\Entity\Platforms;
+use App\Entity\Features;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -68,40 +70,51 @@ class GamesPlatformRepository extends ServiceEntityRepository
         return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_SCALAR);
     }
 
-    public function findAllNoQuery()
+    public function findAllNoQueryByPlatform($platform)
     {
         $em = $this->getEntityManager();
 
-        $sql =  $em->createQuery(
-            'SELECT p FROM App\Entity\GamesPlatform p'
-        );
+        $sql =  $em->createQueryBuilder()
+        ->select('g')
+        ->from(GamesPlatform::class, 'g');
+
+        if($platform == 'pc'){
+            $sql->innerJoin(Platforms::class, 'p')
+            ->where('g.idPlatform = p.idPlatform')
+            ->andWhere("p.platformName NOT IN ('playstation', 'xbox', 'switch')");
+        }elseif($platform != 'all'){
+            $sql->innerJoin(Platforms::class, 'p')
+            ->where('g.idPlatform = p.idPlatform')
+            ->andWhere('p.platformName = :platform')
+            ->setParameter('platform', $platform);
+        }
 
         return $sql;
     }
 
-    public function findByFeatureNoQuery($params)
+    public function findByFeatureNoQuery($params, $order)
     {
-        $first = 0;
         $index = 0;
         $em = $this->getEntityManager();
         
         $sql = $em->createQueryBuilder()
         ->select('p')
-        ->from(GamesPlatform::class, 'p');
+        ->from(GamesPlatform::class, 'p')
+        ->join(Features::class, 'f')
+        ->where('p.idFeature = f.idFeature');
 
         foreach ($params as $key => $value) {
             $index++;
             if(count(array_filter($value)) != 0){
-                if($first == 0){
-                    $sql -> where('p.'.$key.' in (:field'.$index.')');
-                }else{
-                    $sql->andWhere('p.'.$key.' in (:field'.$index.')');
-                }
-                
-                $sql->setParameter('field'.$index, $value, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
-                $first = 1;
+                $sql -> andWhere('p.'.$key.' in (:field'.$index.')')
+                ->setParameter('field'.$index, $value, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
             }
         }
+
+        if($order == 'lowPrice') $sql->orderBy('f.gamePrice', 'ASC');
+        if($order == 'highPrice') $sql->orderBy('f.gamePrice', 'DESC');
+        if($order == 'lowValoration') $sql->orderBy('f.gameValoration', 'ASC');
+        if($order == 'highValoration') $sql->orderBy('f.gameValoration', 'DESC');
 
         return $sql;
     }
