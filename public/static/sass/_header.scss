@@ -27,6 +27,12 @@
         &--img
         {
             height: 100%;
+
+            &Movile
+            {
+                height: 100%;
+                display: none;
+            }
         }
 
         &--movile
@@ -191,8 +197,8 @@
         &--menu
         {
             @extend .header__icon;
-            font-size: clamp(30px, 4vw, 40px);
-            margin: 0px; 
+            font-size: clamp(30px, 5vw, 45px);
+            margin-right: 10px; 
         }
 
         &--search
