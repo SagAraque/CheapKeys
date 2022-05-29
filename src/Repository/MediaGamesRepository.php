@@ -50,7 +50,7 @@ class MediaGamesRepository extends ServiceEntityRepository
              AND mg.idGame in (:game)
              AND mg.idPlatform in (:platform)
              AND m.mediaInfoimg = 0
-            GROUP BY mg.idPlatform'
+            GROUP BY mg.idPlatform, mg.idGame'
         )->setParameter('game', $game, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY)
         ->setParameter('platform', $platform, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
 

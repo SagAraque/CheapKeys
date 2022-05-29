@@ -133,7 +133,7 @@ class Controller extends AbstractController
 
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
-        
+
         $response = $this->render('/product.html.twig',[
             'game' => $game[0],
             'media' => $media,
@@ -158,7 +158,7 @@ class Controller extends AbstractController
     {
         $games = $doctrine -> getRepository(GamesPlatform::class) -> findAllNoQueryByPlatform($data);
         $platformFilter = 0;
-
+        
         $paginator->paginate($games, 1, 16);
 
         $cartCount = new CartCount($doctrine, $security);
@@ -189,6 +189,19 @@ class Controller extends AbstractController
         
         $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformId);
 
+        $gamesImages = [];
+
+        foreach ($paginator->getItems() as $game) {
+            $idG = $game->getGame()->getIdGame();
+            $idP = $game->getIdPlatform()->getIdPlatform();
+
+            foreach ($images as $img) {
+                if ($img->getIdGame()->getIdGame() == $idG && $img->getIdPlatform()->getIdPlatform() == $idP){
+                    array_push($gamesImages, $img);
+                }
+            }
+        }
+
         if($data == 'all'  || $data == 'pc') $platformFilter = 1;
 
         $response =  $this->render('/store/store.html.twig',[
@@ -198,7 +211,7 @@ class Controller extends AbstractController
             'stock' => $stock,
             'pegi' => array_count_values($pegi),
             'paginator' => $paginator,
-            'media' => $images,
+            'media' => $gamesImages,
             'cartCant' => $cart,
             'platformFilter' => $platformFilter
         ]);
@@ -210,3 +223,4 @@ class Controller extends AbstractController
         return $response;
     }
 }
+

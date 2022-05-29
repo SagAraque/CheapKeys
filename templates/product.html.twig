@@ -20,7 +20,7 @@
         {# Gallery Start #}
         <section class="gallery">
             {# Gallery img start #}
-            <div class="gallery__img">
+            <div class="gallery__img" >
                 <img src="{{ asset('static/img/games/' ~ media[0].idMedia.mediaUrl ~ '.webp') }}" alt="{{ media[0].idMedia.mediaAlt }}" class="gallery__asset" loading="lazy">
             </div>
             {# Gallery img end #}
@@ -106,20 +106,9 @@
         {# Description container start #}
         <section class="desc">
             <h2 class="desc__title--primary">Acerca del juego</h2>
-            {% for i in 1..desc.title | length %}
-                {# Display title #}
-                {% if desc.title[i - 1] != null %}
-
-                    <h3 class="desc__title">
-                        {{ desc.title[i - 1] }}
-                    </h3>
-
-                {% endif %}
-                {# Display desciption content #}
-                <p class="desc__text">
-                    {{ desc.content[i - 1] }}
-                </p>
-            {% endfor %}
+            {% autoescape %}
+                {{ features.idFeature.gameDesc|raw }} {# var won't be escaped #}
+            {% endautoescape %}
         </section>
         {# Description container end #}
         {# Specs container start #}

@@ -4,7 +4,7 @@
         {% set feature = game.idFeature %}
         {% set counter = ( counter | default(0) ) + 1 %}
 
-        {% set discount =  feature.gamePrice -  ((feature.gamePrice * (feature.gameDiscount / 100)) | number_format(2)) %}
+        {% set discount =  feature.gamePrice -  ((feature.gamePrice * (feature.gameDiscount / 100)) ) %}
 
         {% if platform.platformName == 'switch' %}
             {% set platformIcon = 'nintendo-switch' %}
@@ -25,7 +25,7 @@
                     <h3 class="card__title"> {{ product.gameName }}</h3>
                     <div class="card__content--container">
                         {% if feature.gameDiscount != 0 %}
-                            <h3 class="card__price"><span class="info__price--discount">{{ feature.gamePrice }}€</span>{{discount}}€</h3>
+                            <h3 class="card__price"><span class="info__price--discount">{{ feature.gamePrice }}€</span>{{(discount) | number_format(2) }}€</h3>
                         {% else %}
                             <h3 class="card__price">{{ feature.gamePrice }}€</h3>
                         {% endif %}
