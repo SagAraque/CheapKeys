@@ -252,11 +252,8 @@
 
         &__container
         {
-            &--buttons
-            {
-                width: max(320px, 55%);
-                margin: 10px auto;
-            }
+            width: max(320px, 55%);
+            margin: 10px auto;
         }
 
         &__list
@@ -274,6 +271,11 @@
         &__asset
         {
             display: none;
+        }
+
+        &__price
+        {
+            margin: 0;
         }
     }
 
@@ -421,6 +423,15 @@
             width: 200px;
             height: 270px;
         }
+
+        &__container
+        {
+            &--products
+            {
+                grid-template-columns: repeat(auto-fill, 200px);
+                
+            }
+        }
         
     }
 
@@ -439,15 +450,48 @@
             height: 25px;
         }
     }
+
     .title{
         font-size: 25px;
+    }
+
+    .specs
+    {
+        flex-direction: column;
+
+        &__container
+        {
+            width: max(300px, 60%);
+        }
     }
 
     .info
     {
         &__price
         {
-            font-size: 35px;
+            font-size: 30px;
+            width: min-content;
+            margin: 0;
+
+            &--discount
+            {
+                font-size: var(--text);
+            }
+        }
+
+        &__button
+        {
+            &--buy
+            {
+                height: 35px;
+                font-size: var(--text);
+            }
+
+            &--wish
+            {
+                height: 35px;
+                font-size: var(--text);
+            }
         }
 
         &__card
@@ -503,6 +547,14 @@
         &__icon
         {
             margin: 0px 10px;
+        }
+    }
+
+    .specs
+    {
+        &__container
+        {
+            width: 100%;
         }
     }
 }

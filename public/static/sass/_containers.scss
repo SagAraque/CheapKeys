@@ -170,14 +170,17 @@
         {
             width: 100%;
             height: min-content;
-            @include mixin.flex-style($justify:start, $wrap: wrap);
-            gap: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 280px);
+            justify-content: space-between;
+            gap: 20px;
+            
         }
 
         &--content
         {
             @include mixin.flex-style($justify:start, $direction:column);
-            width: clamp(600px, 60vw, 74%);
+            width: clamp(600px, 75vw, 74%);
             height: min-content;
             margin-top: 20px;
             position: relative;

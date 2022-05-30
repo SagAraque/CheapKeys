@@ -3,7 +3,7 @@
 {% set desc =  json_decode(features.idFeature.gameDesc) %}
 {% set minSpec =  json_decode(features.idFeature.minReq, true) %}
 {% set maxSpec =  json_decode(features.idFeature.maxReq, true) %}
-{% set discount =  features.idFeature.gamePrice -  ((features.idFeature.gamePrice * (features.idFeature.gameDiscount / 100)) | number_format(2)) %}
+{% set discount =  features.idFeature.gamePrice -  ((features.idFeature.gamePrice * (features.idFeature.gameDiscount / 100))) %}
 {% set galleryMax = media | length >= 4 ? 4 : media | length %}
 
 {% if features.idPlatform.platformName == 'switch' %}
@@ -63,7 +63,7 @@
                     <h3 class="info__price">{{ features.idFeature.gamePrice }}€</h3>
                 {% else %}
                     <span class="info__span--discount">{{ features.idFeature.gameDiscount}}%</span>
-                    <h3 class="info__price"><span class="info__price--discount">{{ features.idFeature.gamePrice }}€</span>{{ discount }}€</h3>
+                    <h3 class="info__price"><span class="info__price--discount">{{ features.idFeature.gamePrice }}€</span>{{ (discount)  | number_format(2) }}€</h3>
                 {% endif %}
             </div>
             {# Info button container start #}
