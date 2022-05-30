@@ -15,7 +15,7 @@
 {% block title %} CheapKeys | {{ game.gameName }} {% endblock %}
 
 {% block body %} 
-    <main class="main" role="main">
+    <main class="product" role="main">
         <h2 class="title">{{ game.gameName }}</h2>
         {# Gallery Start #}
         <section class="gallery">
@@ -67,7 +67,7 @@
                 {% endif %}
             </div>
             {# Info button container start #}
-            <div class="info__container">
+            <div class="info__container--buttons">
                 <button class="info__button--buy">{{ features.idFeature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito' }}</button>
                 <button class="info__button--wish">
                     {% if wish == true %}

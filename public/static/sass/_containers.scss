@@ -72,6 +72,12 @@
     @extend .main;
 }
 
+.product
+{
+    @extend .main;
+}
+
+
 .header
 {
     &__container
@@ -140,6 +146,9 @@
 
         &--select
         {
+            width: min-content;
+            font-size: var(--text);
+            white-space: nowrap;
             color: var(--white);
             grid-area: 2 / 4 / 3 / 7;
             justify-self: end;
@@ -147,7 +156,7 @@
 
         &--menu
         {
-            width: 20%;
+            width: 250px;
             height: min-content;
             background-color: var(--background_secondary);
             @include mixin.flex-style($justify:start, $direction:column);
@@ -168,7 +177,7 @@
         &--content
         {
             @include mixin.flex-style($justify:start, $direction:column);
-            width: 74%;
+            width: clamp(600px, 60vw, 74%);
             height: min-content;
             margin-top: 20px;
             position: relative;

@@ -65,6 +65,7 @@
     width: 100%;
     font-size: var.$title;
     color: var(--white);
+    margin-top: 0px;
 }
 
 .info{
@@ -81,14 +82,15 @@
     overflow: hidden;
 
     &__title{
-        @extend .title;
+        width: 100%;
+        color: var(--white);
         font-size: 20px;
         text-align: center;
     }
 
     &__price{
         color: var(--white);
-        font-size: clamp(20px, 2vw, 40px);
+        font-size: clamp(25px, 2vw, 40px);
         font-weight: 400;
         margin: 15px;
         flex-grow: 1;
@@ -108,7 +110,7 @@
                 background-color: var(--background_pink);
                 transform: rotate(180deg);
                 position: absolute;
-                bottom: 10px;
+                bottom: 0.6rem;
                 left: 0px;
             }
         }
@@ -177,6 +179,11 @@
     &__container{
         width: 100%;
         @include mixin.flex-style($justify:space-between, $align:center);
+
+        &--buttons
+        {
+            @extend .info__container;
+        }
     }
 
     &__list{
@@ -194,11 +201,11 @@
 
     &__span
     {
-        font-size: var.$text;
+        font-size: var(--text);
     }
 
     &__span--data{
-        font-size: var.$text;
+        font-size: var(--text);
         color: var(--white);
     }
 
@@ -215,7 +222,7 @@
 
     &__span--discount{
         color: var(--white);
-        font-size: var.$text;
+        font-size: var(--text);
         background-color: var(--background_pink);
         padding: 5px 15px;
         border-radius: 5px;
@@ -253,7 +260,7 @@
 
     &__text{
         color: var(--light_white);
-        font-size: var.$text;
+        font-size: var(--text);
         line-height: 30px;
     }
 }

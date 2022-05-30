@@ -1,0 +1,25 @@
+{% for game in games %}
+
+    {% set platform = game.idPlatform %}
+    {% set product = game.game %}
+    {% set feature = game.idFeature %}
+    {% set counter = ( counter | default(0) ) + 1 %}
+
+    {% set discount =  feature.gamePrice -  ((feature.gamePrice * (feature.gameDiscount / 100)) ) %}
+
+    {% if platform.platformName == 'switch' %}
+        {% set platformIcon = 'nintendo-switch' %}
+    {% else %}
+        {% set platformIcon = platform.platformName %}
+    {% endif %} 
+
+    <a href="{{path('product', {'game_slug': product.gameSlug ~ '_' ~ platform.platformName})}}" class="header__card">
+        <img src="{{ asset('static/img/games/'~ media[counter - 1].idMedia.mediaUrl ~'-min.webp') }}" alt="{{ media[counter - 1].idMedia.mediaAlt }}" class="card__img--height">
+        <div class="card__content--long">
+            <h3 class="card__title--search">{{product.gameName}}</h3>
+            <span class="card__platform--search"><i class="{{'bi bi-' ~ platformIcon ~ ' info__icon--data'}}"></i>{{ platform.platformName | capitalize }}</span>
+            <span class="card__price--search">{{ discount | number_format(2) }} €</span>
+        </div>
+    </a>
+
+{% endfor %}

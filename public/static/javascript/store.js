@@ -75,7 +75,7 @@ function getData()
     xhr.send(data);
 
     let loading = setTimeout(()=>{
-        setLoading();
+        setLoading(container);
     },200);
 
     xhr.onreadystatechange = ()=>{
@@ -87,14 +87,6 @@ function getData()
             setError()
         }
     }
-}
-
-function setLoading()
-{
-    let loading = document.createElement('div');
-    loading.classList.add('reviews__loading');
-    container.innerHTML = "";
-    container.appendChild(loading);
 }
 
 function setError()

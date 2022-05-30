@@ -24,18 +24,9 @@
     {
         width: 100%;
         color: var(--white);
-        font-size: var.$title25;
+        font-size: var(--title25);
         font-weight: 600;
         margin: 10px 0px;
-
-        &--game
-        {
-            @extend .card__title;
-            margin: 0px;
-            font-size: var.$text20;
-            text-align: start;
-            font-weight: 500;
-        }
     }
 
     &__list
@@ -51,7 +42,7 @@
     &__item
     {
         @include mixin.flex-style($justify: space-between);
-        font-size: var.$text20;
+        font-size: var(--text20);
     }
 
     &__text
@@ -64,7 +55,7 @@
 
         &--total
         {
-            font-size: var.$title25;
+            font-size: var(--title25);
             font-weight: 600;
         }
     }
@@ -72,7 +63,7 @@
     &__button
     {
         width: 100%;
-        font-size: var.$text20;
+        font-size: var(--text20);
         background-color: var(--background_pink);
         color: var(--white);
         padding: 8px 0px;
@@ -81,91 +72,15 @@
         border-radius: 5px;
     }
 
-    &__product
-    {
-        width: 100%;
-        height: 130px;
-        @include mixin.flex-style($justify: start);
-        background-color: var(--background_secondary);
-        border-radius: 8px;
-        margin-bottom: 15px;
-        overflow: hidden;
-        position: relative;
-    }
-
     &__img
     {
         height: 100%;
     }
 
-    &__info
-    {
-        height: 100%;
-        @include mixin.flex-style($justify: space-between, $direction:column);
-        flex-grow:  1;
-        padding: 10px;
-        box-sizing: border-box;
-        position: relative;
-    }
-
-    &__icon
-    {
-        @extend .info__icon--data;
-
-        &--selector
-        {
-            @extend .info__icon--data;
-            color:  var(--background_pink);
-            font-size: var.$text20;
-            margin: 0;
-            cursor: pointer;
-        }
-
-        &--delete
-        {
-            width: min-content;
-            color:  var(--background_pink);
-            font-size: var.$title25;
-            position: absolute;
-            top: 8px;
-            right: 10px;
-            cursor: pointer;
-        }
-    }
-
-    &__platform
-    {
-        @extend .info__span--data;
-    }
-
     &__cant
     {
         @extend .info__span--data;
-        font-size: var.$text20;
+        font-size: var(--text20);
         margin: 0px 10px;
-    }
-
-    &__price
-    {
-        color: var(--white);
-        font-size: var.$text20;
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-
-        &--discount
-        {
-            @extend .info__price--discount;
-        }
-    }
-
-    &__discount
-    {
-        @extend .info__span--discount;
-        position: absolute;
-        border-bottom-left-radius: 0;
-        border-top-right-radius: 0;
-        left: 0;
-        top: -10px;
     }
 }

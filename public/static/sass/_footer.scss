@@ -50,7 +50,7 @@
     }
 
     &__link, &__copy{
-        font-size: var.$text;
+        font-size: var(--text);
         color: var(--white);
         text-decoration: none;
         white-space: nowrap;
