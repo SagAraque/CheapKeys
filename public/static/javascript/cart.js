@@ -1,4 +1,4 @@
-let deleteButton = document.querySelectorAll('.cart__icon--delete'),
+let deleteButton = document.querySelectorAll('.card__icon--delete'),
 cartPrice = document.querySelector('.cart__text--total'),
 cartTotal = document.querySelector('.cart__text'),
 cartTotalHeader = document.querySelector('.header__cartCant'),

@@ -118,4 +118,21 @@ class GamesPlatformRepository extends ServiceEntityRepository
 
         return $sql;
     }
+
+    public function findByWord($word)
+    {
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT gp 
+            FROM App\Entity\GamesPlatform gp
+            JOIN App\Entity\Games g
+            WHERE gp.game = g.idGame
+            AND g.gameName LIKE :word'
+        )
+        ->setParameter('word', '%'.$word.'%')
+        ->setMaxResults(6);
+
+        return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+    }
 }

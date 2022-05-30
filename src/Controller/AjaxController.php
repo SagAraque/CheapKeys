@@ -347,6 +347,32 @@ class AjaxController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/ajax/searchBarResult", name="searchBarResult")
+     */
+    public function searchBarResult(ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $param = $request ->query;
+
+        if($param->get('string') == "") return new Response('', 404);
+
+        $games = $doctrine->getRepository(GamesPLatform::class)->findByWord($param -> get('string'));
+        $gamesId = [];
+        $platformsId = [];
+    
+        foreach ($games as $game) {
+            array_push($gamesId, strval($game->getGame()->getIdGame()));
+            array_push($platformsId, strval($game->getIdPlatform()->getIdPlatform()));
+        }
+
+        $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
+        
+        return $this->render('ajax/searchCard.html.twig',[
+            'games' => $games,
+            'media' => $images
+        ]);
+    }
+
 
     private function getDiscountPrice($game)
     {
