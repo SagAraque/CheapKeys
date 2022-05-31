@@ -67,6 +67,7 @@
                     </div>
                 {% endfor %}
             </div>
+            <input type="hidden" name="token" value="{{ csrf_token('comodore-amiga') }}">
             <input type="submit" value="Pagar" class="cart__button">
             {% for flash in app.session.flashbag.get('error') %}
                 <span class="form__error">  

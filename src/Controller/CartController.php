@@ -14,14 +14,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\GamesPlatform;
 use App\Entity\CartProducts;
 use App\Entity\MediaGames;
-use App\Entity\Platforms;
-use App\Utils\CartCount;
-use App\Utils\Paginator;
-use App\Entity\Features;
 use App\Entity\GameKeys;
-use App\Entity\Billing;
-use App\Entity\Games;
+use App\Utils\CartCount;
 use App\Entity\Orders;
+use App\Entity\Billing;
 use App\Entity\Cart;
 
 class CartController extends AbstractController
@@ -64,7 +60,7 @@ class CartController extends AbstractController
             'billingState' => 'ACTIVE'
         ));
         
-        $response = $this->render('/cart.html.twig', [
+        $response = $this->render('/store/cart.html.twig', [
             'cartCant' => $cartCant,
             'cart' => $cart[0],
             'cartContent' => $cartContent,
@@ -85,6 +81,10 @@ class CartController extends AbstractController
      */
     public function payment(ManagerRegistry $doctrine, Security $security, Request $request, EntityManagerInterface $entityManager): RedirectResponse
     {
+
+        $token = $request -> request -> get('token');
+        if(!($this->isCsrfTokenValid('comodore-amiga', $token))) throw new BadRequestHttpException('Maybe I´m not a tea pot', null, 403);
+
         $billId = $request->get('billingDirection');
         $userId = $this->getUser()->getIdUser();
 

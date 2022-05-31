@@ -1,0 +1,180 @@
+{% extends 'base.html.twig' %}
+
+{% set desc =  json_decode(features.idFeature.gameDesc) %}
+{% set minSpec =  json_decode(features.idFeature.minReq, true) %}
+{% set maxSpec =  json_decode(features.idFeature.maxReq, true) %}
+{% set discount =  features.idFeature.gamePrice -  ((features.idFeature.gamePrice * (features.idFeature.gameDiscount / 100))) %}
+{% set galleryMax = media | length >= 4 ? 4 : media | length %}
+
+{% if features.idPlatform.platformName == 'switch' %}
+    {% set platform = 'nintendo-switch' %}
+{% else %}
+    {% set platform = features.idPlatform.platformName %}
+{% endif %} 
+
+{% block title %} CheapKeys | {{ game.gameName }} {% endblock %}
+
+{% block body %} 
+    <main class="product" role="main">
+        <h2 class="title">{{ game.gameName }}</h2>
+        {# Gallery Start #}
+        <section class="gallery">
+            {# Gallery img start #}
+            <div class="gallery__img" >
+                <img src="{{ asset('static/img/games/' ~ media[0].idMedia.mediaUrl ~ '.webp') }}" alt="{{ media[0].idMedia.mediaAlt }}" class="gallery__asset" loading="lazy">
+            </div>
+            {# Gallery img end #}
+            {# Gallery min container start #}
+            <div class="gallery__container">
+                {# Gallery arrow start #}
+                <div class="gallery__arrow" slide="left">
+                    <svg class="gallery__icon" viewBox="0 0 20 20">
+						<path fill="none" d="M8.388,10.049l4.76-4.873c0.303-0.31,0.297-0.804-0.012-1.105c-0.309-0.304-0.803-0.293-1.105,0.012L6.726,9.516c-0.303,0.31-0.296,0.805,0.012,1.105l5.433,5.307c0.152,0.148,0.35,0.223,0.547,0.223c0.203,0,0.406-0.08,0.559-0.236c0.303-0.309,0.295-0.803-0.012-1.104L8.388,10.049z"></path>
+					</svg>
+                </div>
+                {# Gallery arrow end #}
+                {% for i in 0 .. galleryMax - 1 %}
+                    {% if i == 0 %}
+                        <div class="gallery__min--selected">
+                            <img src="{{ asset('static/img/games/' ~ media[i].idMedia.mediaUrl ~ '-min.webp') }}" alt="{{ media[i].idMedia.mediaAlt }}" class="gallery__asset">
+                        </div>
+                    {% else %}
+                        <div class="gallery__min">
+                            <img src="{{ asset('static/img/games/' ~ media[i].idMedia.mediaUrl ~ '-min.webp') }}" alt="{{ media[i].idMedia.mediaAlt }}" class="gallery__asset">
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                {# Gallery arrow start #}
+                <div class="gallery__arrow" slide="right">
+                    <svg class="gallery__icon" viewBox="0 0 20 20">
+						<path fill="none"  d="M11.611,10.049l-4.76-4.873c-0.303-0.31-0.297-0.804,0.012-1.105c0.309-0.304,0.803-0.293,1.105,0.012l5.306,5.433c0.304,0.31,0.296,0.805-0.012,1.105L7.83,15.928c-0.152,0.148-0.35,0.223-0.547,0.223c-0.203,0-0.406-0.08-0.559-0.236c-0.303-0.309-0.295-0.803,0.012-1.104L11.611,10.049z"></path>
+					</svg>
+                </div>
+                {# Gallery arrow end #}
+            </div>
+            {# Gallery min container end #}
+        </section>
+        {# Gallery end #}
+        {# Info section start #}
+        <section class="info">
+            <img src="{{ asset('static/img/games/' ~ medIaInfo.mediaUrl ~ '.webp') }}" alt="{{ medIaInfo.mediaAlt }}" class="info__asset" loading="lazy">
+            <div class="info__container">
+                {% if features.idFeature.gameDiscount == 0 %}
+                    <h3 class="info__price">{{ features.idFeature.gamePrice }}€</h3>
+                {% else %}
+                    <span class="info__span--discount">{{ features.idFeature.gameDiscount}}%</span>
+                    <h3 class="info__price"><span class="info__price--discount">{{ features.idFeature.gamePrice }}€</span>{{ (discount)  | number_format(2) }}€</h3>
+                {% endif %}
+            </div>
+            {# Info button container start #}
+            <div class="info__container--buttons">
+                <button class="info__button--buy">{{ features.idFeature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito' }}</button>
+                <button class="info__button--wish">
+                    {% if wish == true %}
+                        <i class="bi bi-heart-fill info_icon--wish"></i>
+                    {% else %}
+                        <i class="bi bi-heart info_icon--wish"></i>
+                    {% endif %}
+                </button>
+            </div>
+            {# Info button container end #}
+            <ul class="info__list">
+                <li class="info__item"><span class="info__span">Desarrolladora:</span><span class="info__span--data">{{ features.idFeature.gameDeveloper }}</span></li>
+                <li class="info__item"><span class="info__span">Distribuidor:</span><span class="info__span--data">{{ features.idFeature.gameDistributor }}</span></li>
+                <li class="info__item"><span class="info__span">Fecha de lanzamiento:</span><span class="info__span--data">{{ features.idFeature.gameDate | date('d-m-Y') }}</span></li>
+                <li class="info__item"><span class="info__span">Plataforma:</span><span class="info__span--data"><i class="{{'bi bi-' ~ platform ~ ' info__icon--data'}}"></i> {{ features.idPlatform.platformName }}</span></li>
+            </ul>
+            {# Info cards start #}
+            <div class="info__cards">
+                <div class="info__card">
+                    {% if features.idFeature.gameStock != 0 %}
+							<i class="bi bi-check-circle info__icon--stock"></i>
+                    {% else %}
+                            <i class="bi bi-x-circle info__icon--stock"></i>
+                    {% endif %}
+                    <span class="info__span--data">Stock</span>
+                </div>
+                <img src="{{ asset('static/img/pegi/pegi'~ features.idFeature.gamePegi ~'.png') }}" alt="" class="info__card--pegi" loading="lazy">
+                <div class="info__card">
+                    <span class="info__span--val">{{ features.idFeature.gameValoration | replace({".0" : ""}) }}</span>
+                    <span class="info__span--data">Valoraciones</span>
+                </div>
+            </div>
+            {# Info cards end #}
+        </section>
+        {# Info section end #}
+        {# Description container start #}
+        <section class="desc">
+            <h2 class="desc__title--primary">Acerca del juego</h2>
+            {% autoescape %}
+                {{ features.idFeature.gameDesc|raw }} {# var won't be escaped #}
+            {% endautoescape %}
+        </section>
+        {# Description container end #}
+        {# Specs container start #}
+        <section class="specs">
+            <h2 class="specs__title--primary">Requisitos</h2>
+            <div class="specs__container">
+                <h3 class="specs__title">Mínimos</h3>
+                <ul class="specs__list">
+                    {% for key, value in minSpec %}
+                        <li class="specs__item"><span class="specs__span"> {{ key }}:</span><span class="specs__span--data">{{ value }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="specs__container">
+                <h3 class="specs__title">Recomendados</h3>
+                <ul class="specs__list">
+                   {% for key , value in maxSpec %}
+                        <li class="specs__item"><span class="specs__span"> {{ key }}:</span><span class="specs__span--data">{{ value }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+        {# Specs container end #}
+        {# Reviews container start #}
+        <section class="reviews" target="{{ game.idGame }}">
+            <h2 class="reviews__title">Opiniones ({{ reviews.total }})</h2>
+            
+            {% if reviews.total != 0 %}
+                {# Reviews content #}
+                <div class="reviews__container">
+                    {{ include('ajax/reviews.html.twig') }}
+                </div>
+                {# Reviews paginator  start#}
+                <div class="reviews__paginator">
+                {% if reviews.lastPage != 1 %}
+                    <i class="bi bi-chevron-left reviews__button--disabled" direction="left"></i>
+                    <span class="reviews__page">
+                        Página <span class="reviews__actual">1</span> de <span class="reviews__last">{{ reviews.lastPage }}</span>
+                    </span>
+                    <i class="bi bi-chevron-right reviews__button" direction="right"></i>
+                {% endif %}
+                </div>
+                {# Reviews paginator end #}
+            {% endif %}
+
+        </section>
+        {# Reviews container end #}
+    </main>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var images = [];
+        {% for image in media %}
+            images.push('{{image.idMedia.mediaUrl}}');
+        {% endfor %}
+        
+        var product = [{{ game.idGame }}, {{features.idPlatform.idPlatform}}];
+
+    </script>
+    
+    <script src="{{ asset('static/javascript/product.js') }}"></script>
+
+    {% if reviews.total != 0 %}
+        <script src="{{ asset('static/javascript/ajax.js') }}"></script>
+    {% endif %}
+    
+{% endblock %}

@@ -90,7 +90,7 @@ class Controller extends AbstractController
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
 
-        $response = $this->render('/product.html.twig',[
+        $response = $this->render('/store/product.html.twig',[
             'game' => $game[0],
             'media' => $media,
             'medIaInfo' => $mediaInfo,
