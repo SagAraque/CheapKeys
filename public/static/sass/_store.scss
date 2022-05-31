@@ -98,5 +98,12 @@
     {
         @extend .reviews__page;
     }
+
+    &__loading
+    {
+        @extend .reviews__loading;
+        position: absolute;
+        left: calc(50% - 25px);
+    }
     
 }
