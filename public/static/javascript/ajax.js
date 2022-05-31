@@ -25,7 +25,7 @@ function getReviews(direction, id)
     xhr.open('GET', `/ajax/reviews?id=${id}&page=${page}`, true);
     xhr.send();
 
-    setLoading();
+    setLoading(reviewsContainer);
 
     xhr.onreadystatechange = ()=>{
         if(xhr.readyState == 4 && xhr.status == 200)
@@ -52,12 +52,4 @@ function changeButtons()
     }else{
         pageBtn[1].classList.replace('reviews__button--disabled', 'reviews__button');
     }
-}
-
-function setLoading()
-{
-    let loading = document.createElement('div');
-    loading.classList.add('reviews__loading');
-    reviewsContainer.innerHTML = "";
-    reviewsContainer.appendChild(loading);
 }

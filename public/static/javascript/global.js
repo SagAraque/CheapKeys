@@ -47,10 +47,10 @@ document.addEventListener('click', (e)=>{
     }
 })
 
-function setLoading(div)
+function setLoading(div, elementClass = 'reviews__loading')
 {
     let loading = document.createElement('div');
-    loading.classList.add('reviews__loading');
+    loading.classList.add(elementClass);
     div.innerHTML = "";
     div.appendChild(loading);
 }

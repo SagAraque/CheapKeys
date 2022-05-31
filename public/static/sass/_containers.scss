@@ -125,6 +125,30 @@
 {
     @extend .main;
     min-height: calc(100vh - 400px);
+
+    &__container
+    {   
+        width: 100%;
+        @include mixin.flex-style($align:center, $justify:space-between, $direction:column);
+        margin-bottom: 20px;
+    }
+
+    &__grid
+    {
+        &--left
+        {
+            @include mixin.flex-style($align:center, $justify:center, $direction:column);
+            grid-area: 1 / 1 / 2 / 2;
+        }
+
+        &--right
+        {
+            @include mixin.flex-style($align:start, $justify:start, $direction:column);
+            grid-area: 1 / 2 / 2 / 3;
+            padding: 5px 5px 5px 15px;
+            box-sizing: border-box;
+        }
+    }
 }
 
 .store
@@ -169,11 +193,12 @@
         &--products
         {
             width: 100%;
-            height: min-content;
+            min-height: 100px;
             display: grid;
             grid-template-columns: repeat(auto-fill, 280px);
             justify-content: space-between;
             gap: 20px;
+            position: relative;
             
         }
 

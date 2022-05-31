@@ -312,7 +312,7 @@ class AjaxController extends AbstractController
 
         $page = $request->get('page');
     
-        $paginator->paginate($games, intval($page), 16);
+        $paginator->paginate($games, intval($page), 8);
         
         if($paginator->getTotal() == 0) return new Response("No data", 404);
 

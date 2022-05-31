@@ -1,15 +1,23 @@
 let checkbox = document.querySelectorAll('.store__checkBox'),
 container = document.querySelector('.store__container--products'),
+storeContainer = document.querySelector('.store__container--content'),
 select = document.querySelector('.store__select'),
 cardButtons = document.querySelectorAll('.card__button'),
 cartNum = document.querySelector('.header__cartCant'),
 developerData = [],
 platformData = [],
 pegiData = [],
-stockData = [],
-actualPage = document.querySelector('.store__actual');
+stockData = [];
+
+// Paginator elements
+
+let page = 1,
+actualPage = document.querySelector('.store__actual'),
+lastPage = document.querySelector('.store__last'),
+pageBtn = document.querySelectorAll('[class*="store__button"]');
 
 
+// Filters listeners
 checkbox.forEach(input => {
     input.addEventListener('change', ()=>{
         let value = input.getAttribute('value');
@@ -30,35 +38,37 @@ checkbox.forEach(input => {
                 input.checked ? stockData.push(value) : modifyArray(value, stockData);
                 break;
         }
-
+        page = 1;
         getData();
     })
 });
 
 
 select.addEventListener('change', ()=>{
-    getData();
+    getData(page);
 });
 
-// Cart button
+//Listeners
+listeners();
 
-cardButtons.forEach(button => {
-    button.addEventListener('click', ()=>{
-        let game = button.getAttribute('game');
-        let platform = button.getAttribute('platform');
-        setGameCart([game, platform]);
-    });
-});
-
-
-
+/**
+ * Delete a value from a filter array
+ * 
+ * @param {*} value Value to be removed
+ * @param {*} arr Filter array
+ */
 function modifyArray(value, arr)
 {
     let i = arr.indexOf(value);
     if(i !== -1) arr.splice(i, 1);
 }
 
-function getData()
+/**
+ * Get games card from data base 
+ * 
+ * @param {*} pageValue Paginator page value
+ */
+function getData(pageValue = 1)
 {
     let xhr = new XMLHttpRequest();
     let data = new FormData();
@@ -69,26 +79,33 @@ function getData()
     data.append('stock', stockData)
     data.append('page', actualPage == null ? 1: actualPage.textContent);
     data.append('platformLimit', platformLimit)
-    data.append('order', select.value);
+    data.append('order', select.value)
+    data.append('page', pageValue);
 
     xhr.open('POST', '/ajax/changeStoreProducts', true);
     xhr.send(data);
 
     let loading = setTimeout(()=>{
-        setLoading(container);
+        setLoading(container, 'store__loading');
     },200);
 
     xhr.onreadystatechange = ()=>{
         if(xhr.readyState == 4 && xhr.status == 200){
             clearTimeout(loading);
-            container.innerHTML = xhr.responseText;
+            storeContainer.innerHTML = xhr.responseText;
+            listeners();
+            actualPage.innerHTML = page;
+            changeButtons();
         }else if(xhr.readyState == 4 && xhr.status == 404){
             clearTimeout(loading);
-            setError()
+            setError();
         }
     }
 }
 
+/**
+ * Sen an error message
+ */
 function setError()
 {
     let div = document.createElement('div');
@@ -110,6 +127,11 @@ function setError()
     container.appendChild(div);
 }
 
+/**
+ * Set a game to the user
+ * 
+ * @param {*} gameData Game if and platform id
+ */
 function setGameCart(gameData)
 {
     let xhr = new XMLHttpRequest();
@@ -123,7 +145,6 @@ function setGameCart(gameData)
         data.append('cartCount', 0);
     }
    
-
     xhr.open('POST', '/ajax/addProductCart', true);
     xhr.send(data);
 
@@ -134,4 +155,57 @@ function setGameCart(gameData)
             cartNum.textContent = xhr.responseText;
         }
     }
+}
+
+
+/**
+ * Change paginator buttons class
+ */
+function changeButtons()
+{
+    if(page == 1){
+        pageBtn[0].classList.replace('store__button', 'store__button--disabled');
+    }else{
+        pageBtn[0].classList.replace('store__button--disabled', 'store__button');
+    }
+
+    if(page == lastPage.textContent){
+        pageBtn[1].classList.replace('store__button', 'store__button--disabled');
+    }else{
+        pageBtn[1].classList.replace('store__button--disabled', 'store__button');
+    }
+}
+
+/**
+ * Reload some variables and listeners when it is call
+ */
+function listeners()
+{
+    container = document.querySelector('.store__container--products');
+
+    // Cards button
+    cardButtons = document.querySelectorAll('.card__button'),
+
+    cardButtons.forEach(button => {
+        button.addEventListener('click', ()=>{
+            let game = button.getAttribute('game');
+            let platform = button.getAttribute('platform');
+            setGameCart([game, platform]);
+        });
+    });
+
+    // Paginator listener
+    pageBtn = document.querySelectorAll('[class*="store__button"]');
+    actualPage = document.querySelector('.store__actual'),
+    lastPage = document.querySelector('.store__last'),
+
+    pageBtn.forEach(btn => {
+        btn.addEventListener('click', ()=>{
+            let direction = btn.getAttribute('direction');
+            if (!btn.classList.contains('store__button--disabled')){
+                direction == 'left'  ?     page -= 1 :     page += 1;
+                getData(page);
+            }
+        });
+    });
 }
