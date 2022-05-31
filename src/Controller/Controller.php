@@ -2,23 +2,27 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Security;
-use App\Utils\Paginator;
-use App\Utils\CartCount;
-use App\Entity\Games;
-use App\Entity\Reviews;
-use App\Entity\Features;
-use App\Entity\Platforms;
-use App\Entity\CartProducts;
-use App\Entity\Cart;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\GamesPlatform;
-use App\Entity\MediaGames;
 use App\Entity\WishlistGames;
+use App\Entity\CartProducts;
+use App\Entity\MediaGames;
+use App\Entity\Platforms;
+use App\Utils\CartCount;
+use App\Utils\Paginator;
+use App\Entity\Features;
+use App\Entity\Billing;
+use App\Entity\Reviews;
+use App\Entity\Games;
+use App\Entity\Cart;
 
 class Controller extends AbstractController
 {
@@ -36,54 +40,6 @@ class Controller extends AbstractController
 
         $response->setEtag(md5($response->getContent()));
         $response->setPublic();
-        $response->isNotModified($request);
-
-        return $response;
-    }
-
-    /**
-     * @Route("/cart", name="cart")
-     */
-    public function cart(ManagerRegistry $doctrine, Security $security, Request $request):Response
-    {
-        $user = $this->getUser();
-
-        $cartCount = new CartCount($doctrine, $security);
-        $cartCant = $cartCount->getCount();
-
-        $cart = $doctrine->getRepository(Cart::class)->findBy(array(
-            'idUser' =>  $user->getIdUser(),
-            'cartState' => 1
-        ));
-
-        $cartContent = $doctrine->getRepository(CartProducts::class)->findBy(array(
-            'idCart' => $cart[0]->getIdCart()
-        ));
-
-        $gamesId = [];
-        $platformsId = [];
-
-        foreach ($cartContent as $game) {
-            array_push($gamesId, strval($game->getIdGame()));
-            array_push($platformsId, strval($game->getIdPlatform()));
-        }
-
-        $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
-        $features = $doctrine->getRepository(GamesPlatform::class)->findBy(array(
-            'game' => $gamesId,
-            'idPlatform' => $platformsId,
-        ));
-        
-        $response = $this->render('/cart.html.twig', [
-            'cartCant' => $cartCant,
-            'cart' => $cart[0],
-            'cartContent' => $cartContent,
-            'images' => $images,
-            'features' => $features,
-        ]);
-
-        $response->setEtag(md5($response->getContent()));
-        $response->setPrivate();
         $response->isNotModified($request);
 
         return $response;
@@ -159,7 +115,7 @@ class Controller extends AbstractController
         $games = $doctrine -> getRepository(GamesPlatform::class) -> findAllNoQueryByPlatform($data);
         $platformFilter = 0;
         
-        $paginator->paginate($games, 1, 16);
+        $paginator->paginate($games, 1, 8);
 
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();

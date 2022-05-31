@@ -1,4 +1,5 @@
-{% for game in paginator.items %}
+<div class="store__container--products">
+    {% for game in paginator.items %}
         {% set platform = game.idPlatform %}
         {% set product = game.game %}
         {% set feature = game.idFeature %}
@@ -38,4 +39,16 @@
                 {{feature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito'}}
             </button>
         </div>
-{% endfor %}
+    {% endfor %}
+</div>
+{# Paginator container start #}
+<div class="store__container--paginator">
+    {% if paginator.lastPage > 1 %}
+        <i class="bi bi-chevron-left store__button--disabled" direction="left"></i>
+        <span class="store__page">
+            Página <span class="store__actual">1</span> de <span class="store__last">{{paginator.lastPage}}</span>
+        </span>
+        <i class="bi bi-chevron-right store__button" direction="right"></i>
+    {% endif %}
+</div>
+{# Paginator container end #}

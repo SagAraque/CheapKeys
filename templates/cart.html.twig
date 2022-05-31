@@ -37,7 +37,7 @@
                         {% if discount == 0 %}
                             <span class="card__price--long">{{ feature.gamePrice }} €</span>
                         {% else %}
-                            <span class="card__price--long"><span class="card__price--discount">{{ feature.gamePrice }} €</span>{{ price }} €</span>
+                            <span class="card__price--long"><span class="card__price--discount">{{ feature.gamePrice }} €</span>{{ (price) | number_format(2) }} €</span>
                         {% endif %}
                     </div>
                 </article>
@@ -46,14 +46,34 @@
         </section>
         {# Cart products section end #}
         {# Cart info section start #}
-        <section class="cart__data">
+        <form method="post" action="{{ path('payment') }}"  class="cart__data">
             <h2 class="cart__title">Detalles del carrito</h2>
             <ul class="cart__list">
                 <li class="cart__item"><span class="cart__text--light">Productos</span><span class="cart__text">{{ cartCant }}</span></li>
                 <li class="cart__item"><span class="cart__text--light">Total</span><span class="cart__text--total">{{ cart.cartTotal }} €</span></li>
             </ul>
-            <a href="" class="cart__button">Pagar</a>
-        </section>
+            <div class="cart__container">
+                <h2 class="cart__title">Dirección de facturación</h2>
+                {% for bill in billing %}
+                    <div class="cart__billing">
+                        <div class="cart__grid--left">
+                            <input type="radio" name="billingDirection" class="cart__radio" value="{{bill.idBilling}}" required="required">
+                        </div>
+                        <div class="cart__grid--right">
+                            <h3 class="cart__title--billing">{{ bill.billingName }}</h3>
+                            <p class="cart__text--billing">{{ bill.billingDirection }}, {{ bill.billingPoblation }}, {{ bill.billingPostal }}, {{ bill.billingProvince }}</p>
+                            <p class="cart__text--billing">{{ bill.billinTlfo }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <input type="submit" value="Pagar" class="cart__button">
+            {% for flash in app.session.flashbag.get('error') %}
+                <span class="form__error">  
+                    {{flash}}
+                </span>
+            {% endfor %}
+        </form>
         {# Cart indo section end #}
     </main>
 
