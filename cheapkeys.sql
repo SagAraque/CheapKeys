@@ -45,8 +45,38 @@ CREATE TABLE `billing` (
 
 LOCK TABLES `billing` WRITE;
 /*!40000 ALTER TABLE `billing` DISABLE KEYS */;
-INSERT INTO `billing` VALUES (1,1,'Sergio Araque García','ACTIVE','Calle de huesca 3','28941','Fuenlabrada','España','Madrid','695124903'),(2,1,'Sergio Araque García','DELETED','Calle Joselito 3 3ºA','28945','Mostoles','España','Madrid','695124903');
+INSERT INTO `billing` VALUES (1,1,'Sergio Araque García','ACTIVE','Calle de Manolito3','28931','Humanes','España','Madrid','698376502'),(2,1,'Sergio Araque García','DELETED','Calle Joselito 3 3ºA','28945','Mostoles','España','Madrid','697302178');
 /*!40000 ALTER TABLE `billing` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `card`
+--
+
+DROP TABLE IF EXISTS `card`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `card` (
+  `id_card` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `card_number` varchar(19) NOT NULL,
+  `card_cvv` varchar(3) NOT NULL,
+  `card_name` varchar(100) NOT NULL,
+  `card_user` int(10) unsigned NOT NULL,
+  `card_state` tinyint(1) DEFAULT 1,
+  PRIMARY KEY (`id_card`),
+  KEY `FK28` (`card_user`),
+  CONSTRAINT `FK28` FOREIGN KEY (`card_user`) REFERENCES `users` (`id_user`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `card`
+--
+
+LOCK TABLES `card` WRITE;
+/*!40000 ALTER TABLE `card` DISABLE KEYS */;
+INSERT INTO `card` VALUES (1,'4011317773263584','123','Joselito Perez',1,1),(2,'4016156835285218','321','Pepe Martinez',1,1);
+/*!40000 ALTER TABLE `card` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -73,7 +103,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (8,1,19.95,0),(9,20,0.00,1),(10,1,19.95,0),(11,1,19.95,0),(12,1,19.95,0),(13,1,19.90,0),(14,1,0.00,1);
+INSERT INTO `cart` VALUES (8,1,19.95,0),(9,20,0.00,1),(10,1,19.95,0),(11,1,19.95,0),(12,1,19.95,0),(13,1,19.90,0),(14,1,49.99,1);
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +134,7 @@ CREATE TABLE `cart_products` (
 
 LOCK TABLES `cart_products` WRITE;
 /*!40000 ALTER TABLE `cart_products` DISABLE KEYS */;
-INSERT INTO `cart_products` VALUES (8,1,1,1),(10,1,1,1),(11,1,1,1),(12,1,1,1),(13,4,5,2);
+INSERT INTO `cart_products` VALUES (8,1,1,1),(10,1,1,1),(11,1,1,1),(12,1,1,1),(13,4,5,2),(14,3,3,1);
 /*!40000 ALTER TABLE `cart_products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +195,7 @@ CREATE TABLE `game_keys` (
   CONSTRAINT `FK7` FOREIGN KEY (`id_platform`) REFERENCES `platforms` (`id_platform`) ON UPDATE CASCADE,
   CONSTRAINT `FK8` FOREIGN KEY (`id_game`) REFERENCES `games` (`id_game`) ON UPDATE CASCADE,
   CONSTRAINT `FK9` FOREIGN KEY (`id_order`) REFERENCES `orders` (`id_order`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +204,7 @@ CREATE TABLE `game_keys` (
 
 LOCK TABLES `game_keys` WRITE;
 /*!40000 ALTER TABLE `game_keys` DISABLE KEYS */;
-INSERT INTO `game_keys` VALUES (1,1,1,1,'ER99IO5BE3Q9QFR'),(5,1,1,2,'6KI8C2NLO469PTK'),(6,1,1,3,'DE9JO489N96I434'),(7,1,1,4,'1RPI39H758E5CNR');
+INSERT INTO `game_keys` VALUES (1,1,1,NULL,'ER99IO5BE3Q9QFR'),(5,1,1,NULL,'6KI8C2NLO469PTK'),(6,1,1,NULL,'DE9JO489N96I434'),(7,1,1,NULL,'1RPI39H758E5CNR');
 /*!40000 ALTER TABLE `game_keys` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,13 +334,16 @@ CREATE TABLE `orders` (
   `order_total` decimal(5,2) NOT NULL DEFAULT 0.00,
   `id_billing` int(10) unsigned NOT NULL,
   `id_cart` int(10) unsigned NOT NULL,
+  `id_card` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id_order`),
   KEY `FK2` (`id_user`),
   KEY `FK3` (`id_billing`),
   KEY `FK27` (`id_cart`),
+  KEY `FK34` (`id_card`),
   CONSTRAINT `FK2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON UPDATE CASCADE,
   CONSTRAINT `FK27` FOREIGN KEY (`id_cart`) REFERENCES `cart` (`id_cart`) ON UPDATE CASCADE,
-  CONSTRAINT `FK3` FOREIGN KEY (`id_billing`) REFERENCES `billing` (`id_billing`) ON UPDATE CASCADE
+  CONSTRAINT `FK3` FOREIGN KEY (`id_billing`) REFERENCES `billing` (`id_billing`) ON UPDATE CASCADE,
+  CONSTRAINT `FK34` FOREIGN KEY (`id_card`) REFERENCES `card` (`id_card`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -320,7 +353,6 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,1,'2022-05-31',19.95,1,8),(2,1,'2022-05-31',19.95,1,10),(3,1,'2022-05-31',19.95,1,11),(4,1,'2022-05-31',19.95,1,12),(5,1,'2022-05-31',19.90,1,13);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -413,7 +445,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Usuario 1','usuario1@gmail.com','$2y$10$sRfDbs4bd/FwFaqAMXgaMOwolBDqbeKyY93SaaPwLobYfLMh8202y','default','ROLE_USER','ACTIVE',1),(2,'Usuario 2','usuario2@gmail.com','$2a$10$rtRzzL0PtMXebGJjlQTpbuLWNSpdfyjYjLIu8P.s95UcbMNghSfDi','default','ROLE_USER','ACTIVE',2),(3,'Usuario 3','usuario3@gmail.com','$2a$10$RBTzjNTPCn6AelYEaGYcRu/PKadqFXczCyorGbNOSNQGhs6H6uRa.','default','ROLE_USER','ACTIVE',3),(4,'Usuario 4','usuario4@gmail.com','$2a$10$Y8lklhtnC7Ca9/Um8xLR6uqQUehBdh3qFkLayAHwf7FCAltETI1hm','default','ROLE_USER','ACTIVE',4),(5,'Usuario 5','usuario5@gmail.com',' $2a$10$JBQktfx3fF17/ZSs9iGhUe/VOZcXpiYCF9GY4cXxbAhw6gxEOkvH','default','ROLE_USER','ACTIVE',5),(6,'Usuario 6','usuario6@gmail.com',' $2a$10$5yLnm6EsTPQ0DtoHINa.FuH8M6PxRchhle2KbT.giS5QVHvS6UN2','default','ROLE_USER','ACTIVE',6),(7,'Usuario 7','usuario7@gmail.com',' $2a$10$cVRvLqM0eGR45kYXIWm/SeBGv29mPKmFv0GIAJoaiazWpmyb7R5a','default','ROLE_USER','ACTIVE',7),(8,'Usuario 8','usuario8@gmail.com',' $2a$10$E139RnijNmvzLRuIDDTFmeGA/cT69NWfdxbno6nXMBv470GjcLnI','default','ROLE_USER','ACTIVE',8),(9,'registro','registro@gmail.com','$2y$13$f2XP065Sh3.Vpld1M1O8PucTIlsFo6wt5T9jCGygsBpmAZJbCPBEm','default','ROLE_USER','ACTIVE',9),(10,'pruebaRegistro','pruebaregistro@gmail.com','$2y$13$WMWDtr.PgDhino9XoXDGVe18CpPXR2PY74fglPakZ4rW3WhnKxTtm','default','ROLE_USER','ACTIVE',10),(11,'prueba2','prueba2@gmail.com','$2y$13$QrOv8jP/jbMKEiiXgrV09epUuxXc9vILd4bGzSu9PeJ8dFdUlGGTy','default','','',11),(12,'prueba3','prueba3@gmail.com','$2y$13$bxzyaaIhsOyvA9L9whB0Fuf03JOoj4NDNl3DRakV.l7UNyW7LA4zC','default','','',12),(13,'prueba4','prueba4@gmail.com','$2y$13$7rjR1LENH8hoPCiqWhCk7uNLBE2nNC7bGAgWAy6fO/Aa0b8sGGwgK','default','ROLE_USER','ACTIVE',13),(14,'prueba5','prueba5@gmail.com','$2y$13$IXnsJErSNNt1A2HP2oU4Ouj8gfJL3PJUbd7Ajnp4dhQHHyy.NC3Hm','\'default\'','','',15),(15,'prueba6','prueba6@gmail.com','$2y$13$/618bAQK4RebmKfC4INzfewzKfN7NnRJdIVXstaCUB7BOVJtyrYB6','default','ROLE_USER','ACTIVE',16),(16,'prueba7','prueba7@gmail.com','$2y$13$UjEp9CY9JciwrsDmPP2xDejqGHI3KWr5WPX0xhumiir9zMX6k.lFW','default','ROLE_USER','ACTIVE',17),(17,'prueba8','prueba8@gmail.com','$2y$13$12D9Tg9lRPeFDbwcqC5WP.WlYFEgHMxqODGSvG6BdWdBLN9Ib91aS','default','ROLE_USER','ACTIVE',18),(18,'12345','usuario1@gamil.com','$2y$13$/sps0OxO9ta0neudIqegxuCoyWWCdZP6gInp9UVj6KPvPmkWleIdK','default','ROLE_USER','ACTIVE',19),(20,'usuario19','usuario19@gmail.com','$2y$13$Ol17E8hys9j/apj1hnTE6OVvc6PC37JGhKlng3rKrAhhpqMKgUv3K','default','ROLE_USER','ACTIVE',21);
+INSERT INTO `users` VALUES (1,'Usuario 1','usuario1@gmail.com','$2y$13$ZWPufYV41vuE4fkPue.A6.Ks.9K64rOFfDlrTjIP3fkADex3cmthe','default','ROLE_USER','ACTIVE',1),(2,'Usuario 2','usuario2@gmail.com','$2a$10$rtRzzL0PtMXebGJjlQTpbuLWNSpdfyjYjLIu8P.s95UcbMNghSfDi','default','ROLE_USER','ACTIVE',2),(3,'Usuario 3','usuario3@gmail.com','$2a$10$RBTzjNTPCn6AelYEaGYcRu/PKadqFXczCyorGbNOSNQGhs6H6uRa.','default','ROLE_USER','ACTIVE',3),(4,'Usuario 4','usuario4@gmail.com','$2a$10$Y8lklhtnC7Ca9/Um8xLR6uqQUehBdh3qFkLayAHwf7FCAltETI1hm','default','ROLE_USER','ACTIVE',4),(5,'Usuario 5','usuario5@gmail.com',' $2a$10$JBQktfx3fF17/ZSs9iGhUe/VOZcXpiYCF9GY4cXxbAhw6gxEOkvH','default','ROLE_USER','ACTIVE',5),(6,'Usuario 6','usuario6@gmail.com',' $2a$10$5yLnm6EsTPQ0DtoHINa.FuH8M6PxRchhle2KbT.giS5QVHvS6UN2','default','ROLE_USER','ACTIVE',6),(7,'Usuario 7','usuario7@gmail.com',' $2a$10$cVRvLqM0eGR45kYXIWm/SeBGv29mPKmFv0GIAJoaiazWpmyb7R5a','default','ROLE_USER','ACTIVE',7),(8,'Usuario 8','usuario8@gmail.com',' $2a$10$E139RnijNmvzLRuIDDTFmeGA/cT69NWfdxbno6nXMBv470GjcLnI','default','ROLE_USER','ACTIVE',8),(9,'registro','registro@gmail.com','$2y$13$f2XP065Sh3.Vpld1M1O8PucTIlsFo6wt5T9jCGygsBpmAZJbCPBEm','default','ROLE_USER','ACTIVE',9),(10,'pruebaRegistro','pruebaregistro@gmail.com','$2y$13$WMWDtr.PgDhino9XoXDGVe18CpPXR2PY74fglPakZ4rW3WhnKxTtm','default','ROLE_USER','ACTIVE',10),(11,'prueba2','prueba2@gmail.com','$2y$13$QrOv8jP/jbMKEiiXgrV09epUuxXc9vILd4bGzSu9PeJ8dFdUlGGTy','default','','',11),(12,'prueba3','prueba3@gmail.com','$2y$13$bxzyaaIhsOyvA9L9whB0Fuf03JOoj4NDNl3DRakV.l7UNyW7LA4zC','default','','',12),(13,'prueba4','prueba4@gmail.com','$2y$13$7rjR1LENH8hoPCiqWhCk7uNLBE2nNC7bGAgWAy6fO/Aa0b8sGGwgK','default','ROLE_USER','ACTIVE',13),(14,'prueba5','prueba5@gmail.com','$2y$13$IXnsJErSNNt1A2HP2oU4Ouj8gfJL3PJUbd7Ajnp4dhQHHyy.NC3Hm','\'default\'','','',15),(15,'prueba6','prueba6@gmail.com','$2y$13$/618bAQK4RebmKfC4INzfewzKfN7NnRJdIVXstaCUB7BOVJtyrYB6','default','ROLE_USER','ACTIVE',16),(16,'prueba7','prueba7@gmail.com','$2y$13$UjEp9CY9JciwrsDmPP2xDejqGHI3KWr5WPX0xhumiir9zMX6k.lFW','default','ROLE_USER','ACTIVE',17),(17,'prueba8','prueba8@gmail.com','$2y$13$12D9Tg9lRPeFDbwcqC5WP.WlYFEgHMxqODGSvG6BdWdBLN9Ib91aS','default','ROLE_USER','ACTIVE',18),(18,'12345','usuario1@gamil.com','$2y$13$/sps0OxO9ta0neudIqegxuCoyWWCdZP6gInp9UVj6KPvPmkWleIdK','default','ROLE_USER','ACTIVE',19),(20,'usuario19','usuario19@gmail.com','$2y$13$Ol17E8hys9j/apj1hnTE6OVvc6PC37JGhKlng3rKrAhhpqMKgUv3K','default','ROLE_USER','ACTIVE',21);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -479,4 +511,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-31 17:19:03
+-- Dump completed on 2022-06-01 17:53:24
