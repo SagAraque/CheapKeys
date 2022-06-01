@@ -17,12 +17,27 @@ class UserPassType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+        ->add('password', PasswordType::class, [
+            'label' => 'Contraseña',
+            'mapped' => false,
+            'label_attr' =>[
+                'class' => 'control__label'
+            ],
+            'attr' => [
+                'class' => 'control__input',
+                'name' => 'oldPass'
+            ],
+            'constraints' => [
+                new NotBlank()
+            ]
+        ])
         ->add('newPass', RepeatedType::class, [
             'type' => PasswordType::class,
             'invalid_message' => 'Las contraseñas deben coincidir',
             'label' => 'Contraseña',
             'label_attr' =>[
-                'class' => 'control__label'
+                'class' => 'control__label',
+                'name' => 'newPass'
             ],
             'options' => [
                 'attr' => [

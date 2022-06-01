@@ -183,7 +183,8 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function setNewPass(string $newPass): self
     {
-        $this->userPass = password_hash($newPass, PASSWORD_BCRYPT, [null, 10] );
+        // $this->userPass = password_hash($newPass, PASSWORD_BCRYPT, [null, 10] );
+        $this->newPass = $newPass;
 
         return $this;
     }

@@ -1,0 +1,100 @@
+{% extends "users/control_panel.html.twig" %}
+
+{% block content %}
+    {# Billing direction container start #}
+    <article class="content__billing">
+        <h2 class="control__title">Direcciones de facturación</h2>
+        <div class="billing__container">
+        {% for billDirection in billings %}
+            <div class="billing__card">
+                <h3 class="billing__title">{{ billDirection.billingName }}</h3>
+                <p class="billing__text"><strong>Dirección: </strong>{{ billDirection.billingDirection }}, {{ billDirection.billingPostal }}, {{ billDirection.billingPoblation }}, {{ billDirection.billingProvince }}</p>
+                <p class="billing__text"><strong>Teléfono: </strong>{{ billDirection.billinTlfo }}</p>
+                <i class="bi bi-x card__icon--delete"></i>
+            </div>
+        {% endfor %}
+        </div>
+        <button class="control__button">Añadir dirección</button>
+    </article>
+    {# Billing direction container end #}
+    {# Pay methods container start #}
+    <article class="content__pay">
+        <h2 class="control__title">Métodos de pago</h2>
+        <div class="pay__container">
+        {% for card in cards %}
+            <div class="pay__card">
+                <h3 class="pay__title">Termina en {{ card.cardNumber | slice((card.cardNumber | length) - 4, card.cardNumber | length) }} </h3>
+                <p class="pay__text">{{ card.cardName }}</p>
+                <p class="pay__text">Caduca el 8/29</p>
+                <i class="bi bi-x card__icon--delete"></i>
+            </div>
+        {% endfor %}
+        </div>
+        <button class="control__button">Añadir tarjeta</button>
+    </article>
+    {# Pay methods container end #}
+    {# User data container start #}
+    <article class="content__data">
+        <h2 class="control__title">Datos de mi cuenta</h2>
+
+        {# Usaer name change form start #}
+        {{ form_start(userNameForm, {'attr' : {'action' : path('user_control_panel_data'), 'class': 'control__form' }}) }}
+
+            {{ form_label(userNameForm.userName) }}
+            <div class="control__container">
+                {{ form_widget(userNameForm.userName, {'value': app.user.username}) }}
+                <input type="submit" value="Guardar" class="control__button">
+            </div>
+            {{ form_errors(userNameForm.userName, {'attr': {'class' : 'form__error'}}) }}
+            
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        {{ form_end(userNameForm) }}
+        {# User name change form end #}
+        {# User email change form start #}
+        {{ form_start(userMailForm, {'attr' : {'action' : path('user_control_panel_data'), 'class': 'control__form' }}) }}
+
+            {{ form_label(userMailForm.userEmail) }}
+            <div class="control__container">
+                {{ form_widget(userMailForm.userEmail, {'value': app.user.useremail}) }}
+                <input type="submit" value="Guardar" class="control__button">
+            </div>
+            {{ form_errors(userMailForm.userEmail, {'attr': {'class' : 'form__error'}}) }}
+            
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        {{ form_end(userMailForm) }}
+        {# User email change form end #}
+
+        {{ form_start(userPassForm, {'attr' : {'action' : path('user_control_panel_data'), 'class': 'control__form--pass' }}) }}
+
+            <div class="control__container--pass">
+                <div class="control__container--column">
+                    {{ form_label(userPassForm.password) }}
+                    {{ form_widget(userPassForm.password) }}
+                </div>
+                <div class="control__container--column">
+                    {{ form_label(userPassForm.newPass.first) }}
+                    {{ form_widget(userPassForm.newPass.first) }}
+                </div>
+                <div class="control__container--column">
+                    {{ form_label(userPassForm.newPass.second) }}
+                    {{ form_widget(userPassForm.newPass.second) }}
+                </div>
+                
+                <input type="submit" value="Guardar" class="control__button--pass">
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        
+        {{ form_end(userPassForm) }}
+
+        {% for flash in app.session.flashbag.get('error') %}
+            <span class="form__error">  
+                {{flash}}
+            </span>
+        {% endfor %}
+    </article>
+    {# User data container end #}
+
+{% endblock %}

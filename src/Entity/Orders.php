@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Orders
  *
- * @ORM\Table(name="orders", indexes={@ORM\Index(name="FK3", columns={"id_billing"}), @ORM\Index(name="FK27", columns={"id_cart"}), @ORM\Index(name="FK2", columns={"id_user"})})
+ * @ORM\Table(name="orders", indexes={@ORM\Index(name="FK3", columns={"id_billing"}), @ORM\Index(name="FK27", columns={"id_cart"}), @ORM\Index(name="FK34", columns={"id_card"}), @ORM\Index(name="FK2", columns={"id_user"})})
  * @ORM\Entity
  */
 class Orders
@@ -24,7 +24,7 @@ class Orders
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="order_date", type="date", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="order_date", type="date", nullable=false, options={"default"="current_timestamp()"})
      */
     private $orderDate = 'current_timestamp()';
 
@@ -44,6 +44,16 @@ class Orders
      * })
      */
     private $idCart;
+
+    /**
+     * @var \Card
+     *
+     * @ORM\ManyToOne(targetEntity="Card")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_card", referencedColumnName="id_card")
+     * })
+     */
+    private $idCard;
 
     /**
      * @var \Users
@@ -102,6 +112,18 @@ class Orders
     public function setIdCart(?Cart $idCart): self
     {
         $this->idCart = $idCart;
+
+        return $this;
+    }
+
+    public function getIdCard(): ?Card
+    {
+        return $this->idCard;
+    }
+
+    public function setIdCard(?Card $idCard): self
+    {
+        $this->idCard = $idCard;
 
         return $this;
     }
