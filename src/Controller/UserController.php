@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\RequestStack;
 use App\Form\UserNameType;
 use App\Form\UserPassType;
 use App\Form\UserMailType;
@@ -16,13 +18,14 @@ use App\Entity\WishlistGames;
 use App\Entity\Billing;
 use App\Entity\MediaGames;
 use App\Utils\CartCount;
+use App\Entity\Card;
 
 class UserController extends AbstractController
 {
     /**
      *  @Route("/users/control_panel/mis_datos", name="user_control_panel_data")
      */
-    public function controlPanelData(Request $request, Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
+    public function controlPanelData(Request $request, Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine,UserPasswordHasherInterface $passwordEncoder): Response
     {
         $user = $this->getUser();
         $lastUserName = $user->getUserName();
@@ -43,8 +46,15 @@ class UserController extends AbstractController
         }
 
         if($userPassForm->isSubmitted() && $userPassForm->isValid() && $request->request->has('user_pass')){
-            $entityManager -> persist($user);
-            $entityManager ->flush();
+            if($passwordEncoder->isPasswordValid($user, $userPassForm->get('password')->getData())){
+                $newPassword = $passwordEncoder->hashPassword($user, $userPassForm->get('newPass')->getData());
+                $user -> setUserPass($newPassword);
+                $entityManager -> persist($user);
+                $entityManager ->flush();
+            }else{
+                $this->addFlash('error', 'La contraseña es incorrecta');
+            }
+            
         }
 
         if($userMailForm->isSubmitted() && $userMailForm->isValid() && $request->request->has('user_mail')){
@@ -57,16 +67,23 @@ class UserController extends AbstractController
             "billingState" => 'ACTIVE'
         ));
 
+        $cards = $doctrine -> getRepository(Card::class)->findBy(array(
+            "cardUser" => $user->getIdUser(),
+            "cardState" => 1
+        ));
+
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
 
-        return $this->render('forms/userDataForm.html.twig', [
-            'userNameForm' => $userNameForm->createView(),
-            'userPassForm' => $userPassForm->createView(),
-            'userMailForm' => $userMailForm->createView(),
-            'billings' => $billing,
-            'cartCant' => $cart
-        ]);
+        return $this->render('users/user_data.html.twig', [
+                 'userNameForm' => $userNameForm->createView(),
+                 'userPassForm' => $userPassForm->createView(),
+               'userMailForm' => $userMailForm->createView(),
+                 'billings' => $billing,
+                 'cartCant' => $cart,
+             'cards' => $cards,
+                 'class' => 'control__content--data'
+           ]);
     }
 
 
