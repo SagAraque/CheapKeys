@@ -19,6 +19,7 @@ use App\Utils\CartCount;
 use App\Entity\Orders;
 use App\Entity\Billing;
 use App\Entity\Cart;
+use App\Entity\Card;
 
 class CartController extends AbstractController
 {
@@ -59,6 +60,11 @@ class CartController extends AbstractController
             'idUser' => $user->getIdUser(),
             'billingState' => 'ACTIVE'
         ));
+
+        $cards = $doctrine->getRepository(Card::class)->findBy(array(
+            'cardUser' => $user->getIdUser(),
+            'cardState' => 1
+        ));
         
         $response = $this->render('/store/cart.html.twig', [
             'cartCant' => $cartCant,
@@ -66,7 +72,8 @@ class CartController extends AbstractController
             'cartContent' => $cartContent,
             'images' => $images,
             'features' => $features,
-            'billing' => $billing
+            'billing' => $billing,
+            'cards' => $cards
         ]);
 
         $response->setEtag(md5($response->getContent()));
@@ -86,15 +93,29 @@ class CartController extends AbstractController
         if(!($this->isCsrfTokenValid('comodore-amiga', $token))) throw new BadRequestHttpException('Maybe I´m not a tea pot', null, 403);
 
         $billId = $request->get('billingDirection');
+        $cardId = $request->get('payMethod');
         $userId = $this->getUser()->getIdUser();
 
-        // Check if billing direcction id is correct
+        // Check if billing direction id is correct
         $billingDirection = $doctrine->getRepository(Billing::class)->findBy(array(
             'idUser' => $userId,
             'idBilling' => $billId
         ));
 
         if($billingDirection == null)
+        {
+            $this->addFlash('error', 'Error en el pago');
+            return $this->redirectToRoute('cart', [], 302);
+        }
+
+        // Check if pay method id is correct
+        $userCard = $doctrine->getRepository(Card::class)->findBy(array(
+            'cardUser' => $userId,
+            'idCard' => $cardId,
+            'cardState' => 1
+        ));
+
+        if($userCard == null)
         {
             $this->addFlash('error', 'Error en el pago');
             return $this->redirectToRoute('cart', [], 302);
@@ -146,6 +167,7 @@ class CartController extends AbstractController
         $order -> setOrderTotal($cart[0] -> getCartTotal());
         $order -> setOrderDate(new \DateTime());
         $order -> setIdBilling($billingDirection[0]);
+        $order -> setIdCard($userCard[0]);
         $order -> setIdCart($cart[0]);
 
         //Getting games keys

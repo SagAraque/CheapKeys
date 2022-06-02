@@ -67,6 +67,21 @@
                     </div>
                 {% endfor %}
             </div>
+            <div class="cart__container">
+                <h2 class="cart__title">Método de pago</h2>
+                {% for card in cards %}
+                    <div class="cart__pay">
+                        <div class="cart__grid--left">
+                            <input type="radio" name="payMethod" class="cart__radio" value="{{card.idCard}}" required="required">
+                        </div>
+                        <div class="cart__grid--right">
+                            <h3 class="cart__title--pay">Termina en {{ card.cardNumber | slice((card.cardNumber | length) - 4, card.cardNumber | length) }}</h3>
+                            <p class="cart__text--pay">{{ card.cardName }}</p>
+                            <p class="cart__text--pay">Caduca el 8/29</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
             <input type="hidden" name="token" value="{{ csrf_token('comodore-amiga') }}">
             <input type="submit" value="Pagar" class="cart__button">
             {% for flash in app.session.flashbag.get('error') %}

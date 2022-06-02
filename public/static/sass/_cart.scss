@@ -35,6 +35,11 @@
             margin: 0px 0px 10px 0px;
             font-weight: 500;
         }
+
+        &--pay
+        {
+            @extend .cart__title--billing;
+        }
     }
 
     &__list
@@ -76,6 +81,11 @@
             overflow: hidden;
             width: 100%;
         }
+
+        &--pay
+        {
+            @extend .cart__text--billing;
+        }
     }
 
     &__button
@@ -114,6 +124,11 @@
         display: grid;
         grid-template-columns: 30px calc(100% - 30px);
         overflow-x: hidden;
+    }
+
+    &__pay
+    {
+        @extend .cart__billing;
     }
 
     &__radio
