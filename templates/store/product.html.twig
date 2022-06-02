@@ -55,6 +55,25 @@
             {# Gallery min container end #}
         </section>
         {# Gallery end #}
+
+        {# Mobile gallery start #}
+        <section class="gallery--mobile">
+            <div class="gallery__container--mobile">
+                <div class="gallery__wrapper">
+                    {% for image in media %}
+                        <img src="{{ asset('static/img/games/' ~ image.idMedia.mediaUrl ~ '.webp' ) }}" alt="" class="gallery__asset--mobile">
+                    {% endfor %}
+                </div>
+                <div class="gallery__paginator">
+                    <span class="gallery__ball--selected"></span>
+                    {% for i in 1 .. (media | length) - 1 %}
+                        <span class="gallery__ball"></span>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {# Mobile gallery end #}
+
         {# Info section start #}
         <section class="info">
             <img src="{{ asset('static/img/games/' ~ medIaInfo.mediaUrl ~ '.webp') }}" alt="{{ medIaInfo.mediaAlt }}" class="info__asset" loading="lazy">
@@ -170,7 +189,7 @@
         var product = [{{ game.idGame }}, {{features.idPlatform.idPlatform}}];
 
     </script>
-    
+
     <script src="{{ asset('static/javascript/product.js') }}"></script>
 
     {% if reviews.total != 0 %}

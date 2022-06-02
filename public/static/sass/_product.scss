@@ -13,12 +13,25 @@
 
     &__asset{
         height: 100%;
+
+        &--mobile
+        {
+            width: calc(100vw - 20px);
+        }
     }
 
     &__container{
         height: 15%;
         width: 100%;
         @include mixin.flex-style($align:center, $justify:space-between);
+        
+        &--mobile
+        {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 5px;
+            position:relative;
+        }
     }
 
     &__arrow{
@@ -57,6 +70,39 @@
         &--selected{
             @extend .gallery__min;
             border:  2px solid var(--background_pink);
+        }
+    }
+
+    &__wrapper
+    {
+        width: 10000px;
+        @include mixin.flex-style($justify:start, $align:start);
+        transition: all 0.5s linear ;
+        cursor: grab;
+    }
+
+    &__paginator
+    {
+        width: 30%;
+        @include mixin.flex-style($justify:space-between, $align:center);
+        position: absolute;
+        left: calc(50% - (30% / 2));
+        bottom: 10px;
+    }
+
+    &__ball
+    {
+        height: 10px;
+        width: 10px;
+        transition: all 0.15s linear;
+        background-color: var(--background_secondary);
+        border: 2px solid var(--background_primary);
+        border-radius: 100%;
+
+        &--selected
+        {
+            @extend .gallery__ball;
+            background-color: var(--background_pink);
         }
     }
 }
@@ -121,7 +167,7 @@
         transition: all 0.25s;
         height: 40px;
         width: 100%;
-        font-size: var.$label;
+        font-size: var(--label);
         font-weight: 600;
         @include mixin.flex-style($justify: center, $align: center);
         background-color: var(--background_pink);
@@ -247,8 +293,8 @@
         font-size: 22px;
 
         &--primary{
-            @extend .desc__title;
-            font-size: var.$title;
+            color: var(--white);
+            font-size: var(--title);
         }
     }
 
