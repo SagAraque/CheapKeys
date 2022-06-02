@@ -68,6 +68,7 @@
     .gallery
     {
         height: 480px;
+        max-width: 700px;
     }
 
     .info
@@ -117,6 +118,12 @@
     .main
     {
         margin-top: 150px;
+
+        &__form
+        {
+            background-image: url('../img/loginBackground.webp');
+            margin-bottom: 10px;
+        }
     }
 
     .header
@@ -318,6 +325,28 @@
             }
         }
     }
+
+    .container
+    {
+        &__form
+        {
+            width: 100%;
+            min-height: calc(100vh - 320px);
+        }
+
+        &__img
+        {
+            display: none;
+        }
+    }
+
+    .form
+    {
+        &--login
+        {
+            max-width: 600px;
+        }
+    }
 }
 
 @media (max-width: 750px) 
@@ -437,7 +466,9 @@
 
     .gallery
     {
-        height: 350px;
+        max-width: 600px;
+        height: 380px;
+
         &__arrow
         {
             height: 35px;
@@ -514,7 +545,17 @@
 {
     .gallery
     {
-        height: 250px;
+        display: none;
+
+        &--mobile
+        {
+            display: flex;
+        }
+
+        &__arrow
+        {
+            display: none;
+        }
     }
     
     .footer
@@ -555,6 +596,23 @@
         &__container
         {
             width: 100%;
+        }
+    }
+
+    .form
+    {
+        &--login
+        {
+            width: calc(100% - 20px);
+        }
+    }
+
+    .container
+    {
+        &__form
+        {
+            width: 100%;
+            min-width: unset;
         }
     }
 }
@@ -606,6 +664,46 @@
         {
             width: 20px;
             height: 20px;
+        }
+    }
+
+    .cart
+    {
+        &__product
+        {
+            height: 80px;
+        }
+
+        &__cant
+        {
+            font-size: var(--text);
+        }
+    }
+
+    .card
+    {
+        &__title
+        {
+            &--long
+            {
+                font-size: var(--label);
+            }
+        }
+
+        &__icon
+        {
+            &--selector
+            {
+                font-size: var(--tetx);
+            }
+        }
+
+        &__content
+        {
+            &--long
+            {
+                padding: 5px;
+            }
         }
     }
 }

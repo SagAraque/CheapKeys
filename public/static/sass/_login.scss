@@ -15,7 +15,7 @@
 
     &__label
     {   
-        font-size: var.$label;
+        font-size: var(--label);
         color:var(--white);
         margin: 15px 0px 5px 0px;
     }
@@ -42,6 +42,7 @@
     &__error
     {
         width: 100%;
+        font-size: var(--label);
         font-weight: 600;
         margin: 20px 0px;
         list-style: none;
@@ -62,7 +63,7 @@
 
     &__title
     {
-        font-size: var.$title;
+        font-size: var(--title);
         font-weight: 600;
         color: var(--white);
         margin: 5px 0px 20px 0px;

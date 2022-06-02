@@ -12,7 +12,7 @@
         width: 960px;
         height: 80%;
         @include mixin.flex-style($alignC:center, $justify:left, $wrap:wrap);
-        padding: 0px 10px;
+        padding: 20px 10px;
         box-sizing: border-box;
     }
 
