@@ -51,6 +51,7 @@ class UserController extends AbstractController
                 $user -> setUserPass($newPassword);
                 $entityManager -> persist($user);
                 $entityManager ->flush();
+                $request -> getSession()-> migrate(true);
             }else{
                 $this->addFlash('error', 'La contraseña es incorrecta');
             }
