@@ -291,7 +291,6 @@
         &__list
         {
             width: 100%;
-            font-size: 16px;
         }
     }
 
@@ -532,6 +531,15 @@
             {
                 height: 55px;
             }
+        }
+    }
+
+    .reviews
+    {
+        &__button
+        {
+            height: 30px;
+            width: 30px;
         }
     }
 
