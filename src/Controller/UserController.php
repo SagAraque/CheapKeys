@@ -4,20 +4,21 @@ namespace App\Controller;
 
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\WishlistGames;
+use App\Entity\MediaGames;
 use App\Form\UserNameType;
 use App\Form\UserPassType;
 use App\Form\UserMailType;
-use App\Entity\WishlistGames;
-use App\Entity\Billing;
-use App\Entity\MediaGames;
+use App\Form\CardType;
 use App\Utils\CartCount;
+use App\Entity\Billing;
 use App\Entity\Card;
 
 class UserController extends AbstractController
@@ -28,15 +29,21 @@ class UserController extends AbstractController
     public function controlPanelData(Request $request, Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine,UserPasswordHasherInterface $passwordEncoder): Response
     {
         $user = $this->getUser();
+        $card = new Card();
+        $card -> setCardUser($user);
+        $cardClass = 'control__container--none';
+
         $lastUserName = $user->getUserName();
 
         $userNameForm = $this->createForm(UserNameType::class, $user);
         $userPassForm = $this->createForm(UserPassType::class, $user);
         $userMailForm = $this->createForm(UserMailType::class, $user);
+        $userNewCard = $this->createForm(CardType::class, $card);
 
         $userNameForm -> handleRequest($request);
         $userPassForm -> handleRequest($request);
         $userMailForm -> handleRequest($request);
+        $userNewCard -> handleRequest($request);
 
         if($userNameForm->isSubmitted() && $userNameForm->isValid() && $request->request->has('user_name')){
             $entityManager -> persist($user);
@@ -63,6 +70,15 @@ class UserController extends AbstractController
             $entityManager ->flush();
         }
 
+        if($userNewCard->isSubmitted() && $userNewCard->isValid() && $request->request->has('card')){
+            $entityManager -> persist($card);
+            $entityManager ->flush();
+            $card = new Card();
+            $userNewCard = $this->createForm(CardType::class, $card);
+        }else if($userNewCard->isSubmitted() && !($userNewCard->isValid() && $request->request->has('card'))){
+            $cardClass = "";
+        }
+
         $billing = $doctrine -> getRepository(Billing::class)->findBy(array(
             "idUser" => $user->getIdUser(),
             "billingState" => 'ACTIVE'
@@ -77,13 +93,15 @@ class UserController extends AbstractController
         $cart = $cartCount->getCount();
 
         return $this->render('users/user_data.html.twig', [
-                 'userNameForm' => $userNameForm->createView(),
-                 'userPassForm' => $userPassForm->createView(),
-               'userMailForm' => $userMailForm->createView(),
-                 'billings' => $billing,
-                 'cartCant' => $cart,
-             'cards' => $cards,
-                 'class' => 'control__content--data'
+            'userNameForm' => $userNameForm->createView(),
+            'userPassForm' => $userPassForm->createView(),
+            'userMailForm' => $userMailForm->createView(),
+            'userNewCard' => $userNewCard->createView(),
+            'billings' => $billing,
+            'cartCant' => $cart,
+            'cards' => $cards,
+            'class' => 'control__content--data',
+            'cardClass' => $cardClass
            ]);
     }
 
@@ -116,5 +134,13 @@ class UserController extends AbstractController
             'images' => $images,
             'cartCant' => $cart
         ]);
+    }
+
+    /**
+     * @Route("/users/control_panel/addCard", name="add_card")
+     */
+    public function addCard(Request $request, Security $security, EntityManagerInterface $entityManager)
+    {
+
     }
 }

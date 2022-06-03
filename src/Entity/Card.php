@@ -38,6 +38,13 @@ class Card
     /**
      * @var string
      *
+     * @ORM\Column(name="card__expire", type="text", length=65535, nullable=false)
+     */
+    private $cardExpire;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="card_name", type="string", length=100, nullable=false)
      */
     private $cardName;
@@ -64,12 +71,12 @@ class Card
         return $this->idCard;
     }
 
-    public function getCardNumber(): ?int
+    public function getCardNumber(): ?string
     {
         return $this->cardNumber;
     }
 
-    public function setCardNumber(int $cardNumber): self
+    public function setCardNumber(string $cardNumber): self
     {
         $this->cardNumber = $cardNumber;
 
@@ -84,6 +91,18 @@ class Card
     public function setCardCvv(string $cardCvv): self
     {
         $this->cardCvv = $cardCvv;
+
+        return $this;
+    }
+
+    public function getCardExpire(): ?string
+    {
+        return $this->cardExpire;
+    }
+
+    public function setCardExpire(string $cardExpire): self
+    {
+        $this->cardExpire = $cardExpire;
 
         return $this;
     }

@@ -17,6 +17,7 @@
         <button class="control__button">Añadir dirección</button>
     </article>
     {# Billing direction container end #}
+
     {# Pay methods container start #}
     <article class="content__pay">
         <h2 class="control__title">Métodos de pago</h2>
@@ -25,14 +26,15 @@
             <div class="pay__card">
                 <h3 class="pay__title">Termina en {{ card.cardNumber | slice((card.cardNumber | length) - 4, card.cardNumber | length) }} </h3>
                 <p class="pay__text">{{ card.cardName }}</p>
-                <p class="pay__text">Caduca el 8/29</p>
+                <p class="pay__text">Caduca el {{ card.cardExpire }}</p>
                 <i class="bi bi-x card__icon--delete"></i>
             </div>
         {% endfor %}
         </div>
-        <button class="control__button">Añadir tarjeta</button>
+        <button class="control__button control__add--card">Añadir tarjeta</button>
     </article>
     {# Pay methods container end #}
+
     {# User data container start #}
     <article class="content__data">
         <h2 class="control__title">Datos de mi cuenta</h2>
@@ -51,6 +53,7 @@
 
         {{ form_end(userNameForm) }}
         {# User name change form end #}
+
         {# User email change form start #}
         {{ form_start(userMailForm, {'attr' : {'action' : path('user_control_panel_data'), 'class': 'control__form' }}) }}
 
@@ -66,6 +69,7 @@
         {{ form_end(userMailForm) }}
         {# User email change form end #}
 
+        {# User password change form start #}
         {{ form_start(userPassForm, {'attr' : {'action' : path('user_control_panel_data'), 'class': 'control__form--pass' }}) }}
 
             <div class="control__container--pass">
@@ -88,6 +92,7 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         
         {{ form_end(userPassForm) }}
+        {# User password change form end #}
 
         {% for flash in app.session.flashbag.get('error') %}
             <span class="form__error">  
@@ -96,5 +101,38 @@
         {% endfor %}
     </article>
     {# User data container end #}
+
+    <article class="control__container--full {{ cardClass }}">
+        {{ form_start(userNewCard, {'attr' : {'action' : path('user_control_panel_data'), 'class': 'control__form--card' }}) }}
+
+            <i class="bi bi-x card__icon--delete card__icon--deletCard"></i>
+            <h2 class="control__title">Nueva Tarjeta</h2>
+            
+            <div class="control__container--card">
+                {{ form_label(userNewCard.cardNumber) }}
+                {{ form_widget(userNewCard.cardNumber) }}
+                {{ form_errors(userNewCard.cardNumber) }}
+
+            </div>
+            <div class="control__container--half">
+                {{ form_label(userNewCard.cardExpire) }}
+                {{ form_widget(userNewCard.cardExpire) }}
+            </div>
+            <div class="control__container--half">
+                {{ form_label(userNewCard.cardCvv) }}
+                {{ form_widget(userNewCard.cardCvv) }}
+            </div>
+            {{ form_errors(userNewCard.cardCvv) }}
+            {{ form_errors(userNewCard.cardExpire) }}
+            <div class="control__container--card">
+                {{ form_label(userNewCard.cardName) }}
+                {{ form_widget(userNewCard.cardName) }}
+                {{ form_errors(userNewCard.cardName) }}
+            </div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <input type="submit" value="Guardar" class="control__button">
+
+        {{ form_end(userNewCard) }}
+    </article>
 
 {% endblock %}

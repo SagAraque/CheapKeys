@@ -120,6 +120,34 @@
             width: min-content;
             @include mixin.flex-style($justify:start, $direction:column);
         }
+
+        &--full
+        {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #00000050;
+            @include mixin.flex-style($justify:center, $align:center);
+        }
+
+        &--card
+        {
+            width: 100%;
+            @include mixin.flex-style($justify:start, $direction:column);
+        }
+
+        &--half
+        {
+            width: 48%;
+            @include mixin.flex-style($justify:start, $direction:column);
+        }
+
+        &--none
+        {
+            display: none
+        }
     }
 
     &__label
@@ -132,8 +160,27 @@
     &__input
     {
         @extend .form__input;
+        height: 40px;
         width: 200px;
         margin: 15px 20px 15px 0px;
+
+        &--full
+        {
+            @extend .control__input;
+            width: 100%;
+            margin-top: 0;
+        }
+
+        &--num
+        {
+            -moz-appearance: textfield;
+            
+            &::-webkit-outer-spin-button, &::-webkit-inner-spin-button
+            {
+                -webkit-appearance: none;
+                margin: 0; 
+            }
+        }
     }
 
     &__button
@@ -144,6 +191,7 @@
         text-decoration: none;
         width: 180px;
         height: 37px;
+        margin: 0 auto;
 
         &--pass
         {
@@ -181,16 +229,6 @@
         color: var(--white);
     }
 
-    &__x
-    {   
-        font-size: 35px;
-        color: var(--red);
-        cursor: pointer;
-        position: absolute;
-        top: 5px;
-        right: 10px
-    }
-
     &__form
     {
         margin-top: 50px;
@@ -200,6 +238,19 @@
             margin-top: 50px;
             @include mixin.flex-style($direction:column,$justify:start);
             position: relative;
+        }
+
+        &--card
+        {
+            width: 400px;
+            min-height: 350px;
+            @include mixin.flex-style($justify:space-between, $wrap:wrap);
+            background-color: var(--background_secondary);
+            border-radius: 8px;
+            padding: 0 10px 10px 10px;
+            position: relative;
+            box-sizing: border-box;
+
         }
     }
 }
@@ -266,8 +317,9 @@
     &__container
     {
         width: 100%;
-        min-height: 200px;
+        height: 200px;
         @include mixin.flex-style($direction:column, $align:start);  
+        gap: 10px;
         overflow-y:auto;
         padding-right: 5px;
         box-sizing: border-box;

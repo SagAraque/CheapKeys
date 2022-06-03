@@ -1,5 +1,8 @@
 let buttons = document.querySelectorAll('.control__x');
 let container = document.querySelector('.control__container--billing');
+let closeCardForm = document.querySelector('.card__icon--deletCard');
+let addCardButton = document.querySelector('.control__add--card');
+let formCard = document.querySelector('.control__form--card');
 
 buttons.forEach(button => {
     button.addEventListener('click', ()=>{
@@ -7,6 +10,16 @@ buttons.forEach(button => {
         deleteBillingDirection(id);
         container.removeChild(button.parentNode);
     });
+});
+
+addCardButton.addEventListener('click', ()=>{
+    let container = formCard.parentNode;
+    container.classList.toggle('control__container--none');
+});
+
+closeCardForm.addEventListener('click', ()=>{
+    let container = formCard.parentNode;
+    container.classList.toggle('control__container--none');
 });
 
 
