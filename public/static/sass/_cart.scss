@@ -117,13 +117,12 @@
     &__billing
     {
         width: 100%;
-        min-height: 70px;
+        min-height: 80px;
         background-color: var(--background_primary);
         border-radius: 8px;
         margin: 5px 0px;
         display: grid;
         grid-template-columns: 30px calc(100% - 30px);
-        overflow-x: hidden;
     }
 
     &__pay

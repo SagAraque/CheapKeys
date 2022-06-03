@@ -52,8 +52,8 @@
                 <li class="cart__item"><span class="cart__text--light">Productos</span><span class="cart__text">{{ cartCant }}</span></li>
                 <li class="cart__item"><span class="cart__text--light">Total</span><span class="cart__text--total">{{ cart.cartTotal }} €</span></li>
             </ul>
+            <h2 class="cart__title">Dirección de facturación</h2>
             <div class="cart__container">
-                <h2 class="cart__title">Dirección de facturación</h2>
                 {% for bill in billing %}
                     <div class="cart__billing">
                         <div class="cart__grid--left">
@@ -67,8 +67,8 @@
                     </div>
                 {% endfor %}
             </div>
+            <h2 class="cart__title">Método de pago</h2>
             <div class="cart__container">
-                <h2 class="cart__title">Método de pago</h2>
                 {% for card in cards %}
                     <div class="cart__pay">
                         <div class="cart__grid--left">
