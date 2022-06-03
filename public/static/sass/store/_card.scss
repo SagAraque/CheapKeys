@@ -1,0 +1,243 @@
+@use '../mixins' as mixin;
+@use '../var';
+
+.index
+{
+    &__card
+    {
+        width: 280px;
+        height: 350px;
+        background-color: var.$background-secondary;
+        @include mixin.flex-style($justify:space-between, $direction:column);
+        border-radius: 5px;
+        margin: 10px 0px;
+        text-decoration: none;
+        overflow: hidden; 
+        cursor: pointer;
+    }
+}
+
+.store
+{
+    &__card
+    {
+        @extend .index__card;
+    }
+}
+
+.cart{
+    &__product
+    {
+        width: 100%;
+        height: 130px;
+        @include mixin.flex-style($justify: start);
+        background-color: var(--background_secondary);
+        border-radius: 8px;
+        margin-bottom: 15px;
+        overflow: hidden;
+        text-decoration: none;
+        position: relative;
+    }
+}
+
+.header
+{
+    &__card
+    {
+        @extend .cart__product;
+        height: 70px;
+        margin: 10px 0px;
+    }
+}
+
+
+.card
+{
+    &__img
+    {
+        width: 100%;
+        object-fit:contain;
+
+        &--height
+        {
+            height: 100%;
+        }
+
+        &--container
+        {
+            width: 100%;
+            position: relative;
+        }
+
+        &--span
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-bottom-right-radius: 5px;
+            background-color: var(--background_pink);
+            color: var(--white);
+            padding: 8px 12px;
+        }
+    }
+
+    &__content
+    {
+        @include mixin.flex-style($justify:space-between, $align:start, $direction:column);
+        padding: 0px 15px 0px 15px;
+        flex-grow: 1;
+        
+        &--container
+        {
+            width: 100%;
+            @include mixin.flex-style($justify:space-between, $align:center); 
+        }
+
+        &--long
+        {
+            height: 100%;
+            @include mixin.flex-style($justify: space-between, $direction:column);
+            flex-grow:  1;
+            padding: 10px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+    }
+
+    &__title
+    {
+        font-size: var(--text);
+        color:var(--white);
+        text-align: center;
+        margin-top: 10px;
+
+        &--long{
+
+            @extend .card__title;
+            margin: 0px;
+            font-size: var(--text20);
+            text-align: start;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        &--search
+        {
+            @extend .card__title;
+            font-size: 14px;
+            text-align: start;
+            margin: 0px 0px 5px 0px
+        }
+    }
+
+    &__button
+    {
+        @extend .info__button;
+        font-size: var(--label);
+        width: unset;
+        margin: 0px 15px 15px 15px;
+        box-sizing: border-box;
+
+        &:hover
+        {
+            @include mixin.button-hover;
+        }
+    }
+
+    &__val
+    {
+        @extend .info__span--val;
+        font-size: var(--text20);
+        width: 42px;
+        height: 42px;
+    }
+
+    &__link
+    {
+        @include mixin.flex-style($justify:space-between, $direction:column);
+        text-decoration: none;
+    }
+
+    &__icon
+    {
+        @extend .info__icon--data;
+
+        &--selector
+        {
+            @extend .info__icon--data;
+            color:  var(--background_pink);
+            font-size: var(--text20);
+            margin: 0;
+            cursor: pointer;
+        }
+
+        &--delete
+        {
+            width: min-content;
+            color:  var(--background_pink);
+            font-size: var(--title25);
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            cursor: pointer;
+        }
+    }
+
+    &__platform
+    {
+        font-size: var(--text);
+        color: var(--white);
+
+        &--search
+        {
+            @extend .card__platform;
+            font-size: 12px;
+        }
+    }
+
+    &__discount
+    {
+        @extend .info__span--discount;
+        position: absolute;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 0;
+        left: 0;
+        top: -10px;
+    }
+
+    &__price
+    {
+        font-size: var(--title25);
+        font-weight: 500;
+        color: var(--white);
+        margin: 0;
+
+        &--long
+        {
+            color: var(--white);
+            font-size: var(--text20);
+            position: absolute;
+            bottom: 10px;
+            right: 10px; 
+        }
+
+        &--search
+        {
+            @extend .card__price--long;
+            font-size: var(--text);
+        }
+
+        
+
+        &--discount
+        {
+            @extend .info__price--discount;
+
+            &Search{
+                @extend .info__price--discount;
+                font-size: var(--text);
+            }
+        }
+    }
+}

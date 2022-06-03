@@ -35,12 +35,12 @@ body
 @import 'header.scss';
 @import 'containers.scss';
 @import 'footer.scss';
-@import 'product.scss';
+@import 'store/product.scss';
 @import 'index.scss';
-@import 'login.scss';
-@import 'control_panel.scss';
-@import 'store.scss';
-@import 'card.scss';
-@import 'cart.scss';
+@import 'user/login.scss';
+@import 'user/control_panel.scss';
+@import 'store/store.scss';
+@import 'store/card.scss';
+@import 'store/cart.scss';
 
 @import 'responsive.scss';
