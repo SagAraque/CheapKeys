@@ -339,11 +339,15 @@ body {
 }
 .cart__container {
   width: 100%;
+  max-height: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+  overflow-y: auto;
+  padding: 0 5px 0 0;
+  box-sizing: border-box;
 }
 .cart__grid--left {
   display: flex;
@@ -951,7 +955,7 @@ body {
   text-decoration: none;
   box-sizing: border-box;
 }
-.form__input, .control__input {
+.form__input, .control__input, .control__input--full {
   width: 100%;
   color: var(--white);
   background-color: var(--background_body);
@@ -1078,13 +1082,51 @@ body {
   flex-direction: column;
   justify-content: start;
 }
+.control__container--full {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3137254902);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.control__container--card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+.control__container--half {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+.control__container--none {
+  display: none;
+}
 .control__label {
   font-weight: 600;
   margin-top: 0px;
 }
-.control__input {
+.control__input, .control__input--full {
+  height: 40px;
   width: 200px;
   margin: 15px 20px 15px 0px;
+}
+.control__input--full {
+  width: 100%;
+  margin-top: 0;
+}
+.control__input--num {
+  -moz-appearance: textfield;
+}
+.control__input--num::-webkit-outer-spin-button, .control__input--num::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 .control__button, .control__button--pass {
   border-radius: 5px;
@@ -1092,6 +1134,7 @@ body {
   text-decoration: none;
   width: 180px;
   height: 37px;
+  margin: 0 auto;
 }
 .control__button--pass {
   width: 144px;
@@ -1122,14 +1165,6 @@ body {
 .control__text {
   color: var(--white);
 }
-.control__x {
-  font-size: 35px;
-  color: var(--red);
-  cursor: pointer;
-  position: absolute;
-  top: 5px;
-  right: 10px;
-}
 .control__form {
   margin-top: 50px;
 }
@@ -1139,6 +1174,18 @@ body {
   flex-direction: column;
   justify-content: start;
   position: relative;
+}
+.control__form--card {
+  width: 400px;
+  min-height: 350px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: var(--background_secondary);
+  border-radius: 8px;
+  padding: 0 10px 10px 10px;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .content__billing, .content__pay, .content__data {
@@ -1192,10 +1239,11 @@ body {
 }
 .billing__container, .pay__container {
   width: 100%;
-  min-height: 200px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   align-items: start;
+  gap: 10px;
   overflow-y: auto;
   padding-right: 5px;
   box-sizing: border-box;
@@ -1518,13 +1566,12 @@ body {
 }
 .cart__billing, .cart__pay {
   width: 100%;
-  min-height: 70px;
+  min-height: 80px;
   background-color: var(--background_primary);
   border-radius: 8px;
   margin: 5px 0px;
   display: grid;
   grid-template-columns: 30px calc(100% - 30px);
-  overflow-x: hidden;
 }
 .cart__radio {
   accent-color: var(--background_pink);
