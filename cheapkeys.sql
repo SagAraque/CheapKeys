@@ -60,13 +60,14 @@ CREATE TABLE `card` (
   `id_card` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `card_number` varchar(19) NOT NULL,
   `card_cvv` varchar(3) NOT NULL,
+  `card__expire` text NOT NULL,
   `card_name` varchar(100) NOT NULL,
   `card_user` int(10) unsigned NOT NULL,
   `card_state` tinyint(1) DEFAULT 1,
   PRIMARY KEY (`id_card`),
   KEY `FK28` (`card_user`),
   CONSTRAINT `FK28` FOREIGN KEY (`card_user`) REFERENCES `users` (`id_user`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +76,7 @@ CREATE TABLE `card` (
 
 LOCK TABLES `card` WRITE;
 /*!40000 ALTER TABLE `card` DISABLE KEYS */;
-INSERT INTO `card` VALUES (1,'4011317773263584','123','Joselito Perez',1,1),(2,'4016156835285218','321','Pepe Martinez',1,1);
+INSERT INTO `card` VALUES (1,'4011317773263584','123','03/29','Joselito Perez',1,1),(2,'4016156835285218','321','04/29','Pepe Martinez',1,1),(4,'4263982640269299','738','04/23','Sergio Araque García',1,1),(5,'4821319942682522','310','09/22','Carlos Martinez Rodriguez',1,1),(6,'5003460541020576','123','10/25','Manolito Perez Segundo',1,1);
 /*!40000 ALTER TABLE `card` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -512,4 +513,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-02 17:02:16
+-- Dump completed on 2022-06-03 14:55:28
