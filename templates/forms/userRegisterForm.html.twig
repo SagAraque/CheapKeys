@@ -9,21 +9,20 @@
             <h2 class="form__title">Registro</h2>
 
             {{ form_label(form.userEmail) }}
-            {{ form_errors(form.userEmail, {'attr': {'class' : 'form__error'}}) }}
             {{ form_widget(form.userEmail) }}
+            {{ form_errors(form.userEmail, {'attr': {'class' : 'form__error'}}) }}
 
             {{ form_label(form.userName) }}
-            {{ form_errors(form.userName, {'attr': {'class' : 'form__error'}}) }}
             {{ form_widget(form.userName) }}
-            
+            {{ form_errors(form.userName, {'attr': {'class' : 'form__error'}}) }}
+
             {{ form_label(form.userPass.first) }}
-            {{ form_errors(form.userPass.first, {'attr': {'class' : 'form__error'}}) }}
             {{ form_widget(form.userPass.first) }}
+            {{ form_errors(form.userPass.first, {'attr': {'class' : 'form__error'}}) }}
 
             {{ form_label(form.userPass.second) }}
-            {{ form_errors(form.userPass.second, {'attr': {'class' : 'form__error'}}) }}
             {{ form_widget(form.userPass.second) }}
-            
+            {{ form_errors(form.userPass.second, {'attr': {'class' : 'form__error'}}) }}
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
