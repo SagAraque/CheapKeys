@@ -6,15 +6,15 @@
         <h2 class="control__title">Direcciones de facturación</h2>
         <div class="billing__container">
         {% for billDirection in billings %}
-            <div class="billing__card">
+            <div class="billing__card" identifier="{{ billDirection.idBilling }}">
                 <h3 class="billing__title">{{ billDirection.billingName }}</h3>
                 <p class="billing__text"><strong>Dirección: </strong>{{ billDirection.billingDirection }}, {{ billDirection.billingPostal }}, {{ billDirection.billingPoblation }}, {{ billDirection.billingProvince }}</p>
                 <p class="billing__text"><strong>Teléfono: </strong>{{ billDirection.billinTlfo }}</p>
-                <i class="bi bi-x card__icon--delete"></i>
+                <i class="bi bi-x billing__icon--delete"></i>
             </div>
         {% endfor %}
         </div>
-        <button class="control__button">Añadir dirección</button>
+        <button class="control__button control__add--billing">Añadir dirección</button>
     </article>
     {# Billing direction container end #}
 
@@ -23,11 +23,11 @@
         <h2 class="control__title">Métodos de pago</h2>
         <div class="pay__container">
         {% for card in cards %}
-            <div class="pay__card">
+            <div class="pay__card" identifier="{{ card.idCard }}">
                 <h3 class="pay__title">Termina en {{ card.cardNumber | slice((card.cardNumber | length) - 4, card.cardNumber | length) }} </h3>
                 <p class="pay__text">{{ card.cardName }}</p>
                 <p class="pay__text">Caduca el {{ card.cardExpire }}</p>
-                <i class="bi bi-x card__icon--delete"></i>
+                <i class="bi bi-x pay__icon--delete"></i>
             </div>
         {% endfor %}
         </div>
@@ -40,7 +40,7 @@
         <h2 class="control__title">Datos de mi cuenta</h2>
 
         {# Usaer name change form start #}
-        {{ form_start(userNameForm, {'attr' : {'action' : path('user_control_panel_data'), 'class': 'control__form' }}) }}
+        {{ form_start(userNameForm, {'attr' : {'action' : path('change_username'), 'class': 'control__form' }}) }}
 
             {{ form_label(userNameForm.userName) }}
             <div class="control__container">
@@ -55,7 +55,7 @@
         {# User name change form end #}
 
         {# User email change form start #}
-        {{ form_start(userMailForm, {'attr' : {'action' : path('user_control_panel_data'), 'class': 'control__form' }}) }}
+        {{ form_start(userMailForm, {'attr' : {'action' : path('change_email'), 'class': 'control__form' }}) }}
 
             {{ form_label(userMailForm.userEmail) }}
             <div class="control__container">
@@ -70,7 +70,7 @@
         {# User email change form end #}
 
         {# User password change form start #}
-        {{ form_start(userPassForm, {'attr' : {'action' : path('user_control_panel_data'), 'class': 'control__form--pass' }}) }}
+        {{ form_start(userPassForm, {'attr' : {'action' : path('change_pass'), 'class': 'control__form--pass' }}) }}
 
             <div class="control__container--pass">
                 <div class="control__container--column">
@@ -85,6 +85,8 @@
                     {{ form_label(userPassForm.newPass.second) }}
                     {{ form_widget(userPassForm.newPass.second) }}
                 </div>
+
+                {{ form_errors(userPassForm.newPass.first) }}
                 
                 <input type="submit" value="Guardar" class="control__button--pass">
             </div>
@@ -94,25 +96,23 @@
         {{ form_end(userPassForm) }}
         {# User password change form end #}
 
-        {% for flash in app.session.flashbag.get('error') %}
+        {% for flash in app.flashes('error') %}
             <span class="form__error">  
-                {{flash}}
+                {{flash }}
             </span>
         {% endfor %}
     </article>
     {# User data container end #}
+    <article class="control__container--full {{ userNewCard.vars.valid ? 'control__container--none' : '' }}">
+        {{ form_start(userNewCard, {'attr' : {'action' : path('add_card'), 'class': 'control__form--card' }}) }}
 
-    <article class="control__container--full {{ cardClass }}">
-        {{ form_start(userNewCard, {'attr' : {'action' : path('user_control_panel_data'), 'class': 'control__form--card' }}) }}
-
-            <i class="bi bi-x card__icon--delete card__icon--deletCard"></i>
+            <i class="bi bi-x card__icon--delete card__icon--closeForm"></i>
             <h2 class="control__title">Nueva Tarjeta</h2>
             
             <div class="control__container--card">
                 {{ form_label(userNewCard.cardNumber) }}
                 {{ form_widget(userNewCard.cardNumber) }}
                 {{ form_errors(userNewCard.cardNumber) }}
-
             </div>
             <div class="control__container--half">
                 {{ form_label(userNewCard.cardExpire) }}
@@ -133,6 +133,62 @@
             <input type="submit" value="Guardar" class="control__button">
 
         {{ form_end(userNewCard) }}
+    </article>
+
+    <article class="control__container--full {{ userNewBilling.vars.valid ? 'control__container--none' : '' }}">
+        {{ form_start(userNewBilling, {'attr' : {'action' : path('add_billing_direction'), 'class': 'control__form--billing' }}) }}
+
+            <i class="bi bi-x card__icon--delete card__icon--closeForm"></i>
+            <h2 class="control__title">Nueva dirección</h2>
+
+            <div class="control__container--card">
+                {{ form_label(userNewBilling.billingName) }}
+                {{ form_widget(userNewBilling.billingName) }}
+                {{ form_errors(userNewBilling.billingName) }}
+            </div>
+
+            <div class="control__container--card">
+                {{ form_label(userNewBilling.billingDirection) }}
+                {{ form_widget(userNewBilling.billingDirection) }}
+                {{ form_errors(userNewBilling.billingDirection) }}
+            </div>
+
+            <div class="control__container--half">
+                {{ form_label(userNewBilling.billingPostal) }}
+                {{ form_widget(userNewBilling.billingPostal) }}
+            </div>
+
+            <div class="control__container--half">
+                {{ form_label(userNewBilling.billingPoblation) }}
+                {{ form_widget(userNewBilling.billingPoblation) }}
+            </div>
+
+            {{ form_errors(userNewBilling.billingPostal) }}
+            {{ form_errors(userNewBilling.billingPoblation) }}
+
+            <div class="control__container--card">
+                {{ form_label(userNewBilling.billingCountry) }}
+                {{ form_widget(userNewBilling.billingCountry) }}
+                {{ form_errors(userNewBilling.billingCountry) }}
+            </div>
+
+             <div class="control__container--half">
+                {{ form_label(userNewBilling.billingProvince) }}
+                {{ form_widget(userNewBilling.billingProvince) }}
+            </div>
+
+             <div class="control__container--half">
+                {{ form_label(userNewBilling.billinTlfo) }}
+                {{ form_widget(userNewBilling.billinTlfo) }}
+            </div>
+
+                {{ form_errors(userNewBilling.billinTlfo) }}
+                {{ form_errors(userNewBilling.billingProvince) }}
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            <input type="submit" value="Guardar" class="control__button">
+
+        {{ form_end(userNewBilling) }}
     </article>
 
 {% endblock %}

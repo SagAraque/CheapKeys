@@ -59,7 +59,13 @@
 
     &__icon
     {
-        margin-right: 10px
+        margin-right: 10px;
+
+        &--img
+        {
+            font-size: 35px;
+            color: var(--white);
+        }
     }
 
     &__link
@@ -80,6 +86,7 @@
         width: 100px;
         height: 100px;
         border-radius: 100%;
+        cursor: pointer;
 
         &--card
         {
@@ -155,6 +162,30 @@
         @extend .form__label;
         font-weight: 600;
         margin-top:0px;
+
+        &--img
+        {
+            height: 100px;
+            width: 100px;
+            border-radius: 100%;
+            position: relative;
+        }
+    }
+
+    &__span
+    {
+        &--img
+        {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            top: 0;
+            left: 0;
+            position: absolute;
+            cursor: pointer;
+            @include mixin.flex-style($justify:center, $align:center);
+            display: none
+        }
     }
 
     &__input
@@ -180,6 +211,11 @@
                 -webkit-appearance: none;
                 margin: 0; 
             }
+        }
+
+        &--img
+        {
+            display: none
         }
     }
 
@@ -250,7 +286,25 @@
             padding: 0 10px 10px 10px;
             position: relative;
             box-sizing: border-box;
+        }
 
+        &--billing
+        {
+            @extend .control__form--card
+        }
+
+        &--img
+        {
+            height: 100px;
+            width: 100px;
+            display: flex;
+            overflow: hidden;
+            border-radius: 100%;
+
+            &:hover .control__span--img
+            {
+                display: flex;
+            }
         }
     }
 }
@@ -325,6 +379,15 @@
         box-sizing: border-box;
 
     }
+
+    &__icon
+    {
+        &--delete
+        {
+            @extend .card__icon--delete;
+        }
+
+    }
 }
 
 .pay
@@ -349,5 +412,13 @@
     {
         @extend .billing__card;
         width: 48%;
+    }
+
+    &__icon
+    {
+        &--delete
+        {
+            @extend .card__icon--delete;
+        }
     }
 }

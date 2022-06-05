@@ -970,7 +970,7 @@ body {
 }
 .form__error {
   width: 100%;
-  font-size: var(--label);
+  font-size: var(--text);
   font-weight: 600;
   margin: 20px 0px;
   list-style: none;
@@ -1039,6 +1039,10 @@ body {
 .control__icon {
   margin-right: 10px;
 }
+.control__icon--img {
+  font-size: 35px;
+  color: var(--white);
+}
 .control__link {
   width: min-content;
   background-color: transparent;
@@ -1052,6 +1056,7 @@ body {
   width: 100px;
   height: 100px;
   border-radius: 100%;
+  cursor: pointer;
 }
 .control__img--card {
   height: calc(100% + 40px);
@@ -1116,6 +1121,25 @@ body {
   font-weight: 600;
   margin-top: 0px;
 }
+.control__label--img {
+  height: 100px;
+  width: 100px;
+  border-radius: 100%;
+  position: relative;
+}
+.control__span--img {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  top: 0;
+  left: 0;
+  position: absolute;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
 .control__input, .control__input--full {
   height: 40px;
   width: 200px;
@@ -1131,6 +1155,9 @@ body {
 .control__input--num::-webkit-outer-spin-button, .control__input--num::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+.control__input--img {
+  display: none;
 }
 .control__button, .control__button--pass {
   border-radius: 5px;
@@ -1179,7 +1206,7 @@ body {
   justify-content: start;
   position: relative;
 }
-.control__form--card {
+.control__form--card, .control__form--billing {
   width: 400px;
   min-height: 350px;
   display: flex;
@@ -1190,6 +1217,16 @@ body {
   padding: 0 10px 10px 10px;
   position: relative;
   box-sizing: border-box;
+}
+.control__form--img {
+  height: 100px;
+  width: 100px;
+  display: flex;
+  overflow: hidden;
+  border-radius: 100%;
+}
+.control__form--img:hover .control__span--img {
+  display: flex;
 }
 
 .content__billing, .content__pay, .content__data {
@@ -1252,7 +1289,6 @@ body {
   padding-right: 5px;
   box-sizing: border-box;
 }
-
 .pay__container {
   display: flex;
   flex-direction: row;
@@ -1263,7 +1299,6 @@ body {
 .pay__card {
   width: 48%;
 }
-
 .store__title {
   font-size: 35px;
   color: var(--white);
@@ -1447,7 +1482,7 @@ body {
   margin: 0;
   cursor: pointer;
 }
-.card__icon--delete {
+.card__icon--delete, .billing__icon--delete, .pay__icon--delete {
   width: min-content;
   color: var(--background_pink);
   font-size: var(--title25);

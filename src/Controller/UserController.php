@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
@@ -13,6 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\WishlistGames;
 use App\Entity\MediaGames;
+use App\Security\UsersAuthAuthenticator;
 use App\Form\UserNameType;
 use App\Form\UserPassType;
 use App\Form\UserMailType;
@@ -20,68 +22,40 @@ use App\Form\CardType;
 use App\Utils\CartCount;
 use App\Entity\Billing;
 use App\Entity\Card;
+use App\Entity\Users;
+use App\Form\BillingDirectionType;
+use Symfony\Bundle\SecurityBundle\Security\UserAuthenticator;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class UserController extends AbstractController
 {
+
     /**
      *  @Route("/users/control_panel/mis_datos", name="user_control_panel_data")
      */
-    public function controlPanelData(Request $request, Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine,UserPasswordHasherInterface $passwordEncoder): Response
+    public function controlPanelData(Request $request, Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
         $user = $this->getUser();
         $card = new Card();
+        $billingDirection = new Billing();
         $card -> setCardUser($user);
-        $cardClass = 'control__container--none';
-
-        $lastUserName = $user->getUserName();
+        $billingDirection->setIdUser($user);
 
         $userNameForm = $this->createForm(UserNameType::class, $user);
         $userPassForm = $this->createForm(UserPassType::class, $user);
         $userMailForm = $this->createForm(UserMailType::class, $user);
         $userNewCard = $this->createForm(CardType::class, $card);
+        $userNewBillingDirection = $this->createForm(BillingDirectionType::class, $billingDirection);
 
         $userNameForm -> handleRequest($request);
         $userPassForm -> handleRequest($request);
         $userMailForm -> handleRequest($request);
         $userNewCard -> handleRequest($request);
-
-        if($userNameForm->isSubmitted() && $userNameForm->isValid() && $request->request->has('user_name')){
-            $entityManager -> persist($user);
-            $entityManager ->flush();
-        }else{
-            $user->setUserName($lastUserName);
-        }
-
-        if($userPassForm->isSubmitted() && $userPassForm->isValid() && $request->request->has('user_pass')){
-            if($passwordEncoder->isPasswordValid($user, $userPassForm->get('password')->getData())){
-                $newPassword = $passwordEncoder->hashPassword($user, $userPassForm->get('newPass')->getData());
-                $user -> setUserPass($newPassword);
-                $entityManager -> persist($user);
-                $entityManager ->flush();
-                $request -> getSession()-> migrate(true);
-            }else{
-                $this->addFlash('error', 'La contraseña es incorrecta');
-            }
-            
-        }
-
-        if($userMailForm->isSubmitted() && $userMailForm->isValid() && $request->request->has('user_mail')){
-            $entityManager -> persist($user);
-            $entityManager ->flush();
-        }
-
-        if($userNewCard->isSubmitted() && $userNewCard->isValid() && $request->request->has('card')){
-            $entityManager -> persist($card);
-            $entityManager ->flush();
-            $card = new Card();
-            $userNewCard = $this->createForm(CardType::class, $card);
-        }else if($userNewCard->isSubmitted() && !($userNewCard->isValid() && $request->request->has('card'))){
-            $cardClass = "";
-        }
+        $userNewBillingDirection -> handleRequest($request);
 
         $billing = $doctrine -> getRepository(Billing::class)->findBy(array(
             "idUser" => $user->getIdUser(),
-            "billingState" => 'ACTIVE'
+            "billingState" => 1
         ));
 
         $cards = $doctrine -> getRepository(Card::class)->findBy(array(
@@ -97,11 +71,11 @@ class UserController extends AbstractController
             'userPassForm' => $userPassForm->createView(),
             'userMailForm' => $userMailForm->createView(),
             'userNewCard' => $userNewCard->createView(),
+            'userNewBilling' => $userNewBillingDirection->createView(),
             'billings' => $billing,
             'cartCant' => $cart,
             'cards' => $cards,
             'class' => 'control__content--data',
-            'cardClass' => $cardClass
            ]);
     }
 
@@ -137,10 +111,119 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/users/control_panel/addCard", name="add_card")
+     * @Route("/users/control_panel/change_name", name="change_username")
      */
-    public function addCard(Request $request, Security $security, EntityManagerInterface $entityManager)
+    public function changeUsername(Request $request, Security $security, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        $lastUserName = $user->getUserName();
+        $userNameForm = $this->createForm(UserNameType::class, $user);
+        $userNameForm -> handleRequest($request);
 
+        if($userNameForm->isValid() ){
+            $entityManager -> persist($user);
+            $entityManager ->flush();
+
+            $request -> getSession()-> migrate(true);
+        }else{
+            $user->setUserName($lastUserName);
+        }
+
+        return $this->redirectToRoute('user_control_panel_data', [], 308);
+    }
+
+    /**
+     * @Route("/users/control_panel/change_email", name="change_email")
+     */
+    public function changeEmail(Request $request, UserAuthenticatorInterface $userAuthenticator, UsersAuthAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $lastEmail = $user->getUserEmail();
+        $userMailForm = $this->createForm(UserMailType::class, $user);
+        $userMailForm -> handleRequest($request);
+
+        if($userMailForm->isValid()){
+            $entityManager -> persist($user);
+            $entityManager ->flush();
+
+            $userAuthenticator->authenticateUser(
+                $user,
+                $authenticator,
+                $request
+            );
+
+            $request -> getSession()-> migrate(true);
+        }else{
+            $user->setUserEmail($lastEmail);
+        }
+
+        return $this->redirectToRoute('user_control_panel_data', [], 308);
+    }
+
+    /**
+     * @Route("/users/control_panel/change_pass", name="change_pass")
+     */
+    public function changePassword(Request $request, Security $security, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder) : Response
+    {
+        $user = $this->getUser();
+        $userPassForm = $this->createForm(UserPassType::class, $user);
+        $userPassForm -> handleRequest($request);
+
+        if($userPassForm->isValid()){
+            if($passwordEncoder->isPasswordValid($user, $userPassForm->get('password')->getData())){
+                $newPassword = $passwordEncoder->hashPassword($user, $userPassForm->get('newPass')->getData());
+                $user -> setUserPass($newPassword);
+                $entityManager -> persist($user);
+                $entityManager ->flush();
+                $request -> getSession()-> migrate(true);
+            }else{
+                $this->addFlash('error', 'La contraseña es incorrecta');
+            }  
+        }
+        return $this->redirectToRoute('user_control_panel_data', [], 308);
+    }
+
+    /**
+     * @Route("/users/control_panel/add_card", name="add_card")
+     */
+    public function addCard(Request $request, EntityManagerInterface  $entityManager): Response 
+    {
+        $user = $this->getUser();
+        $card = new Card();
+
+        $userNewCard = $this->createForm(CardType::class, $card);
+        $userNewCard -> handleRequest($request);
+
+        if($userNewCard->isValid()){
+            $entityManager -> persist($card);
+            $entityManager ->flush();
+            $card = new Card();
+            $userNewCard = $this->createForm(CardType::class, $card);
+            $request->overrideGlobals();
+        }
+
+        return $this->redirectToRoute('user_control_panel_data', [], 308);
+    }
+
+    /**
+     * @Route("/users/control_panel/add_billing_direction", name="add_billing_direction")
+     */
+    public function addBillingDirection(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $billingDirection = new Billing();
+        $billingDirection->setIdUser($user);
+
+        $userNewBillingDirection = $this->createForm(BillingDirectionType::class, $billingDirection);
+        $userNewBillingDirection->handleRequest($request);
+
+        if($userNewBillingDirection->isValid()){
+             $entityManager -> persist($billingDirection);
+             $entityManager ->flush();
+             $request->overrideGlobals();
+         }
+
+         return $this->redirectToRoute('user_control_panel_data', [], 308);
     }
 }
+
