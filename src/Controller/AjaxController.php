@@ -13,6 +13,7 @@ use App\Utils\CartCount;
 use App\Entity\Reviews;
 use App\Entity\MediaGames;
 use App\Entity\Cart;
+use App\Entity\Card;
 use App\Entity\CartProducts;
 use App\Entity\Games;
 use App\Entity\Features;
@@ -82,21 +83,6 @@ class AjaxController extends AbstractController
 
             return new Response("Deleted", 200);
         }
-    }
-
-
-    /**
-     * @Route("/ajax/deleteBilling")
-     */
-    public function deleteBilling(ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $bd = $doctrine->getRepository(Billing::class)->find($request->get('id'));
-        $bd->setBillingState('DELETED');
-
-        $entityManager->persist($bd);
-        $entityManager->flush();
-
-        return new Response("", 200);
     }
 
     /**
@@ -373,7 +359,62 @@ class AjaxController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/ajax/deleteCard")
+     */
+    public function deleteCard(ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $cardId = $request -> get('id');
+        $user = $this->getUser();
 
+        if($user == null) return new Response("", 403);
+        
+        $userCard = $doctrine -> getRepository(Card::class)->findBy(array(
+            "idCard" => $cardId,
+            "cardUser" => $user->getIdUser()
+        ));
+
+        if($userCard == null) return new Response("", 404);
+
+        $userCard[0]->setCardState(0);
+        $entityManager->persist($userCard[0]);
+        $entityManager->flush();
+
+        return new Response("", 200);
+    }
+
+    /**
+     * @Route("/ajax/deleteBilling")
+     */
+    public function deleteBilling(ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $billingId = $request -> get('id');
+        $user = $this->getUser();
+
+        if($user == null) return new Response("", 403);
+        
+        $userBilling = $doctrine -> getRepository(Billing::class)->findBy(array(
+            "idBilling" => $billingId,
+            "idUser" => $user->getIdUser()
+        ));
+
+        if($userBilling == null) return new Response("", 404);
+
+        $userBilling[0]->setBillingState(0);
+        $entityManager->persist($userBilling[0]);
+        $entityManager->flush();
+
+        return new Response("", 200);
+    }
+
+    /**
+     * @Route("/ajax/set_user_image")
+     */
+    public function userImage(ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $img = $request->files;
+        return new Response(1, 200);
+    }
     private function getDiscountPrice($game)
     {
         $gamePrice = $game->getIdFeature()->getGamePrice();
