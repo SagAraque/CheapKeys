@@ -42,7 +42,7 @@ searchInput.addEventListener('input', ()=>{
 document.addEventListener('click', (e)=>{
     if(e.target != searchInput || e.target != searchContainer){
         searchContainer.innerHTML = "";
-        clearTimeout(searchLoading);
+        if(typeof variable != 'undefined' && variable != null) clearTimeout(searchLoading);
         if(xhr != "") xhr.abort();
     }
 })
