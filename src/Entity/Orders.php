@@ -36,7 +36,7 @@ class Orders
     private $orderTotal = '0.00';
 
     /**
-     * @var \Cart
+     * @var \Cart::class
      *
      * @ORM\ManyToOne(targetEntity="Cart")
      * @ORM\JoinColumns({
@@ -46,7 +46,7 @@ class Orders
     private $idCart;
 
     /**
-     * @var \Card
+     * @var \Card::class
      *
      * @ORM\ManyToOne(targetEntity="Card")
      * @ORM\JoinColumns({
@@ -56,7 +56,7 @@ class Orders
     private $idCard;
 
     /**
-     * @var \Users
+     * @var \Users::class
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
@@ -66,7 +66,7 @@ class Orders
     private $idUser;
 
     /**
-     * @var \Billing
+     * @var \Billing::class
      *
      * @ORM\ManyToOne(targetEntity="Billing")
      * @ORM\JoinColumns({

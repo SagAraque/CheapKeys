@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Entity\Users;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Billing
  *
  * @ORM\Table(name="billing", indexes={@ORM\Index(name="FK1", columns={"id_user"})})
- * @ORM\Entity(repositoryClass="App\Repository\BillingRepository")
+ * @ORM\Entity
  */
 class Billing
 {
@@ -29,11 +30,11 @@ class Billing
     private $billingName;
 
     /**
-     * @var string
+     * @var bool
      *
-     * @ORM\Column(name="billing_state", type="string", length=0, nullable=false, options={"default"="'ACTIVE'"})
+     * @ORM\Column(name="billing_state", type="boolean", nullable=false, options={"default"="1"})
      */
-    private $billingState = '\'ACTIVE\'';
+    private $billingState = true;
 
     /**
      * @var string
@@ -78,7 +79,7 @@ class Billing
     private $billinTlfo;
 
     /**
-     * @var \Users
+     * @var \Users::class
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
@@ -92,12 +93,24 @@ class Billing
         return $this->idBilling;
     }
 
-    public function getBillingState(): ?string
+    public function getBillingName(): ?string
+    {
+        return $this->billingName;
+    }
+
+    public function setBillingName(string $billingName): self
+    {
+        $this->billingName = $billingName;
+
+        return $this;
+    }
+
+    public function isBillingState(): ?bool
     {
         return $this->billingState;
     }
 
-    public function setBillingState(string $billingState): self
+    public function setBillingState(bool $billingState): self
     {
         $this->billingState = $billingState;
 
@@ -184,18 +197,6 @@ class Billing
     public function setIdUser(?Users $idUser): self
     {
         $this->idUser = $idUser;
-
-        return $this;
-    }
-
-    public function getBillingName(): ?string
-    {
-        return $this->billingName;
-    }
-
-    public function setBillingName(string $billingName): self
-    {
-        $this->billingName = $billingName;
 
         return $this;
     }

@@ -2,27 +2,20 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\GamesPlatform;
 use App\Entity\WishlistGames;
-use App\Entity\CartProducts;
 use App\Entity\MediaGames;
 use App\Entity\Platforms;
 use App\Utils\CartCount;
 use App\Utils\Paginator;
-use App\Entity\Features;
-use App\Entity\Billing;
 use App\Entity\Reviews;
 use App\Entity\Games;
-use App\Entity\Cart;
 
 class Controller extends AbstractController
 {

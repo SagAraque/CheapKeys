@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class MediaGames
 {
     /**
-     * @var \Platforms
+     * @var \Platforms:::class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -25,7 +25,7 @@ class MediaGames
     private $idPlatform;
 
     /**
-     * @var \Media
+     * @var \Media::class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -37,7 +37,7 @@ class MediaGames
     private $idMedia;
 
     /**
-     * @var \Games
+     * @var \Games::class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")

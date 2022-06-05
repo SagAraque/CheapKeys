@@ -8,7 +8,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\CardScheme;
@@ -28,6 +27,7 @@ class CardType extends AbstractType
                     'class' => 'control__input--full control__input--num',
                     'min' => 0
                 ],
+                "empty_data" => "",
                 'constraints' => [
                     new NotBlank(),
                     new CardScheme([
@@ -45,6 +45,7 @@ class CardType extends AbstractType
                     'class' => 'control__input--full control__input--num',
                     'min' => 0
                 ],
+                "empty_data" => "",
                 'constraints' => [
                     new NotBlank([
                         'message' => 'El campo no puede estar vacio'
@@ -64,6 +65,7 @@ class CardType extends AbstractType
                     'class' => 'control__input--full',
                     'placeholder' => 'mm / yy'
                 ],
+                "empty_data" => "",
                 'constraints' => [
                     new notBlank([
                         'message' => 'El campo no puede estar vacio'
@@ -81,6 +83,7 @@ class CardType extends AbstractType
                 'label_attr' => [
                     'class' => 'control__label'
                 ],
+                "empty_data" => "",
                 'attr' => [
                     'class' => 'control__input--full'
                 ],

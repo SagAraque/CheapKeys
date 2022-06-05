@@ -25,8 +25,11 @@ class LoginType extends AbstractType
                 'class' => 'form__input',
                 'name' => 'userEmail'
             ],
+            "empty_data" => "",
             'constraints' => [
-                new NotBlank(),
+                new NotBlank([
+                    'message' => 'El email no puede estar vacio'
+                ]),
                 new Type(EmailType::class)
             ]
         ])
@@ -39,8 +42,11 @@ class LoginType extends AbstractType
                 'class' => 'form__input',
                 'name' => 'password'
             ],
+            "empty_data" => "",
             'constraints' => [
-                new NotBlank()
+                new NotBlank([
+                    'message' => 'La contraseña no puede estar vacia'
+                ])
             ]
         ]);
     }

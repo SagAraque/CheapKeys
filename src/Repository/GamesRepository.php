@@ -39,18 +39,6 @@ class GamesRepository extends ServiceEntityRepository
         }
     }
 
-    public function findByGamePlatform($game, $platform)
-    {
-        $em = $this->getEntityManager();
-
-        $sql =  $em->createQuery(
-            'SELECT f FROM App\Entity\Features f
-            WHERE f.game = :value'
-        )->setParameter('value', $slug);
-
-        return $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
-    }
-
     public function findBySlug($slug)
     {
         $em = $this->getEntityManager();

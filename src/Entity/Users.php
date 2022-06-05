@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
@@ -32,7 +31,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string
      *
      * @ORM\Column(name="user_name", type="string", length=20, nullable=false,unique=true)
-     * @Assert\NotBlank
      * @Assert\Length(
      *      min = 5,
      *      max = 20,
@@ -98,7 +96,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private $userState = 'ACTIVE';
 
     /**
-     * @var \Wishlist
+     * @var \Wishlist::class
      *
      * @ORM\ManyToOne(targetEntity="Wishlist")
      * @ORM\JoinColumns({

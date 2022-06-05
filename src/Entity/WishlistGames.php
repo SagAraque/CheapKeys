@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class WishlistGames
 {
     /**
-     * @var \Games
+     * @var \Games::class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -25,7 +25,7 @@ class WishlistGames
     private $idGame;
 
     /**
-     * @var \Platforms
+     * @var \Platforms::class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -37,7 +37,7 @@ class WishlistGames
     private $idPlatform;
 
     /**
-     * @var \Wishlist
+     * @var \Wishlist::class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")

@@ -20,7 +20,7 @@ class CartProducts
     private $cant = 1;
 
     /**
-     * @var \Cart
+     * @var \Cart::class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -32,7 +32,7 @@ class CartProducts
     private $idCart;
 
     /**
-     * @var \Platforms
+     * @var \Platforms::class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -44,7 +44,7 @@ class CartProducts
     private $idPlatform;
 
     /**
-     * @var \Games
+     * @var \Games::class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")

@@ -36,7 +36,7 @@ class Cart
     private $cartState = true;
 
     /**
-     * @var \Users
+     * @var \Users::class
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({

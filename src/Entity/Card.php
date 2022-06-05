@@ -57,7 +57,7 @@ class Card
     private $cardState = true;
 
     /**
-     * @var \Users
+     * @var \Users::class
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({

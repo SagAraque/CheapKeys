@@ -58,7 +58,7 @@ class CartController extends AbstractController
 
         $billing = $doctrine->getRepository(Billing::class)->findBy(array(
             'idUser' => $user->getIdUser(),
-            'billingState' => 'ACTIVE'
+            'billingState' => 1
         ));
 
         $cards = $doctrine->getRepository(Card::class)->findBy(array(

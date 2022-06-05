@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type;
 
 class RegisterFormType extends AbstractType
 {
@@ -26,8 +25,11 @@ class RegisterFormType extends AbstractType
                 'attr' => [
                     'class' => 'form__input',
                 ],
+                "empty_data" => "",
                 'constraints' => [
-                    new NotBlank()
+                    new NotBlank([
+                        'message' => 'El usuario no puede estar vacio'
+                    ])
                 ]
             ])
             ->add('userEmail', EmailType::class, [
@@ -38,8 +40,11 @@ class RegisterFormType extends AbstractType
                 'attr' => [
                     'class' => 'form__input',
                 ],
+                "empty_data" => "",
                 'constraints' => [
-                    new NotBlank(),
+                    new NotBlank([
+                        'message' => 'El email no puede estar vacio'
+                    ]),
                 ]
             ])
             ->add('userPass', RepeatedType::class, [
@@ -49,6 +54,7 @@ class RegisterFormType extends AbstractType
                 'label_attr' =>[
                     'class' => 'form__label'
                 ],
+                "empty_data" => "",
                 'options' => [
                     'attr' => [
                        'class' => 'form__input', 
@@ -57,7 +63,9 @@ class RegisterFormType extends AbstractType
                 'first_options'  => ['label' => 'Contraseña', 'label_attr' =>['class' => 'form__label'],],
                 'second_options' => ['label' => 'Repetir contraseña', 'label_attr' =>['class' => 'form__label'],],
                 'constraints' => [
-                    new NotBlank()
+                    new NotBlank([
+                        'message' => 'Se requiere una contraseña'
+                    ])
                 ]
             ])
         ;

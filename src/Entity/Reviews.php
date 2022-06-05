@@ -34,7 +34,7 @@ class Reviews
     private $reviewDate = 'current_timestamp()';
 
     /**
-     * @var \Games
+     * @var \Games::class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -46,7 +46,7 @@ class Reviews
     private $idGame;
 
     /**
-     * @var \Platforms
+     * @var \Platforms::class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -58,7 +58,7 @@ class Reviews
     private $idPlaftorm;
 
     /**
-     * @var \Users
+     * @var \Users:classd
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")

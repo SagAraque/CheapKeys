@@ -29,7 +29,7 @@ class GameKeys
     private $keyValue;
 
     /**
-     * @var \Platforms
+     * @var \Platforms::class
      *
      * @ORM\ManyToOne(targetEntity="Platforms")
      * @ORM\JoinColumns({
@@ -39,7 +39,7 @@ class GameKeys
     private $idPlatform;
 
     /**
-     * @var \Orders
+     * @var \Orders::class
      *
      * @ORM\ManyToOne(targetEntity="Orders")
      * @ORM\JoinColumns({
@@ -49,7 +49,7 @@ class GameKeys
     private $idOrder;
 
     /**
-     * @var \Games
+     * @var \Games::class
      *
      * @ORM\ManyToOne(targetEntity="Games")
      * @ORM\JoinColumns({

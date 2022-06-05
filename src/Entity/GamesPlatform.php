@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class GamesPlatform
 {
     /**
-     * @var \Features
+     * @var \Features::class
      *
      * @ORM\ManyToOne(targetEntity="Features")
      * @ORM\JoinColumns({
@@ -23,7 +23,7 @@ class GamesPlatform
     private $idFeature;
 
     /**
-     * @var \Platforms
+     * @var \Platforms::class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -35,7 +35,7 @@ class GamesPlatform
     private $idPlatform;
 
     /**
-     * @var \Games
+     * @var \Games::class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")

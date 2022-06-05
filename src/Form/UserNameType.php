@@ -7,8 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class UserNameType extends AbstractType
 {
@@ -23,8 +23,14 @@ class UserNameType extends AbstractType
             'attr' => [
                 'class' => 'control__input',
             ],
+            'empty_data' => "",
             'constraints' => [
-                new NotBlank(),
+                new NotBlank([
+                    'message' => 'El usuario  no puede estar vacio'
+                ]),
+                new NotNull([
+                    'message' => 'El usuario no puede estar vacio'
+                ])
             ]
         ]);
     }
