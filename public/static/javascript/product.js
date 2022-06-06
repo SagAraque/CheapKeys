@@ -57,7 +57,10 @@ cartButton.addEventListener('click', ()=>{
 
 
 
-// Gallery functions
+/**
+ * Change the gallery image using the src atributte from a miniature
+ * @param {*} min Image miniature
+ */
 function changeGalleryImg(min)
 {
     let minSelected = document.querySelector('.gallery__min--selected');
@@ -70,6 +73,10 @@ function changeGalleryImg(min)
     gallery.setAttribute('src', src);
 }
 
+/**
+ * Set the parameter to change gallery image and miniature images
+ * @param {*} direction Direction of the slide 
+ */
 function slide(direction)
 {
     let minSelected = document.querySelector('.gallery__min--selected');
@@ -107,6 +114,11 @@ function slide(direction)
     changeGalleryImg(min[index]);
 }
 
+/**
+ * Chnage the gallery miniatures
+ * @param {*} init 
+ * @param {*} max 
+ */
 function changeMinImg(init, max)
 {   
     let minindex = 0;
@@ -118,16 +130,18 @@ function changeMinImg(init, max)
 }
 
 
-// Wishlist functions
 
-
+/**
+ * Add the game to the user wishlist
+ * @param {*} gameData Array with game id and platform id
+ */
 function setWishlist(gameData)
 {
     let xhr = new XMLHttpRequest();
 
     let data = new FormData();
-    data.append('_game', gameData[0]);
-    data.append('_platform', gameData[1]);
+    data.append('game', gameData[0]);
+    data.append('platform', gameData[1]);
 
     xhr.open('POST', `/ajax/wishlist`, true);
     xhr.send(data);
@@ -145,8 +159,11 @@ function setWishlist(gameData)
     }
 }
 
-// Cart functions
 
+/**
+ * Add the game to the user cart
+ * @param {*} gameData Array with game id and platform id
+ */
 function setGameCart(gameData)
 {
     let xhr = new XMLHttpRequest();
@@ -174,6 +191,14 @@ function setGameCart(gameData)
 }
 
 
+/**
+ * Do mobile gallery wrap function when mouse is moving to detect th direction
+ * of the movement and change the image and paginator
+ * @param {*} imgs Images used to extract the correct width
+ * @param {*} wrapper Wraper container with all images
+ * @param {*} initialPos Mouse initial position
+ * @param {*} paginator Gallery paginator
+ */
 function wrapGallery(imgs, wrapper, initialPos, paginator)
 {
     wrapper.addEventListener('mousemove', (e)=>{
