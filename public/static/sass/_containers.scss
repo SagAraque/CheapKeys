@@ -235,3 +235,36 @@
     }
 }
 
+.control
+{
+    &__content
+    {
+        width: calc(100% - 260px);
+        min-height: 400px;
+
+        &--data
+        {
+            @extend .control__content;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            grid-column-gap: 10px;
+            grid-row-gap: 10px;
+        }
+
+        &--wishlist
+        {
+            @extend .control__content;
+            @include mixin.flex-style($direction:column);
+        }
+    }
+
+    &__wish
+    {
+        width: 100%;
+        height: min-content;
+        @include mixin.flex-style($justify:space-between, $wrap:wrap);
+        gap: 20px;
+    }
+}
+

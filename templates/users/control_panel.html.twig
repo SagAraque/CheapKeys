@@ -15,12 +15,12 @@
             </label>
             <input type="file" name="userImage" id="userImage" class="control__input--img">
         </form>
-        <h2 class="control__title">{{app.user.username}}</h2>
+        <h2 class="control__title--user">{{app.user.username}}</h2>
         <ul class="control__list">
-            <li class="control__item--selected"><a href="{{ path('user_control_panel_data') }}" class="control__link"><i class="bi bi-person control__icon"></i> Mis datos</a></li>
-            <li class="control__item"><a href="{{ path('user_control_panel_wish') }}" class="control__link"><i class="bi bi-list-stars control__icon"></i> Lista de deseos</a></li>
-            <li class="control__item"><a href="" class="control__link"><i class="bi bi-pencil-square control__icon"></i> Opiniones</a></li>
-            <li class="control__item"><a href="" class="control__link"><i class="bi bi-cart control__icon"></i> Compras</a></li>
+            <li class="control__item{{ menu == 'data' ? '--selected' : '' }}"><a href="{{ path('user_control_panel_data') }}" class="control__link"><i class="bi bi-person control__icon"></i> Mis datos</a></li>
+            <li class="control__item{{ menu == 'wishlist' ? '--selected' : '' }}"><a href="{{ path('user_control_panel_wish') }}" class="control__link"><i class="bi bi-list-stars control__icon"></i> Lista de deseos</a></li>
+            <li class="control__item{{ menu == 'reviews' ? '--selected' : '' }}"><a href="" class="control__link"><i class="bi bi-pencil-square control__icon"></i> Opiniones</a></li>
+            <li class="control__item{{ menu == 'orders' ? '--selected' : '' }}"><a href="{{ path('orders') }}" class="control__link"><i class="bi bi-cart control__icon"></i> Compras</a></li>
         </ul>
         <a href="{{ path('app_logout') }}" class="control__button">Cerrar sesión</a>
     </aside>

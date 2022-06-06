@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CartProducts
  *
- * @ORM\Table(name="cart_products", indexes={@ORM\Index(name="FK22", columns={"id_game"}), @ORM\Index(name="Fk21", columns={"id_platform"}), @ORM\Index(name="IDX_2D251531808394B5", columns={"id_cart"})})
+ * @ORM\Table(name="cart_products", indexes={@ORM\Index(name="Fk21", columns={"id_platform"}), @ORM\Index(name="FK22", columns={"id_game"}), @ORM\Index(name="IDX_2D251531808394B5", columns={"id_cart"})})
  * @ORM\Entity
  */
 class CartProducts
@@ -20,7 +20,14 @@ class CartProducts
     private $cant = 1;
 
     /**
-     * @var \Cart::class
+     * @var float
+     *
+     * @ORM\Column(name="price", type="float", precision=5, scale=2, nullable=false)
+     */
+    private $price;
+
+    /**
+     * @var \Cart
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -32,7 +39,7 @@ class CartProducts
     private $idCart;
 
     /**
-     * @var \Platforms::class
+     * @var \Platforms
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -44,7 +51,7 @@ class CartProducts
     private $idPlatform;
 
     /**
-     * @var \Games::class
+     * @var \Games
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -63,6 +70,18 @@ class CartProducts
     public function setCant(int $cant): self
     {
         $this->cant = $cant;
+
+        return $this;
+    }
+
+    public function getPrice(): ?float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

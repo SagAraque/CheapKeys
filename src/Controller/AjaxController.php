@@ -58,8 +58,8 @@ class AjaxController extends AbstractController
 
         $em = $doctrine->getManager();
 
-        $gameId = $request->get('_game');
-        $platformId = $request->get('_platform');
+        $gameId = $request->get('game');
+        $platformId = $request->get('platform');
 
         $wishlist = $doctrine->getRepository(WishlistGames::class)->findGameByUser($gameId, $platformId, $user->getUserWishlist());
 
@@ -161,7 +161,9 @@ class AjaxController extends AbstractController
             'idPlatform' => $platform->getIdPlatform()
         ));
 
-        $this->setProduct($cart[0], $game, $platform, $productCart, $entityManager, $doctrine);
+        $price = $this->getDiscountPrice($gamePlatform[0]);
+
+        $this->setProduct($cart[0], $game, $platform, $productCart, $price, $entityManager, $doctrine);
 
         $count = intval($request->get('cartCount'));
         return new Response($count + 1, 200);
@@ -169,7 +171,7 @@ class AjaxController extends AbstractController
     }
 
 
-    private function setProduct($cart, $game, $platform, $productCart, EntityManagerInterface $entityManager, ManagerRegistry $doctrine)
+    private function setProduct($cart, $game, $platform, $productCart, $price, EntityManagerInterface $entityManager, ManagerRegistry $doctrine)
     {
         if($productCart == null){
             $newProduct = new CartProducts();
@@ -177,6 +179,7 @@ class AjaxController extends AbstractController
             $newProduct -> setIdCart($cart);
             $newProduct -> setIdGame($game);
             $newProduct -> setIdPlatform($platform);
+            $newProduct -> setPrice($price);
 
             $entityManager->persist($newProduct);
             $entityManager->flush($newProduct);

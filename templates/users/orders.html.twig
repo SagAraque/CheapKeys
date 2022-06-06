@@ -1,0 +1,9 @@
+{% extends "users/control_panel.html.twig" %}
+
+{% block content %}
+    {{orders | length}}
+    {% for order in orders %}
+        {{dump(order)}}
+        end object
+    {% endfor %}
+{% endblock %}

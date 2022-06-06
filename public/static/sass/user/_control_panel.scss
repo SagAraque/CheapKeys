@@ -14,22 +14,6 @@
         border-radius: 5px;
     }
 
-    &__content
-    {
-        width: calc(100% - 260px);
-        min-height: 400px;
-
-        &--data
-        {
-            @extend .control__content;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, 1fr);
-            grid-column-gap: 10px;
-            grid-row-gap: 10px
-        }
-    }
-
     &__list
     {
         width: 100%;
@@ -66,6 +50,37 @@
             font-size: 35px;
             color: var(--white);
         }
+
+        &--platform
+        {
+            font-size: var(--text);
+            color: var(--white);
+        }
+
+        &--collapse
+        {
+            transition: all 0.1s linear;
+            width: 16px;
+            height: 16px;
+            font-size: var(--label);
+            font-weight: 600;
+            color:var(--white);
+            border-radius: 100%;
+            padding: 5px;
+            cursor: pointer;
+            display: none;
+
+            &:hover
+            {
+                transition: all 0.1s linear;
+                background-color: var(--background_pink);
+            }
+        }
+
+        &--rotate
+        {
+            transform: rotate(180deg)
+        }
     }
 
     &__link
@@ -87,26 +102,30 @@
         height: 100px;
         border-radius: 100%;
         cursor: pointer;
-
-        &--card
-        {
-            height: calc(100% + 40px);
-            width: auto;
-            margin: -5px 0px -5px -20px;
-        }
     }
 
     &__title
     {
+        height: min-content;
         font-size: var(--title25);
         color: var(--white);
         width: 100%;
-        margin: 20px 0px 30px 0px;
+        margin: 20px 0px 20px 0px;
+        display: flex;
+        justify-content: space-between;
 
-        &--card
+        &--mobile
         {
             @extend .control__title;
-            font-size: var.$text20;
+            font-size: var(--title);
+            margin: 0px 0px 10px 0px;
+            display: none;
+        }
+
+        &--user
+        {
+            @extend .control__title;
+            width: min-content;
             white-space: nowrap;
         }
     }
@@ -118,13 +137,13 @@
 
         &--pass
         {
-            width: 80%;
+            width: 100%;
             @include mixin.flex-style($justify:start, $direction:column);
         }
 
         &--column
         {
-            width: min-content;
+            width: 100%;
             @include mixin.flex-style($justify:start, $direction:column);
         }
 
@@ -139,12 +158,6 @@
             @include mixin.flex-style($justify:center, $align:center);
         }
 
-        &--card
-        {
-            width: 100%;
-            @include mixin.flex-style($justify:start, $direction:column);
-        }
-
         &--half
         {
             width: 48%;
@@ -154,6 +167,30 @@
         &--none
         {
             display: none
+        }
+
+        &--collapse
+        {
+            width: 100%;
+            transition: all 0.5s linear;
+            height: min-content;
+            @include mixin.flex-style($direction:column);
+            overflow:hidden;
+        }
+
+        &--collapseUp
+        {
+            animation: collapseContainerUp 1s linear;
+        }
+
+        &--collapseDown
+        {
+            animation: collapseContainerDown 1s linear;
+        }
+
+        &--hidden
+        {
+            transition: all 0.5s linear;
         }
     }
 
@@ -229,13 +266,14 @@
         height: 37px;
         margin: 0 auto;
 
-        &--pass
+        &--wish
         {
             @extend .control__button;
-            width: 144px;
-            position: absolute;
-            bottom: 15px;
-            right: 90px;
+            height: min-content;
+            width: min-content;
+            white-space: nowrap;
+            font-size: var(--text);
+            margin: 0 0 5px 10px;
         }
     }
 
@@ -245,7 +283,7 @@
         width: 100%;
         position: relative;
         @include mixin.flex-style($direction:column,$justify:space-between);
-        background-color: var(--background_primary);
+        background-color: var(--background_secondary);
         border-radius: 10px;
         padding: 15px 20px;
         margin: 15px 0px;
@@ -255,23 +293,26 @@
         &--wish
         {
             @extend .control__card;
+            width: 490px;
             @include mixin.flex-style($direction:row,$justify:start);
-            padding: 5px 20px;
+            padding: 5px;
+            margin: 0px;
+            position: relative;
         }
     }
 
     &__text
     {
         color: var(--white);
+
     }
 
     &__form
     {
-        margin-top: 50px;
+        margin: 20px 0px 30px 0px ;
         
         &--pass
         {
-            margin-top: 50px;
             @include mixin.flex-style($direction:column,$justify:start);
             position: relative;
         }
@@ -306,6 +347,16 @@
                 display: flex;
             }
         }
+    }
+
+    &__platform
+    {
+        background-color: var(--background_pink);
+        padding: 5px 20px;
+        border-bottom-right-radius: 8px;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 }
 
@@ -422,3 +473,78 @@
         }
     }
 }
+
+.wish
+{
+    &__icon
+    {
+        &--delete
+        {
+            @extend .card__icon--delete;
+            top: 5px;
+        }
+
+        &--cart
+        {
+            font-size: var(--label);
+            color: var(--white);
+            background-color: var(--background_pink);
+            position: absolute;
+            padding: 5px 10px;
+            border-radius: 5px;
+            bottom: 5px;
+            right: 5px;
+            cursor: pointer;
+        }
+    }
+
+    &__img
+    {
+        height: calc(100% + 10px);
+        width: auto;
+        margin: -5px 0px -5px -5px;
+    }
+
+    &__title
+    {
+        @extend .control__title;
+        font-size: var(--label);
+        margin: 5px 0px 5px 10px;
+        white-space: nowrap;
+    }
+
+    &__text
+    {
+        font-size: var(--label);
+        font-weight: 600;
+        color: var(--white);
+        margin: 0px 0px 5px 10px;
+    }
+
+    &__container
+    {
+        width: 100%;
+        @include mixin.flex-style($justify:space-between, $direction:column);
+    }
+}
+
+@keyframes collapseContainerUp 
+{
+    from{
+        height: 100%;
+    }
+    to{
+        height: 30px;
+    }
+}
+
+@keyframes collapseContainerDown
+{
+    from{
+        height: 30px;
+    }
+    to{
+        height: 100%;
+    }
+}
+  

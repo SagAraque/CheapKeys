@@ -2,30 +2,30 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\WishlistGames;
-use App\Entity\MediaGames;
 use App\Security\UsersAuthAuthenticator;
+use App\Form\BillingDirectionType;
+use App\Entity\WishlistGames;
+use App\Entity\GamesPlatform;
+use App\Entity\CartProducts;
+use App\Entity\MediaGames;
 use App\Form\UserNameType;
 use App\Form\UserPassType;
 use App\Form\UserMailType;
-use App\Form\CardType;
 use App\Utils\CartCount;
 use App\Entity\Billing;
+use App\Form\CardType;
+use App\Entity\Orders;
 use App\Entity\Card;
-use App\Entity\Users;
-use App\Form\BillingDirectionType;
-use Symfony\Bundle\SecurityBundle\Security\UserAuthenticator;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use App\Utils\Paginator;
 
 class UserController extends AbstractController
 {
@@ -76,6 +76,7 @@ class UserController extends AbstractController
             'cartCant' => $cart,
             'cards' => $cards,
             'class' => 'control__content--data',
+            'menu' => 'data'
            ]);
     }
 
@@ -98,16 +99,91 @@ class UserController extends AbstractController
             array_push($platformsId, strval($game->getIdPlatform()));
         }
 
+        $games = $doctrine->getRepository(GamesPlatform::class)->findBy(array(
+            'game' => $gamesId,
+            'idPlatform' => $platformsId
+        ));
+
         $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
 
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
 
         return $this->render('users/wishlist.html.twig',[
-            'games' => $wishGames,
+            'games' => $games,
             'images' => $images,
-            'cartCant' => $cart
+            'cartCant' => $cart,
+            'class' => 'control__content--wishlist',
+            'menu' => 'wishlist',
+            'total' => count($wishGames)
         ]);
+    }
+
+    /**
+     * @Route("/users/control_panel/orders", name="orders")
+     */
+    public function orders(Request $request, Security $security, ManagerRegistry $doctrine, Paginator $paginator)
+    {
+        $user = $this->getUser();
+
+        $orders = $doctrine->getRepository(Orders::class)->findBy(array(
+            'idUser' => $user->getIdUser()
+        ));
+
+        $ordersId = [];
+        $cartsId = [];
+        foreach ($orders as $order) {
+            array_push($ordersId, $order->getIdOrder());
+            array_push($cartsId, $order->getIdCart()->getIdCart());
+        }
+
+        // $cartProducts = $doctrine->getRepository(CartProducts::class)->findBy(array(
+        //     'idCart' => $cartsId
+        // ));
+
+        $orderContent = $doctrine->getRepository(Orders::class)->findAllByOrder($ordersId);
+        
+        $paginator -> paginate($orderContent, 1, 10);
+
+        $content = [];
+        $order = array();
+        $products = array();
+        
+        foreach ($paginator->getItems() as $item) {
+            // Check if item is an Order
+            if($item instanceof  Orders){
+                // If products array is empty, means that is the first item or previously content was pushed. 
+                // If its not empty, push data to content array
+                if(empty($products)){
+                    array_push($order, ['order' => $item]);
+                }else{
+                    array_push($order, ['products' => $products]);
+                    array_push($content, $order);
+                    $order = array();
+                    $products = array();
+                    array_push($order, ['order' => $item]);
+                }
+            }
+            // Check if item is a cart product
+            if($item instanceof CartProducts){
+                array_push($products, $item);
+            }
+        }
+
+        // Push last items to content array
+        array_push($order, ['products' => $products]);
+        array_push($content, $order);
+
+        $cartCount = new CartCount($doctrine, $security);
+        $cart = $cartCount->getCount();
+
+        return $this->render('users/orders.html.twig',[
+            'orders' => $content,
+            'class' => 'control__content--orders',
+            'menu' => 'orders',
+            'cartCant' => $cart,
+        ]);
+
     }
 
     /**

@@ -16,6 +16,7 @@
 
     {{ form_end(userNameForm) }}
 
+    {# User change password form start #}
     {{ form_start(userPassForm, {'attr' : {'action' : path('user_control_panel_data') }}) }}
 
         <div class="control__container">
@@ -25,16 +26,21 @@
             </div>
             <div class="control__container--column">
                 {{ form_label(userPassForm.newPass.second) }}
-                {{ form_widget(userPassForm.newPass.second) }}
+                <div class="control__container">
+                    {{ form_widget(userPassForm.newPass.second) }}
+                    <input type="submit" value="Guardar" class="control__button">
+                </div>
+                
             </div>
-            <input type="submit" value="Guardar" class="control__button">
+            
         </div>
         {{ form_errors(userPassForm.newPass.second, {'attr': {'class' : 'form__error'}}) }}
         
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         
     {{ form_end(userPassForm) }}
-
+    {# User change password form end #}
+    
     {{ form_start(userMailForm, {'attr' : {'action' : path('user_control_panel_data') }}) }}
 
         {{ form_label(userMailForm.userEmail) }}

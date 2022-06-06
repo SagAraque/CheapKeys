@@ -39,6 +39,22 @@ class OrdersRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllByOrder($id)
+    {
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT o, cp
+             FROM App\Entity\Orders o
+             INNER JOIN  App\Entity\CartProducts cp
+             WHERE o.idCart = cp.idCart
+             AND o.idOrder in (:id)
+            '
+        )->setParameter('id', $id, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
+
+        return $sql;
+    }
+
 //    /**
 //     * @return Orders[] Returns an array of Orders objects
 //     */

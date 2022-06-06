@@ -102,13 +102,32 @@
         }
     }
 
-    // Footer responsive
-
     .footer
     {
         &__top, &__bottom
         {
             width: 100%;
+        }
+    }
+
+    .control
+    {
+        max-width: 900px;
+        &__content
+        {
+            &--data
+            {
+                @include mixin.flex-style($direction:column);
+                gap: 20px;
+            }
+        }
+
+        &__card
+        {
+            &--wish
+            {
+                width: 600px;
+            }
         }
     }
 }
@@ -346,6 +365,16 @@
             max-width: 600px;
         }
     }
+
+    .control{
+        &__card
+        {
+            &--wish
+            {
+                width: 100%;
+            }
+        }
+    }
 }
 
 @media (max-width: 750px) 
@@ -547,6 +576,69 @@
     {
         width: 100%;
     }
+
+    .control{
+        width: 100%;
+        &__menu
+        {
+            display: none;
+        }
+
+        &__title
+        {
+            &--mobile
+            {
+                display: initial;
+            }
+        }
+
+        &__card
+        {
+            &--wish
+            {
+                height: 120px;
+            }
+        }
+        
+        &__container
+        {
+            &--hidden
+            {
+                height: 0px;
+            }
+        }
+
+        &__content
+        {
+            &--wishlist
+            {
+                width: 100%;
+            }
+
+            &--data
+            {
+                width: 100%;
+            }
+
+        }
+
+        &__icon
+        {
+            &--collapse
+            {
+                @include mixin.flex-style($align:center);
+            }
+        }
+    }
+
+    .content
+    {
+        &__billing, &__pay, &__data
+        {
+            height: min-content;
+            overflow: hidden;
+        }
+    }
 }
 
 @media (max-width: 500px) 
@@ -623,10 +715,60 @@
             min-width: unset;
         }
     }
+
+    .content
+    {
+        &__pay
+        {
+            padding: 0 10px 10px 10px;
+        }
+
+        &__billing
+        {
+            padding: 0 10px 10px 10px;
+        }
+
+        &__data
+        {
+            padding: 0 10px 10px 10px;
+        }
+    }
+
+    .control
+    {
+        &__container
+        {
+            width: 100%;
+            flex-direction: column;
+        }
+
+        &__input
+        {
+            width: 100%;
+            margin-right: 0;
+        }
+
+        &__button
+        {
+            &--wish
+            {
+                display: none;
+            }
+        }
+
+        &__card
+        {
+            &--wish
+            {
+                height: 80px;
+            }
+        }
+    }
 }
 
 @media (max-width: 380px) 
 {
+
     .gallery
     {
         height: 230px;
@@ -712,6 +854,20 @@
             {
                 padding: 5px;
             }
+        }
+    }
+
+    .pay
+    {
+        &__container
+        {
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        &__card
+        {
+            width: 100%;
         }
     }
 }
