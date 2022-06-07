@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<main class="control">
+<main class="{{ menu == 'orders' ? 'control--orders' : 'control' }}">
     <aside class="control__menu">
         <form class="control__form--img">
             <label for="userImage" class="control__label--img">

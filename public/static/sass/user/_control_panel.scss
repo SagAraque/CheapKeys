@@ -128,6 +128,12 @@
             width: min-content;
             white-space: nowrap;
         }
+
+        &--primary
+        {
+            @extend .control__title;
+            font-size: var(--title);
+        }
     }
 
     &__container
@@ -304,7 +310,6 @@
     &__text
     {
         color: var(--white);
-
     }
 
     &__form
@@ -528,23 +533,221 @@
     }
 }
 
-@keyframes collapseContainerUp 
+.order
 {
-    from{
+    width: 100%;
+    height: min-content;
+    @include mixin.flex-style($direction:column);
+
+    &__top
+    {
+        width: 100%;
+        min-height: 50px;
+        background-color: var(--background_secondary);
+        padding: 10px;
+        box-sizing: border-box;
+        border-radius: 8px;
+        display: grid;
+        grid-template-columns: repeat(5, min-content);
+        grid-template-rows: auto;
+        justify-content: space-between;
+        grid-template-areas: 'orderN date pay total icon'
+    }
+
+    &__title
+    {
+        @extend .control__title;
+        font-size: var(--label);
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__bottom
+    {
+        width: 100%;
+        transition: max-height 0.4s ease-in;
+        @include mixin.flex-style($direction:column, $align:center);
+        padding: 5px 20px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    &__span
+    {
+        font-size: var(--text);
+        color: var(--white);
+        font-weight: 400;
+    }
+
+    &__text
+    {
+        @extend .order__total;
+        margin: 0;
+        white-space: nowrap;
+
+        &--cant
+        {
+            @extend .order__text;
+        }
+    }
+
+    &__number
+    {
+        height: min-content;
+        font-size: var(--label);
+        color: var(--white);
+        font-weight: 600;
+        grid-area: orderN;
+        white-space: nowrap;
+        margin: 5px 0px;
+    }
+
+    &__date
+    {   
+        height: min-content;
+        color: var(--white);
+        font-weight: 400;
+        grid-area: date;
+        align-self: center;
+        white-space: nowrap;
+        margin: 5px 0px;
+    }
+
+    &__pay
+    {
+        @extend .order__number;
+        grid-area: pay;
+    }
+
+    &__total
+    {
+        @extend .order__number;
+        grid-area: total;
+    }
+
+    &__icon
+    {
+        font-size: var(--title25);
+        font-weight: 600;
+        color: var(--background_pink);
+        grid-area: icon;
+        transition: all 0.4s;
+        @include mixin.flex-style($align:center, $justify:center);
+        cursor: pointer;
+    }
+
+    &__product
+    {
+        width: 100%;
+        height: 120px;
+        min-height: 120px;
+        @include mixin.flex-style($align:center, $justify:start);
+        background-color: var(--background_secondary);
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        margin: 5px 0px;
+    }
+
+    &__img
+    {
         height: 100%;
     }
-    to{
-        height: 30px;
+
+    &__platform
+    {
+        font-size: var(--label);
+        color: var(--white);
+        margin: 10px 0px 0px 0px;
+        
+        &--icon
+        {
+            margin: 10px 10px 0px 0px;
+        }
+    }
+
+    &__cant
+    {
+        &--min
+        {
+            font-size: 14px;
+            color: var(--white);
+            background-color: var(--background_pink);
+            border-bottom-right-radius: 5px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 5px 10px;
+            display: none;
+        }
+    }
+
+    &__container
+    {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, min-content);
+        grid-template-areas: 'nameG button price';
+        grid-template-rows: 100%;
+        justify-content: space-between;
+        padding: 10px;
+        box-sizing: border-box;
+
+        &--flex
+        {
+            width: 100%;
+            grid-area: nameG;
+            @include mixin.flex-style($direction:column, $justify:start);
+
+            &:last-of-type
+            {
+                grid-area: price;
+                justify-content: space-between
+            }
+        }
+    }
+
+    &__button
+    {
+        @extend .control__button;
+        width: 140px;
+        grid-area: button;
+        align-self: center;
+        justify-self: start;
+        margin: 0;
+
+        &--min
+        {
+            height: min-content;
+            width: min-content;
+            grid-area: button;
+            font-size: var(--title25);
+            background-color: var(--background_pink);
+            color: var(--white);
+            border-radius: 5px;
+            padding: 0px 5px;
+            align-self: center;
+            display: none;
+        }
+
+        &--external
+        {
+            @extend .control__button;
+            width: 140px;
+            height: min-content;
+            font-size: var(--text);
+            margin: 5px auto;
+            display: none;
+        }
     }
 }
 
-@keyframes collapseContainerDown
+.collapsed
 {
-    from{
-        height: 30px;
-    }
-    to{
-        height: 100%;
-    }
+    max-height: 0px;
 }
+
   

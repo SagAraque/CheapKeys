@@ -71,11 +71,6 @@
     }
 }
 
-.control
-{
-    @extend .main;
-    min-height: 600px;
-}
 
 .product
 {
@@ -237,10 +232,13 @@
 
 .control
 {
+    @extend .main;
+    min-height: 600px;
+
     &__content
     {
-        width: calc(100% - 260px);
-        min-height: 400px;
+        width: calc(100% - 270px);
+        min-height: 100vh;
 
         &--data
         {
@@ -255,6 +253,13 @@
         &--wishlist
         {
             @extend .control__content;
+            width: calc(100% - 260px);
+            @include mixin.flex-style($direction:column);
+        }
+
+        &--orders
+        {
+            @extend .control__content;
             @include mixin.flex-style($direction:column);
         }
     }
@@ -262,9 +267,23 @@
     &__wish
     {
         width: 100%;
-        height: min-content;
+        min-height: 100vh;
         @include mixin.flex-style($justify:space-between, $wrap:wrap);
         gap: 20px;
+    }
+
+    &__order
+    {
+        width: 100%;
+        min-height: 100vh;
+        @include mixin.flex-style($direction:column);
+        gap: 20px;
+    }
+
+    &--orders
+    {
+        @extend .main;
+        width: 100%;
     }
 }
 

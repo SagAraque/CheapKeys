@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Orders;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @extends ServiceEntityRepository<Orders>
@@ -39,18 +40,15 @@ class OrdersRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllByOrder($id)
+    public function findAllByUser($id)
     {
         $em = $this->getEntityManager();
 
         $sql =  $em->createQuery(
-            'SELECT o, cp
-             FROM App\Entity\Orders o
-             INNER JOIN  App\Entity\CartProducts cp
-             WHERE o.idCart = cp.idCart
-             AND o.idOrder in (:id)
+            'SELECT o FROM App\Entity\Orders o
+             WHERE o.idUser = :id
             '
-        )->setParameter('id', $id, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
+        )->setParameter('id', $id);
 
         return $sql;
     }

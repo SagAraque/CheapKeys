@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Media
  *
- * @ORM\Table(name="media", indexes={@ORM\Index(name="FK12", columns={"id_game"})})
+ * @ORM\Table(name="media")
  * @ORM\Entity(repositoryClass="App\Repository\MediaRepository")
  */
 class Media
@@ -42,6 +42,12 @@ class Media
      */
     private $mediaInfoimg = '0';
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="media_principal", type="boolean", nullable=false)
+     */
+    private $mediaPrincipal = '0';
 
     public function getIdMedia(): ?int
     {
@@ -83,5 +89,18 @@ class Media
 
         return $this;
     }
+
+    public function isMediaPrincipal(): ?bool
+    {
+        return $this->mediaPrincipal;
+    }
+
+    public function setMediaPrincipal(bool $mediaPrincipal): self
+    {
+        $this->mediaPrincipal = $mediaPrincipal;
+
+        return $this;
+    }
+
 
 }

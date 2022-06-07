@@ -1,19 +1,19 @@
 <?php
 
-
 namespace App\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * MediaGames
  *
- * @ORM\Table(name="media_games", indexes={@ORM\Index(name="FK24", columns={"id_platform"}), @ORM\Index(name="FK25", columns={"id_game"}), @ORM\Index(name="IDX_1A4E509484A9E03C", columns={"id_media"})})
+ * @ORM\Table(name="media_games", indexes={@ORM\Index(name="FK24", columns={"id_platform"}), @ORM\Index(name="FK25", columns={"id_game"}), @ORM\Index(name="IDX_E03AEF8084A9E03C", columns={"id_media"})})
  * @ORM\Entity(repositoryClass="App\Repository\MediaGamesRepository")
  */
 class MediaGames
 {
     /**
-     * @var \Platforms:::class
+     * @var \Platforms
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -25,7 +25,7 @@ class MediaGames
     private $idPlatform;
 
     /**
-     * @var \Media::class
+     * @var \Media
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -37,7 +37,7 @@ class MediaGames
     private $idMedia;
 
     /**
-     * @var \Games::class
+     * @var \Games
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")

@@ -20,12 +20,12 @@ use App\Entity\MediaGames;
 use App\Form\UserNameType;
 use App\Form\UserPassType;
 use App\Form\UserMailType;
+use App\Utils\Paginator;
 use App\Utils\CartCount;
 use App\Entity\Billing;
 use App\Form\CardType;
 use App\Entity\Orders;
 use App\Entity\Card;
-use App\Utils\Paginator;
 
 class UserController extends AbstractController
 {
@@ -126,62 +126,38 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
-        $orders = $doctrine->getRepository(Orders::class)->findBy(array(
-            'idUser' => $user->getIdUser()
-        ));
+        $orders = $doctrine->getRepository(Orders::class)->findAllByUser($user->getIdUser());
+        $paginator -> paginate($orders, 1, 10);
 
         $ordersId = [];
         $cartsId = [];
-        foreach ($orders as $order) {
+        foreach ($paginator->getItems() as $order) {
             array_push($ordersId, $order->getIdOrder());
             array_push($cartsId, $order->getIdCart()->getIdCart());
         }
 
-        // $cartProducts = $doctrine->getRepository(CartProducts::class)->findBy(array(
-        //     'idCart' => $cartsId
-        // ));
+        $cartProducts = $doctrine->getRepository(CartProducts::class)->findBy(array(
+            'idCart' => $cartsId
+        ));
 
-        $orderContent = $doctrine->getRepository(Orders::class)->findAllByOrder($ordersId);
-        
-        $paginator -> paginate($orderContent, 1, 10);
-
-        $content = [];
-        $order = array();
-        $products = array();
-        
-        foreach ($paginator->getItems() as $item) {
-            // Check if item is an Order
-            if($item instanceof  Orders){
-                // If products array is empty, means that is the first item or previously content was pushed. 
-                // If its not empty, push data to content array
-                if(empty($products)){
-                    array_push($order, ['order' => $item]);
-                }else{
-                    array_push($order, ['products' => $products]);
-                    array_push($content, $order);
-                    $order = array();
-                    $products = array();
-                    array_push($order, ['order' => $item]);
-                }
-            }
-            // Check if item is a cart product
-            if($item instanceof CartProducts){
-                array_push($products, $item);
-            }
+        $gamesId = [];
+        $platformsId = [];
+        foreach ($cartProducts as $product) {
+            array_push($gamesId, $product->getIdGame()->getIdGame());
+            array_push($platformsId, $product->getIdPlatform()->getIdPlatform());
         }
 
-        // Push last items to content array
-        array_push($order, ['products' => $products]);
-        array_push($content, $order);
-
+        $media = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
 
         return $this->render('users/orders.html.twig',[
-            'orders' => $content,
             'class' => 'control__content--orders',
             'menu' => 'orders',
             'cartCant' => $cart,
+            'orders' => $paginator,
+            'media' => $media,
+            'products' => $cartProducts
         ]);
 
     }

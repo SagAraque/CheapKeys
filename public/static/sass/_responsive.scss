@@ -130,6 +130,15 @@
             }
         }
     }
+
+    .order
+    {
+        &__product
+        {
+            height: 100px;
+            min-height: 100px;
+        }
+    }
 }
 
 @media (max-width: 992px) 
@@ -375,6 +384,147 @@
             }
         }
     }
+
+    .order
+    {
+        &__top
+        {
+            grid-template-columns: repeat(3, min-content);
+            grid-template-rows: repeat(2, 1fr); 
+            grid-template-areas: 'orderN orderN date icon' 'pay pay total icon'
+        }
+
+        &__button
+        {
+            display: none;
+
+            &--min
+            {
+                display: block;
+            }
+        }
+
+        &__text
+        {
+            font-size: var(--text);
+            margin: 5px 0px 0px 0px;
+            &--cant
+            {
+                display: none;
+            }
+        }
+
+        &__platform
+        {
+            display: none;
+
+            &--icon
+            {
+                margin: 0px 5px 0px 0px;
+            }
+        }
+
+        &__cant
+        {
+            &--min
+            {
+                display: block;
+            }
+        }
+
+        &__title
+        {
+            font-size: var(--text);
+        }
+
+        &__container
+        {
+            grid-template-rows: min-content 80%;
+            grid-template-columns: repeat(2, min-content);
+            grid-template-areas: "nameG button" "price button";
+            &--flex:last-of-type
+            {
+                justify-content: start;
+            }
+        }
+
+        &__product
+        {
+            height: 100px;
+        }
+
+    }
+}
+
+@media (max-width: 800px)
+{
+    .control{
+        width: 100%;
+        &__menu
+        {
+            display: none;
+        }
+
+        &__title
+        {
+            &--mobile
+            {
+                display: initial;
+            }
+        }
+
+        &__card
+        {
+            &--wish
+            {
+                height: 120px;
+            }
+        }
+        
+        &__container
+        {
+            &--hidden
+            {
+                height: 0px;
+            }
+        }
+
+        &__content
+        {
+            &--wishlist
+            {
+                width: 100%;
+            }
+
+            &--data
+            {
+                width: 100%;
+            }
+
+            &--orders
+            {
+                width: 100%;
+            }
+
+        }
+
+        &__icon
+        {
+            &--collapse
+            {
+                @include mixin.flex-style($align:center);
+            }
+        }
+    }
+
+    .content
+    {
+        &__billing, &__pay, &__data
+        {
+            height: min-content;
+            overflow: hidden;
+        }
+    }
 }
 
 @media (max-width: 750px) 
@@ -576,69 +726,6 @@
     {
         width: 100%;
     }
-
-    .control{
-        width: 100%;
-        &__menu
-        {
-            display: none;
-        }
-
-        &__title
-        {
-            &--mobile
-            {
-                display: initial;
-            }
-        }
-
-        &__card
-        {
-            &--wish
-            {
-                height: 120px;
-            }
-        }
-        
-        &__container
-        {
-            &--hidden
-            {
-                height: 0px;
-            }
-        }
-
-        &__content
-        {
-            &--wishlist
-            {
-                width: 100%;
-            }
-
-            &--data
-            {
-                width: 100%;
-            }
-
-        }
-
-        &__icon
-        {
-            &--collapse
-            {
-                @include mixin.flex-style($align:center);
-            }
-        }
-    }
-
-    .content
-    {
-        &__billing, &__pay, &__data
-        {
-            height: min-content;
-            overflow: hidden;
-        }
-    }
 }
 
 @media (max-width: 500px) 
@@ -764,6 +851,52 @@
             }
         }
     }
+
+    .order
+    {
+        &__bottom
+        {
+            padding: 5px 10px;
+        }
+        &__product
+        {
+            height: 60px;
+            min-height: 60px;
+        }
+
+        &__container
+        {
+            padding: 10px 5px;
+            grid-template-columns: 100%;
+            grid-template-areas: 'nameG' 'price';
+
+            &--flex
+            {
+                flex-direction: row;
+                justify-content: space-between;
+
+                &:last-of-type
+                {
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
+            }
+        }
+
+        &__button
+        {
+            &--min
+            {
+                display: none;
+            }
+
+            &--external
+            {
+                display: block;
+            }
+        }
+    }
+
 }
 
 @media (max-width: 380px) 
@@ -822,6 +955,7 @@
         &__product
         {
             height: 80px;
+            min-height: 80px;
         }
 
         &__cant
