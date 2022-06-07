@@ -6,15 +6,10 @@ button.forEach(arrow => {
         let container = parent.querySelector('.order__bottom');
 
         if(container.classList.contains('collapsed')){
-            container.classList.toggle('collapsed');
-            let h = container.offsetHeight;
-
-
-            console.log(h);
-            container.style.maxHeight = h+"px";
+            container.style.maxHeight = container.scrollHeight +"px";
             
             setTimeout(()=>{
-
+                container.classList.toggle('collapsed');
                 container.removeAttribute('style');
             },400); 
 

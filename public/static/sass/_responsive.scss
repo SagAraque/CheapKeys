@@ -440,7 +440,7 @@
         &__container
         {
             grid-template-rows: min-content 80%;
-            grid-template-columns: repeat(2, min-content);
+            grid-template-columns: 90% 10%;
             grid-template-areas: "nameG button" "price button";
             &--flex:last-of-type
             {

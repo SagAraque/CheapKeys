@@ -4,6 +4,7 @@
 .footer{
     width: 100%;
     height: min-content;
+    margin-top: auto;
     background:  linear-gradient(180deg, var(--background_secondary) 80%, var(--background_primary) 20%);
     @include mixin.flex-style($align:center,  $direction:column);
     box-sizing: border-box;

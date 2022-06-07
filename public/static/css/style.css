@@ -24,6 +24,7 @@ body {
   flex-direction: column;
   align-items: center;
   background-color: var(--background_body);
+  min-height: 100vh;
 }
 
 .header {
@@ -426,7 +427,6 @@ body {
 }
 .control__content, .control__content--orders, .control__content--wishlist, .control__content--data {
   width: calc(100% - 270px);
-  min-height: 100vh;
 }
 .control__content--data {
   display: grid;
@@ -446,7 +446,6 @@ body {
 }
 .control__wish {
   width: 100%;
-  min-height: 100vh;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -454,18 +453,14 @@ body {
 }
 .control__order {
   width: 100%;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-.control--orders {
-  width: 100%;
-}
-
 .footer {
   width: 100%;
   height: min-content;
+  margin-top: auto;
   background: linear-gradient(180deg, var(--background_secondary) 80%, var(--background_primary) 20%);
   display: flex;
   flex-direction: column;
@@ -1402,7 +1397,7 @@ body {
   white-space: nowrap;
 }
 .wish__text {
-  font-size: var(--label);
+  font-size: var(--text);
   font-weight: 600;
   color: var(--white);
   margin: 0px 0px 5px 10px;
@@ -1436,9 +1431,6 @@ body {
 .order__title {
   font-size: var(--label);
   margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .order__bottom {
   width: 100%;
@@ -1461,7 +1453,7 @@ body {
 }
 .order__number, .order__total, .order__text, .order__text--cant, .order__pay {
   height: min-content;
-  font-size: var(--label);
+  font-size: var(--text);
   color: var(--white);
   font-weight: 600;
   grid-area: orderN;
@@ -1511,7 +1503,7 @@ body {
   height: 100%;
 }
 .order__platform {
-  font-size: var(--label);
+  font-size: var(--text);
   color: var(--white);
   margin: 10px 0px 0px 0px;
 }
@@ -1533,7 +1525,7 @@ body {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(3, min-content);
+  grid-template-columns: 45% repeat(2, min-content);
   grid-template-areas: "nameG button price";
   grid-template-rows: 100%;
   justify-content: space-between;
@@ -1543,6 +1535,7 @@ body {
 .order__container--flex {
   width: 100%;
   grid-area: nameG;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -2173,7 +2166,7 @@ body {
   }
   .order__container {
     grid-template-rows: min-content 80%;
-    grid-template-columns: repeat(2, min-content);
+    grid-template-columns: 90% 10%;
     grid-template-areas: "nameG button" "price button";
   }
   .order__container--flex:last-of-type {
