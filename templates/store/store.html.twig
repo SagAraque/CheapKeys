@@ -8,17 +8,16 @@
     {# Store top container start #}
     <div class="store__container--title">
         <h2 class="store__title">Todos los productos</h2>
-        <span class="store__count">1560 videojuegos</span>
-        <span class="store__container--select">
-            Ordenar por 
-            <select name="orderBy" class="store__select">
-                <option value="rel">Relevancia</option>
-                <option value="lowPrice">Precio ascendente</option>
-                <option value="highPrice">Precio descendente</option>
-                <option value="lowValoration">Valoración ascendente</option>
-                <option value="highValoration">Valoración descendente</option>
-            </select>
-        </span>
+        <span class="store__count">{{paginator.total}} videojuegos</span>
+
+        <select name="orderBy" class="store__select">
+            <option value="rel">Relevancia</option>
+            <option value="lowPrice">Precio ascendente</option>
+            <option value="highPrice">Precio descendente</option>
+            <option value="lowValoration">Valoración ascendente</option>
+            <option value="highValoration">Valoración descendente</option>
+        </select>
+
     </div>
     {# Store top container end #}
     {# Store menu container start #}
@@ -75,61 +74,7 @@
     {# Store menu container end #}
     {# Store products container start #}
     <section class="store__container--content">
-        <div class="store__container--products">
-        {% for game in paginator.items %}
-
-            {% set platform = game.idPlatform %}
-            {% set product = game.game %}
-            {% set feature = game.idFeature %}
-            {% set counter = ( counter | default(0) ) + 1 %}
-
-            {% set discount =  feature.gamePrice -  ((feature.gamePrice * (feature.gameDiscount / 100))) %}
-
-            {% if platform.platformName == 'switch' %}
-                {% set platformIcon = 'nintendo-switch' %}
-            {% else %}
-                {% set platformIcon = platform.platformName %}
-            {% endif %} 
-
-            <div class="store__card">
-                <a href="{{path('product', {'game_slug': product.gameSlug ~ '_' ~ platform.platformName})}}" class="card__link">
-                    {# Card image start #}
-                    <div class="card__img--container">
-                        <img src="{{ asset('static/img/games/'~ media[counter - 1].idMedia.mediaUrl ~'-min.webp') }}" alt="{{ media[counter - 1].idMedia.mediaAlt }}" class="card__img">
-                        <span class="card__img--span"><i class="{{'bi bi-' ~ platformIcon ~ ' info__icon--data'}}"></i>{{ platform.platformName }}</span>
-                    </div>
-                    {# Card image end #}
-                    {# Card content start #}
-                    <div class="card__content">
-                        <h3 class="card__title"> {{ product.gameName }}</h3>
-                        <div class="card__content--container">
-                            {% if feature.gameDiscount != 0 %}
-                                <h3 class="card__price"><span class="info__price--discount">{{ feature.gamePrice }}€</span>{{(discount) | number_format(2)}}€</h3>
-                            {% else %}
-                                <h3 class="card__price">{{ feature.gamePrice }}€</h3>
-                            {% endif %}
-                            <span class="card__val">{{ feature.gameValoration }}</span>
-                        </div>
-                    </div>
-                    {# Card content end #}
-                </a>
-                <button class="card__button" game="{{ product.idGame }}" platform="{{ platform.idPlatform }}">
-                    {{feature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito'}}
-                </button>
-            </div>
-        {% endfor %}
-        </div>
-        {# Paginator container start #}
-        <div class="store__container--paginator">
-        {% if paginator.lastPage > 1 %}
-            <i class="bi bi-chevron-left paginator__button--disabled" direction="left"></i>
-            <span class="paginator__page">
-                Página <span class="paginator__actual">1</span> de <span class="paginator__last">{{paginator.lastPage}}</span>
-            </span>
-            <i class="bi bi-chevron-right paginator__button" direction="right"></i>
-        {% endif %}
-        </div>
-        {# Paginator container end #}
+        {% include 'ajax/cardGame.html.twig' %}
     </section>
     {# Store products container end #}
 </main>
@@ -138,7 +83,13 @@
 
 {% block javascript %}
     <script>
-        var platformLimit = '{{data}}'
+        if('{{data}}' == 'ofertas'){
+            var platformLimit = 'all';
+            var offersValue =true;
+        }else{
+            var platformLimit = '{{data}}';
+            var offersValue =false;
+        }
     </script>
     <script src="{{ asset('static/javascript/store.js') }}"></script>
 

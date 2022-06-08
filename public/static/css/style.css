@@ -376,14 +376,6 @@ body {
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(2, auto);
 }
-.store__container--select {
-  width: min-content;
-  font-size: var(--text);
-  white-space: nowrap;
-  color: var(--white);
-  grid-area: 2/4/3/7;
-  justify-self: end;
-}
 .store__container--menu {
   width: 250px;
   height: min-content;
@@ -1617,15 +1609,19 @@ body {
 }
 
 .store__title {
-  font-size: 35px;
+  font-size: var(--title);
   color: var(--white);
   grid-area: 1/1/2/7;
 }
 .store__title--list {
-  font-size: 20px;
+  font-size: var(--text20);
   font-weight: 600;
   color: var(--list);
   margin-bottom: 15px;
+}
+.store__select {
+  grid-area: 2/4/3/7;
+  justify-self: end;
 }
 .store__count {
   font-size: var(--text);

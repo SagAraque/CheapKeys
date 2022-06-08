@@ -5,17 +5,23 @@
 {
     &__title
     {
-        font-size: 35px;
+        font-size: var(--title);
         color: var(--white);
         grid-area: 1 / 1 / 2 / 7;
 
         &--list
         {
-            font-size: 20px;
+            font-size: var(--text20);
             font-weight: 600;
             color: var(--list);
             margin-bottom: 15px;
         }
+    }
+
+    &__select
+    {
+        grid-area: 2 / 4 / 3 / 7;
+        justify-self: end;
     }
 
     &__count

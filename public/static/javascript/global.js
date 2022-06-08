@@ -18,7 +18,7 @@ movileIcon.addEventListener('click', ()=>{
 
 try {
     menuMobileIcon.addEventListener('click', ()=>{
-        collapseMenu();
+        collapse('collapsed--unset', menuList, menuMobileIcon);
     });
 } catch (error) {}
 
@@ -64,25 +64,25 @@ function setLoading(div, elementClass = 'reviews__loading')
     div.appendChild(loading);
 }
 
-function collapseMenu()
+function collapse(collapseClass, element, icon)
 {
-    if(menuList.classList.contains('collapsed--unset')){
-        menuList.style.maxHeight = menuList.scrollHeight + 'px';
+    if(element.classList.contains(collapseClass)){
+        element.style.maxHeight = element.scrollHeight + 'px';
 
         setTimeout(()=>{
-            menuList.classList.toggle('collapsed--unset');
-            menuList.removeAttribute('style')
+            element.classList.toggle(collapseClass);
+            element.removeAttribute('style')
         }, 400);
     }else{
-        menuList.style.maxHeight = menuList.clientHeight + 'px';
+        element.style.maxHeight = element.clientHeight + 'px';
 
         setTimeout(()=>{
-            menuList.classList.toggle('collapsed--unset');
-            menuList.removeAttribute('style');
+            element.classList.toggle(collapseClass);
+            element.removeAttribute('style');
         }, 10);
     }
 
-    menuMobileIcon.classList.toggle('control__icon--rotate');
+    icon.classList.toggle('control__icon--rotate');
 }
 
 function changeButtons(page, btnLeft, btnRight, lastPage)
@@ -99,4 +99,5 @@ function changeButtons(page, btnLeft, btnRight, lastPage)
         btnRight.classList.replace('paginator__button--disabled', 'paginator__button');
     }
 }
+
 

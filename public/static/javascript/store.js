@@ -76,10 +76,11 @@ function getData(pageValue = 1)
     data.append('dev', developerData);
     data.append('platform', platformData);
     data.append('pegi', pegiData);
-    data.append('stock', stockData)
+    data.append('stock', stockData);
     data.append('page', actualPage == null ? 1: actualPage.textContent);
-    data.append('platformLimit', platformLimit)
-    data.append('order', select.value)
+    data.append('platformLimit', platformLimit);
+    data.append('order', select.value);
+    data.append('offers', offersValue);
     data.append('page', pageValue);
 
     xhr.open('POST', '/ajax/changeStoreProducts', true);

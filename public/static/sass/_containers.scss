@@ -178,16 +178,6 @@
             grid-template-rows: repeat(2, auto);
         }
 
-        &--select
-        {
-            width: min-content;
-            font-size: var(--text);
-            white-space: nowrap;
-            color: var(--white);
-            grid-area: 2 / 4 / 3 / 7;
-            justify-self: end;
-        }
-
         &--menu
         {
             width: 250px;

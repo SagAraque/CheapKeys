@@ -74,9 +74,8 @@ class FeaturesRepository extends ServiceEntityRepository
         return [['value' => $firstResult['stock'], 'title' => 'En Stock'], ['value' => $secondResult['stock'], 'title' => 'Sin Stock']];
     }
 
-    public function findMultipleFeatures($params, $stock)
+    public function findMultipleFeatures($params, $stock, $offers)
     {
-        $first = 0;
         $index = 0;
         $em = $this->getEntityManager();
 
@@ -84,14 +83,14 @@ class FeaturesRepository extends ServiceEntityRepository
         ->select('f.idFeature')
         ->from(Features::class, 'f');
 
+        $offers == true ? $sql->where('f.gameDiscount > 0') : $sql->where('f.gameDiscount >= 0');
+
         foreach ($params as $key => $value) {
             $index++;
             if(count(array_filter($value)) != 0){
-                $query = 'f.'.$key.' in (:field'.$index.')';
-                $first == 0 ? $sql -> where($query) : $sql->andWhere($query);
+                $sql->andWhere('f.'.$key.' in (:field'.$index.')');
                 
                 $sql->setParameter('field'.$index, $value, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
-                $first = 1;
             }
         }
 
@@ -100,10 +99,10 @@ class FeaturesRepository extends ServiceEntityRepository
             foreach($stock as $value){
                 strcmp($value, "En Stock") ? $query = 'f.gameStock = 0' : $query = 'f.gameStock > 0';
                     
-                $first == 0 ? $sql ->where($query) : $sql ->andWhere($query);
-                $first = 1;
+                $sql ->andWhere($query);
             }
         }
+
         return $sql->getQuery()->getArrayResult();
     }
 }

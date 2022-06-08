@@ -1,23 +1,15 @@
 let deleteButton = document.querySelectorAll('.wish__icon--x'),
     deleteButtonMin = document.querySelectorAll('.wish__icon--delete'),
     addCartButton = document.querySelectorAll('.wish__icon--cart'),
+    wishControlContainer = document.querySelector('.control__content--wishlist'),
+    page = 1,
+    wishXhr = "",
     cartNum = document.querySelector('.header__cartCant');
 
-    // Paginator code
-try {
-
-    var pageBtn = document.querySelectorAll('[class*="paginator__button"]'),
-        wishControlContainer = document.querySelector('.control__content--wishlist'),
-        wishContainer = document.querySelector('.control__wish'),
-        lastPage = document.querySelector('.paginator__last').textContent,
-        actual = document.querySelector('.paginator__actual'),
-        wishXhr = "",
-        page = 1;
-    
-} catch (error) {}  
+let pageBtn, wishContainer, lastPage, actual;
 
 
-reloadWishListeners();
+init();
 
 /**
  * Delete a game from the wishlist
@@ -41,7 +33,7 @@ function deleteWishGame(card)
             window.location.href = '/users/login'; 
         }else if(xhr.readyState == 4 && xhr.status == 200){
             wishControlContainer.innerHTML = xhr.responseText;
-            reloadWishListeners();
+            init();
         }
     }
 }
@@ -93,13 +85,13 @@ function getGames(direction)
     wishXhr.onreadystatechange = ()=>{
         if(wishXhr.readyState == 4 && wishXhr.status == 200){
             wishControlContainer.innerHTML = wishXhr.responseText;
-            reloadWishListeners();
+            init();
             changeButtons(page, pageBtn[0], pageBtn[1], lastPage);
         }
     }
 }
 
-function reloadWishListeners()
+function init()
 {
     deleteButton = document.querySelectorAll('.wish__icon--x');
     deleteButtonMin = document.querySelectorAll('.wish__icon--delete');

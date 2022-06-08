@@ -2,20 +2,20 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
-use Doctrine\Persistence\ManagerRegistry;
-use App\Entity\GamesPlatform;
-use App\Entity\WishlistGames;
-use App\Entity\MediaGames;
-use App\Entity\Platforms;
+use App\Entity\Games;
+use App\Entity\Reviews;
 use App\Utils\CartCount;
 use App\Utils\Paginator;
-use App\Entity\Reviews;
-use App\Entity\Games;
+use App\Entity\Platforms;
+use App\Entity\MediaGames;
+use App\Entity\GamesPlatform;
+use App\Entity\WishlistGames;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class Controller extends AbstractController
 {
@@ -138,19 +138,6 @@ class Controller extends AbstractController
         
         $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformId);
 
-        $gamesImages = [];
-
-        foreach ($paginator->getItems() as $game) {
-            $idG = $game->getGame()->getIdGame();
-            $idP = $game->getIdPlatform()->getIdPlatform();
-
-            foreach ($images as $img) {
-                if ($img->getIdGame()->getIdGame() == $idG && $img->getIdPlatform()->getIdPlatform() == $idP){
-                    array_push($gamesImages, $img);
-                }
-            }
-        }
-
         if($data == 'all'  || $data == 'pc') $platformFilter = 1;
 
         $response =  $this->render('/store/store.html.twig',[
@@ -160,14 +147,14 @@ class Controller extends AbstractController
             'stock' => $stock,
             'pegi' => array_count_values($pegi),
             'paginator' => $paginator,
-            'media' => $gamesImages,
+            'media' => $images,
             'cartCant' => $cart,
             'platformFilter' => $platformFilter
         ]);
 
-        $response->setEtag(md5($response->getContent()));
-        $response->setPublic();
-        $response->isNotModified($request);
+        // $response->setEtag(md5($response->getContent()));
+        // $response->setPublic();
+        // $response->isNotModified($request);
         
         return $response;
     }

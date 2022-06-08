@@ -17,6 +17,7 @@ use App\Entity\Card;
 use App\Entity\CartProducts;
 use App\Entity\Games;
 use App\Entity\Features;
+use App\Entity\Orders;
 use App\Entity\Platforms;
 use App\Entity\Billing;
 use App\Entity\GamesPlatform;
@@ -331,7 +332,8 @@ class AjaxController extends AbstractController
             "gameDeveloper" => explode(',', $request->get("dev")),
             "gamePegi" => explode(',', $request->get("pegi")),
             ),
-            explode(',', $request->get("stock"))
+            explode(',', $request->get("stock")),
+            $request->get('offers')
         );
 
         $features = [];
@@ -376,23 +378,10 @@ class AjaxController extends AbstractController
     
         $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
 
-        $gamesImages = [];
-
-        foreach ($paginator->getItems() as $game) {
-            $idG = $game->getGame()->getIdGame();
-            $idP = $game->getIdPlatform()->getIdPlatform();
-
-            foreach ($images as $img) {
-                if ($img->getIdGame()->getIdGame() == $idG && $img->getIdPlatform()->getIdPlatform() == $idP){
-                    array_push($gamesImages, $img);
-                }
-            }
-        }
-
             
         return $this->render('ajax/cardGame.html.twig',[
             'paginator' => $paginator,
-            'media' => $gamesImages,
+            'media' => $images,
         ]);
     }
 
@@ -510,7 +499,7 @@ class AjaxController extends AbstractController
 
         $media = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
 
-        return $this->render('users/ordersCard.html.twig',[
+        return $this->render('ajax/ordersCard.html.twig',[
             'orders' => $paginator,
             'media' => $media,
             'products' => $cartProducts

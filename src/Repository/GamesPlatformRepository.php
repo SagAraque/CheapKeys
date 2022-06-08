@@ -82,11 +82,15 @@ class GamesPlatformRepository extends ServiceEntityRepository
             $sql->innerJoin(Platforms::class, 'p')
             ->where('g.idPlatform = p.idPlatform')
             ->andWhere("p.platformName NOT IN ('playstation', 'xbox', 'switch')");
-        }elseif($platform != 'all'){
+        }elseif($platform != 'all' && $platform != 'ofertas'){
             $sql->innerJoin(Platforms::class, 'p')
             ->where('g.idPlatform = p.idPlatform')
             ->andWhere('p.platformName = :platform')
             ->setParameter('platform', $platform);
+        }elseif($platform == 'ofertas' ){
+            $sql->innerJoin(Features::class, 'f')
+            ->where('g.idFeature = f.idFeature')
+            ->andWhere('f.gameDiscount > 0');
         }
 
         return $sql;
