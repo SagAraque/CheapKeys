@@ -84,38 +84,33 @@ class UserController extends AbstractController
     /**
      * @Route("/users/control_panel/wishlist", name="user_control_panel_wish")
      */
-    public function controlPanelWish(Request $request, ManagerRegistry $doctrine, Security $security): Response
+    public function controlPanelWish(Request $request, ManagerRegistry $doctrine, Security $security, Paginator $paginator): Response
     {
 
-        $wishGames = $doctrine->getRepository(WishlistGames::class)->findByGamesWishlist(array(
-            'idWishlist' => $this->getUser()->getUserWishlist()
-        ));
+        $wishGames = $doctrine->getRepository(GamesPlatform::class)->findAllWishNoQuery($this->getUser()->getUserWishlist());
+
+        $paginator->paginate($wishGames, 1, 6);
 
         $gamesId = [];
         $platformsId = [];
 
-        foreach ($wishGames as $game) {
-            array_push($gamesId, strval($game->getIdGame()));
-            array_push($platformsId, strval($game->getIdPlatform()));
+        foreach ($paginator->getItems() as $game) {
+            array_push($gamesId, strval($game->getGame()->getIdGame()));
+            array_push($platformsId, strval($game->getIdPlatform()->getIdPlatform()));
         }
-
-        $games = $doctrine->getRepository(GamesPlatform::class)->findBy(array(
-            'game' => $gamesId,
-            'idPlatform' => $platformsId
-        ));
-
+        
         $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
 
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
 
         return $this->render('users/wishlist.html.twig',[
-            'games' => $games,
+            'paginator' => $paginator,
             'images' => $images,
             'cartCant' => $cart,
             'class' => 'control__content--wishlist',
             'menu' => 'wishlist',
-            'total' => count($wishGames)
+            'actual' => 1
         ]);
     }
 
@@ -127,7 +122,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
 
         $orders = $doctrine->getRepository(Orders::class)->findAllByUser($user->getIdUser());
-        $paginator -> paginate($orders, 1, 10);
+        $paginator -> paginate($orders, 1, 2);
 
         $ordersId = [];
         $cartsId = [];

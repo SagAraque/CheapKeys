@@ -31,3 +31,9 @@
     transition: all 0.25s;
     background-color: var(--background_pink_dark);
 }
+
+@mixin padding($padding)
+{
+    padding: $padding;
+    box-sizing: border-box;
+}

@@ -1,20 +1,20 @@
 let checkbox = document.querySelectorAll('.store__checkBox'),
-container = document.querySelector('.store__container--products'),
-storeContainer = document.querySelector('.store__container--content'),
-select = document.querySelector('.store__select'),
-cardButtons = document.querySelectorAll('.card__button'),
-cartNum = document.querySelector('.header__cartCant'),
-developerData = [],
-platformData = [],
-pegiData = [],
-stockData = [];
+    container = document.querySelector('.store__container--products'),
+    storeContainer = document.querySelector('.store__container--content'),
+    select = document.querySelector('.store__select'),
+    cardButtons = document.querySelectorAll('.card__button'),
+    cartNum = document.querySelector('.header__cartCant'),
+    developerData = [],
+    platformData = [],
+    pegiData = [],
+    stockData = [];
 
 // Paginator elements
 
 let page = 1,
-actualPage = document.querySelector('.store__actual'),
-lastPage = document.querySelector('.store__last'),
-pageBtn = document.querySelectorAll('[class*="store__button"]');
+    actualPage = document.querySelector('.paginator__actual'),
+    lastPage = document.querySelector('.paginator__last'),
+    pageBtn = document.querySelectorAll('[class*="paginator__button"]');
 
 
 // Filters listeners
@@ -95,7 +95,7 @@ function getData(pageValue = 1)
             storeContainer.innerHTML = xhr.responseText;
             listeners();
             actualPage.innerHTML = page;
-            changeButtons();
+            changeButtons(page, pageBtn[0], pageBtn[1], lastPage);
         }else if(xhr.readyState == 4 && xhr.status == 404){
             clearTimeout(loading);
             setError();
@@ -157,25 +157,6 @@ function setGameCart(gameData)
     }
 }
 
-
-/**
- * Change paginator buttons class
- */
-function changeButtons()
-{
-    if(page == 1){
-        pageBtn[0].classList.replace('store__button', 'store__button--disabled');
-    }else{
-        pageBtn[0].classList.replace('store__button--disabled', 'store__button');
-    }
-
-    if(page == lastPage.textContent){
-        pageBtn[1].classList.replace('store__button', 'store__button--disabled');
-    }else{
-        pageBtn[1].classList.replace('store__button--disabled', 'store__button');
-    }
-}
-
 /**
  * Reload some variables and listeners when it is call
  */
@@ -184,7 +165,7 @@ function listeners()
     container = document.querySelector('.store__container--products');
 
     // Cards button
-    cardButtons = document.querySelectorAll('.card__button'),
+    cardButtons = document.querySelectorAll('.paginator__button'),
 
     cardButtons.forEach(button => {
         button.addEventListener('click', ()=>{
@@ -195,14 +176,14 @@ function listeners()
     });
 
     // Paginator listener
-    pageBtn = document.querySelectorAll('[class*="store__button"]');
-    actualPage = document.querySelector('.store__actual'),
-    lastPage = document.querySelector('.store__last'),
+    pageBtn = document.querySelectorAll('[class*="paginator__button"]');
+    actualPage = document.querySelector('.paginator__actual'),
+    lastPage = document.querySelector('.paginator__last'),
 
     pageBtn.forEach(btn => {
         btn.addEventListener('click', ()=>{
             let direction = btn.getAttribute('direction');
-            if (!btn.classList.contains('store__button--disabled')){
+            if (!btn.classList.contains('paginator__button--disabled')){
                 direction == 'left'  ?     page -= 1 :     page += 1;
                 getData(page);
             }

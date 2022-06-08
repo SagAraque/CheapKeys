@@ -40,9 +40,11 @@ class AjaxController extends AbstractController
         $page = $params->getInt('page');
         $paginator->paginate($reviews, $page);
 
-        return $this->render('ajax/reviews.html.twig',[
+        $response =  $this->render('ajax/reviews.html.twig',[
             'reviews' => $paginator
         ]);
+
+        return new Response($response, 200);
     }
 
     /**
@@ -83,6 +85,64 @@ class AjaxController extends AbstractController
 
             return new Response("Deleted", 200);
         }
+    }
+
+    /**
+     * @Route("/ajax/delete_wishlist")
+     */
+    public function deleteWishlistGame(Request $request, ManagerRegistry $doctrine, Security $security, Paginator $paginator): Response
+    {
+        $user = $security->getUser();
+        
+        if($user == null) return new Response("", 302);
+        
+
+        $em = $doctrine->getManager();
+
+        $gameId = $request->get('game');
+        $platformId = $request->get('platform');
+        $page = $request->get('page');
+
+        $wishlist = $doctrine->getRepository(WishlistGames::class)->findGameByUser($gameId, $platformId, $user->getUserWishlist());
+
+        if($wishlist == null) return new Response("", 404);
+
+        $em->remove($wishlist);
+        $em->flush();
+
+        return $this->forward('App\Controller\AjaxController::wishlistGames');
+    }
+
+    /**
+     * @Route("/ajax/wishlist_games")
+     */
+    public function wishlistGames(Request $request, ManagerRegistry $doctrine, Security $security, Paginator $paginator): Response
+    {
+        $page = $request->get('page');
+        $wishGames = $doctrine->getRepository(GamesPlatform::class)->findAllWishNoQuery($this->getUser()->getUserWishlist());
+
+        $paginator->paginate($wishGames, $page , 6);
+
+        if($paginator->getLastPage() < $page ){
+            $page = $paginator->getLastPage();
+            $paginator->paginate($wishGames, $page , 6);
+        }
+
+        $gamesId = [];
+        $platformsId = [];
+
+        foreach ($paginator->getItems() as $game) {
+            array_push($gamesId, strval($game->getGame()->getIdGame()));
+            array_push($platformsId, strval($game->getIdPlatform()->getIdPlatform()));
+        }
+        
+        $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
+
+        return $this->render('ajax/wishCard.html.twig',[
+            'paginator' => $paginator,
+            'images' => $images,
+            'actual' => $request->get('page')
+        ]);
     }
 
     /**
@@ -417,6 +477,44 @@ class AjaxController extends AbstractController
     {
         $img = $request->files;
         return new Response(1, 200);
+    }
+
+    /**
+     * @Route("/ajax/get_orders")
+     */
+    public function getOrders(Paginator $paginator, ManagerRegistry $doctrine, Request $request, Security $security, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        if($user == null) return new Response('', 404);
+
+        $orders = $doctrine->getRepository(Orders::class)->findAllByUser($user->getIdUser());
+        $paginator -> paginate($orders, $request->get('page'), 2);
+
+        $ordersId = [];
+        $cartsId = [];
+        foreach ($paginator->getItems() as $order) {
+            array_push($ordersId, $order->getIdOrder());
+            array_push($cartsId, $order->getIdCart()->getIdCart());
+        }
+
+        $cartProducts = $doctrine->getRepository(CartProducts::class)->findBy(array(
+            'idCart' => $cartsId
+        ));
+
+        $gamesId = [];
+        $platformsId = [];
+        foreach ($cartProducts as $product) {
+            array_push($gamesId, $product->getIdGame()->getIdGame());
+            array_push($platformsId, $product->getIdPlatform()->getIdPlatform());
+        }
+
+        $media = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
+
+        return $this->render('users/ordersCard.html.twig',[
+            'orders' => $paginator,
+            'media' => $media,
+            'products' => $cartProducts
+        ]);
     }
     private function getDiscountPrice($game)
     {

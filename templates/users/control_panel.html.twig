@@ -5,30 +5,42 @@
 {% block body %}
 
 <main class="{{ menu == 'orders' ? 'control--orders' : 'control' }}">
+    {# Control panel menu start #}
     <aside class="control__menu">
-        <form class="control__form--img">
-            <label for="userImage" class="control__label--img">
-                <img src="{{ asset('static/img/users/' ~ app.user.userimg ~ '.webp') }}" alt="" class="control__img">
-                <span class="control__span--img">
-                    <i class="bi bi-camera control__icon--img "></i>
-                </span>
-            </label>
-            <input type="file" name="userImage" id="userImage" class="control__input--img">
-        </form>
-        <h2 class="control__title--user">{{app.user.username}}</h2>
-        <ul class="control__list">
+        {# User image start #}
+        <div class="menu__container">
+            <form class="control__form--img">
+                <label for="userImage" class="control__label--img">
+                    <img src="{{ asset('static/img/users/' ~ app.user.userimg ~ '.webp') }}" alt="" class="control__img">
+                    <span class="control__span--img">
+                        <i class="bi bi-camera control__icon--img "></i>
+                    </span>
+                </label>
+                <input type="file" name="userImage" id="userImage" class="control__input--img">
+            </form>
+            {# User image end #}
+            <h2 class="control__title--user">{{app.user.username}}</h2>
+            <i class="bi bi-chevron-down control__icon--menu "></i>
+        </div>
+        {# Menu list start #}
+        <ul class="control__list collapsed--unset">
             <li class="control__item{{ menu == 'data' ? '--selected' : '' }}"><a href="{{ path('user_control_panel_data') }}" class="control__link"><i class="bi bi-person control__icon"></i> Mis datos</a></li>
             <li class="control__item{{ menu == 'wishlist' ? '--selected' : '' }}"><a href="{{ path('user_control_panel_wish') }}" class="control__link"><i class="bi bi-list-stars control__icon"></i> Lista de deseos</a></li>
             <li class="control__item{{ menu == 'reviews' ? '--selected' : '' }}"><a href="" class="control__link"><i class="bi bi-pencil-square control__icon"></i> Opiniones</a></li>
             <li class="control__item{{ menu == 'orders' ? '--selected' : '' }}"><a href="{{ path('orders') }}" class="control__link"><i class="bi bi-cart control__icon"></i> Compras</a></li>
+            <li class="control__item--logout"><a href="{{ path('app_logout') }}" class="control__link"><i class="bi bi-door-open control__icon"></i> Cerrar sessión</a></li>
         </ul>
-        <a href="{{ path('app_logout') }}" class="control__button">Cerrar sesión</a>
+        {# Menu list end #}
+        <a href="{{ path('app_logout') }}" class="control__button--menu">Cerrar sesión</a>
     </aside>
+    {# Control panel menu end #}
+    {# Control panel content start #}
     <section class="{{ class }}">
         {% block content %}
 
         {% endblock %}
     </section>
+    {# Control panel content end #}
 </main>
 
 {% endblock %}

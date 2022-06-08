@@ -2,37 +2,11 @@
 
 {% block content %}
 
-    <h2 class="control__title--primary">Lista de deseos: {{ total }} juegos</h2>
-
-    <article class="control__wish">
-        {% for game in games %}
-
-            {% if game.idPlatform.platformName == 'switch' %}
-                {% set platformIcon = 'nintendo-switch' %}
-            {% else %}
-                {% set platformIcon = game.idPlatform.platformName %}
-            {% endif %} 
-
-            {% set counter = ( counter | default(0) ) + 1 %}
-            <div class="control__card--wish" game = "{{game.game.idGame}}" platform="{{game.idPlatform.idPlatform}}">
-                <i class="bi bi-x wish__icon--delete"></i>
-                <img src="{{ asset('static/img/games/' ~ images[counter - 1].idMedia.mediaUrl ~ '.webp') }}" alt="{{ images[counter - 1].idMedia.mediaAlt }}" class="wish__img"> 
-                <span class="control__platform">
-                    <i class="{{'bi bi-' ~ platformIcon ~ ' control__icon--platform'}}"></i>
-                </span>
-                <div class="wish__container">
-                    <h2 class="wish__title">{{game.game.gameName}}</h2> 
-                    <p class="wish__text">{{ game.idFeature.gamePrice }}€</p>
-                    <i class="bi bi-cart wish__icon--cart"></i>
-                </div>
-            </div>
-
-        {% endfor %}
-    </article>
-
+    {% include 'ajax/wishCard.html.twig' %}
+    
 {% endblock %}
 
 {% block javascript %}
     <script src="{{ asset('static/javascript/users.js') }}"></script>
-    <script src="{{ asset('static/javascript/users/wishlist.js') }}"></script>
+    <script type="module" src="{{ asset('static/javascript/users/wishlist.js') }}"></script>
 {% endblock %}

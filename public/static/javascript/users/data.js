@@ -73,6 +73,22 @@ function collapse(button)
 {
     let container = button.parentNode.parentNode;
     target = container.querySelector('.control__container--collapse');
-    target.classList.toggle('control__container--hidden');
+    // target.classList.toggle('control__container--hidden');
+
+    if(target.classList.contains('collapsed--unset')){
+        target.style.maxHeight = target.scrollHeight+'px';
+
+        setTimeout(()=>{
+            target.classList.toggle('collapsed--unset');
+            onanimationiteration.removeAttribute('style')
+        }), 400;
+    }else{
+        target.style.maxHeight = target.clientHeight+'px';
+
+        setTimeout(()=>{
+            target.classList.toggle('collapsed--unset');
+            target.removeAttribute('style');
+        }, 10);
+    }
     button.classList.toggle('control__icon--rotate');
 }

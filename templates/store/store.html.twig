@@ -122,11 +122,11 @@
         {# Paginator container start #}
         <div class="store__container--paginator">
         {% if paginator.lastPage > 1 %}
-            <i class="bi bi-chevron-left store__button--disabled" direction="left"></i>
-            <span class="store__page">
-                Página <span class="store__actual">1</span> de <span class="store__last">{{paginator.lastPage}}</span>
+            <i class="bi bi-chevron-left paginator__button--disabled" direction="left"></i>
+            <span class="paginator__page">
+                Página <span class="paginator__actual">1</span> de <span class="paginator__last">{{paginator.lastPage}}</span>
             </span>
-            <i class="bi bi-chevron-right store__button" direction="right"></i>
+            <i class="bi bi-chevron-right paginator__button" direction="right"></i>
         {% endif %}
         </div>
         {# Paginator container end #}

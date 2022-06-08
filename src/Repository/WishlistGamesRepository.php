@@ -73,6 +73,7 @@ class WishlistGamesRepository extends ServiceEntityRepository
         return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
 
+
 //    /**
 //     * @return WishlistGames[] Returns an array of WishlistGames objects
 //     */

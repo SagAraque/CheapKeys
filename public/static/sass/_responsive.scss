@@ -376,6 +376,7 @@
     }
 
     .control{
+
         &__card
         {
             &--wish
@@ -459,10 +460,31 @@
 @media (max-width: 800px)
 {
     .control{
+        @include mixin.flex-style($direction:column);
+        justify-content: start;
         width: 100%;
+
+        &--orders
+        {
+            @include mixin.flex-style($direction:column);
+            width: 100%;
+        }
+
         &__menu
         {
-            display: none;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        &__button
+        {
+            &--menu
+            {
+               display: none; 
+            }    
         }
 
         &__title
@@ -470,6 +492,45 @@
             &--mobile
             {
                 display: initial;
+            }
+
+            &--user
+            {
+                font-size: var(--text);
+                margin: 0 0 0 10px;
+            }
+        }
+
+        &__list
+        {
+            overflow: hidden;
+            padding-top: 20px;
+            background: transparent;
+            transition: max-height 0.4s linear;
+            margin: 0;
+        }
+
+        &__link
+        {
+            margin-left: 15px;
+        }
+
+        &__item
+        {
+            border-radius: 8px;
+            
+            &--logout
+            {
+                display: initial;
+            }
+        }
+
+        &__form
+        {
+            &--img
+            {
+                height: 100%;
+                width: min-content;
             }
         }
 
@@ -517,12 +578,32 @@
         }
     }
 
+    .menu
+    {
+        &__container
+        {
+            height: 40px;
+            @include mixin.flex-style($direction:row, $align:center);
+        }
+    }
+
     .content
     {
         &__billing, &__pay, &__data
         {
             height: min-content;
             overflow: hidden;
+        }
+    }
+
+    .collapsed
+    {
+        max-height: 0px;
+
+        &--unset
+        {
+            max-height: 0px;
+            padding: 0;
         }
     }
 }
@@ -713,7 +794,7 @@
         }
     }
 
-    .reviews
+    .paginator
     {
         &__button
         {
@@ -725,6 +806,17 @@
     .gallery, .info, .desc, .specs, .reviews
     {
         width: 100%;
+    }
+
+    .control
+    {
+        &__card
+        {
+            &--wish
+            {
+                height: 100px;
+            }
+        }
     }
 }
 
@@ -829,6 +921,16 @@
             flex-direction: column;
         }
 
+        &__title
+        {
+            margin-top: 10px;
+
+            &--user
+            {
+                margin-top: 0;
+            }
+        }
+
         &__input
         {
             width: 100%;
@@ -847,7 +949,7 @@
         {
             &--wish
             {
-                height: 80px;
+                height: 75px;
             }
         }
     }
@@ -862,6 +964,11 @@
         {
             height: 60px;
             min-height: 60px;
+        }
+
+        &__title
+        {
+            margin: 0;
         }
 
         &__container
@@ -893,6 +1000,22 @@
             &--external
             {
                 display: block;
+            }
+        }
+    }
+
+    .wish
+    {
+        &__icon
+        {
+            &--x
+            {
+                display: none;
+            }
+
+            &--delete
+            {
+                display: initial;
             }
         }
     }

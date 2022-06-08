@@ -5,13 +5,11 @@
 {
     &__data
     {
+        @extend .card__class;
         width:clamp(200px, 35vw, 415px);
         min-height: 150px;
         @include mixin.flex-style($justify: space-between, $direction:column);
-        background-color:var(--background_secondary);
-        border-radius: 8px;
-        padding:20px;
-        box-sizing: border-box;
+        @include mixin.padding(20px);
     }
 
     &__products
@@ -23,17 +21,13 @@
     &__title
     {
         width: 100%;
-        color: var(--white);
-        font-size: var(--title25);
-        font-weight: 600;
+        @include mixin.text-style(var(--white), var(--title25), 600);
         margin: 10px 0px;
 
         &--billing
         {
-            font-size: 16px;
-            color: var(--white);
+            @include mixin.text-style(var(--white), var(--text), 500);
             margin: 0px 0px 10px 0px;
-            font-weight: 500;
         }
 
         &--pay
@@ -116,10 +110,9 @@
 
     &__billing
     {
+        @extend .card__class--primary;
         width: 100%;
         min-height: 80px;
-        background-color: var(--background_primary);
-        border-radius: 8px;
         margin: 5px 0px;
         display: grid;
         grid-template-columns: 30px calc(100% - 30px);

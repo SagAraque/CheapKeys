@@ -24,7 +24,7 @@
     {# Pay methods container start #}
     <article class="content__pay">
         <h2 class="control__title">Métodos de pago <i class="bi bi-chevron-down control__icon--collapse"></i></h2>
-        <div class="control__container--collapse control__container--hidden">
+        <div class="control__container--collapse collapsed--unset">
             <div class="pay__container">
             {% for card in cards %}
                 <div class="pay__card" identifier="{{ card.idCard }}">
@@ -43,7 +43,7 @@
     {# User data container start #}
     <article class="content__data">
         <h2 class="control__title">Datos de mi cuenta <i class="bi bi-chevron-down control__icon--collapse"></i></h2>
-        <div class="control__container--collapse control__container--hidden">
+        <div class="control__container--collapse collapsed--unset">
             {# User name change form start #}
             {{ form_start(userNameForm, {'attr' : {'action' : path('change_username'), 'class': 'control__form' }}) }}
 

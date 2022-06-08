@@ -135,4 +135,20 @@ class GamesPlatformRepository extends ServiceEntityRepository
 
         return $sql->getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
+
+    public function findAllWishNoQuery($id)
+    {
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT gp FROM App\Entity\GamesPlatform gp
+             JOIN App\Entity\WishlistGames w
+             WHERE w.idWishlist = :wishlist
+             AND gp.game = w.idGame
+             AND gp.idPlatform = w.idPlatform
+             '
+        )->setParameter('wishlist', $id);
+
+        return $sql;
+    }
 }

@@ -166,19 +166,7 @@
     }
 
     &__button{
-        transition: all 0.25s;
-        height: 40px;
-        width: 100%;
-        font-size: var(--label);
-        font-weight: 600;
-        @include mixin.flex-style($justify: center, $align: center);
-        background-color: var(--background_pink);
-        color: var(--white);
-        border: none;
-        border-radius: 5px;
-        border: 5px solid var(--background_pink);
-        box-sizing: border-box;
-        cursor: pointer;
+        @extend .button--full;
 
         &--buy{
             @extend .info__button;
@@ -446,33 +434,6 @@
         @include mixin.flex-style($justify:center, $align:center);
     }
 
-    &__page
-    {
-        font-size: var(--label);
-        font-weight: 600;
-        color: var(--white);
-        margin: 0px 10px;
-    }
-
-    &__button
-    {
-        width: 35px;
-        height: 35px;
-        font-size: var(--text20);
-        color: var(--white);
-        background-color: var(--background_pink);
-        margin: 0px 10px;
-        @include mixin.flex-style($justify:center, $align:center);
-        border-radius: 5px;
-        cursor: pointer;
-
-        &--disabled
-        {
-            @extend .reviews__button;
-            filter: contrast(50%);
-            cursor:default;
-        }
-    }
 
     &__loading
     {

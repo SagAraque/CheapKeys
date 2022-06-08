@@ -84,21 +84,6 @@
         }
     }
 
-    &__button
-    {
-        @extend .reviews__button;
-
-        &--disabled
-        {
-            @extend .reviews__button--disabled;
-        }
-    }
-
-    &__page
-    {
-        @extend .reviews__page;
-    }
-
     &__loading
     {
         @extend .reviews__loading;
