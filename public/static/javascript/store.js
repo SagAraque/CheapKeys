@@ -9,12 +9,17 @@ let checkbox = document.querySelectorAll('.store__checkBox'),
     pegiData = [],
     stockData = [];
 
-// Paginator elements
+// Menu variables
+let filterButton = document.querySelector('.store__filter'),
+    closeMenuButton = document.querySelector('.store__icon--close'),
+    filtersMenu = document.querySelector('.store__container--menu'),
+    filterMenuBackground = document.querySelector('[class*="main__background"]');
 
+// Paginator variables
 let page = 1,
     actualPage = document.querySelector('.paginator__actual'),
     lastPage = document.querySelector('.paginator__last'),
-    pageBtn = document.querySelectorAll('[class*="paginator__button"]');
+    pageBtnStore = document.querySelectorAll('[class*="paginator__button"]');
 
 
 // Filters listeners
@@ -95,8 +100,7 @@ function getData(pageValue = 1)
             clearTimeout(loading);
             storeContainer.innerHTML = xhr.responseText;
             listeners();
-            actualPage.innerHTML = page;
-            changeButtons(page, pageBtn[0], pageBtn[1], lastPage);
+            changeButtons(page, pageBtnStore[0], pageBtnStore[1], lastPage.textContent);
         }else if(xhr.readyState == 4 && xhr.status == 404){
             clearTimeout(loading);
             setError();
@@ -105,7 +109,7 @@ function getData(pageValue = 1)
 }
 
 /**
- * Sen an error message
+ * Set an error message
  */
 function setError()
 {
@@ -158,6 +162,23 @@ function setGameCart(gameData)
     }
 }
 
+function displayFiltersMenu(menu, background)
+{
+    menu.style.maxWidth = '210px';
+    background.classList.replace('main__background', 'main__background--visible');
+
+}
+
+function hideFiltersMenu(menu, background)
+{
+    menu.style.maxWidth = '0px';
+    setTimeout(()=>{
+        menu.removeAttribute('style');
+    }, 360);
+
+    background.classList.replace('main__background--visible', 'main__background');
+}
+
 /**
  * Reload some variables and listeners when it is call
  */
@@ -166,7 +187,7 @@ function listeners()
     container = document.querySelector('.store__container--products');
 
     // Cards button
-    cardButtons = document.querySelectorAll('.paginator__button'),
+    cardButtons = document.querySelectorAll('.card__button'),
 
     cardButtons.forEach(button => {
         button.addEventListener('click', ()=>{
@@ -177,11 +198,12 @@ function listeners()
     });
 
     // Paginator listener
-    pageBtn = document.querySelectorAll('[class*="paginator__button"]');
-    actualPage = document.querySelector('.paginator__actual'),
-    lastPage = document.querySelector('.paginator__last'),
+    pageBtnStore = document.querySelectorAll('[class*="paginator__button"]');
+    actualPage = document.querySelector('.paginator__actual');
+    if(actualPage != 'undefined' && actualPage != null) actualPage.textContent = page;
+    lastPage = document.querySelector('.paginator__last');
 
-    pageBtn.forEach(btn => {
+    pageBtnStore.forEach(btn => {
         btn.addEventListener('click', ()=>{
             let direction = btn.getAttribute('direction');
             if (!btn.classList.contains('paginator__button--disabled')){
@@ -189,5 +211,13 @@ function listeners()
                 getData(page);
             }
         });
+    });
+
+    filterButton.addEventListener('click', ()=>{
+        displayFiltersMenu(filtersMenu, filterMenuBackground);
+    });
+
+    closeMenuButton.addEventListener('click', ()=>{
+        hideFiltersMenu(filtersMenu, filterMenuBackground);
     });
 }
