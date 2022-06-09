@@ -2,27 +2,25 @@
 @use 'var';
 
 .footer{
+    @include mixin.flex-style($align:center,  $direction:column);
     width: 100%;
     height: min-content;
     margin-top: auto;
     background:  linear-gradient(180deg, var(--background_secondary) 80%, var(--background_primary) 20%);
-    @include mixin.flex-style($align:center,  $direction:column);
     box-sizing: border-box;
 
     &__top{
+        @include mixin.flex-style($alignC:center, $justify:left, $wrap:wrap);
+        @include mixin.padding(20px 10px);
         width: 960px;
         height: 80%;
-        @include mixin.flex-style($alignC:center, $justify:left, $wrap:wrap);
-        padding: 20px 10px;
-        box-sizing: border-box;
     }
 
     &__bottom{
+        @include mixin.flex-style($align:center, $justify:center);
+        @include mixin.padding(0px 10px);
         width: 960px;
         height: 20%;
-        padding: 0px 10px;
-        box-sizing: border-box;
-        @include mixin.flex-style($align:center, $justify:center);
     }
 
     &__list{
@@ -51,8 +49,7 @@
     }
 
     &__link, &__copy{
-        font-size: var(--text);
-        color: var(--white);
+        @extend .text__class;
         text-decoration: none;
         white-space: nowrap;
     }

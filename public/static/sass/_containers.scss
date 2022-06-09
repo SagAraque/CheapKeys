@@ -63,11 +63,28 @@
     &__form
     {
         @extend .main;
+        @include mixin.padding(0);
+        @include mixin.flex-style($justify: space-between, $wrap:nowrap);
         width: 100%;
         height: min-content;
-        @include mixin.flex-style($justify: space-between, $wrap:nowrap);
-        padding: 0;
-        overflow: hidden
+    }
+
+    &__background
+    {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.2);
+        z-index: 5;
+        display: none;
+
+        &--visible
+        {
+            @extend .main__background;
+            display: initial;
+        }
     }
 }
 
@@ -82,48 +99,23 @@
 {
     &__container
     {
-        width: 450px;
         @include mixin.flex-style($justify:space-around);
+        width: 450px;
     }
 }
 
 .gallery
 {
+    @include mixin.flex-style($direction:column, $align:center, $justify:space-between);
     height: 620px;
     width: min-content;
-    @include mixin.flex-style($direction:column, $align:center, $justify:space-between);
 
     &--mobile
     {
-        height: min-content;
-        width: 100%;
         @include mixin.flex-style($direction:column, $align:center, $justify:space-between);
-        display: none;
-    }
-}
-
-.index
-{
-    @extend .main;
-
-    &__gallery
-    {
-        height: 620px;
-        width: 100%;
-        background-color: red;
-    }
-
-
-    &__container
-    {
         height: min-content;
-        @include mixin.flex-style($align:center, $justify:space-between, $wrap:wrap);
-    }
-
-    &__banner
-    {
-        height: 200px;
-        background-color: aqua;
+        width: 100%;
+        display: none;
     }
 }
 
@@ -134,13 +126,12 @@
 
     &__container
     {   
+        @include mixin.padding(0 5px 0 0);
+        @include mixin.flex-style($align:center, $justify:space-between, $direction:column);
         width: 100%;
         max-height: 250px;
-        @include mixin.flex-style($align:center, $justify:space-between, $direction:column);
         margin-bottom: 20px;
         overflow-y: auto;
-        padding: 0 5px 0 0;
-        box-sizing: border-box;
     }
 
     &__grid
@@ -153,10 +144,9 @@
 
         &--right
         {
+            @include mixin.padding(5px 5px 5px 15px);
             @include mixin.flex-style($align:start, $justify:start, $direction:column);
             grid-area: 1 / 2 / 2 / 3;
-            padding: 5px 5px 5px 15px;
-            box-sizing: border-box;
         }
     }
 }
@@ -174,27 +164,24 @@
         {
             width: 100%;
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, auto);
+            grid-template-areas: 'titulo titulo' 'total select';
         }
 
         &--menu
         {
+            @extend .card__class;
+            @include mixin.flex-style($justify:start, $direction:column, $align:center);
+            @include mixin.padding(0px 20px);
             width: 250px;
-            height: min-content;
-            background-color: var(--background_secondary);
-            @include mixin.flex-style($justify:start, $direction:column);
             margin-top: 20px;
-            padding: 0px 20px;
-            border-radius: 8px;
-            box-sizing: border-box;
         }
 
         &--products
         {
-            width: 100%;
+            @extend .store__container--title;
             min-height: 100px;
-            display: grid;
             grid-template-columns: repeat(auto-fill, 280px);
             justify-content: space-between;
             gap: 20px;
@@ -217,6 +204,13 @@
             height: min-content;
             margin-top: 20px;
         }
+
+        &--select
+        {
+            grid-area: select;
+            @include mixin.flex-style($justify:end, $align:center);
+            gap: 20px
+        }
     }
 }
 
@@ -236,16 +230,15 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            grid-column-gap: 10px;
-            grid-row-gap: 10px;
+            gap: 10px 10px;
             height: min-content
         }
 
         &--wishlist
         {
             @extend .control__content;
-            width: calc(100% - 260px);
             @include mixin.flex-style($direction:column);
+            width: calc(100% - 260px);
         }
 
         &--orders
@@ -257,16 +250,16 @@
 
     &__wish
     {
-        width: 100%;
         @include mixin.flex-style($justify:space-between, $wrap:wrap);
+        width: 100%;
         gap: 20px;
         margin: 20px 0px;
     }
 
     &__order
     {
-        width: 100%;
         @include mixin.flex-style($direction:column);
+        width: 100%;
         gap: 20px;
     }
 
@@ -278,12 +271,13 @@
 
 .button--full
 {
+    @extend .text18__class;
+    @include mixin.flex-style($align:center, $justify:center);
     width: 100%;
     height: 40px;
+    font-weight: 600;
     background-color: var(--background_pink);
-    @include mixin.text-style(var(--white), var(--label), 600);
     text-decoration: none;
-    @include mixin.flex-style($align:center, $justify:center);
     border-radius: 5px;
     border: 5px solid var(--background_pink);
     box-sizing: border-box;
@@ -331,5 +325,48 @@
         @extend .card__class;
         background-color: var(--background_primary);
     }
+}
+
+.title__class
+{
+    @include mixin.text-style(var(--white), var(--title), 700);
+}
+
+.title25__class
+{
+    @include mixin.text-style(var(--white), var(--title25), 600);
+}
+
+.text18__class
+{
+    @include mixin.text-style(var(--white), var(--label), initial);
+}
+
+.text__class
+{
+    @include mixin.text-style(var(--white), var(--text), initial);
+}
+.text14__class
+{
+    @include mixin.text-style(var(--white), var(--text14), initial);
+}
+
+.text20__class
+{
+    @include mixin.text-style(var(--white), var(--text20), initial);
+}
+
+.icon__class
+{
+    @include mixin.flex-style($justify:space-between, $align:center);
+    @include mixin.text-style(var(--white), var(--title25), 700);
+    width: min-content;
+    height: min-content;
+}
+
+.icon__class--pink
+{
+    @extend .icon__class;
+    color: var(--background_pink);
 }
 

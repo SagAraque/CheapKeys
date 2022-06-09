@@ -5,7 +5,6 @@
 
 @media (max-width: 1480px) {
 
-    // Responsive header
     .header{
         &__top, &__bottom
         {
@@ -14,11 +13,7 @@
         }
     }
 
-    // Responsive product
-
     .info{
-        // width: 25%;
-
         &__asset{
             height: 150px;
         }
@@ -45,7 +40,6 @@
         height: 520px;
     }
 
-    //Responsive cart
     .cart
     {
         &__products
@@ -91,12 +85,7 @@
     {
         height: 140px;
 
-        &__top
-        {
-            width: 100%;
-        }
-
-        &__bottom
+        &__top, &__bottom
         {
             width: 100%;
         }
@@ -291,13 +280,7 @@
             margin: 10px auto;
         }
 
-        &__list
-        {
-            width: max(300px, 47%);
-            margin: 10px auto;
-        }
-
-        &__cards
+        &__list, &__cards
         {
             width: max(300px, 47%);
             margin: 10px auto;
@@ -343,12 +326,35 @@
         {
             &--menu
             {
-                display: none;
+                height: 100vh;
+                transition: max-width 0.4s linear;
+                max-width: 0px;
+                overflow: hidden auto;
+                position: fixed;
+                z-index: 10;
+                left: 0;
+                top:0px;
+                margin: 0;
+                padding: 0;
+                border-radius: 0 8px 8px 0;
             }
 
             &--content
             {
                 width: 100%;
+            }
+        }
+
+        &__filter
+        {
+            display: block;
+        }
+
+        &__title
+        {
+            &--secondary
+            {
+                display: flex;
             }
         }
     }
@@ -395,9 +401,13 @@
             grid-template-areas: 'orderN orderN date icon' 'pay pay total icon'
         }
 
-        &__button
+        &__button, &__platform, &__text--cant
         {
             display: none;
+        }
+
+        &__button
+        {
 
             &--min
             {
@@ -409,16 +419,10 @@
         {
             font-size: var(--text);
             margin: 5px 0px 0px 0px;
-            &--cant
-            {
-                display: none;
-            }
         }
 
         &__platform
         {
-            display: none;
-
             &--icon
             {
                 margin: 0px 5px 0px 0px;
@@ -552,17 +556,7 @@
 
         &__content
         {
-            &--wishlist
-            {
-                width: 100%;
-            }
-
-            &--data
-            {
-                width: 100%;
-            }
-
-            &--orders
+            &--wishlist, &--data, &--orders
             {
                 width: 100%;
             }
@@ -771,13 +765,7 @@
 
         &__button
         {
-            &--buy
-            {
-                height: 35px;
-                font-size: var(--text);
-            }
-
-            &--wish
+            &--buy , &--wish
             {
                 height: 35px;
                 font-size: var(--text);
@@ -1020,6 +1008,35 @@
         }
     }
 
+    .store
+    {
+        &__select
+        {
+            display: none;
+        }
+    }
+
+}
+
+@media (max-width: 445px)
+{
+    .store
+    {
+        &__card
+        {
+            width: 250px;
+            height: 337px;
+        }
+
+        &__container
+        {
+            &--products
+            {
+                grid-template-columns: repeat(auto-fill, 250px);
+                justify-content: center;
+            }
+        }
+    }
 }
 
 @media (max-width: 380px) 

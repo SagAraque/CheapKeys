@@ -2,18 +2,17 @@
 @use 'var';
 
 .header{
+    @include mixin.flex-style($direction:column, $align:center);
     width: 100%;
     height: 160px;
     background:  linear-gradient(180deg, var(--background_primary) 60%, var(--background_secondary) 40%);
-    @include mixin.flex-style($direction:column, $align:center);
     box-sizing: border-box;
 
     &__top, &__bottom{
+        @include mixin.flex-style($align:center, $justify:space-around);
+        @include mixin.padding(10px);
         height: 60%;
         width: 1480px;
-        @include mixin.flex-style($align:center, $justify:space-around);
-        padding: 10px;
-        box-sizing: border-box;
         position: relative;
     }
 
@@ -43,22 +42,21 @@
     }
 
     &__form{
+        @include mixin.flex-style($align:center, $justify:space-between);
         height: 100%;
         width: 100%;
-        @include mixin.flex-style($align:center, $justify:space-between);
         background-color: var(--white);
         border-radius: 20px;
         position: relative;
     }
 
     &__input{
+        @include mixin.padding(0 10px);
         height: 45px;
         width: 90%;
-        padding: 0px 10px;
         border: none;
         border-radius: 20px;
         outline: none;
-        box-sizing: border-box;
     }
 
     &__search{
@@ -119,12 +117,11 @@
 
     &__cartCant
     {
+        @extend .text__class;
+        @include mixin.flex-style($align:center, $justify:center);
         width: 20px;
         height: 20px;
-        font-size: 13px;
         font-weight: 700;
-        @include mixin.flex-style($align:center, $justify:center);
-        color: var(--white);
         background-color: var(--background_pink);
         position: absolute;
         border-radius: 100%;
@@ -134,8 +131,7 @@
     }
 
     &__login{
-        color: var(--white);
-        font-size: var.$text20;
+        @extend .text20__class;
         margin: 0px 10px;
     }
 
@@ -152,14 +148,13 @@
     }
 
     &__list{
+        @include mixin.flex-style($align:center, $justify:space-between);
         width: 100%;
         list-style: none;
-        @include mixin.flex-style($align:center, $justify:space-between);
     }
 
     &__link, &__link--m10{
-        font-size: var(--text20);
-        color: var(--white);
+        @extend .text20__class;
         text-decoration: none;
         white-space: nowrap;
 
@@ -212,14 +207,15 @@
     &__container
     {
         &--movile{
+            @include mixin.flex-style($align:center, $justify:space-between);
             height: 100%;
             width: min-content;
-            @include mixin.flex-style($align:center, $justify:space-between);
             display: none;
         }
 
         &--search
         {
+            @include mixin.padding(0 5px);
             background-color: var(--white);
             width: 100%;
             height: min-content;
@@ -228,8 +224,6 @@
             left: 0;
             z-index: 4;
             border-radius: 8px;
-            padding: 0px 5px;
-            box-sizing: border-box;
         }
 
         &--form
@@ -242,12 +236,11 @@
 }
 
 .header--min{
+    @include mixin.flex-style($align:center, $justify:center);
+    @include mixin.padding(10px 0);
     height: 100px;
     width: 100%;
-    @include mixin.flex-style($align:center, $justify:center);
     background-color: var(--background_primary);
-    padding: 10px 0px;
-    box-sizing: border-box;
 }
   
   

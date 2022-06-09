@@ -5,22 +5,19 @@
 {
     &__menu
     {
-        width: 250px;
-        height: min-content;
+        @extend .card__class;
         @include mixin.flex-style($direction:column,$align:center);
-        background-color: var(--background_secondary);
-        text-align: center;
         @include mixin.padding(20px 0px);
-        border-radius: 5px;
+        width: 250px;
+        text-align: center;
 
         &--mobile
         {
-            min-height: 50px;
-            width: 100%;
-            background-color: var(--background_secondary);
-            border-radius: 8px;
+            @extend .card__class;
             @include mixin.padding(10px);
             @include mixin.flex-style($justify:start ,$align:center);
+            min-height: 50px;
+            width: 100%; 
         }
     }
 
@@ -62,23 +59,20 @@
 
         &--img
         {
-            font-size: var(--title);
-            color: var(--white);
+            @extend .title__class;
         }
 
         &--platform
         {
-            font-size: var(--text);
-            color: var(--white);
+            @extend .text__class;
         }
 
         &--collapse
         {
+            @extend .title25__class;
             transition: transform 0.25s linear, background-color 0.15s linear;
             width: 16px;
             height: 16px;
-            font-size: var(--title25);
-            font-weight: 600;
             color: var(--background_pink);
             border-radius: 100%;
             padding: 5px;
@@ -123,9 +117,8 @@
 
     &__title
     {
+        @extend .title25__class;
         height: min-content;
-        font-size: var(--title25);
-        color: var(--white);
         width: 100%;
         margin: 20px 0px 0px 0px;
         display: flex;
@@ -148,51 +141,48 @@
 
         &--userMobile
         {
+            @extend .text__class;
             width: min-content;
             white-space: nowrap;
-            font-size: var(--text);
-            color: var(--white);
         }
 
         &--primary
         {
-            @extend .control__title;
-            font-size: var(--title);
+            @extend .title__class;
         }
     }
 
     &__container
     {
-        width: 80%;
         @include mixin.flex-style($justify:start, $align:center);
+        width: 80%;
 
         &--pass
         {
-            width: 100%;
             @include mixin.flex-style($justify:start, $direction:column);
+            width: 100%;  
         }
 
         &--column
         {
-            width: 100%;
-            @include mixin.flex-style($justify:start, $direction:column);
+            @extend .control__container--pass;
         }
 
         &--full
         {
+            @include mixin.flex-style($justify:center, $align:center);
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             background-color: #00000050;
-            @include mixin.flex-style($justify:center, $align:center);
         }
 
         &--half
         {
-            width: 48%;
             @include mixin.flex-style($justify:start, $direction:column);
+            width: 48%;    
         }
 
         &--none
@@ -202,10 +192,10 @@
 
         &--collapse
         {
+            @include mixin.flex-style($direction:column);
             width: 100%;
             transition: all 0.4s linear;
             height: min-content;
-            @include mixin.flex-style($direction:column);
             overflow:hidden;
         }
     }
@@ -229,6 +219,7 @@
     {
         &--img
         {
+            @include mixin.flex-style($justify:center, $align:center);
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.4);
@@ -236,7 +227,6 @@
             left: 0;
             position: absolute;
             cursor: pointer;
-            @include mixin.flex-style($justify:center, $align:center);
             display: none
         }
     }
@@ -298,19 +288,19 @@
     &__card
     {
         @extend .card__class;
-        height: 120px;
-        width: 100%;
-        position: relative;
         @include mixin.flex-style($direction:column,$justify:space-between);
         @include mixin.padding(15px 20px);
+        height: 120px;
+        width: 100%;
+        position: relative; 
         margin: 15px 0px;
 
         &--wish
         {
             @extend .control__card;
-            width: 490px;
             @include mixin.flex-style($direction:row,$justify:start);
             @include mixin.padding(5px);
+            width: 490px;
             margin: 0px;
             position: relative;
         }
@@ -334,10 +324,10 @@
         &--card
         {
             @extend .card__class;
-            width: 400px;
-            min-height: 350px;
             @include mixin.flex-style($justify:space-between, $wrap:wrap);
             @include mixin.padding(0px 10px 10px 10px);
+            width: 400px;
+            min-height: 350px;
             position: relative;
         }
 
@@ -370,8 +360,8 @@
 
     &__platform
     {
-        background-color: var(--background_pink);
         @include mixin.padding(5px 20px);
+        background-color: var(--background_pink);
         border-bottom-right-radius: 8px;
         position: absolute;
         top: 0;
@@ -384,21 +374,22 @@
     &__billing, &__pay, &__data
     {
         @extend .card__class;
+        @include mixin.padding(0px 20px 20px 20px);
         width: 100%;
         height: 100%;
-        @include mixin.padding(0px 20px 20px 20px);
     }
 
     &__billing
     {
-        grid-area: 1 / 1 / 2 / 2;
         @include mixin.flex-style($direction:column, $align:center, $justify:start);
+        grid-area: 1 / 1 / 2 / 2;
+        
     }
 
     &__pay
     {
+        @extend .content__billing;
         grid-area: 2 / 1 / 3 / 2;
-        @include mixin.flex-style($direction:column, $align:center, $justify:start);
     }
 
     &__data
@@ -412,9 +403,9 @@
     &__card
     {
         @extend .card__class--primary;
-        width: 100%;
         @include mixin.padding(10px);
         @include mixin.flex-style($direction:column, $align:start, $justify:space-between);  
+        width: 100%;
         align-self: start;
         position: relative
     }
@@ -428,17 +419,16 @@
 
     &__text
     {
-        font-size: var(--text14);
+        @extend .text14__class;
         margin: 5px 0px 0px 0px;
-        color: var(--white);
     }
 
     &__container
     {
+        @include mixin.flex-style($direction:column, $align:start);  
         width: 100%;
         min-height: 200px;
         max-height: 200px;
-        @include mixin.flex-style($direction:column, $align:start);  
         gap: 10px;
         overflow-y:auto;
         padding-right: 5px;
@@ -502,11 +492,10 @@
 
         &--cart
         {
-            font-size: var(--label);
-            color: var(--white);
+            @extend .text18__class;
+            @include mixin.padding(5px 10px);
             background-color: var(--background_pink);
             position: absolute;
-            @include mixin.padding(5px 10px);
             border-radius: 5px;
             bottom: 5px;
             right: 5px;
@@ -538,32 +527,31 @@
 
     &__text
     {
-        font-size: var(--text);
+        @extend .text__class;
         font-weight: 600;
-        color: var(--white);
         margin: 0px 0px 5px 10px;
     }
 
     &__container
     {
-        width: 100%;
         @include mixin.flex-style($justify:space-between, $direction:column);
+        width: 100%;
     }
 }
 
 .order
 {
+    @include mixin.flex-style($direction:column);
     width: 100%;
     height: min-content;
-    @include mixin.flex-style($direction:column);
     margin-top: 20px;
 
     &__top
     {
         @extend .card__class;
+        @include mixin.padding(10px);
         width: 100%;
         min-height: 50px;
-        @include mixin.padding(10px);
         display: grid;
         grid-template-columns: repeat(5, min-content);
         grid-template-rows: auto;
@@ -580,17 +568,16 @@
 
     &__bottom
     {
-        width: 100%;
-        transition: max-height 0.4s ease-in;
         @include mixin.flex-style($direction:column, $align:center);
         @include mixin.padding(5px 20px);
+        width: 100%;
+        transition: max-height 0.4s ease-in;
         overflow: hidden;
     }
 
     &__span
     {
-        font-size: var(--text);
-        color: var(--white);
+        @extend .text__class;
         font-weight: 400;
     }
 
@@ -608,7 +595,8 @@
 
     &__number
     {
-        @include mixin.text-style(var(--white), var(--text), 600);
+        @extend .text__class;
+        font-weight: 600;
         height: min-content;
         grid-area: orderN;
         white-space: nowrap;
@@ -638,19 +626,19 @@
     &__icon
     {
         @include mixin.text-style(var(--background_pink), var(--title25), 600);
+        @include mixin.flex-style($align:center, $justify:center);
         grid-area: icon;
         transition: all 0.4s;
-        @include mixin.flex-style($align:center, $justify:center);
         cursor: pointer;
     }
 
     &__product
     {
         @extend .card__class;
+        @include mixin.flex-style($align:center, $justify:start);
         width: 100%;
         height: 120px;
         min-height: 120px;
-        @include mixin.flex-style($align:center, $justify:start);
         position: relative;
         margin: 5px 0px;
     }
@@ -662,8 +650,7 @@
 
     &__platform
     {
-        font-size: var(--text);
-        color: var(--white);
+        @extend .text__class;
         margin: 10px 0px 0px 0px;
         
         &--icon
@@ -676,20 +663,20 @@
     {
         &--min
         {
-            font-size: 14px;
-            color: var(--white);
+            @extend .text14__class;
+            @include mixin.padding(5px 10px);
             background-color: var(--background_pink);
             border-bottom-right-radius: 5px;
             position: absolute;
             top: 0;
             left: 0;
-            @include mixin.padding(5px 10px);
             display: none;
         }
     }
 
     &__container
     {
+        @include mixin.padding(10px);
         width: 100%;
         height: 100%;
         display: grid;
@@ -697,14 +684,13 @@
         grid-template-areas: 'nameG button price';
         grid-template-rows: 100%;
         justify-content: space-between;
-        @include mixin.padding(10px);
 
         &--flex
         {
+            @include mixin.flex-style($direction:column, $justify:start);
             width: 100%;
             grid-area: nameG;
             overflow: hidden;
-            @include mixin.flex-style($direction:column, $justify:start);
 
             &:last-of-type
             {
@@ -726,11 +712,11 @@
         &--min
         {
             @extend .button--full;
+            @include mixin.padding(0px 5px);
             height: min-content;
             width: min-content;
             grid-area: button;
             font-size: var(--title25);
-            @include mixin.padding(0px 5px);
             align-self: center;
             display: none;
         }
@@ -743,25 +729,6 @@
             margin: 5px auto;
             display: none;
         }
-    }
-
-    &__keys
-    {
-        width: 100%;
-        max-width: 350px;
-        height: min-content;
-        background-color: var(--background_secondary);
-        border-radius: 8px;
-        @include mixin.padding(10px);
-    }
-}
-
-.keys
-{
-    &__title
-    {
-        @extend .control__title--primary;
-        margin: 0 0 10px 0;
     }
 }
 

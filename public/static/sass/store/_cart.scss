@@ -6,10 +6,10 @@
     &__data
     {
         @extend .card__class;
-        width:clamp(200px, 35vw, 415px);
-        min-height: 150px;
         @include mixin.flex-style($justify: space-between, $direction:column);
         @include mixin.padding(20px);
+        width:clamp(200px, 35vw, 415px);
+        min-height: 150px;
     }
 
     &__products
@@ -84,10 +84,9 @@
 
     &__button
     {
+        @extend .text20__class;
         width: 100%;
-        font-size: var(--text20);
         background-color: var(--background_pink);
-        color: var(--white);
         padding: 8px 0px;
         text-align: center;
         text-decoration: none;

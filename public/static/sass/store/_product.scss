@@ -109,30 +109,25 @@
 }
 
 .title{
+    @extend .title__class;
     width: 100%;
-    font-size: var.$title;
-    color: var(--white);
     margin-top: 0px;
 }
 
 .info{
+    @extend .card__class;
+    @include mixin.padding(20px);
+    @include mixin.flex-style($align:center, $direction:column);
     height: min-content;
     width: 28%;
-    @include mixin.flex-style($align:center, $direction:column);
-    background-color: var(--background_secondary);
     position: -webkit-sticky;
     position: sticky;
     top: 20px;
-    border-radius: 5px;
-    padding: 20px;
-    box-sizing: border-box;
-    overflow: hidden;
     box-shadow: 0px 0px 15px 5px rgb(0 0 0 / 20%);
 
     &__title{
+        @extend .text20__class;
         width: 100%;
-        color: var(--white);
-        font-size: 20px;
         text-align: center;
     }
 
@@ -251,8 +246,7 @@
     }
 
     &__span--discount{
-        color: var(--white);
-        font-size: var(--text);
+        @extend .text__class;
         background-color: var(--background_pink);
         padding: 5px 15px;
         border-radius: 5px;
@@ -283,14 +277,13 @@
         font-size: 22px;
 
         &--primary{
-            color: var(--white);
-            font-size: var(--title);
+            @extend .title__class;
         }
     }
 
     &__text{
+        @extend .text__class;
         color: var(--light_white);
-        font-size: var(--text);
         line-height: 30px;
     }
 }
@@ -355,21 +348,17 @@
             height: 100%;
             width: 85%;
             @include mixin.flex-style($direction:column, $align:end);
-            padding: 0 0 0 10px;
-            box-sizing: border-box;
+            @include mixin.padding(0 0 0 10px);
         }
     }
 
     &__card
     {
-        height: min-content;
-        width: 100%;
+        @extend .card__class;
+        @include mixin.padding(10px);
         @include mixin.flex-style($justify:space-between);
-        background-color: var(--background_secondary);
-        border-radius: 5px;
-        padding: 10px 10px;
+        width: 100%;
         margin-bottom: 15px;
-        box-sizing: border-box;
         box-shadow: 0px 0px 15px 5px rgb(0 0 0 / 20%);
 
     }
@@ -391,15 +380,14 @@
 
     &__text
     {
-        font-size: clamp(12px, 1.15vw, 16px);
-        color: var(--white);
+        @extend .text__class;
         line-height: 25px;
 
         &--info
         {
             @extend .reviews__text;
-            color: var(--light_white);
             @include mixin.flex-style($align:center);
+            color: var(--light_white);
             width: min-content;
             white-space: nowrap;
         }
