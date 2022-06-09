@@ -8,6 +8,7 @@
         {# Cart products section start #}
         <section class="cart__products">
             {% for product in cartContent %}
+                {% set feature = "" %}
 
                 {% if product.idPlatform.platformName == 'switch' %}
                     {% set platform = 'nintendo-switch' %}
@@ -15,13 +16,18 @@
                     {% set platform =  product.idPlatform.platformName %}
                 {% endif %} 
 
-                {% set counter = ( counter | default(0) ) + 1 %}
-                {% set feature = features[counter - 1].idFeature %}
+                {% for gameFeature in features | filter((gameFeature) => gameFeature.game == product.idGame and gameFeature.idPlatform == product.idPlatform) %}
+                    {% set feature = gameFeature.idFeature %}
+                {% endfor %}
+                
                 {% set discount =  feature.gamePrice * (feature.gameDiscount / 100) | number_format(2) %}
                 {% set price = feature.gamePrice - discount | number_format(2)  %}
 
                 <article class="cart__product" targetgame = " {{ product.idGame }} " targetplatform = " {{ product.idPlatform }} ">
-                    <img src="{{ asset('static/img/games/' ~ images[counter - 1].idMedia.mediaUrl ~ '.webp') }}" alt="{{ images[counter - 1].idMedia.mediaAlt }}" class="cart__img">
+                    {% for img in images | filter((img) => img.idGame == product.idGame and img.idPlatform == product.idPlatform) %}
+                        <img src="{{ asset('static/img/games/' ~ img.idMedia.mediaUrl ~ '.webp') }}" alt="" class="cart__img">
+                    {% endfor %}
+
                     {% if feature.gameDiscount != 0 %}
                         <span class="card__discount">{{ feature.gameDiscount }} %</span>
                     {% endif %}
