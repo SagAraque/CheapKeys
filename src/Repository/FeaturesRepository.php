@@ -83,7 +83,7 @@ class FeaturesRepository extends ServiceEntityRepository
         ->select('f.idFeature')
         ->from(Features::class, 'f');
 
-        $offers == true ? $sql->where('f.gameDiscount > 0') : $sql->where('f.gameDiscount >= 0');
+        $offers == 'true' ? $sql->where('f.gameDiscount > 0') : $sql->where('f.gameDiscount >= 0');
 
         foreach ($params as $key => $value) {
             $index++;

@@ -9,19 +9,21 @@
     <div class="store__container--title">
         <h2 class="store__title">Todos los productos</h2>
         <span class="store__count">{{paginator.total}} videojuegos</span>
-
-        <select name="orderBy" class="store__select">
-            <option value="rel">Relevancia</option>
-            <option value="lowPrice">Precio ascendente</option>
-            <option value="highPrice">Precio descendente</option>
-            <option value="lowValoration">Valoración ascendente</option>
-            <option value="highValoration">Valoración descendente</option>
-        </select>
-
+        <div class="store__container--select">
+            <select name="orderBy" class="store__select">
+                <option value="rel">Relevancia</option>
+                <option value="lowPrice">Precio ascendente</option>
+                <option value="highPrice">Precio descendente</option>
+                <option value="lowValoration">Valoración ascendente</option>
+                <option value="highValoration">Valoración descendente</option>
+            </select>
+            <i class="bi bi-funnel  store__filter"></i>
+        </div>
     </div>
     {# Store top container end #}
     {# Store menu container start #}
     <section class="store__container--menu">
+        <h2 class="store__title--secondary">Filtros <i class="bi bi-x  store__icon--close"></i></h2>
         <ul class="store__list" data-type="developer">
             <li class="store__title--list" >Desarrollador</li>
             {% for key,value in developers %}
@@ -77,6 +79,7 @@
         {% include 'ajax/cardGame.html.twig' %}
     </section>
     {# Store products container end #}
+    <div class="main__background"></div>
 </main>
 
 {% endblock %}

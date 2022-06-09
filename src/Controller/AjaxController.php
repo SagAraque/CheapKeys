@@ -365,7 +365,7 @@ class AjaxController extends AbstractController
     
         $paginator->paginate($games, intval($page), 8);
         
-        if($paginator->getTotal() == 0) return new Response("No data", 404);
+        if($paginator->getTotal() == 0) return new Response("No data", 404);      
 
         $gamesId = [];
         $platformsId = [];
@@ -374,7 +374,6 @@ class AjaxController extends AbstractController
             array_push($gamesId, strval($game->getGame()->getIdGame()));
             array_push($platformsId, strval($game->getIdPlatform()->getIdPlatform()));
         }
-
     
         $images = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
 

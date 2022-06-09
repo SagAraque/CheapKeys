@@ -69,7 +69,7 @@ class PlatformsRepository extends ServiceEntityRepository
         if($platform == 'pc'){
             $query = "p.platformName NOT IN ('playstation', 'xbox', 'switch')";
             $first == 1 ? $sql -> andWhere($query) : $sql->where($query);
-        }elseif($platform != 'all'){
+        }elseif($platform != 'all' && $platform != 'ofertas'){
             $query = 'p.platformName = :platform';
             $first == 1 ? $sql -> andWhere($query) : $sql->where($query);
             $sql->setParameter('platform', $platform);
