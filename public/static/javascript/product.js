@@ -11,8 +11,7 @@ let min = document.querySelectorAll('[class*="gallery__min"]'),
 let slider = document.querySelector('.slider'),
     wrapper = document.querySelector('.gallery__wrapper'),
     wrapperImg = document.querySelectorAll('.gallery__asset--mobile'),
-    sliderPaginator = document.querySelectorAll('[class*="gallery__ball"]'),
-    wrapperPos = 0;
+    sliderPaginator = document.querySelectorAll('[class*="gallery__ball"]');
 
 
 wrapper.addEventListener('dragstart',  (e)=> {
@@ -191,38 +190,5 @@ function setGameCart(gameData)
 }
 
 
-/**
- * Do mobile gallery wrap function when mouse is moving to detect th direction
- * of the movement and change the image and paginator
- * @param {*} imgs Images used to extract the correct width
- * @param {*} wrapper Wraper container with all images
- * @param {*} initialPos Mouse initial position
- * @param {*} paginator Gallery paginator
- */
-function wrapGallery(imgs, wrapper, initialPos, paginator)
-{
-    wrapper.addEventListener('mousemove', (e)=>{
-        let imgWidth = imgs[0].offsetWidth,
-            max = imgWidth * imgs.length,
-            direction = 0;
 
-        e.pageX > initialPos ? direction = -1 : direction = 1
-
-        wrapperPos -= imgWidth * direction;
-
-        if(Math.abs(wrapperPos) >= max) wrapperPos = 0;
-        if(wrapperPos > 0) wrapperPos = -max + imgWidth;
-
-        wrapper.style.transform = `translateX(${wrapperPos}px)`;
-
-        // Change paginator classes
-        let index = Math.abs(wrapperPos / imgWidth);
-        
-        paginator.forEach(ball => {
-            ball.classList.replace('gallery__ball--selected', 'gallery__ball');
-        });
-        paginator[index].classList.replace('gallery__ball', 'gallery__ball--selected');
-
-    }, {once : true});
-}
 

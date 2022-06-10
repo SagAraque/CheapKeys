@@ -132,46 +132,16 @@ function setError()
     container.appendChild(div);
 }
 
-/**
- * Set a game to the user
- * 
- * @param {*} gameData Game if and platform id
- */
-function setGameCart(gameData)
-{
-    let xhr = new XMLHttpRequest();
-
-    let data = new FormData();
-    data.append('game', gameData[0]);
-    data.append('platform', gameData[1]);
-    try {
-        data.append('cartCount', cartNum.textContent);
-    } catch (error) {
-        data.append('cartCount', 0);
-    }
-   
-    xhr.open('POST', '/ajax/addProductCart', true);
-    xhr.send(data);
-
-    xhr.onreadystatechange = ()=>{
-        if(xhr.readyState == 4 && xhr.status == 302){
-            window.location.href = '/users/login'; 
-        }else if(xhr.readyState == 4 && xhr.status == 200){
-            cartNum.textContent = xhr.responseText;
-        }
-    }
-}
-
 function displayFiltersMenu(menu, background)
 {
-    menu.style.maxWidth = '210px';
+    menu.style.width = '210px';
     background.classList.replace('main__background', 'main__background--visible');
 
 }
 
 function hideFiltersMenu(menu, background)
 {
-    menu.style.maxWidth = '0px';
+    menu.style.width = '0px';
     setTimeout(()=>{
         menu.removeAttribute('style');
     }, 360);
