@@ -72,7 +72,7 @@ body {
   margin: 15px 0px;
 }
 
-.main, .index, .control--orders, .control, .store, .cart, .product, .main__form {
+.main, .contact, .index, .control--orders, .control, .store, .cart, .product, .main__form {
   width: 1280px;
   height: min-content;
   padding: 10px;
@@ -255,7 +255,7 @@ body {
   width: 100%;
   gap: 20px;
 }
-.button--full, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--disabled {
+.button--full, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--disabled {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -292,7 +292,7 @@ body {
   cursor: default;
 }
 
-.card__class, .cart__data, .cart__product, .header__card, .index__card, .store__card, .index__card--review, .order__product, .order__top, .content__billing, .content__pay, .content__data, .control__form--card, .control__form--billing, .control__card, .control__card--wish, .control__menu--mobile, .control__menu, .reviews__card, .info, .card__class--primary, .cart__billing, .cart__pay, .billing__card, .pay__card, .store__container--menu {
+.card__class, .faq__header, .contact__form, .cart__data, .cart__product, .header__card, .index__card, .store__card, .index__card--review, .order__product, .order__top, .content__billing, .content__pay, .content__data, .control__form--card, .control__form--billing, .control__card, .control__card--wish, .control__menu--mobile, .control__menu, .reviews__card, .info, .card__class--primary, .cart__billing, .cart__pay, .billing__card, .pay__card, .store__container--menu {
   width: min-content;
   height: min-content;
   background-color: var(--background_secondary);
@@ -303,19 +303,30 @@ body {
   background-color: var(--background_primary);
 }
 
+.input__class, .contact__textarea, .contact__input {
+  padding: 5px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  color: var(--white);
+  background-color: var(--background_body);
+  border-radius: 10px;
+  border: 3px solid var(--input_border);
+}
+
 .title__class, .store__title, .control__title--primary, .control__icon--img, .index__title, .desc__title--primary, .reviews__title, .specs__title--primary, .title {
   color: var(--white);
   font-size: var(--title);
   font-weight: 700;
 }
 
-.title25__class, .card__price, .store__title--secondary, .control__title, .order__title, .wish__title, .billing__title, .pay__title, .control__title--user, .control__title--mobile, .control__icon--collapse, .control__icon--menu {
+.title25__class, .contact__title, .card__price, .store__title--secondary, .control__title, .order__title, .wish__title, .billing__title, .pay__title, .control__title--user, .control__title--mobile, .control__icon--collapse, .control__icon--menu {
   color: var(--white);
   font-size: var(--title25);
   font-weight: 600;
 }
 
-.text18__class, .card__title, .card__title--search, .card__title--long, .wish__icon--cart, .wish__icon--delete, .button--full, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--disabled {
+.text18__class, .faq__answer, .contact__label, .card__title, .card__title--search, .card__title--long, .wish__icon--cart, .wish__icon--delete, .button--full, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--disabled {
   color: var(--white);
   font-size: var(--label);
   font-weight: initial;
@@ -333,13 +344,13 @@ body {
   font-weight: initial;
 }
 
-.text20__class, .cart__button, .card__price--long, .card__price--search, .store__title--list, .info__title, .header__link, .header__link--list, .header__link--m10--list, .header__link--m10, .header__login {
+.text20__class, .faq__question, .cart__button, .card__price--long, .card__price--search, .store__title--list, .info__title, .header__link, .header__link--list, .header__link--m10--list, .header__link--m10, .header__login {
   color: var(--white);
   font-size: var(--text20);
   font-weight: initial;
 }
 
-.icon__class, .store__filter, .index__arrow, .icon__class--pink, .card__icon--review, .card__icon--delete, .billing__icon--delete, .pay__icon--delete, .wish__icon--x, .store__icon--close {
+.icon__class, .store__filter, .index__arrow, .icon__class--pink, .faq__icon, .card__icon--review, .card__icon--delete, .billing__icon--delete, .pay__icon--delete, .wish__icon--x, .store__icon--close {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -350,7 +361,7 @@ body {
   height: min-content;
 }
 
-.icon__class--pink, .card__icon--review, .card__icon--delete, .billing__icon--delete, .pay__icon--delete, .wish__icon--x, .store__icon--close {
+.icon__class--pink, .faq__icon, .card__icon--review, .card__icon--delete, .billing__icon--delete, .pay__icon--delete, .wish__icon--x, .store__icon--close {
   color: var(--background_pink);
 }
 
@@ -1073,7 +1084,7 @@ body {
   padding: 5px;
   box-sizing: border-box;
 }
-.form__error {
+.form__error, .form__success {
   width: 100%;
   font-size: var(--text);
   font-weight: 600;
@@ -1947,6 +1958,90 @@ body {
   cursor: pointer;
 }
 
+.contact__title {
+  text-align: center;
+  margin-top: 0;
+}
+.contact__header {
+  width: 100%;
+  height: 150px;
+  background-image: url("../img/contact.png");
+  background-position: center;
+  background-size: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.contact__content {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  height: min-content;
+}
+.contact__faq {
+  max-width: 800px;
+  height: min-content;
+}
+.contact__form {
+  padding: 10px;
+  box-sizing: border-box;
+  width: 380px;
+  min-width: 320px;
+  height: min-content;
+  position: sticky;
+  top: 20px;
+}
+.contact__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.contact__textarea {
+  height: 280px;
+  resize: none;
+}
+.contact__label {
+  text-align: center;
+  margin-bottom: 5px;
+}
+.faq {
+  width: 100%;
+  height: min-content;
+}
+.faq__header {
+  padding: 0px 10px;
+  box-sizing: border-box;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 95% 5%;
+  grid-template-areas: "question icon";
+  align-items: center;
+  cursor: pointer;
+}
+.faq__question {
+  grid-area: question;
+}
+.faq__answer {
+  padding: 0px 20px;
+  box-sizing: border-box;
+  color: var(--light_white);
+  line-height: 29px;
+  transition: max-height 0.4s linear;
+  overflow: hidden;
+}
+.faq__icon {
+  transition: transform 0.4s linear;
+  grid-area: icon;
+}
+
+.form__success {
+  border-color: var(--green);
+  color: var(--green);
+}
+
 @media (max-width: 1480px) {
   .header__top, .header__bottom {
     width: 1280px;
@@ -1978,7 +2073,7 @@ body {
   }
 }
 @media (max-width: 1250px) {
-  .main, .main__form, .product, .cart, .store, .control, .control--orders, .index {
+  .main, .main__form, .product, .cart, .store, .control, .control--orders, .index, .contact {
     width: 100%;
   }
 
@@ -2028,7 +2123,7 @@ body {
   }
 }
 @media (max-width: 992px) {
-  .main, .main__form, .product, .cart, .store, .control, .control--orders, .index {
+  .main, .main__form, .product, .cart, .store, .control, .control--orders, .index, .contact {
     margin-top: 150px;
   }
   .main__form {
@@ -2320,6 +2415,21 @@ body {
     max-height: 0px;
     padding: 0;
   }
+
+  .contact__content {
+    flex-direction: column;
+  }
+  .contact__faq {
+    width: 100%;
+    max-width: unset;
+  }
+  .contact__form {
+    width: 100%;
+    min-width: unset;
+  }
+  .contact__header {
+    height: 100px;
+  }
 }
 @media (max-width: 750px) {
   :root {
@@ -2330,7 +2440,7 @@ body {
     --label:16px;
   }
 
-  .main, .main__form, .product, .cart, .store, .control, .control--orders, .index {
+  .main, .main__form, .product, .cart, .store, .control, .control--orders, .index, .contact {
     margin-top: 110px;
   }
 
