@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Cheapkeys | Contacto {% endblock %}
+
+{% block body %}
+
+<main class="contact">
+    <section class="contact__header"></section>
+    <section class="contact__content">
+    
+        <article class="contact__faq">
+
+            <div class="faq">
+                <div class="faq__header">
+                    <h2 class="faq__question">¿Qué métodos de pago se pueden emplear?</h2>
+                    <i class="bi bi-chevron-down faq__icon control__icon--rotate"></i>
+                </div>
+                <p class="faq__answer">
+                    Para realizar el pago de los productros en el carrito, se pueden emplear tarjetas de crédito
+                    Visa, Maestro y MasterdCard.
+                </p>
+            </div>
+
+            <div class="faq">
+                <div class="faq__header">
+                    <h2 class="faq__question">¿Cómo se activan las keys?</h2>
+                    <i class="bi bi-chevron-down faq__icon"></i>
+                </div>
+                <p class="faq__answer collapsed">
+                    Para realizar el pago de los productros en el carrito, se pueden emplear tarjetas de crédito
+                    Visa, Maestro y MasterdCard.
+                </p>
+            </div>
+
+            <div class="faq">
+                <div class="faq__header">
+                    <h2 class="faq__question">¿Debo registrarme para realizar una compra?</h2>
+                    <i class="bi bi-chevron-down faq__icon"></i>
+                </div>
+                <p class="faq__answer collapsed">
+                    Para realizar el pago de los productros en el carrito, se pueden emplear tarjetas de crédito
+                    Visa, Maestro y MasterdCard.
+                </p>
+            </div>
+
+            <div class="faq">
+                <div class="faq__header">
+                    <h2 class="faq__question">¿Donde puedo encontrar el producto que he comprado?</h2>
+                    <i class="bi bi-chevron-down faq__icon"></i>
+                </div>
+                <p class="faq__answer collapsed">
+                    Para realizar el pago de los productros en el carrito, se pueden emplear tarjetas de crédito
+                    Visa, Maestro y MasterdCard.
+                </p>
+            </div>
+
+            <div class="faq">
+                <div class="faq__header">
+                    <h2 class="faq__question">¿No he recibido ninguna confirmación por email de mi compra?</h2>
+                    <i class="bi bi-chevron-down faq__icon"></i>
+                </div>
+                <p class="faq__answer collapsed">
+                    Para realizar el pago de los productros en el carrito, se pueden emplear tarjetas de crédito
+                    Visa, Maestro y MasterdCard.
+                </p>
+            </div>
+
+            <div class="faq">
+                <div class="faq__header">
+                    <h2 class="faq__question">¿Cómo puedo contactaros?</h2>
+                    <i class="bi bi-chevron-down faq__icon"></i>
+                </div>
+                <p class="faq__answer collapsed">
+                    Para realizar el pago de los productros en el carrito, se pueden emplear tarjetas de crédito
+                    Visa, Maestro y MasterdCard.
+                </p>
+            </div>
+
+            <div class="faq">
+                <div class="faq__header">
+                    <h2 class="faq__question">¿Qué garantias tiene el cliente que compra en CheapKeys?</h2>
+                    <i class="bi bi-chevron-down faq__icon"></i>
+                </div>
+                <p class="faq__answer collapsed">
+                    Para realizar el pago de los productros en el carrito, se pueden emplear tarjetas de crédito
+                    Visa, Maestro y MasterdCard.
+                </p>
+            </div>
+
+        </article>
+
+        {{ form_start(form, {'attr' : {'action' : path('contact'), 'class': 'contact__form' }}) }}
+            <h2 class="contact__title">Formulario de contacto</h2>
+            <div class="contact__container">
+                    {{ form_label(form.name) }}
+                    {{ form_widget(form.name) }}
+                    {{ form_errors(form.name) }}
+            </div>
+
+            <div class="contact__container">
+                    {{ form_label(form.email) }}
+                    {{ form_widget(form.email) }}
+                    {{ form_errors(form.email) }}
+            </div>
+
+            <div class="contact__container">
+                    {{ form_label(form.message) }}
+                    {{ form_widget(form.message) }}
+                    {{ form_errors(form.message) }}
+            </div>
+
+            <input type="hidden" name="token" value="{{ csrf_token('IBM_MS-DOS') }}"/>
+            <input type="submit" value="Enviar" class="contact__button">
+
+            {% for flash in app.flashes('success') %}
+                <p class="form__success">  
+                    {{flash }}
+                </p>
+            {% endfor %}
+        {{ form_end(form) }}
+    </section>
+</main>
+
+{% endblock %}

@@ -1,0 +1,131 @@
+@use 'mixins' as mixin;
+.contact
+{
+    @extend .main;
+
+    &__title
+    {
+        @extend .title25__class;
+        text-align: center;
+        margin-top: 0;
+    }
+
+    &__header
+    {
+        width: 100%;
+        height: 150px;
+        background-image: url('../img/contact.png');
+        background-position: center;
+        background-size: cover;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+
+    &__content
+    {
+        @include mixin.flex-style($justify:space-between);
+        gap: 20px;
+        width: 100%;
+        height: min-content;
+    }
+
+    &__faq
+    {
+        max-width: 800px;
+        height: min-content;
+    }
+
+    &__form
+    {
+        @extend .card__class;
+        @include mixin.padding(10px);
+        width: 380px;
+        min-width: 320px;
+        height: min-content;
+        position: sticky;
+        top: 20px;
+    }
+
+    &__container
+    {
+        @include mixin.flex-style($direction:column, $justify:center);
+        width: 100%;
+        margin-bottom: 20px
+    }
+
+    &__input
+    {
+        @extend .input__class;
+    }
+
+    &__textarea
+    {
+        @extend .input__class;
+        height: 280px;
+        resize: none
+    }
+
+    &__label
+    {
+        @extend .text18__class;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    &__button
+    {
+        @extend .button--full;
+    }
+}
+
+.faq
+{
+    width: 100%;
+    height: min-content;
+
+    &__header
+    {
+        @extend .card__class;
+        @include mixin.padding(0px 10px);
+        width: 100%;
+        display: grid;
+        grid-template-columns:  95% 5%;
+        grid-template-areas: 'question icon';
+        align-items: center;
+        cursor: pointer;
+    }
+
+    &__question
+    {
+        @extend .text20__class;
+        grid-area: question;
+    }
+
+    &__answer
+    {
+        @extend .text18__class;
+        @include mixin.padding(0px 20px);
+        color: var(--light_white);
+        line-height: 29px;
+        transition: max-height 0.4s linear;
+        overflow: hidden
+    }
+
+    &__icon
+    {
+        @extend .icon__class--pink;
+        transition: transform 0.4s linear;
+        grid-area: icon;
+    }
+}
+
+.form
+{
+    &__success
+    {
+        @extend .form__error;
+        border-color: var(--green);
+        color: var(--green);
+    }
+}

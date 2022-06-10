@@ -18,6 +18,20 @@ let indexCardButton = document.querySelectorAll('.card__button'),
     indexGalleryArrows = document.querySelectorAll('.index__arrow'),
     indexPaginatorGallery = document.querySelectorAll('[class*="gallery__ball"]');
 
+// Contact variables
+let faqHeader = document.querySelectorAll('.faq__header');
+
+if(faqHeader != 'undefined' && faqHeader != null){
+    faqHeader.forEach(header => {
+        header.addEventListener('click', ()=>{
+            let parent = header.parentNode;
+            let text = parent.querySelector('.faq__answer');
+            let icon = parent.querySelector('.faq__icon');
+            collapse('collapsed', text, icon);
+        });
+    });
+}
+
 
 if(indexWrapper != 'undefined' && indexWrapper != null){
     indexWrapper.addEventListener('dragstart',  (e)=> {

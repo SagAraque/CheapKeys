@@ -13,7 +13,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Security\UsersAuthAuthenticator;
 use App\Form\BillingDirectionType;
-use App\Entity\WishlistGames;
 use App\Entity\GamesPlatform;
 use App\Entity\CartProducts;
 use App\Entity\MediaGames;

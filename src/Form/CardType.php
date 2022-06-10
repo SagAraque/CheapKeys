@@ -29,7 +29,9 @@ class CardType extends AbstractType
                 ],
                 "empty_data" => "",
                 'constraints' => [
-                    new NotBlank(),
+                    new notBlank([
+                        'message' => 'El campo no puede estar vacio'
+                    ]),
                     new CardScheme([
                         'message' => 'El número de tarjeta no es valido',
                         'schemes' => ['VISA', 'MASTERCARD', 'MAESTRO']
@@ -91,6 +93,11 @@ class CardType extends AbstractType
                     new NotBlank([
                         'message' => 'El campo no puede estar vacio'
                     ]),
+                    new Regex([
+                        'message' => 'El nombre no tiene un formato correcto',
+                        'pattern' => "/^[a-z A-Z À-ÿ \u00f1\u00d1]+$/i",
+                        'htmlPattern' => "^[a-z A-Z À-ÿ \u00f1\u00d1]"
+                    ])
                 ]
             ]);
     }

@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\ContactType;
 
 class Controller extends AbstractController
 {
@@ -64,6 +65,25 @@ class Controller extends AbstractController
         $response->isNotModified($request);
 
         return $response;
+    }
+
+    /**
+     * @Route("/contacto", name="contact")
+     */
+    public function contact(Request $request): Response
+    {
+        $contactForm = $this -> createForm(ContactType::class);
+
+        $contactForm -> handleRequest($request);
+
+        if($contactForm->isSubmitted() && $contactForm->isValid()){
+            $this->addFlash('success', 'Su mensaje ha sido enviado correctamente!');
+            $contactForm = $this -> createForm(ContactType::class);
+        }
+
+        return $this->render('contact.html.twig', [
+            "form" => $contactForm -> createView()
+        ]);
     }
 
     /**

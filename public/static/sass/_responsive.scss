@@ -611,6 +611,31 @@
             padding: 0;
         }
     }
+
+    .contact
+    {
+        &__content
+        {
+            flex-direction: column;
+        }
+
+        &__faq
+        {
+            width: 100%;
+            max-width: unset;
+        }
+
+        &__form
+        {
+            width: 100%;
+            min-width: unset;
+        }
+
+        &__header
+        {
+            height: 100px;
+        }
+    }
 }
 
 @media (max-width: 750px) 
