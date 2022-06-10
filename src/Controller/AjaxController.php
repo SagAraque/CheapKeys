@@ -41,11 +41,9 @@ class AjaxController extends AbstractController
         $page = $params->getInt('page');
         $paginator->paginate($reviews, $page);
 
-        $response =  $this->render('ajax/reviews.html.twig',[
+        return $this->render('ajax/reviews.html.twig',[
             'reviews' => $paginator
         ]);
-
-        return new Response($response, 200);
     }
 
     /**

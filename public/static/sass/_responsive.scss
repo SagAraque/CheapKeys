@@ -128,6 +128,16 @@
             min-height: 100px;
         }
     }
+    .gallery
+    {
+        &__asset
+        {
+            &--index
+            {
+                width: calc(100vw - 20px);
+            }
+        }
+    }
 }
 
 @media (max-width: 992px) 
@@ -327,8 +337,8 @@
             &--menu
             {
                 height: 100vh;
-                transition: max-width 0.4s linear;
-                max-width: 0px;
+                transition: width 0.4s linear;
+                width: 0;
                 overflow: hidden auto;
                 position: fixed;
                 z-index: 10;
@@ -348,6 +358,7 @@
         &__filter
         {
             display: block;
+            cursor: pointer;
         }
 
         &__title
@@ -691,21 +702,26 @@
 
     .card
     {
+        width: 200px;
+        height: 290px;
+
         &__val
         {
             width: 32px;
             height: 32px;
         }
+
+        &__icon
+        {
+            &--review
+            {
+                display: block;
+            }
+        }
     }
 
     .store
     {
-        &__card
-        {
-            width: 200px;
-            height: 270px;
-        }
-
         &__container
         {
             &--products
@@ -715,6 +731,22 @@
             }
         }
         
+    }
+
+    .index
+    {
+        &__container
+        {
+            grid-template-columns: repeat(auto-fill, 200px);
+        }
+
+        &__card
+        {
+            &--review
+            {
+                height: min-content;
+            }
+        } 
     }
 
     .gallery
@@ -1016,27 +1048,92 @@
         }
     }
 
-}
-
-@media (max-width: 445px)
-{
-    .store
+    .card
     {
-        &__card
+        width: 160px;
+        height: 230px;
+        &__img
         {
-            width: 250px;
-            height: 337px;
+            &--span
+            {
+                font-size: var(--text);
+            }
         }
 
+        &__val
+        {
+            width: 32px;
+            height: 32px;
+        }
+
+        &__content
+        {
+            padding: 0 10px 0 10px;
+        }
+
+        &__title
+        {
+            font-size: var(--text);
+            font-weight: 600;
+        }
+
+        &__price
+        {
+            font-size: var(--label);
+
+            &--discount
+            {
+                font-size: 12px;
+            }
+        }
+
+        &__val
+        {
+            width: 28px;
+            height: 28px;
+            font-size: 12px;
+        }
+
+        &__button
+        {
+            height: min-content;
+            font-size: var(--text);
+            margin: 0 10px 10px 10px;
+        }
+    }
+
+    .index
+    {
+        &__container
+        {
+            grid-template-columns: repeat(auto-fill, 160px);
+        }
+
+        &__arrow
+        {
+            display: none;
+        }
+
+        &__card
+        {
+            &--review
+            {
+                height: min-content;
+            }
+        } 
+    }
+
+    .store 
+    {
         &__container
         {
             &--products
             {
-                grid-template-columns: repeat(auto-fill, 250px);
-                justify-content: center;
+                grid-template-columns: repeat(auto-fill, 160px);
             }
         }
     }
+
 }
 
 @media (max-width: 380px) 
@@ -1143,6 +1240,67 @@
         {
             width: 100%;
         }
+    }
+}
+
+@media (max-width: 360px)
+{
+
+    .card
+    {
+        width: 250px;
+        height: 300px;
+
+        &__title
+        {
+            font-size: var(--label);
+        }
+
+        &__price
+        {
+            font-size: var(--text20);
+        }
+
+        &__button
+        {
+            font-size: var(--label);
+        }
+
+        &__val
+        {
+            font-size: var(--text);
+            height: 32px;
+            width: 32px;
+        }
+    }
+
+    .store
+    {
+        &__container
+        {
+            &--products
+            {
+                grid-template-columns: repeat(auto-fill, 250px);
+                justify-content: center;
+            }
+        }
+    }
+
+    .index
+    {
+        &__container
+        {
+            grid-template-columns: repeat(auto-fill, 250px);
+            justify-content: center;
+        }
+
+        &__card
+        {
+            &--review
+            {
+                height: min-content;
+            }
+        } 
     }
 }
 

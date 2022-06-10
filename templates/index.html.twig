@@ -4,25 +4,155 @@
 
 <main class="index" role="main">
     <section class="index__gallery">
-        <i class="bi bi-chevron-left index__arrow"></i>
-        <i class="bi bi-chevron-right index__arrow"></i>
+        <div class="gallery__wrapper">
+            <img src="{{asset('static/img/games/minecraft.webp')}}" alt="" class="gallery__asset--index">
+            <img src="{{asset('static/img/gallery.jpg')}}" alt="" class="gallery__asset--index">
+            <img src="{{asset('static/img/gallery.jpg')}}" alt="" class="gallery__asset--index">
+        </div>
+        
+        <i class="bi bi-chevron-left index__arrow" direction="left"></i>
+        <i class="bi bi-chevron-right index__arrow" direction="right"></i>
+
+        <div class="gallery__paginator">
+            <span class="gallery__ball--selected"></span>
+            <span class="gallery__ball"></span>
+            <span class="gallery__ball"></span>
+        </div>                            
     </section>
+
+    <h2 class="index__title">Los más vendidos</h2>
+
     <section class="index__container">
-        <h2 class="index__title">Los más vendidos</h2>
+        
+        {% for game in bestsellers %}
+
+            {% set platform = game.idPlatform %}
+            {% set product = game.game %}
+            {% set feature = game.idFeature %}
+
+            {% set discount =  feature.gamePrice -  ((feature.gamePrice * (feature.gameDiscount / 100)) ) %}
+            {% set platformIcon = (platform.platformName == 'switch' ? 'nintendo-switch' : platform.platformName) %}
+
+            <div  class="index__card">
+                <a href="{{path('product', {'game_slug': product.gameSlug ~ '_' ~ platform.platformName})}}" class="card__link">
+                    {# Card image start #}
+                    <div class="card__img--container">
+                        {% for img in media | filter((img) => img.idGame == product and img.idPlatform == platform) %}
+                            <img src="{{ asset('static/img/games/' ~ img.idMedia.mediaUrl ~ '.webp') }}" alt="" class="card__img">
+                        {% endfor %}
+                        {# <img src="{{ asset('static/img/games/'~ media[counter - 1].idMedia.mediaUrl ~'-min.webp') }}" alt="{{ media[counter - 1].idMedia.mediaAlt }}" class="card__img"> #}
+                        <span class="card__img--span"><i class="{{'bi bi-' ~ platformIcon ~ ' info__icon--data'}}"></i>{{ platform.platformName }}</span>
+                    </div>
+                    {# Card image end #}
+                    {# Card content start #}
+                    <div class="card__content">
+                        <h3 class="card__title"> {{ product.gameName }}</h3>
+                        <div class="card__content--container">
+                            {% if feature.gameDiscount != 0 %}
+                                <h3 class="card__price"><span class="info__price--discount">{{ feature.gamePrice }}€</span>{{(discount) | number_format(2) }}€</h3>
+                            {% else %}
+                                <h3 class="card__price">{{ feature.gamePrice }}€</h3>
+                            {% endif %}
+                            <span class="card__val">{{ feature.gameValoration }}</span>
+                        </div>
+                    </div>
+                    {# Card content end #}
+                </a>
+                <button class="card__button" game="{{ product.idGame }}" platform="{{ platform.idPlatform }}">
+                    {{feature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito'}}
+                </button>
+            </div>
+
+        {% endfor %}
         
     </section>
     <section class="index__banner">
 
     </section>
+
+    <h2 class="index__title">Últimas ofertas</h2>
+
     <section class="index__container">
-        <h2 class="index__title">Últimas ofertas</h2>
-        
+        {% for game in offers %}
+
+            {% set platform = game.idPlatform %}
+            {% set product = game.game %}
+            {% set feature = game.idFeature %}
+
+            {% set discount =  feature.gamePrice -  ((feature.gamePrice * (feature.gameDiscount / 100)) ) %}
+            {% set platformIcon = (platform.platformName == 'switch' ? 'nintendo-switch' : platform.platformName) %}
+
+            <div  class="index__card">
+                <a href="{{path('product', {'game_slug': product.gameSlug ~ '_' ~ platform.platformName})}}" class="card__link">
+                    {# Card image start #}
+                    <div class="card__img--container">
+                        {% for img in media | filter((img) => img.idGame == product and img.idPlatform == platform) %}
+                            <img src="{{ asset('static/img/games/' ~ img.idMedia.mediaUrl ~ '.webp') }}" alt="" class="card__img">
+                        {% endfor %}
+                        {# <img src="{{ asset('static/img/games/'~ media[counter - 1].idMedia.mediaUrl ~'-min.webp') }}" alt="{{ media[counter - 1].idMedia.mediaAlt }}" class="card__img"> #}
+                        <span class="card__img--span"><i class="{{'bi bi-' ~ platformIcon ~ ' info__icon--data'}}"></i>{{ platform.platformName }}</span>
+                    </div>
+                    {# Card image end #}
+                    {# Card content start #}
+                    <div class="card__content">
+                        <h3 class="card__title"> {{ product.gameName }}</h3>
+                        <div class="card__content--container">
+                            {% if feature.gameDiscount != 0 %}
+                                <h3 class="card__price"><span class="info__price--discount">{{ feature.gamePrice }}€</span>{{(discount) | number_format(2) }}€</h3>
+                            {% else %}
+                                <h3 class="card__price">{{ feature.gamePrice }}€</h3>
+                            {% endif %}
+                            <span class="card__val">{{ feature.gameValoration }}</span>
+                        </div>
+                    </div>
+                    {# Card content end #}
+                </a>
+                <button class="card__button" game="{{ product.idGame }}" platform="{{ platform.idPlatform }}">
+                    {{feature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito'}}
+                </button>
+            </div>
+
+        {% endfor %}
     </section>
+
     <section class="index__banner">
 
     </section>
+
+    <h2 class="index__title">Últimas reseñas</h2>
+
     <section class="index__container">
-        <h2 class="index__title">Últimas reseñas</h2>
+        
+        {% for review in reviews %}
+
+            {% set platform = review.idPlatform %}
+            {% set product = review.idGame %}
+            {% set platformIcon = (platform.platformName == 'switch' ? 'nintendo-switch' : platform.platformName) %}
+
+            <div  class="index__card--review">
+                <a href="{{path('product', {'game_slug': product.gameSlug ~ '_' ~ platform.platformName})}}" class="card__link">
+                    {# Card image start #}
+                    <div class="card__img--container">
+                        {% for img in media | filter((img) => img.idGame == product and img.idPlatform == platform) %}
+                            <img src="{{ asset('static/img/games/' ~ img.idMedia.mediaUrl ~ '.webp') }}" alt="" class="card__img">
+                        {% endfor %}
+                        <span class="card__img--span"><i class="{{'bi bi-' ~ platformIcon ~ ' info__icon--data'}}"></i>{{ platform.platformName }}</span>
+                    </div>
+                    {# Card image end #}
+                    {# Card content start #}
+                    <div class="card__content">
+                        <div class="card__content--review">
+                            <span class="card__val--review">{{ review.reviewCalification }}</span>
+                            <img src="{{ asset('static/img/users/' ~ review.idUser.userImg ~ '.webp') }}" alt="" class="card__img--user">
+                        </div>
+                        <p class="card__text">{{ review.reviewDesc[:140] }}{{ review.reviewDesc | length > 140 ? ' ...' : '' }}</p>
+                    </div>
+                    {# Card content end #}
+                </a>
+                <i class="bi bi-chevron-down card__icon--review"></i>
+            </div>
+
+        {% endfor %}
         
     </section>
 </main>

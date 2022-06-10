@@ -52,13 +52,13 @@ class Reviews
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Platforms")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_plaftorm", referencedColumnName="id_platform")
+     *   @ORM\JoinColumn(name="id_platform", referencedColumnName="id_platform")
      * })
      */
-    private $idPlaftorm;
+    private $idPlatform;
 
     /**
-     * @var \Users:classd
+     * @var \Users:class
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -117,14 +117,14 @@ class Reviews
         return $this;
     }
 
-    public function getIdPlaftorm(): ?Platforms
+    public function getIdPlatform(): ?Platforms
     {
-        return $this->idPlaftorm;
+        return $this->idPlatform;
     }
 
-    public function setIdPlaftorm(?Platforms $idPlaftorm): self
+    public function setIdPlatform(?Platforms $idPlatform): self
     {
-        $this->idPlaftorm = $idPlaftorm;
+        $this->idPlatform = $idPlatform;
 
         return $this;
     }

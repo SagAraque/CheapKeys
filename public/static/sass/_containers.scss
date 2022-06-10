@@ -180,9 +180,11 @@
 
         &--products
         {
-            @extend .store__container--title;
+            width: 100%;
+            display: grid;
             min-height: 100px;
             grid-template-columns: repeat(auto-fill, 280px);
+            grid-template-rows: repeat(2, auto);
             justify-content: space-between;
             gap: 20px;
             position: relative;

@@ -12,6 +12,12 @@
         margin: 10px 0px;
         text-decoration: none;
         cursor: pointer;
+
+        &--review
+        {
+            @extend .index__card;
+            height: min-content;
+        }
     }
 }
 
@@ -75,6 +81,18 @@
             color: var(--white);
             padding: 8px 12px;
         }
+
+        &--user
+        {
+            width: 25%;
+            border-radius: 100%;
+        }
+    }
+
+    &__text
+    {
+        @extend .text__class;
+        line-height: 31px;
     }
 
     &__content
@@ -98,14 +116,25 @@
             position: relative;
         }
 
+        &--review
+        {
+            @include mixin.padding(10px 0);
+            @include mixin.flex-style($justify:space-around, $align:stretch);
+            width: 100%;
+            height: min-content;
+        }
+
     }
 
     &__title
     {
         @extend .text18__class;
+        width: 100%;
         font-weight: 600;
-        text-align: center;
+        text-align: start;
         margin-top: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
         &--long{
 
@@ -140,8 +169,15 @@
     {
         @extend .info__span--val;
         font-size: var(--text20);
-        width: 42px;
-        height: 42px;
+
+        &--review
+        {
+            @extend .info__span--val;
+            font-size: var(--text20);
+            width: 25%;
+            height: initial;
+            
+        }
     }
 
     &__link
@@ -165,13 +201,19 @@
 
         &--delete
         {
-            width: min-content;
-            color:  var(--background_pink);
-            font-size: var(--title25);
+            @extend .icon__class--pink;
             position: absolute;
             top: 8px;
             right: 10px;
             cursor: pointer;
+        }
+
+        &--review
+        {
+            @extend .icon__class--pink;
+            margin: 5px auto;
+            cursor: pointer;
+            display: none
         }
     }
 

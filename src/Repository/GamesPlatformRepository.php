@@ -155,4 +155,37 @@ class GamesPlatformRepository extends ServiceEntityRepository
 
         return $sql;
     }
+
+    public function findByDiscount($min = 0)
+    {
+        $em = $this -> getEntityManager();
+
+        $sql = $em->createQuery(
+            'SELECT gp FROM App\Entity\GamesPlatform gp
+            JOIN App\Entity\Features f
+            WHERE gp.idFeature = f.idFeature
+            AND f.gameDiscount > :min'
+        )
+        ->setParameter('min', strval($min))
+        ->setMaxResults(8);
+
+        return $sql -> getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+    }
+
+    public function finddBestsellers()
+    {
+        $em = $this->getEntityManager();
+
+        $sql = $em->createQueryBuilder('e')
+        ->select('gp')
+        ->from('App\Entity\GamesPlatform', 'gp')
+        ->join('App\Entity\GameKeys', 'gk')
+        ->where('gp.idPlatform = gk.idPlatform')
+        ->andWhere('gp.game = gk.idGame')
+        ->andWhere('gp.idPlatform = gk.idPlatform')
+        ->groupBy('gp.idPlatform, gp.game')
+        ->orderBy('COUNT(gk)', 'DESC');
+
+        return $sql->getQuery()->getResult();
+    }
 }

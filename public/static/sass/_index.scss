@@ -8,10 +8,11 @@
     &__gallery
     {
         width: 100%;
-        height: 500px;
+        height: min-content;
+        max-height: 500px;
         border-radius: 8px;
-        background-color: aqua;
-        position: relative
+        position: relative;
+        overflow: hidden
     }
 
     &__title
@@ -21,9 +22,17 @@
 
     &__container
     {
-        @include mixin.flex-style($align:center, $justify:space-between, $wrap:wrap);
         height: min-content;
         width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 280px); 
+        row-gap: 10px;
+        justify-content: space-between
+    }
+
+    &__card
+    {
+        @extend .card;
     }
 
     &__banner
@@ -31,6 +40,7 @@
         width: 100%;
         height: 200px;
         background-color: aqua;
+        margin-top: 40px
     }
 
     &__arrow
@@ -54,5 +64,22 @@
         {
             right: 40px;
         }
+    }
+}
+
+.gallery
+{
+    &__asset
+    {
+        &--index
+        {
+            width: 1280px;
+        }
+
+    }
+
+    &__wrapper
+    {
+
     }
 }

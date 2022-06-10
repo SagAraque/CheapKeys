@@ -24,11 +24,39 @@ class Controller extends AbstractController
      */
     public function index(Request $request, ManagerRegistry $doctrine, Security $security): Response
     {
+        $gameOffers = $doctrine -> getRepository(GamesPlatform::class)->findByDiscount();
+        $bestsellers = $doctrine -> getRepository(GamesPlatform::class)->finddBestsellers();
+        $reviews = $doctrine -> getRepository(Reviews::class)->findBy(array(),["reviewDate" => "DESC"], 4);
+
+
+        $gamesId = [];
+        $platformsId = [];
+
+        foreach([$gameOffers, $bestsellers, $reviews] as $query)
+        {
+            foreach ($query as $game) {
+                try {
+                    array_push($gamesId, strval($game->getGame()->getIdGame()));
+                } catch (\Throwable $th) {
+                    array_push($gamesId, strval($game->getIdGame()->getIdGame()));
+                }
+                array_push($platformsId, strval($game->getIdPlatform()->getIdPlatform()));
+            }
+        }
+
+        
+
+        $media = $doctrine -> getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
+
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
 
         $response = $this->render('/index.html.twig', [
-            'cartCant' => $cart
+            'cartCant' => $cart,
+            'offers' => $gameOffers,
+            'bestsellers' => $bestsellers,
+            'reviews' => $reviews,
+            'media' => $media
         ]);
 
         $response->setEtag(md5($response->getContent()));
