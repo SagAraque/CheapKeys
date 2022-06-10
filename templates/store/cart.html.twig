@@ -9,12 +9,7 @@
         <section class="cart__products">
             {% for product in cartContent %}
                 {% set feature = "" %}
-
-                {% if product.idPlatform.platformName == 'switch' %}
-                    {% set platform = 'nintendo-switch' %}
-                {% else %}
-                    {% set platform =  product.idPlatform.platformName %}
-                {% endif %} 
+                {% set platformIcon = (product.idPlatform.platformName == 'switch' ? 'nintendo-switch' : product.idPlatform.platformName) %}
 
                 {% for gameFeature in features | filter((gameFeature) => gameFeature.game == product.idGame and gameFeature.idPlatform == product.idPlatform) %}
                     {% set feature = gameFeature.idFeature %}

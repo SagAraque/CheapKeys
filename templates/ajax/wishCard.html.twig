@@ -3,11 +3,7 @@
     <article class="control__wish">
         {% for game in paginator.items %}
 
-            {% if game.idPlatform.platformName == 'switch' %}
-                {% set platformIcon = 'nintendo-switch' %}
-            {% else %}
-                {% set platformIcon = game.idPlatform.platformName %}
-            {% endif %} 
+            {% set platformIcon = (game.idPlatform.platformName == 'switch' ? 'nintendo-switch' : game.idPlatform.platformName) %}
 
             {% set counter = ( counter | default(0) ) + 1 %}
             <div class="control__card--wish" game = "{{game.game.idGame}}" platform="{{game.idPlatform.idPlatform}}">
