@@ -5,9 +5,10 @@
 <main class="index" role="main">
     <section class="index__gallery">
         <div class="gallery__wrapper">
-            <img src="{{asset('static/img/games/minecraft.webp')}}" alt="" class="gallery__asset--index">
-            <img src="{{asset('static/img/gallery.jpg')}}" alt="" class="gallery__asset--index">
-            <img src="{{asset('static/img/gallery.jpg')}}" alt="" class="gallery__asset--index">
+            <img src="{{asset('static/img/index2.webp')}}" alt="" class="gallery__asset--index">
+            <img src="{{asset('static/img/index1.webp')}}" alt="" class="gallery__asset--index">
+            <img src="{{asset('static/img/index3.webp')}}" alt="" class="gallery__asset--index">
+            <img src="{{asset('static/img/index4.webp')}}" alt="" class="gallery__asset--index">
         </div>
         
         <i class="bi bi-chevron-left index__arrow" direction="left"></i>
@@ -15,6 +16,7 @@
 
         <div class="gallery__paginator">
             <span class="gallery__ball--selected"></span>
+            <span class="gallery__ball"></span>
             <span class="gallery__ball"></span>
             <span class="gallery__ball"></span>
         </div>                            
@@ -149,7 +151,6 @@
                     </div>
                     {# Card content end #}
                 </a>
-                <i class="bi bi-chevron-down card__icon--review"></i>
             </div>
 
         {% endfor %}

@@ -95,8 +95,8 @@ class CardType extends AbstractType
                     ]),
                     new Regex([
                         'message' => 'El nombre no tiene un formato correcto',
-                        'pattern' => "/^[a-z A-Z À-ÿ \u00f1\u00d1]+$/i",
-                        'htmlPattern' => "^[a-z A-Z À-ÿ \u00f1\u00d1]"
+                        'pattern' => "/^[a-z A-Z À-ÿ ñ]+$/i",
+                        'htmlPattern' => "^[a-z A-Z À-ÿ ñ]"
                     ])
                 ]
             ]);

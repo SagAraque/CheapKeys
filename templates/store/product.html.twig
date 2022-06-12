@@ -152,27 +152,64 @@
         </section>
         {# Specs container end #}
         {# Reviews container start #}
+        <a name="reviews"></a>
         <section class="reviews" target="{{ game.idGame }}">
-            <h2 class="reviews__title">Opiniones ({{ reviews.total }})</h2>
-            
+            <div class="reviews__container--title">
+                <h2 class="reviews__title">Opiniones ({{ reviews.total }})</h2>
+                {# Check if variable is null. If so, means that user is not logged in #}
+                {% if reviewForm != null %}
+                    <button class="reviews__button">Escribir reseña</button>
+                {% endif %}
+            </div>         
+            {# Reviews content #}
+            <div class="reviews__container">
+            {% for flash in app.flashes('success') %}
+                <p class="form__success">  
+                    {{flash }}
+                </p>
+            {% endfor %}
+             {% if reviews.total != 0 %}
+                {{ include('ajax/reviews.html.twig') }}
+            {% endif %}
+            {# Check if variable is null. If so, means that user is not logged in #}
+                {% if reviewForm != null %}
+                    <article class="reviews__form--container {{ formError == true ? '' : 'displayNone'}}">
+                        {{ form_start(reviewForm, {'attr' : {'action' :   path('post_review') , 'class': 'reviews__form' }}) }}
+                            <h2 class="contact__title">¡Cuentanos tu opinión!</h2>
+                            <div class="reviews__container--form">
+                                    {{ form_widget(reviewForm.reviewCalification) }}
+                                    {{ form_errors(reviewForm.reviewCalification) }}
+                            </div>
+
+                            <div class="reviews__container--form">
+                                    {{ form_label(reviewForm.reviewDesc) }}
+                                    {{ form_widget(reviewForm.reviewDesc) }}
+                                    {{ form_errors(reviewForm.reviewDesc) }}
+                            </div>
+
+                            <input type="hidden" name="token" value="{{ csrf_token('IBM_MS-DOS') }}"/>
+                            
+                            <input type="submit" value="Enviar" class="contact__button">
+                            {{form_errors(reviewForm)}}
+                        {{ form_end(reviewForm) }}
+                    </article>
+                {% endif %}
+            </div>
+            {# Reviews paginator  start#}
+            {# Check if game has reviews #}
             {% if reviews.total != 0 %}
-                {# Reviews content #}
-                <div class="reviews__container">
-                    {{ include('ajax/reviews.html.twig') }}
-                </div>
-                {# Reviews paginator  start#}
                 <div class="reviews__paginator">
-                {% if reviews.lastPage != 1 %}
-                    <i class="bi bi-chevron-left paginator__button--disabled" direction="left"></i>
+                {# Check if last page of paginator is different 1 #}
+                {% if reviews.lastPage > 1 %}
+                    <i class="bi bi-chevron-left paginator__button--disabled paginator__button--reviews" direction="left"></i>
                     <span class="paginator__page">
                         Página <span class="paginator__actual">1</span> de <span class="paginator__last">{{ reviews.lastPage }}</span>
                     </span>
-                    <i class="bi bi-chevron-right paginator__button" direction="right"></i>
+                    <i class="bi bi-chevron-right paginator__button paginator__button--reviews" direction="right"></i>
                 {% endif %}
                 </div>
-                {# Reviews paginator end #}
             {% endif %}
-
+            {# Reviews paginator end #}
         </section>
         {# Reviews container end #}
     </main>
@@ -189,10 +226,5 @@
         var product = [{{ game.idGame }}, {{features.idPlatform.idPlatform}}];
 
     </script>
-    <script src="{{ asset('static/javascript/product.js') }}"></script>
-
-    {% if reviews.total != 0 %}
-        <script src="{{ asset('static/javascript/ajax.js') }}"></script>
-    {% endif %}
     
 {% endblock %}

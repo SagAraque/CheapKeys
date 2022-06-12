@@ -1,0 +1,26 @@
+{% for reviews in reviews.items %}
+
+    <article class="reviews--user">
+        <div class="reviews__header">
+            {% for img in media | filter((img) => img.idGame.idGame == reviews.idGame.idGame and img.idPlatform.idPlatform == reviews.idPlatform.idPlatform) %}
+                <img src="{{ asset('static/img/games/' ~ img.idMedia.mediaUrl ~ '.webp') }}" alt="" class="reviews__img--game">
+            {% endfor %}
+            <h3 class="reviews__game">{{ reviews.idGame.gameName }}</h3>
+            <span class="reviews__cal--user">{{ reviews.reviewCalification }}</span>
+        </div>
+        <span class="reviews__cal--userMin">{{ reviews.reviewCalification }}</span>
+        <div class="reviews__container--text">
+            <p class="reviews__text">{{ reviews.reviewDesc }}</p>
+        </div>
+    </article>
+
+{% endfor %}
+
+{% if reviews.items | length == 0 %}
+
+<div class="store__error">
+    <i class="bi-exclamation-triangle  store__error--icon"></i>
+    <span class="store__error--text"> Parece que aún no tienes reseñas</span>
+</div>
+
+{% endif %}

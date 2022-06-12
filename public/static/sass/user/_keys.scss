@@ -1,0 +1,93 @@
+@use '../mixins' as mixin;
+
+.keys
+{
+    @extend .main;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    &__container
+    {
+        @extend .card__class;
+        @include mixin.padding(10px);
+        width: min(800px, 100%);
+        min-height: 200px;
+        height: min-content;
+        flex-grow: 1;
+        position: relative;
+        overflow: visible;
+        margin-top: 100px;
+
+        &--absolute
+        {
+            @include mixin.flex-style($direction:column, $align:center);
+            width: 100%;
+            transform: translateY(-25%);
+        }
+
+        &--data
+        {
+            @include mixin.flex-style($justify:space-between, $align:center);
+            gap: 20px;
+        }
+
+        &--key
+        {
+            @include mixin.flex-style($justify:space-between, $align:center);
+            gap: 20px;
+            width: min(100%, 450px);
+        }
+    }
+
+    &__img
+    {
+        width: 350px;
+        margin:  0 auto;
+        border-radius: 8px;
+    }
+
+    &__title
+    {
+        @extend .title25__class;
+        margin-bottom: 5px
+    }
+
+    &__text
+    {
+        @extend .text__class;
+        margin-top: 5px;
+
+        &--help
+        {
+            @extend .keys__text;
+            position: absolute;
+            bottom: 15px;
+            text-align: center;
+            padding: 0px 10px;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            width: fit-content;
+        }
+    }
+    &__key
+    {
+        @extend .input__class;
+        display: flex;
+        align-items: center;
+        border-radius: 15px;
+    }
+
+    &__button
+    {
+        @extend .button--full;
+        width: 140px;
+        height: 36px;
+        border-radius: 15px;
+
+        &:hover{
+            @include mixin.button-hover();
+        }
+    }
+}

@@ -9,7 +9,7 @@
     <section class="contact__content">
     
         <article class="contact__faq">
-
+            <a name="metodos_pago"></a>
             <div class="faq">
                 <div class="faq__header">
                     <h2 class="faq__question">¿Qué métodos de pago se pueden emplear?</h2>
@@ -21,6 +21,7 @@
                 </p>
             </div>
 
+            <a name="como_activar"></a>
             <div class="faq">
                 <div class="faq__header">
                     <h2 class="faq__question">¿Cómo se activan las keys?</h2>
@@ -32,6 +33,7 @@
                 </p>
             </div>
 
+            <a name="como_comprar"></a>
             <div class="faq">
                 <div class="faq__header">
                     <h2 class="faq__question">¿Debo registrarme para realizar una compra?</h2>
@@ -89,7 +91,7 @@
 
         </article>
 
-        {{ form_start(form, {'attr' : {'action' : path('contact'), 'class': 'contact__form' }}) }}
+        {{ form_start(form, {'attr' : {'action' : path('check_contact_form'), 'class': 'contact__form' }}) }}
             <h2 class="contact__title">Formulario de contacto</h2>
             <div class="contact__container">
                     {{ form_label(form.name) }}
@@ -121,4 +123,19 @@
     </section>
 </main>
 
+{% endblock %}
+
+
+{% block javascript %}
+    <script>
+    if(window.location.hash){
+        let parent = faqHeader[0].parentNode;
+        let text = parent.querySelector('.faq__answer');
+        text.classList.add('collapsed');
+
+        let anchor = document.querySelectorAll["a[name='como_comprar']"];
+        console.log(anchor)
+    }
+    </script>
+    
 {% endblock %}

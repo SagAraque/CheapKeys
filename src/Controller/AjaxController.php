@@ -46,6 +46,33 @@ class AjaxController extends AbstractController
         ]);
     }
 
+        /**
+     * @Route("/ajax/reviews_user")
+     */
+    public function reviewsUser(ManagerRegistry $doctrine, Paginator $paginator, Request $request): Response
+    {
+        $params = $request->query;
+        $user = $this -> getUser();
+        $reviews = $doctrine->getRepository(Reviews::class)->findNoResults($user -> getIdUser());
+
+        $page = $params->getInt('page');
+        $paginator->paginate($reviews, $page, 2);
+
+        $gamesId = [];
+        $platformsId = [];
+        foreach ($paginator -> getItems() as $product) {
+            array_push($gamesId, $product->getIdGame()->getIdGame());
+            array_push($platformsId, $product->getIdPlatform()->getIdPlatform());
+        }
+
+        $media = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
+
+        return $this->render('ajax/reviewsUser.html.twig',[
+            'reviews' => $paginator,
+            'media' => $media
+        ]);
+    }
+
     /**
      * @Route("/ajax/wishlist")
      */
@@ -53,10 +80,8 @@ class AjaxController extends AbstractController
     {
         $user = $security->getUser();
         
-        if($user == null){
-            return new Response("", 302);
-        }
-
+        if($user == null) return new Response("", 302);
+        
         $em = $doctrine->getManager();
 
         $gameId = $request->get('game');
@@ -200,8 +225,6 @@ class AjaxController extends AbstractController
 
         if($user == null) return new Response("", 302);
         
-        $game = $doctrine->getRepository(Games::class)->find($request->get('game'));
-        $platform = $doctrine->getRepository(Platforms::class)->find($request->get('platform'));
         $gamePlatform = $doctrine->getRepository(GamesPlatform::class)->findBy(array(
             'game' => $request->get('game'),
             'idPlatform' => $request->get('platform'),
@@ -216,13 +239,13 @@ class AjaxController extends AbstractController
 
         $productCart = $doctrine->getRepository(CartProducts::class)->findBy(array(
             'idCart' => $cart[0]->getIdCart(),
-            'idGame' => $game->getIdGame(),
-            'idPlatform' => $platform->getIdPlatform()
+            'idGame' => $gamePlatform[0]->getGame()->getIdGame(),
+            'idPlatform' => $gamePlatform[0]->getIdPlatform()->getIdPlatform()
         ));
 
         $price = $this->getDiscountPrice($gamePlatform[0]);
 
-        $this->setProduct($cart[0], $game, $platform, $productCart, $price, $entityManager, $doctrine);
+        $this->setProduct($cart[0], $gamePlatform[0]->getGame(), $gamePlatform[0]->getIdPlatform(), $productCart, $price, $entityManager, $doctrine);
 
         $count = intval($request->get('cartCount'));
         return new Response($count + 1, 200);

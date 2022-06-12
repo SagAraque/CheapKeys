@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Form\ContactType;
+use App\Form\ReviewsType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Controller extends AbstractController
 {
@@ -70,32 +73,34 @@ class Controller extends AbstractController
     /**
      * @Route("/contacto", name="contact")
      */
-    public function contact(Request $request): Response
+    public function contact(Request $request,  ManagerRegistry $doctrine, Security $security ): Response
     {
         $contactForm = $this -> createForm(ContactType::class);
 
         $contactForm -> handleRequest($request);
 
-        if($contactForm->isSubmitted() && $contactForm->isValid()){
-            $this->addFlash('success', 'Su mensaje ha sido enviado correctamente!');
-            $contactForm = $this -> createForm(ContactType::class);
-        }
+        $cartCount = new CartCount($doctrine, $security);
+        $cart = $cartCount->getCount();
 
         return $this->render('contact.html.twig', [
-            "form" => $contactForm -> createView()
+            "form" => $contactForm -> createView(),
+            "cartCant" => $cart
         ]);
     }
 
     /**
      *  @Route("/{game_slug}", name="product")
      */
-    public function product($game_slug, Paginator $paginator, ManagerRegistry $doctrine, Request $request, Security $security):Response
+    public function product($game_slug, EntityManagerInterface $entityManager, Paginator $paginator, ManagerRegistry $doctrine, Request $request, Security $security):Response
     {
         $wish = false;
+        $formError = false;
+        $reviewForm = null;
         $platform = substr($game_slug, strripos($game_slug, '_') + 1);
         $gameSlug = substr($game_slug, 0, strripos($game_slug, '_'));
         
         $user = $security->getUser();
+
 
         $game = $doctrine->getRepository(Games::class)->findBy(array(
             "gameSlug" => $gameSlug
@@ -126,6 +131,24 @@ class Controller extends AbstractController
             "id_game" => $game[0]->getIdGame(),
         ));
 
+        $numReviews = $doctrine -> getRepository(Reviews::class) -> checkUserReview(
+            $game[0] -> getIdGame(),
+            $platform -> getIdPlatform(),
+            $user == null ? null : $user -> getIdUser()
+        );
+
+        if($numReviews == null){
+            $newReview = new Reviews();
+            $reviewForm = $this -> createForm(ReviewsType::class, $newReview);
+            $reviewForm -> handleRequest($request);
+
+            if($reviewForm -> isSubmitted() && !$reviewForm -> isValid()){
+                $formError = true;
+            }
+
+            $reviewForm = $reviewForm -> createView();
+        }
+
         $paginator->paginate($reviews, 1);
 
         $cartCount = new CartCount($doctrine, $security);
@@ -138,7 +161,9 @@ class Controller extends AbstractController
             'reviews' => $paginator,
             'features' => $features,
             'wish' => $wish,
-            'cartCant' => $cart
+            'cartCant' => $cart,
+            'reviewForm' => $reviewForm,
+            'formError' => $formError
         ]);
 
         $response->setEtag(md5($response->getContent()));
@@ -205,6 +230,76 @@ class Controller extends AbstractController
         // $response->isNotModified($request);
         
         return $response;
+    }
+
+    /**
+     * @Route("/contact/checkform", methods={"POST"}, name="check_contact_form")
+     */
+    public function checkContactForm(Request $request)
+    {
+        $contactForm = $this -> createForm(ContactType::class);
+        $contactForm -> handleRequest($request);
+
+        $token = $request -> request -> get('token');
+        if($this->isCsrfTokenValid('IBM_MS-DOS', $token) && $contactForm -> isValid()){
+
+            $this->addFlash('success', 'Su mensaje ha sido enviado correctamente!');
+            $request->overrideGlobals();
+        }
+
+        return $this->redirectToRoute('contact', [], 308);
+    }
+
+    /**
+     * @Route ("/users/post_review", methods={"POST"}, name="post_review")
+     */
+    public function postReview(Request $request, Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine )
+    {
+        $url = $request->headers->get('referer');
+        $slug = substr($url, strripos($url, '/') + 1);
+        $platformName = substr($slug, strripos($slug, '_') + 1);
+        $gameSlug = substr($slug, 0, strripos($slug, '_'));
+
+        $game = $doctrine -> getRepository(Games::class)->findBy([
+            'gameSlug' => $gameSlug
+        ]);
+
+        $platform = $doctrine -> getRepository(Platforms::class) -> findBy([
+            'platformName' => $platformName
+        ]);
+
+        $newReview = new Reviews();
+        $newReview -> setIdUser($this -> getUser());
+        $newReview -> setReviewDate(new \DateTime());
+        $newReview -> setIdGame($game[0]);
+        $newReview -> setIdPlatform($platform[0]);
+
+        $reviewForm = $this -> createForm(ReviewsType::class, $newReview);
+        $reviewForm -> handleRequest($request);
+
+        if($reviewForm -> isValid()){
+            $entityManager -> persist($newReview);
+            
+            $request -> overrideGlobals();
+
+            $avg = $doctrine -> getRepository(Reviews::class) -> getAvgByGame($game[0] -> getIdGame(), $platform[0] -> getIdPlatform());
+
+            $feature = $doctrine -> getRepository(GamesPlatform::class) -> findBy(array(
+                'game' => $game[0] -> getIdGame(),
+                'idPlatform' => $platform[0] -> getIdPlatform()
+            ));
+            
+            $feature = $feature[0] -> getIdFeature();
+            $feature -> setGameValoration(
+                $avg[0] == null ?  $newReview -> getReviewCalification()  : round($avg[0], 2, PHP_ROUND_HALF_ODD)
+            );
+
+            $entityManager -> persist($feature);
+            $entityManager ->flush();
+            $this->addFlash('success', 'Su review ha sido publicada!');
+        }
+
+        return $this->redirectToRoute('product', ['game_slug' => $slug, '_fragment' => 'reviews'], 308);
     }
 }
 

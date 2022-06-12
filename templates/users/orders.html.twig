@@ -9,18 +9,17 @@
     </article>
 
     <div class="reviews__paginator">
-        {% if orders.lastPage != 1 %}
-            <i class="bi bi-chevron-left paginator__button--disabled" direction="left"></i>
+        {% if orders.lastPage > 1 %}
+            <i class="bi bi-chevron-left paginator__button--disabled paginator__button--orders" direction="left"></i>
             <span class="paginator__page">
                 Página <span class="paginator__actual">1</span> de <span class="paginator__last">{{ orders.lastPage }}</span>
             </span>
-            <i class="bi bi-chevron-right paginator__button" direction="right"></i>
+            <i class="bi bi-chevron-right paginator__button paginator__button--orders" direction="right"></i>
         {% endif %}
     </div>
 
 {% endblock %}
 
 {% block javascript %}
-    <script src="{{ asset('static/javascript/users.js') }}"></script>
     <script src="{{ asset('static/javascript/users/data.js') }}"></script>
 {% endblock %}

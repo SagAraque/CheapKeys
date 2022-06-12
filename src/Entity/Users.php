@@ -5,7 +5,6 @@ namespace App\Entity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="EmailIndex", columns={"user_email"}), @ORM\UniqueConstraint(name="user_name", columns={"user_name"})}, indexes={@ORM\Index(name="FK4", columns={"user_wishlist"})})
  * @ORM\Entity
- * @UniqueEntity("userName", message="El usuario ya ha sido registrado")
- * @UniqueEntity("userEmail", message="El email ya ha sido registrado")
  */
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {

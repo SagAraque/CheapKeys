@@ -29,7 +29,7 @@
                     <div class="card__content--long">
                         <h3 class="card__title--long">{{ product.idGame.gameName }}</h3>
                         <i class="bi bi-x card__icon--delete"></i>
-                        <span class="card__platform"><i class="{{'bi bi-' ~ platform ~ ' card__icon'}}"></i> {{ product.idPlatform.platformName | capitalize }}</span>
+                        <span class="card__platform"><i class="{{'bi bi-' ~ platformIcon ~ ' card__icon'}}"></i> {{ product.idPlatform.platformName | capitalize }}</span>
                         <div class="card__selector">
                             <i class="bi bi-dash-square card__icon--selector"></i>
                             <span class="cart__cant">{{ product.cant }}</span>
@@ -44,6 +44,15 @@
                 </article>
 
             {% endfor %}
+
+            {% if cartContent | length == 0 %}
+
+            <div class="store__error">
+                <i class="bi-exclamation-triangle  store__error--icon"></i>
+                <span class="store__error--text"> Parece que aún no tienes juegos en tu carrito</span>
+            </div>
+
+            {% endif %}
         </section>
         {# Cart products section end #}
         {# Cart info section start #}

@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class ContactType extends AbstractType
 {
@@ -28,6 +29,9 @@ class ContactType extends AbstractType
             "empty_data" => "",
             'constraints' => [
                 new NotBlank([
+                    'message' => 'El campo no puede estar vacio'
+                ]),
+                new NotNull([
                     'message' => 'El campo no puede estar vacio'
                 ]),
                 new Regex([
@@ -50,6 +54,9 @@ class ContactType extends AbstractType
                 new notBlank([
                     'message' => 'El campo no puede estar vacio'
                 ]),
+                new NotNull([
+                    'message' => 'El campo no puede estar vacio'
+                ]),
                 new Email([
                     'message' => 'El email no es válido'
                 ])
@@ -66,6 +73,9 @@ class ContactType extends AbstractType
             "empty_data" => "",
             'constraints' => [
                 new notBlank([
+                    'message' => 'El campo no puede estar vacio'
+                ]),
+                new NotNull([
                     'message' => 'El campo no puede estar vacio'
                 ]),
             ]

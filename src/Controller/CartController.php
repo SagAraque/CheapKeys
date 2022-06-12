@@ -155,8 +155,7 @@ class CartController extends AbstractController
 
 
         // Check if cart products has stock
-        if($this->checkStock($gamesPlatform, $cartProducts, $entityManager) == 0)
-        {
+        if($this->checkStock($gamesPlatform, $cartProducts, $entityManager) == 0){
             $this->addFlash('error', 'Algunos productos se han quedado sin stock');
             return $this->redirectToRoute('cart', [], 302);
         }

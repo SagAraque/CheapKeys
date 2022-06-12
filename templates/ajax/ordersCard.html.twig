@@ -41,8 +41,8 @@
                             </div>
                             {# Title container end #}
                             {# Keys buttons start #}
-                            <button class="order__button">Ver claves</button>
-                            <i class="bi bi-key order__button--min"></i>
+                            <a class="order__button" href="{{ path('order_keys', {'order' :  "%010d" | format(order.idOrder) , 'game_slug': product.idGame.gameSlug ~ '_' ~ product.idPlatform.platformName }) }}">Ver claves</a>
+                            <a href="{{ path('order_keys', {'order' :  "%010d" | format(order.idOrder) , 'game_slug': product.idGame.gameSlug ~ '_' ~ product.idPlatform.platformName }) }}" class="order__button--min"><i class="bi bi-key "></i></a>
                             {# Keys buttons end #}
                             {# Price data container start #}
                             <div class="order__container--flex">
@@ -54,7 +54,7 @@
                         </div>
                         {# Order container end #}
                     </div>
-                    <button class="order__button--external">Ver claves</button>
+                    <a class="order__button--external" href="{{ path('order_keys', {'order' :  "%010d" | format(order.idOrder) , 'game_slug': product.idGame.gameSlug ~ '_' ~ product.idPlatform.platformName }) }}">Ver claves</a>
 
                 {% endfor %}
             </div>
@@ -62,3 +62,12 @@
        </div>
 
     {% endfor %}
+
+{% if orders.items | length == 0 %}
+
+<div class="store__error">
+    <i class="bi-exclamation-triangle  store__error--icon"></i>
+    <span class="store__error--text"> Parece que aún no tienes pedidos</span>
+</div>
+
+{% endif %}

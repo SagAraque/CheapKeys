@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 class UserMailType extends AbstractType
 {
@@ -40,6 +41,13 @@ class UserMailType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Users::class,
+            'constraints' => [
+                new UniqueEntity([
+                    'message' => 'El email ya está en uso',
+                    'entityClass' => Users::class,
+                    'fields' => 'userEmail',
+                ]),
+            ],
         ]);
     }
 

@@ -40,6 +40,7 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/users/login, roles: PUBLIC_ACCESS }
         - { path: ^/users/control_panel, roles: ROLE_USER }
+        - { path: ^/users/post_review, roles: ROLE_USER }
         - { path: ^/cart, roles: ROLE_USER }
 when@test:
     security:

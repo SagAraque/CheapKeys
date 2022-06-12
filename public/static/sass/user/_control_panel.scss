@@ -3,6 +3,67 @@
 
 .control
 {
+    @extend .main;
+    min-height: 600px;
+
+    &__content
+    {
+        width: calc(100% - 270px);
+
+        &--data
+        {
+            @extend .control__content;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px 10px;
+            height: min-content
+        }
+
+        &--wishlist
+        {
+            @extend .control__content;
+            @include mixin.flex-style($direction:column);
+            width: calc(100% - 260px);
+        }
+
+        &--orders
+        {
+            @extend .control__content;
+            @include mixin.flex-style($direction:column);
+        }
+
+        &--reviews
+        {
+            @extend .control__content;
+        }
+    }
+
+    &__wish
+    {
+        @include mixin.flex-style($justify:space-between, $wrap:wrap);
+        width: 100%;
+        gap: 20px;
+        margin: 20px 0px;
+    }
+
+    &__order
+    {
+        @include mixin.flex-style($direction:column);
+        width: 100%;
+        gap: 20px;
+    }
+
+    &__reviews
+    {
+        @extend .control__wish;
+    }
+
+    &--orders
+    {
+        @extend .main;
+    }
+
     &__menu
     {
         @extend .card__class;
@@ -728,6 +789,84 @@
             font-size: var(--text);
             margin: 5px auto;
             display: none;
+        }
+    }
+}
+
+.reviews
+{
+    &--user
+    {
+        @extend .card__class;
+        @include mixin.flex-style($direction:column);
+        width: 460px;
+        min-height: 250px;
+        position: relative;
+    }
+
+    &__header
+    {
+        @include mixin.flex-style($align:center, $justify:start);
+        width: 100%;
+        height: 80px;
+        gap: 10px;
+        background-color: var(--background_primary)
+    }
+
+    &__img
+    {
+        &--game
+        {
+            height: 100%
+        }
+    }
+
+    &__game
+    {
+        @extend .text18__class;
+        font-weight: 600;
+        display: inline;
+        white-space: pre-wrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    &__cal
+    {
+        &--user
+        {
+            @extend .text18__class;
+            color: var(--background_pink);
+            margin: 0 10px 0 auto;
+            border: 2px solid var(--background_pink);
+            border-radius: 100%;
+            padding: 10px;
+
+            &Min
+            {
+                @extend .reviews__cal--user;
+                margin: 10px auto 0px auto;
+                display: none
+            }
+        }
+    }
+
+    &__container
+    {
+        &--text
+        {
+            @include mixin.padding(0 10px);
+        }
+    }
+}
+
+.paginator
+{
+    &__button
+    {
+        &--wish, &--orders
+        {
+            @extend .paginator__button;
         }
     }
 }

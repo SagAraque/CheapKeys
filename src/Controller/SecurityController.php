@@ -72,13 +72,11 @@ class SecurityController extends AbstractController
             );
 
             $user->setPassword($hashedPassword);
-
             $user->setUserWishlist($wishlist);
 
             $cart->setIdUser($user);
 
             $entityManager -> persist($user);
-
             $entityManager -> persist($cart);
 
             $entityManager -> flush();

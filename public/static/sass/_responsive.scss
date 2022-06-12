@@ -120,6 +120,14 @@
         }
     }
 
+    .reviews
+    {
+        &--user
+        {
+            width: 100%;
+        }
+    }
+
     .order
     {
         &__product
@@ -483,6 +491,14 @@
         {
             @include mixin.flex-style($direction:column);
             width: 100%;
+        }
+
+        &__content
+        {
+            &--reviews
+            {
+                width: 100%;
+            }
         }
 
         &__menu
@@ -1045,6 +1061,7 @@
             &--external
             {
                 display: block;
+                text-align: center;
             }
         }
     }
@@ -1159,6 +1176,30 @@
         }
     }
 
+    .keys
+    {
+        &__img
+        {
+            width: 240px;
+        }
+    }
+
+    .reviews
+    {
+        &__cal
+        {
+            &--user
+            {
+                display: none;
+            
+                &Min
+                {
+                    display: block;
+                }
+            }
+        }
+    }
+
 }
 
 @media (max-width: 380px) 
@@ -1264,6 +1305,18 @@
         &__card
         {
             width: 100%;
+        }
+    }
+
+    .keys
+    {
+        &__container
+        {
+            &--key
+            {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     }
 }

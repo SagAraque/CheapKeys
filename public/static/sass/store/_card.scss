@@ -92,7 +92,9 @@
     &__text
     {
         @extend .text__class;
-        line-height: 31px;
+        width: 100%;
+        min-height: 130px;
+        word-wrap: break-word;
     }
 
     &__content

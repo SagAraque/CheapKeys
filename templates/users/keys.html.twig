@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<main class="keys">
+
+    <section class="keys__container">
+        <div class="keys__container--absolute">
+            <img src="{{ asset('/static/img/games/' ~ media.mediaUrl ~ '.webp') }}" alt="{{ media.mediaAlt }}" class="keys__img">
+            <h2 class="keys__title">{{ keys[0].idGame.gameName }}</h2>
+            <div class="keys__container--data">
+                <p class="keys__text"><strong>Cantidad: </strong>{{ keys[0] | length }}</p>
+                <p class="keys__text"><strong>Fecha: </strong>{{ keys[0].idOrder.orderDate | date('d-m-Y') }}</p>
+            </div>
+            {% for key in keys %}
+                <div class="keys__container--key">
+                    <p class="keys__key">{{ key.keyValue | slice(0,5) ~ '-' ~ key.keyValue | slice(5,5) ~ '-' ~ key.keyValue | slice(10,5)}}</p>
+                    <button class="keys__button">Copiar</button>
+                </div>
+            {% endfor %}
+        </div>
+        <p class="keys__text--help">¿Necesitas ayuda para activar la key? Echale un vistado a las <a href="" class="keys__text"> preguntas frecuentes </a></p>
+    </section>
+
+    <a href="{{ path('orders') }}" class="keys__button">Volver</a>
+
+</main>
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('static/javascript/users/data.js') }}"></script>
+{% endblock %}

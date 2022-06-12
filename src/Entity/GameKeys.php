@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * GameKeys
  *
  * @ORM\Table(name="game_keys", uniqueConstraints={@ORM\UniqueConstraint(name="key_value", columns={"key_value"})}, indexes={@ORM\Index(name="FK8", columns={"id_game"}), @ORM\Index(name="FK9", columns={"id_order"}), @ORM\Index(name="FK7", columns={"id_platform"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\GameKeysRepository")
  */
 class GameKeys
 {

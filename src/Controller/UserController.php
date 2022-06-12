@@ -24,7 +24,10 @@ use App\Utils\CartCount;
 use App\Entity\Billing;
 use App\Form\CardType;
 use App\Entity\Orders;
+use App\Entity\Users;
 use App\Entity\Card;
+use App\Entity\GameKeys;
+use App\Entity\Reviews;
 
 class UserController extends AbstractController
 {
@@ -35,10 +38,14 @@ class UserController extends AbstractController
     public function controlPanelData(Request $request, Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
         $user = $this->getUser();
+        $user = $doctrine->getRepository(Users::class)->find($user->getIdUser());
         $card = new Card();
         $billingDirection = new Billing();
         $card -> setCardUser($user);
         $billingDirection->setIdUser($user);
+
+        $lastUserEmail = $user->getUserEmail();
+        $lastUserName = $user->getUserName();
 
         $userNameForm = $this->createForm(UserNameType::class, $user);
         $userPassForm = $this->createForm(UserPassType::class, $user);
@@ -51,6 +58,9 @@ class UserController extends AbstractController
         $userMailForm -> handleRequest($request);
         $userNewCard -> handleRequest($request);
         $userNewBillingDirection -> handleRequest($request);
+
+        if($userMailForm -> isSubmitted() && !$userMailForm -> isValid()) $user->setUserEmail($lastUserEmail);
+        if($userNameForm -> isSubmitted() && !$userNameForm -> isValid()) $user->setUserName($lastUserName);
 
         $billing = $doctrine -> getRepository(Billing::class)->findBy(array(
             "idUser" => $user->getIdUser(),
@@ -163,16 +173,17 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
         $lastUserName = $user->getUserName();
-        $userNameForm = $this->createForm(UserNameType::class, $user);
+        $userNameForm = $this->createForm(UserNameType::class);
         $userNameForm -> handleRequest($request);
 
         if($userNameForm->isValid() ){
+            var_dump(1);
+            $user->setUserName($request->request->get('userName'));
             $entityManager -> persist($user);
             $entityManager ->flush();
 
             $request -> getSession()-> migrate(true);
-        }else{
-            $user->setUserName($lastUserName);
+            $request->overrideGlobals();
         }
 
         return $this->redirectToRoute('user_control_panel_data', [], 308);
@@ -199,6 +210,7 @@ class UserController extends AbstractController
             );
 
             $request -> getSession()-> migrate(true);
+            $request->overrideGlobals();
         }else{
             $user->setUserEmail($lastEmail);
         }
@@ -222,6 +234,7 @@ class UserController extends AbstractController
                 $entityManager -> persist($user);
                 $entityManager ->flush();
                 $request -> getSession()-> migrate(true);
+                $request->overrideGlobals();
             }else{
                 $this->addFlash('error', 'La contraseña es incorrecta');
             }  
@@ -236,6 +249,7 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
         $card = new Card();
+        $card -> setCardUser($user);
 
         $userNewCard = $this->createForm(CardType::class, $card);
         $userNewCard -> handleRequest($request);
@@ -271,5 +285,69 @@ class UserController extends AbstractController
 
          return $this->redirectToRoute('user_control_panel_data', [], 308);
     }
+
+    /**
+     * @Route("/users/keys/{order}/{game_slug}", methods={"GET"}, name="order_keys")
+     */
+    public function orderKeys($order, $game_slug, Request $request, Security $security,ManagerRegistry $doctrine ): Response
+    {
+        $user = $this -> getUser();
+
+        $userOrder = $doctrine -> getRepository(Orders::class) -> findBy(array(
+            'idUser' => $user -> getIdUser(),
+            'idOrder' => $order
+        ));
+
+        if($userOrder == null) $this -> redirectToRoute('orders', [], 302);
+
+        $keys = $doctrine -> getRepository(GameKeys::class) -> getKeysBySlug($game_slug, $order);
+        $media = $doctrine -> getRepository(MediaGames::class) -> findOnePerGame(
+            [$keys[0] -> getIdGame() -> getIdGame()],
+            [$keys[0] -> getIdPlatform() -> getIdPlatform()]
+        ) ;
+
+        $cartCount = new CartCount($doctrine, $security);
+        $cart = $cartCount->getCount();
+
+        return $this -> render("users/keys.html.twig", [
+            "keys" => $keys,
+            "media" => $media[0] -> getIdMedia(),
+            'cartCant' => $cart
+        ]);
+    }
+
+    /**
+     * @Route("/users/control_panel/reviews", methods={"GET"}, name="user_control_panel_reviews")
+     */
+    public function usersReviews(Request $request, Security $security,ManagerRegistry $doctrine, Paginator $paginator)
+    {
+        $user = $this -> getUser();
+
+        $userReviews = $doctrine -> getRepository(Reviews::class) -> findNoResults($user -> getIdUser() );
+
+        $paginator -> paginate($userReviews, 1, 2);
+
+        $gamesId = [];
+        $platformsId = [];
+        foreach ($paginator -> getItems() as $product) {
+            array_push($gamesId, $product->getIdGame()->getIdGame());
+            array_push($platformsId, $product->getIdPlatform()->getIdPlatform());
+        }
+
+        $media = $doctrine->getRepository(MediaGames::class)->findOnePerGame($gamesId, $platformsId);
+
+        $cartCount = new CartCount($doctrine, $security);
+        $cart = $cartCount->getCount();
+
+        return $this -> render('users/reviews.html.twig', [
+            'media' => $media,
+            'reviews' => $paginator,
+            'menu' => 'reviews',
+            'cartCant' => $cart,
+            'class' => 'control__content--reviews',
+        ]);
+    }
+
+
 }
 
