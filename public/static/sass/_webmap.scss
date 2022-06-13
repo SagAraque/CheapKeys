@@ -1,0 +1,40 @@
+@use 'mixins' as mixin;
+@use 'var';
+
+.webmap
+{
+    @extend  .main;
+    gap: 20px;
+
+    &__title
+    {
+        @extend .title__class;
+        width: 100%;
+    }
+
+    &__container
+    {
+        @include mixin.flex-style($direction:column, $align:start);
+        gap: 20px;
+    }
+
+    &__link
+    {
+        @extend .text20__class;
+        color: var(--white);
+        text-decoration: none;
+        @include mixin.flex-style($justify:space-between, $align:center);
+        gap: 20px;
+
+        &:hover, &:hover .webmap__icon
+        {
+            color: var(--background_pink);
+        }
+    }
+
+    &__icon
+    {
+        @extend .icon__class;
+        font-size: var(--title25);
+    }
+}

@@ -24,9 +24,11 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
             <button type="submit" class="form__button">Login</button>
+
             {% if error %}
                 <span class="form__error">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
             {% endif %}
+            
         {{ form_end(form) }}
 
         <div class="form__register">

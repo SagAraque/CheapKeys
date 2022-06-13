@@ -157,43 +157,50 @@
             <div class="reviews__container--title">
                 <h2 class="reviews__title">Opiniones ({{ reviews.total }})</h2>
                 {# Check if variable is null. If so, means that user is not logged in #}
-                {% if reviewForm != null %}
+                {% if reviewForm != null and is_granted('ROLE_USER') %}
                     <button class="reviews__button">Escribir reseña</button>
                 {% endif %}
             </div>         
             {# Reviews content #}
             <div class="reviews__container">
-            {% for flash in app.flashes('success') %}
-                <p class="form__success">  
-                    {{flash }}
-                </p>
-            {% endfor %}
-             {% if reviews.total != 0 %}
-                {{ include('ajax/reviews.html.twig') }}
-            {% endif %}
-            {# Check if variable is null. If so, means that user is not logged in #}
-                {% if reviewForm != null %}
-                    <article class="reviews__form--container {{ formError == true ? '' : 'displayNone'}}">
-                        {{ form_start(reviewForm, {'attr' : {'action' :   path('post_review') , 'class': 'reviews__form' }}) }}
-                            <h2 class="contact__title">¡Cuentanos tu opinión!</h2>
-                            <div class="reviews__container--form">
-                                    {{ form_widget(reviewForm.reviewCalification) }}
-                                    {{ form_errors(reviewForm.reviewCalification) }}
-                            </div>
-
-                            <div class="reviews__container--form">
-                                    {{ form_label(reviewForm.reviewDesc) }}
-                                    {{ form_widget(reviewForm.reviewDesc) }}
-                                    {{ form_errors(reviewForm.reviewDesc) }}
-                            </div>
-
-                            <input type="hidden" name="token" value="{{ csrf_token('IBM_MS-DOS') }}"/>
-                            
-                            <input type="submit" value="Enviar" class="contact__button">
-                            {{form_errors(reviewForm)}}
-                        {{ form_end(reviewForm) }}
-                    </article>
+                {% for flash in app.flashes('success') %}
+                    <p class="form__success">  
+                        {{flash }}
+                    </p>
+                {% endfor %}
+                {% if reviews.total != 0 %}
+                    {{ include('ajax/reviews.html.twig') }}
+                {% else %}
+                    <div class="store__error">
+                        <i class="bi-exclamation-circle  store__error--icon"></i>
+                        <span class="store__error--text"> Parece que aún no hay reseñas</span>
+                    </div>
                 {% endif %}
+                {# Check if variable is null. If so, means that user is not logged in #}
+                    {% if reviewForm != null and is_granted('ROLE_USER') %}
+                        <article class="reviews__form--container {{ formError == true ? '' : 'displayNone'}}">
+                            {# Reviews form start #}
+                            {{ form_start(reviewForm, {'attr' : {'action' :   path('post_review') , 'class': 'reviews__form' }}) }}
+                                <h2 class="contact__title">¡Cuentanos tu opinión!</h2>
+                                <div class="reviews__container--form">
+                                        {{ form_widget(reviewForm.reviewCalification) }}
+                                        {{ form_errors(reviewForm.reviewCalification) }}
+                                </div>
+
+                                <div class="reviews__container--form">
+                                        {{ form_label(reviewForm.reviewDesc) }}
+                                        {{ form_widget(reviewForm.reviewDesc) }}
+                                        {{ form_errors(reviewForm.reviewDesc) }}
+                                </div>
+
+                                <input type="hidden" name="token" value="{{ csrf_token('IBM_MS-DOS') }}"/>
+                                
+                                <input type="submit" value="Enviar" class="contact__button">
+                                {{form_errors(reviewForm)}}
+                            {{ form_end(reviewForm) }}
+                            {# Reviews form end #}
+                        </article>
+                    {% endif %}
             </div>
             {# Reviews paginator  start#}
             {# Check if game has reviews #}

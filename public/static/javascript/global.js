@@ -107,6 +107,9 @@ try {
     wishlistListeners();
 } catch (error) {}
 
+
+// -------- Reviews listeners start -------//
+
 if(reviewsButton != 'undefined' && reviewsButton != null){
     reviewsButton.addEventListener('click', ()=>{
         reviewsForm.classList.toggle('displayNone');
@@ -135,6 +138,88 @@ if(pageBtnReviewsUser != 'undefined' && pageBtnReviewsUser != null){
         });
     });
 }
+
+// -------- Reviews listeners end -------//
+
+// -------- Index listeners start -------//
+
+
+ if(indexWrapper != 'undefined' && indexWrapper != null){
+    indexWrapper.addEventListener('dragstart',  (e)=> {
+        wrapGallery(indexGalleryImg, indexWrapper, e.pageX, indexPaginatorGallery);
+    });
+} 
+
+indexGalleryArrows.forEach(arrow =>{
+    arrow.addEventListener('click', ()=>{
+        let direction = arrow.getAttribute('direction') == 'left' ? -1 : 1;
+        moveGalleryWrapper( indexWrapper, indexGalleryImg, direction, indexPaginatorGallery);
+    });
+});
+
+indexCardButton.forEach(button => {
+    button.addEventListener('click', ()=>{
+        let id = button.getAttribute('game');
+        let platform = button.getAttribute('platform');
+        setGameCart([id, platform]);
+    });
+    
+});
+
+// -------- Index listeners end -------//
+
+// -------- Product listeners start -------//
+
+// Product gallery buttons
+min.forEach(element => {
+    element.addEventListener('click', ()=>{
+        if(!element.classList.contains('gallery__min--selected')){
+            changeGalleryImg(element);
+            let img = element.querySelector('.gallery__asset').getAttribute('src');
+            img = img.replace('/static/img/games/', '');
+            img = img.replace('-min.webp', '');
+            objectIndex = Array.prototype.indexOf.call(images, img);
+        } 
+    });
+});
+
+/**
+ * Product gallery arrows
+ */
+arrows.forEach(arrow =>{
+    arrow.addEventListener('click', ()=>{
+        slide(arrow.getAttribute('slide'));
+    });
+});
+
+/**
+ * Product cart button
+ */
+if(productCartButton != 'undefined' && productCartButton != null){
+    productCartButton.addEventListener('click', ()=>{
+        setGameCart(product);
+    });
+}
+
+/**
+ * Mobile product gallery wrapper
+ */
+if(wrapper != 'undefined' && wrapper != null){
+    wrapper.addEventListener('dragstart',  (e)=> {
+        wrapGallery(wrapperImg, wrapper, e.pageX, sliderPaginator);
+    });
+}
+
+// Product wishlist button
+if(productWishlist != 'undefined' && productWishlist != null){
+    productWishlist.addEventListener('click', ()=>{
+        setWishlist(product);
+    });
+}
+
+// -------- Product listeners end -------//
+
+// -------- Cart listeners start -------//
 
 if(cartDeleteButton != 'undefined' && cartDeleteButton != null){
     cartDeleteButton.forEach(button => {
@@ -168,50 +253,9 @@ if(addButton != 'undefined' && addButton != null){
     });
 }
 
-// Mobile product gallery wrapper
-if(wrapper != 'undefined' && wrapper != null){
-    wrapper.addEventListener('dragstart',  (e)=> {
-        wrapGallery(wrapperImg, wrapper, e.pageX, sliderPaginator);
-    });
-}
+// -------- Cart listeners end -------//
 
-// Product wishlist button
-if(productWishlist != 'undefined' && productWishlist != null){
-    productWishlist.addEventListener('click', ()=>{
-        setWishlist(product);
-    });
-}
-
-// Product gallery buttons
-min.forEach(element => {
-    element.addEventListener('click', ()=>{
-        if(!element.classList.contains('gallery__min--selected')){
-            changeGalleryImg(element);
-            let img = element.querySelector('.gallery__asset').getAttribute('src');
-            img = img.replace('/static/img/games/', '');
-            img = img.replace('-min.webp', '');
-            objectIndex = Array.prototype.indexOf.call(images, img);
-        } 
-    });
-});
-
-/**
- * Product gallery arrows
- */
-arrows.forEach(arrow =>{
-    arrow.addEventListener('click', ()=>{
-        slide(arrow.getAttribute('slide'));
-    });
-});
-
-/**
- * Product cart button
- */
-if(productCartButton != 'undefined' && productCartButton != null){
-    productCartButton.addEventListener('click', ()=>{
-        setGameCart(product);
-    });
-}
+// -------- FAQ listeners start -------//
 
 if(faqHeader != 'undefined' && faqHeader != null){
     faqHeader.forEach(header => {
@@ -224,50 +268,9 @@ if(faqHeader != 'undefined' && faqHeader != null){
     });
 }
 
-/**
- * Index gallery wrapper
- */
-if(indexWrapper != 'undefined' && indexWrapper != null){
-    indexWrapper.addEventListener('dragstart',  (e)=> {
-        wrapGallery(indexGalleryImg, indexWrapper, e.pageX, indexPaginatorGallery);
-    });
-} 
+// -------- FAQ listeners end -------//
 
-/**
- * INdex gallery arrows
- */
-indexGalleryArrows.forEach(arrow =>{
-    arrow.addEventListener('click', ()=>{
-        let direction = arrow.getAttribute('direction') == 'left' ? -1 : 1;
-        moveGalleryWrapper( indexWrapper, indexGalleryImg, direction, indexPaginatorGallery);
-    });
-});
-
-/**
- * Index cart button
- */
-indexCardButton.forEach(button => {
-    button.addEventListener('click', ()=>{
-        let id = button.getAttribute('game');
-        let platform = button.getAttribute('platform');
-        setGameCart([id, platform]);
-    });
-    
-});
-
-movileIcon.addEventListener('click', ()=>{
-    movileMenu.classList.toggle('header__nav--visible');
-    setTimeout(()=>{
-        movileMenu.classList.toggle('header__nav--hidde');
-    }, 300);
-});
-
-if(menuMobileIcon != 'undefined' && menuMobileIcon != null){
-    menuMobileIcon.addEventListener('click', ()=>{
-        collapse('collapsed--unset', menuList, menuMobileIcon);
-    });
-}
-
+// -------- Search listeners start -------//
 
 searchInput.addEventListener('input', ()=>{
     if(searchXhr != "") searchXhr.abort();
@@ -301,19 +304,25 @@ document.addEventListener('click', (e)=>{
     }
 });
 
-if(keysButton != 'undefined' && keysButton != null){
-    keysButton.forEach(button =>{
-        button.addEventListener('click', () =>{
-            let container = button.parentNode;
-            let key = container.querySelector('.keys__key').textContent;
-            navigator.clipboard.writeText(key);
-            button.textContent = 'Copiado';
-            setTimeout(()=>{
-                button.textContent = 'Copiar';
-            }, 2000);
-        });
+// -------- Search listeners end -------//
+
+// -------- Menu mobile icon listeners start -------//
+
+movileIcon.addEventListener('click', ()=>{
+    movileMenu.classList.toggle('header__nav--visible');
+    setTimeout(()=>{
+        movileMenu.classList.toggle('header__nav--hidde');
+    }, 300);
+});
+
+if(menuMobileIcon != 'undefined' && menuMobileIcon != null){
+    menuMobileIcon.addEventListener('click', ()=>{
+        collapse('collapsed--unset', menuList, menuMobileIcon);
     });
 }
+
+// -------- Menu mobile icon listeners end -------//
+
 
 /**
  * Prints a loading symbol on the indicated container
@@ -356,7 +365,7 @@ function collapse(collapseClass, element, icon)
 }
 
 /**
- *  Change  paginator buttons
+ *  Changes the buttons of the pager depending on the current page
  * @param {*} page Current page of the paginator
  * @param {*} btnLeft  Left button of the paginator
  * @param {*} btnRight Left button of the paginator
@@ -411,6 +420,7 @@ function changeButtons(page, btnLeft, btnRight, lastPage)
  /**
  * Do mobile gallery wrap function when mouse is moving to detect th direction
  * of the movement and change the image and paginator
+ * 
  * @param {*} imgs Images used to extract the correct width
  * @param {*} wrapper Wraper container with all images
  * @param {*} initialPos Mouse initial position
@@ -426,6 +436,13 @@ function wrapGallery(imgs, wrapper, initialPos, paginator = null)
     }, {once : true});
 }
 
+/**
+ * Move wrap gallery images
+ * @param {*} wrapper  Wrapper container
+ * @param {*} imgs  Gallery images
+ * @param {*} direction Wrap direction
+ * @param {*} paginator  Images paginator
+ */
 function moveGalleryWrapper(wrapper, imgs, direction, paginator = null)
 {
     let imgWidth = imgs[0].offsetWidth,
@@ -467,7 +484,7 @@ function moveGalleryWrapper(wrapper, imgs, direction, paginator = null)
  }
 
  /**
- * Set the parameter to change gallery image and miniature images
+ * Set the parameters to change gallery image and miniature images
  * @param {*} direction Direction of the slide 
  */
 function slide(direction)
@@ -577,6 +594,10 @@ function slide(direction)
       }
   }
 
+  /**
+   * Change paginator page from orders view
+   * @param {*} direction Paginator action direction
+   */
   function changePage(direction)
 {
     direction == 'left'  ?     page -= 1 :     page += 1;
@@ -598,19 +619,18 @@ function slide(direction)
     }
 }
 
+/**
+ * Delete user pay method or billing direction
+ * @param {*} card Card that we want to remove
+ * @param {*} type card or  billing
+ */
 function deleteUserInfo(card, type)
 {
     let id = card.getAttribute('identifier');
     let cardsContainer = card.parentNode;
-
     let xhr = new XMLHttpRequest();
 
-    if(type == 'card'){
-        xhr.open('PUT', '/ajax/deleteCard?id='+id, true);
-    }else{
-        xhr.open('PUT', '/ajax/deleteBilling?id='+id, true);
-    }
-    
+    type == 'card' ?  xhr.open('PUT', '/ajax/deleteCard?id='+id, true) : xhr.open('PUT', '/ajax/deleteBilling?id='+id, true);
     xhr.send();
 
     xhr.onreadystatechange = ()=>{
@@ -618,6 +638,10 @@ function deleteUserInfo(card, type)
     }
 }
 
+/**
+ *  Get games from user wishlist using a paginator
+ * @param {*} direction  Paginator action direction
+ */
 function getGames(direction)
 {
      direction == 'left'  ?     page -= 1 :     page += 1;
@@ -640,6 +664,10 @@ function getGames(direction)
     }
 }
 
+/**
+ * Remove a game cart from cart view
+ * @param {*} card The cart that we want to remove
+ */
 function removeGameCart(card)
 {
     let xhr = new XMLHttpRequest();
@@ -665,6 +693,12 @@ function removeGameCart(card)
     }
 }
 
+
+/**
+ * Change cart cant and price from cart view
+ * @param {*} changeValue 
+ * @param {*} card 
+ */
 function changeCantCart(changeValue, card)
 {
     let xhr = new XMLHttpRequest();
@@ -687,16 +721,21 @@ function changeCantCart(changeValue, card)
             cartTotalHeader.textContent = response.cartTotal;
             cartTotal.textContent = response.cartTotal;
 
-            if(newCant <= 0){
-                cardsContainer.removeChild(card);
-            }else{
-                cartCant.textContent = newCant;
-            }
+            newCant <= 0 ?  cardsContainer.removeChild(card) : cartCant.textContent = newCant;
+            
         }
     }
 
 }
 
+
+/**
+ * Get reviews from data base using AJAX and print them into a container
+ * @param {*} direction Set the direction of the paginator
+ * @param {*} container  Reviews container
+ * @param {*} buttons  Paginator buttons
+ * @param {*} id  Game id. Can be null if you want to load all reviews by user
+ */
 function getReviews(direction, container, buttons, id = null)
 {
     direction == 'left'  ?     page -= 1 :     page += 1;
@@ -722,7 +761,7 @@ function getReviews(direction, container, buttons, id = null)
 }
 
 /**
- * Reload listeners functions
+ * Reload data section listeners
 */
 
 function dataListeners()
@@ -765,6 +804,10 @@ function dataListeners()
     });
 }
 
+
+/**
+ * Reload orders listeners
+ */
 function orderListeners()
 {
     button.forEach(arrow => {
@@ -781,8 +824,24 @@ function orderListeners()
             if (!button.classList.contains('paginator__button--disabled')) changePage(direction);
         });
     });
+
+    keysButton.forEach(button =>{
+        button.addEventListener('click', () =>{
+            let container = button.parentNode;
+            let key = container.querySelector('.keys__key').textContent;
+
+            navigator.clipboard.writeText(key);
+            button.textContent = 'Copiado';
+            setTimeout(()=>{
+                button.textContent = 'Copiar';
+             }, 2000);
+        });
+    });
 }
 
+/**
+ * Reload wisahlist listeners
+ */
 function wishlistListeners()
 {
     deleteButton.forEach(button => {
@@ -817,7 +876,7 @@ function wishlistListeners()
 
 
 /**
- * Reload variables and listeners functions
+ * Reload variables and listeners functions and call orders listeners reload function
 */
 
 function reloadOrders()
@@ -826,6 +885,9 @@ function reloadOrders()
     orderListeners()
 }
 
+/**
+ * Reload wishlist variables and call wishlist listeners reload function
+ */
 function reloadWishlist()
 {
     deleteButton = document.querySelectorAll('.wish__icon--x');

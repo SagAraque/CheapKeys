@@ -34,9 +34,7 @@ class AjaxController extends AbstractController
     public function reviews(ManagerRegistry $doctrine, Paginator $paginator, Request $request): Response
     {
         $params = $request->query;
-        $reviews = $doctrine->getRepository(Reviews::class)->findByGameNoResults(array(
-            "id_game" => $params->get('id'),
-        ));
+        $reviews = $doctrine->getRepository(Reviews::class)->findByGameNoResults(array("id_game" => $params->get('id'),));
 
         $page = $params->getInt('page');
         $paginator->paginate($reviews, $page);
@@ -120,12 +118,10 @@ class AjaxController extends AbstractController
         
         if($user == null) return new Response("", 302);
         
-
         $em = $doctrine->getManager();
 
         $gameId = $request->get('game');
         $platformId = $request->get('platform');
-        $page = $request->get('page');
 
         $wishlist = $doctrine->getRepository(WishlistGames::class)->findGameByUser($gameId, $platformId, $user->getUserWishlist());
 
@@ -212,7 +208,6 @@ class AjaxController extends AbstractController
         $cartCount = new CartCount($doctrine, $security);
         $count = $cartCount->getCount();
 
-
         return new JsonResponse(array('cartTotal' => $count, 'totalPrice' => ($cartTotal - $gameTotal)));
     }
 
@@ -289,7 +284,6 @@ class AjaxController extends AbstractController
 
         $entityManager->persist($cart);
         $entityManager->flush();
-
     }
 
     /**
@@ -506,9 +500,7 @@ class AjaxController extends AbstractController
             array_push($cartsId, $order->getIdCart()->getIdCart());
         }
 
-        $cartProducts = $doctrine->getRepository(CartProducts::class)->findBy(array(
-            'idCart' => $cartsId
-        ));
+        $cartProducts = $doctrine->getRepository(CartProducts::class)->findBy(array('idCart' => $cartsId));
 
         $gamesId = [];
         $platformsId = [];
@@ -525,6 +517,11 @@ class AjaxController extends AbstractController
             'products' => $cartProducts
         ]);
     }
+
+    /**
+     * Return the game price with discount applied
+     * @var $game 
+     */
     private function getDiscountPrice($game)
     {
         $gamePrice = $game->getIdFeature()->getGamePrice();

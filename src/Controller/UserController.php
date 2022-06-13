@@ -75,7 +75,7 @@ class UserController extends AbstractController
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
 
-        return $this->render('users/user_data.html.twig', [
+        $response =  $this->render('users/user_data.html.twig', [
             'userNameForm' => $userNameForm->createView(),
             'userPassForm' => $userPassForm->createView(),
             'userMailForm' => $userMailForm->createView(),
@@ -87,6 +87,12 @@ class UserController extends AbstractController
             'class' => 'control__content--data',
             'menu' => 'data'
            ]);
+
+        $response->setEtag(md5($response->getContent()));
+        $response->setPrivate();
+        $response->isNotModified($request);
+
+        return $response;
     }
 
 
@@ -113,7 +119,7 @@ class UserController extends AbstractController
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
 
-        return $this->render('users/wishlist.html.twig',[
+        $response =  $this->render('users/wishlist.html.twig',[
             'paginator' => $paginator,
             'images' => $images,
             'cartCant' => $cart,
@@ -121,6 +127,12 @@ class UserController extends AbstractController
             'menu' => 'wishlist',
             'actual' => 1
         ]);
+
+        $response->setEtag(md5($response->getContent()));
+        $response->setPrivate();
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     /**
@@ -140,9 +152,7 @@ class UserController extends AbstractController
             array_push($cartsId, $order->getIdCart()->getIdCart());
         }
 
-        $cartProducts = $doctrine->getRepository(CartProducts::class)->findBy(array(
-            'idCart' => $cartsId
-        ));
+        $cartProducts = $doctrine->getRepository(CartProducts::class)->findBy(array('idCart' => $cartsId));
 
         $gamesId = [];
         $platformsId = [];
@@ -155,7 +165,7 @@ class UserController extends AbstractController
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
 
-        return $this->render('users/orders.html.twig',[
+        $response =  $this->render('users/orders.html.twig',[
             'class' => 'control__content--orders',
             'menu' => 'orders',
             'cartCant' => $cart,
@@ -163,6 +173,12 @@ class UserController extends AbstractController
             'media' => $media,
             'products' => $cartProducts
         ]);
+
+        $response->setEtag(md5($response->getContent()));
+        $response->setPrivate();
+        $response->isNotModified($request);
+
+        return $response;
 
     }
 
@@ -172,12 +188,10 @@ class UserController extends AbstractController
     public function changeUsername(Request $request, Security $security, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        $lastUserName = $user->getUserName();
         $userNameForm = $this->createForm(UserNameType::class);
         $userNameForm -> handleRequest($request);
 
         if($userNameForm->isValid() ){
-            var_dump(1);
             $user->setUserName($request->request->get('userName'));
             $entityManager -> persist($user);
             $entityManager ->flush();
@@ -195,7 +209,6 @@ class UserController extends AbstractController
     public function changeEmail(Request $request, UserAuthenticatorInterface $userAuthenticator, UsersAuthAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        $lastEmail = $user->getUserEmail();
         $userMailForm = $this->createForm(UserMailType::class, $user);
         $userMailForm -> handleRequest($request);
 
@@ -203,16 +216,10 @@ class UserController extends AbstractController
             $entityManager -> persist($user);
             $entityManager ->flush();
 
-            $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+            $userAuthenticator->authenticateUser($user, $authenticator, $request);
 
             $request -> getSession()-> migrate(true);
             $request->overrideGlobals();
-        }else{
-            $user->setUserEmail($lastEmail);
         }
 
         return $this->redirectToRoute('user_control_panel_data', [], 308);
@@ -309,11 +316,17 @@ class UserController extends AbstractController
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
 
-        return $this -> render("users/keys.html.twig", [
+        $response =  $this -> render("users/keys.html.twig", [
             "keys" => $keys,
             "media" => $media[0] -> getIdMedia(),
             'cartCant' => $cart
         ]);
+
+        $response->setEtag(md5($response->getContent()));
+        $response->setPrivate();
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     /**
@@ -339,13 +352,19 @@ class UserController extends AbstractController
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
 
-        return $this -> render('users/reviews.html.twig', [
+        $response =  $this -> render('users/reviews.html.twig', [
             'media' => $media,
             'reviews' => $paginator,
             'menu' => 'reviews',
             'cartCant' => $cart,
             'class' => 'control__content--reviews',
         ]);
+
+        $response->setEtag(md5($response->getContent()));
+        $response->setPrivate();
+        $response->isNotModified($request);
+
+        return $response;
     }
 
 

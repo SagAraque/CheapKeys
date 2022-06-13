@@ -65,7 +65,7 @@ function modifyArray(value, arr)
 }
 
 /**
- * Get games card from data base 
+ * Get games card from data base with some filters using AJAX
  * 
  * @param {*} pageValue Paginator page value
  */
@@ -105,7 +105,7 @@ function getData(pageValue = 1)
 }
 
 /**
- * Set an error message
+ * Set an error message into store container products
  */
 function setError()
 {
@@ -128,6 +128,11 @@ function setError()
     storeContainerProducts.appendChild(div);
 }
 
+/**
+ *  Display filters menu on mobile devices
+ * @param {*} menu Menu container
+ * @param {*} background Background container
+ */
 function displayFiltersMenu(menu, background)
 {
     menu.style.width = '210px';
@@ -135,6 +140,11 @@ function displayFiltersMenu(menu, background)
 
 }
 
+/**
+ * Hide filters menu on mobile devices
+ * @param {*} menu  Menu container
+ * @param {*} background  Background container
+ */
 function hideFiltersMenu(menu, background)
 {
     menu.style.width = '0px';

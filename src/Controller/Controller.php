@@ -7,19 +7,20 @@ use App\Entity\Reviews;
 use App\Utils\CartCount;
 use App\Utils\Paginator;
 use App\Entity\Platforms;
+use App\Form\ContactType;
+use App\Form\ReviewsType;
 use App\Entity\MediaGames;
 use App\Entity\GamesPlatform;
 use App\Entity\WishlistGames;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Form\ContactType;
-use App\Form\ReviewsType;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Controller extends AbstractController
 {
@@ -79,13 +80,61 @@ class Controller extends AbstractController
 
         $contactForm -> handleRequest($request);
 
+        if($contactForm -> isSubmitted() && $contactForm -> isValid()){
+            $contactForm = $this -> createForm(ContactType::class);
+        }
+
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
 
-        return $this->render('contact.html.twig', [
+        $response =  $this->render('contact.html.twig', [
             "form" => $contactForm -> createView(),
             "cartCant" => $cart
         ]);
+
+        $response->setEtag(md5($response->getContent()));
+        $response->setPublic();
+        $response->isNotModified($request);
+
+        return $response;
+    }
+
+    /**
+     * @Route("/sobre_nosotros", name="about_us")
+     */
+    public function aboutUs(Request $request, ManagerRegistry $doctrine, Security $security): Response
+    {
+        $cartCount = new CartCount($doctrine, $security);
+        $cart = $cartCount->getCount();
+
+        $response =  $this -> render('aboutUs.html.twig',[
+            "cartCant" => $cart
+        ]);
+
+        $response->setEtag(md5($response->getContent()));
+        $response->setPublic();
+        $response->isNotModified($request);
+
+        return $response;
+    }
+
+        /**
+     * @Route("/mapa_web", name="web_map")
+     */
+    public function webMap(Request $request, ManagerRegistry $doctrine, Security $security): Response
+    {
+        $cartCount = new CartCount($doctrine, $security);
+        $cart = $cartCount->getCount();
+
+        $response =  $this -> render('webmap.html.twig',[
+            "cartCant" => $cart
+        ]);
+
+        $response->setEtag(md5($response->getContent()));
+        $response->setPublic();
+        $response->isNotModified($request);
+
+        return $response;
     }
 
     /**
@@ -101,20 +150,16 @@ class Controller extends AbstractController
         
         $user = $security->getUser();
 
-
-        $game = $doctrine->getRepository(Games::class)->findBy(array(
-            "gameSlug" => $gameSlug
-        ));
-
-        $platform = $doctrine->getRepository(Platforms::class)->findByName(array(
-            'platform' => $platform
-        ));
+        // Get product data from data base
+        $game = $doctrine->getRepository(Games::class)->findBy(array("gameSlug" => $gameSlug));
+        $platform = $doctrine->getRepository(Platforms::class)->findByName(array('platform' => $platform));
 
         if($user != null){
             $wishlist = $doctrine->getRepository(WishlistGames::class)->findGameByUser($game[0]->getIdGame(), $platform->getIdPlatform(), $user->getUserWishlist());
             $wish = $wishlist == null ? false : true;
         }
 
+        // Get images from data base
         $media = $doctrine->getRepository(MediaGames::class)->findNoInfo(
             $game[0]->getIdGame(),
             $platform->getIdPlatform(),
@@ -127,10 +172,10 @@ class Controller extends AbstractController
 
         $features = $doctrine->getRepository(GamesPlatform::class)->findFeature($game[0], $platform);
 
-        $reviews = $doctrine->getRepository(Reviews::class)->findByGameNoResults(array(
-            "id_game" => $game[0]->getIdGame(),
-        ));
 
+        $reviews = $doctrine->getRepository(Reviews::class)->findByGameNoResults(array("id_game" => $game[0]->getIdGame()));
+
+        // Check if user has reviews of that product. In that case, reviews button and form are not printed
         $numReviews = $doctrine -> getRepository(Reviews::class) -> checkUserReview(
             $game[0] -> getIdGame(),
             $platform -> getIdPlatform(),
@@ -142,10 +187,8 @@ class Controller extends AbstractController
             $reviewForm = $this -> createForm(ReviewsType::class, $newReview);
             $reviewForm -> handleRequest($request);
 
-            if($reviewForm -> isSubmitted() && !$reviewForm -> isValid()){
-                $formError = true;
-            }
-
+            if($reviewForm -> isSubmitted() && !$reviewForm -> isValid()) $formError = true;
+            
             $reviewForm = $reviewForm -> createView();
         }
 
@@ -225,9 +268,9 @@ class Controller extends AbstractController
             'platformFilter' => $platformFilter
         ]);
 
-        // $response->setEtag(md5($response->getContent()));
-        // $response->setPublic();
-        // $response->isNotModified($request);
+        $response->setEtag(md5($response->getContent()));
+        $response->setPublic();
+        $response->isNotModified($request);
         
         return $response;
     }
@@ -235,13 +278,27 @@ class Controller extends AbstractController
     /**
      * @Route("/contact/checkform", methods={"POST"}, name="check_contact_form")
      */
-    public function checkContactForm(Request $request)
+    public function checkContactForm(MailerInterface $mailer, Request $request)
     {
         $contactForm = $this -> createForm(ContactType::class);
         $contactForm -> handleRequest($request);
 
         $token = $request -> request -> get('token');
         if($this->isCsrfTokenValid('IBM_MS-DOS', $token) && $contactForm -> isValid()){
+
+            // Send email to user
+            $email = (new TemplatedEmail())
+            ->from('contact@cheapkeys.com')
+            ->to('cheapkeys.store.info@gmail.com')
+            ->subject('Contacto')
+            ->htmlTemplate('emailContact.html.twig')
+            ->context([
+                'name' => $contactForm -> get('name') -> getData(),
+                'emailEmail' => $contactForm -> get('email') -> getData(),
+                'emailContent' => $contactForm -> get('message') -> getData()
+            ]);
+
+            $mailer -> send($email);
 
             $this->addFlash('success', 'Su mensaje ha sido enviado correctamente!');
             $request->overrideGlobals();
@@ -255,18 +312,15 @@ class Controller extends AbstractController
      */
     public function postReview(Request $request, Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine )
     {
+        // Get game slug from last url
         $url = $request->headers->get('referer');
         $slug = substr($url, strripos($url, '/') + 1);
         $platformName = substr($slug, strripos($slug, '_') + 1);
         $gameSlug = substr($slug, 0, strripos($slug, '_'));
 
-        $game = $doctrine -> getRepository(Games::class)->findBy([
-            'gameSlug' => $gameSlug
-        ]);
-
-        $platform = $doctrine -> getRepository(Platforms::class) -> findBy([
-            'platformName' => $platformName
-        ]);
+        // Getting game info
+        $game = $doctrine -> getRepository(Games::class)->findBy(['gameSlug' => $gameSlug]);
+        $platform = $doctrine -> getRepository(Platforms::class) -> findBy(['platformName' => $platformName]);
 
         $newReview = new Reviews();
         $newReview -> setIdUser($this -> getUser());
@@ -290,6 +344,8 @@ class Controller extends AbstractController
             ));
             
             $feature = $feature[0] -> getIdFeature();
+            
+            // If avg query result is null, that means game dont have reviews, so the new rating is the user´s rating
             $feature -> setGameValoration(
                 $avg[0] == null ?  $newReview -> getReviewCalification()  : round($avg[0], 2, PHP_ROUND_HALF_ODD)
             );

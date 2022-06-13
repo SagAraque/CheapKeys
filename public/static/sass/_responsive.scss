@@ -1,8 +1,6 @@
 @use 'mixins' as mixin;
 @use 'var';
 
-
-
 @media (max-width: 1480px) {
 
     .header{
@@ -476,8 +474,18 @@
         {
             height: 100px;
         }
-
     }
+
+    .history
+    {
+        flex-direction: column;
+
+        &__container
+        {
+            width: 100%;
+        }
+    }
+
 }
 
 @media (max-width: 800px)
@@ -1197,6 +1205,17 @@
                     display: block;
                 }
             }
+        }
+    }
+
+    .stats
+    {
+        &__container
+        {
+            grid-template-columns: repeat(2, auto);
+            grid-template-columns: repeat(2, auto);
+            justify-content: space-evenly;
+            gap: 50px;
         }
     }
 

@@ -7,7 +7,15 @@
 <main class="store" role="main">
     {# Store top container start #}
     <div class="store__container--title">
-        <h2 class="store__title">Todos los productos</h2>
+        {# Get store page title from uri #}
+        {% if 'all' in app.request.uri  %}
+            <h2 class="store__title">Todos los productos</h2>
+        {% elseif 'ofertas' in app.request.uri %}
+            <h2 class="store__title">Juegos en oferta</h2>
+        {% else %}
+            <h2 class="store__title">Juegos de {{ app.request.uri | slice(strrpos('/', app.request.uri) + 1, app.request.uri | length) }}</h2>
+        {% endif %}
+
         <span class="store__count">{{paginator.total}} videojuegos</span>
         <div class="store__container--select">
             <select name="orderBy" class="store__select">
