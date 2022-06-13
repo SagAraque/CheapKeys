@@ -20,6 +20,8 @@ use App\Entity\Orders;
 use App\Entity\Billing;
 use App\Entity\Cart;
 use App\Entity\Card;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
 
 class CartController extends AbstractController
 {
@@ -86,7 +88,7 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/payment", name="payment")
      */
-    public function payment(ManagerRegistry $doctrine, Security $security, Request $request, EntityManagerInterface $entityManager): RedirectResponse
+    public function payment(MailerInterface $mailer, ManagerRegistry $doctrine, Security $security, Request $request, EntityManagerInterface $entityManager): RedirectResponse
     {
 
         $token = $request -> request -> get('token');
@@ -128,10 +130,7 @@ class CartController extends AbstractController
             'cartState' => 1
         ));
 
-        $cartProducts = $doctrine -> getRepository(CartProducts::class)->findBy(array(
-            'idCart' => $cart[0]->getIdCart()
-        )); 
-
+        $cartProducts = $doctrine -> getRepository(CartProducts::class)->findBy(array('idCart' => $cart[0]->getIdCart())); 
 
         // Check if cart have products
         if($cartProducts == null)
@@ -198,6 +197,18 @@ class CartController extends AbstractController
         $entityManager -> persist($order);
         $entityManager -> flush();
 
+        $email = (new TemplatedEmail())
+            ->from('info@cheapkeys.com')
+            ->to($this -> getUser() -> getUserEmail())
+            ->subject('Registro completado')
+            ->htmlTemplate('email.html.twig')
+            ->context([
+                'emailTitle' => 'Registro completado.',
+                'emailContent' => 'Gracias por registrarte en CheapKeys, la web de compra de videojuegos de confianza.'
+            ]);
+
+            $mailer -> send($email);
+
         return $this->redirectToRoute('index', [], 302);
     }
 
@@ -235,6 +246,10 @@ class CartController extends AbstractController
         
     }
 
+       /**
+     * Return the game price with discount applied
+     * @var $game 
+     */
     private function getDiscountPrice($game)
     {
         $gamePrice = $game->getIdFeature()->getGamePrice();
