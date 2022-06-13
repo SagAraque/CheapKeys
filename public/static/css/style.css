@@ -252,6 +252,10 @@ body {
   height: 30px;
   width: 30px;
 }
+.paginator__button:hover, .paginator__button--wish:hover, .paginator__button--orders:hover, .paginator__button--disabled:hover {
+  transition: all 0.25s;
+  background-color: var(--background_pink_dark);
+}
 .paginator__button--disabled {
   filter: contrast(50%);
   cursor: default;
@@ -739,6 +743,10 @@ body {
   margin: -20px -20px 0px -20px;
   object-fit: cover;
 }
+.info__button:hover, .control__link:hover, .form__button:hover, .info__button--wish:hover, .info__button--buy:hover {
+  transition: all 0.25s;
+  background-color: var(--background_pink_dark);
+}
 .info__button--buy {
   width: 80%;
 }
@@ -1081,6 +1089,10 @@ body {
   text-decoration: none;
   box-sizing: border-box;
 }
+.form__button:hover {
+  transition: all 0.25s;
+  background-color: var(--background_pink_dark);
+}
 .form__input, .control__input, .control__input--full {
   width: 100%;
   color: var(--white);
@@ -1336,12 +1348,20 @@ body {
   height: 37px;
   margin: 0 auto;
 }
+.control__button:hover, .order__button--external:hover, .control__button--menu:hover, .control__button--wish:hover {
+  transition: all 0.25s;
+  background-color: var(--background_pink_dark);
+}
 .control__button--wish {
   height: min-content;
   width: min-content;
   white-space: nowrap;
   font-size: var(--text);
   margin: 0 0 5px 10px;
+}
+.control__button--wish:hover {
+  transition: all 0.25s;
+  background-color: var(--background_pink_dark);
 }
 .control__card, .control__card--wish {
   display: flex;
@@ -1637,6 +1657,10 @@ body {
   justify-self: start;
   margin: 0;
 }
+.order__button:hover {
+  transition: all 0.25s;
+  background-color: var(--background_pink_dark);
+}
 .order__button--min {
   padding: 0px 5px;
   box-sizing: border-box;
@@ -1647,11 +1671,19 @@ body {
   align-self: center;
   display: none;
 }
+.order__button--min:hover {
+  transition: all 0.25s;
+  background-color: var(--background_pink_dark);
+}
 .order__button--external {
   height: min-content;
   font-size: var(--text);
   margin: 5px auto;
   display: none;
+}
+.order__button--external:hover {
+  transition: all 0.25s;
+  background-color: var(--background_pink_dark);
 }
 
 .reviews--user {
@@ -2026,6 +2058,10 @@ body {
   border: none;
   cursor: pointer;
 }
+.cart__button:hover {
+  transition: all 0.25s;
+  background-color: var(--background_pink_dark);
+}
 .cart__img {
   height: 100%;
 }
@@ -2094,6 +2130,11 @@ body {
   text-align: center;
   margin-bottom: 5px;
 }
+.contact__button:hover {
+  transition: all 0.25s;
+  background-color: var(--background_pink_dark);
+}
+
 .faq {
   width: 100%;
   height: min-content;

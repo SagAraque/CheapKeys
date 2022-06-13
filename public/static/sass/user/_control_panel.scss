@@ -330,6 +330,11 @@
         height: 37px;
         margin: 0 auto;
 
+        &:hover
+        {
+            @include mixin.button-hover;
+        }
+
         &--wish
         {
             @extend .control__button;
@@ -338,6 +343,11 @@
             white-space: nowrap;
             font-size: var(--text);
             margin: 0 0 5px 10px;
+
+            &:hover
+            {
+                @include mixin.button-hover;
+            }
         }
 
         &--menu
@@ -770,6 +780,11 @@
         justify-self: start;
         margin: 0;
 
+        &:hover
+        {
+            @include mixin.button-hover;
+        }
+
         &--min
         {
             @extend .button--full;
@@ -780,6 +795,11 @@
             font-size: var(--title25);
             align-self: center;
             display: none;
+
+            &:hover
+            {
+                @include mixin.button-hover;
+            }
         }
 
         &--external
@@ -789,6 +809,11 @@
             font-size: var(--text);
             margin: 5px auto;
             display: none;
+
+            &:hover
+            {
+                @include mixin.button-hover;
+            }
         }
     }
 }

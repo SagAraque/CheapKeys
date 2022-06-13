@@ -250,8 +250,12 @@
         @extend .button--full;
         height: 30px;
         width: 30px;
-        
 
+        &:hover
+        {
+            @include mixin.button-hover;
+        }
+        
         &--disabled
         {   
             @extend .paginator__button;
