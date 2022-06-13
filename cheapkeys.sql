@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-06-2022 a las 01:55:06
+-- Tiempo de generación: 14-06-2022 a las 01:35:51
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -40,15 +40,6 @@ CREATE TABLE `billing` (
   `billin_tlfo` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `billing`
---
-
-INSERT INTO `billing` (`id_billing`, `id_user`, `billing_name`, `billing_state`, `billing_direction`, `billing_postal`, `billing_poblation`, `billing_country`, `billing_province`, `billin_tlfo`) VALUES
-(1, 1, 'Sergio Araque García', 1, 'Calle de Manolito3', '28931', 'Humanes', 'España', 'Madrid', '698376502'),
-(2, 1, 'Sergio Araque García', 2, 'Calle Joselito 3 3ºA', '28945', 'Mostoles', 'España', 'Madrid', '697302178'),
-(3, 10, 'Sergio Araque García', 1, 'aaaaaaaaaaaaaaaaa', '28941', 'Mostoles', 'ES', 'madrid', '695124903');
-
 -- --------------------------------------------------------
 
 --
@@ -64,18 +55,6 @@ CREATE TABLE `card` (
   `card_user` int(10) UNSIGNED NOT NULL,
   `card_state` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `card`
---
-
-INSERT INTO `card` (`id_card`, `card_number`, `card_cvv`, `card__expire`, `card_name`, `card_user`, `card_state`) VALUES
-(1, '4011317773263584', '123', '03/29', 'Joselito Perez', 1, 1),
-(2, '4016156835285218', '321', '04/29', 'Pepe Martinez', 1, 1),
-(4, '4263982640269299', '738', '04/23', 'Sergio Araque García', 1, 0),
-(5, '4821319942682522', '310', '09/22', 'Carlos Martinez Rodriguez', 1, 0),
-(6, '5003460541020576', '123', '10/25', 'Manolito Perez Segundo', 1, 0),
-(7, '4003437469316221', '123', '09/24', 'aaaaaaaaaaaaa', 10, 1);
 
 -- --------------------------------------------------------
 
@@ -95,22 +74,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`id_cart`, `id_user`, `cart_total`, `cart_state`) VALUES
-(8, 1, '19.95', 0),
-(9, 20, '0.00', 1),
-(10, 1, '19.95', 0),
-(11, 1, '19.95', 0),
-(12, 1, '19.95', 0),
-(13, 1, '19.90', 0),
-(14, 1, '19.95', 0),
-(15, 1, '57.35', 0),
-(16, 1, '39.90', 0),
-(17, 1, '19.95', 0),
-(18, 1, '39.90', 0),
-(19, 1, '69.94', 0),
-(20, 1, '99.98', 1),
-(21, 10, '49.99', 0),
-(22, 10, '0.00', 1),
-(23, 21, '0.00', 1);
+(1, 1, '0.00', 1);
 
 -- --------------------------------------------------------
 
@@ -125,27 +89,6 @@ CREATE TABLE `cart_products` (
   `cant` int(10) UNSIGNED NOT NULL DEFAULT 1,
   `price` float(5,2) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `cart_products`
---
-
-INSERT INTO `cart_products` (`id_cart`, `id_game`, `id_platform`, `cant`, `price`) VALUES
-(8, 1, 1, 1, 19.95),
-(10, 1, 1, 1, 19.95),
-(11, 1, 1, 1, 19.95),
-(12, 1, 1, 1, 19.95),
-(13, 4, 5, 2, 0.00),
-(14, 1, 1, 1, 0.00),
-(15, 4, 5, 1, 9.95),
-(15, 6, 5, 1, 9.95),
-(16, 1, 1, 2, 19.95),
-(17, 1, 1, 1, 19.95),
-(18, 1, 1, 2, 19.95),
-(19, 1, 1, 1, 19.95),
-(19, 3, 3, 1, 49.99),
-(20, 3, 3, 2, 49.99),
-(21, 3, 3, 1, 49.99);
 
 -- --------------------------------------------------------
 
@@ -261,12 +204,12 @@ CREATE TABLE `game_keys` (
 --
 
 INSERT INTO `game_keys` (`id_key`, `id_platform`, `id_game`, `id_order`, `key_value`) VALUES
-(1, 1, 1, 9, 'ER99IO5BE3Q9QFR'),
-(5, 1, 1, 10, '6KI8C2NLO469PTK'),
-(6, 1, 1, 10, 'DE9JO489N96I434'),
-(7, 5, 1, 11, '1RPI39H758E5CNR'),
-(21, 3, 3, 12, '123456789675545'),
-(22, 3, 3, 11, 'OSE8HTROOE26HP4');
+(1, 1, 1, NULL, 'ER99IO5BE3Q9QFR'),
+(5, 1, 1, NULL, '6KI8C2NLO469PTK'),
+(6, 1, 1, NULL, 'DE9JO489N96I434'),
+(7, 5, 1, NULL, '1RPI39H758E5CNR'),
+(21, 3, 3, NULL, '123456789675545'),
+(22, 3, 3, NULL, 'OSE8HTROOE26HP4');
 
 -- --------------------------------------------------------
 
@@ -414,16 +357,6 @@ CREATE TABLE `orders` (
   `id_card` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `orders`
---
-
-INSERT INTO `orders` (`id_order`, `id_user`, `order_date`, `order_total`, `id_billing`, `id_cart`, `id_card`) VALUES
-(9, 1, '2022-06-06', '19.95', 1, 17, 2),
-(10, 1, '2022-06-06', '39.90', 1, 18, 1),
-(11, 1, '2022-06-06', '69.94', 1, 19, 2),
-(12, 10, '2022-06-11', '49.99', 3, 21, 7);
-
 -- --------------------------------------------------------
 
 --
@@ -462,21 +395,6 @@ CREATE TABLE `reviews` (
   `review_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `reviews`
---
-
-INSERT INTO `reviews` (`id_platform`, `id_game`, `id_user`, `review_calification`, `review_desc`, `review_date`) VALUES
-(1, 1, 1, '9.9', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta justo ac ipsum fermentum porta. Praesent nunc metus, consequat sed neque sed, elementum vehicula mi. Suspendisse potenti. Aenean eu mollis neque. Ut dictum euismod sem, ut pharetra.', '2022-05-10 00:00:00'),
-(1, 1, 3, '9.5', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta justo ac ipsum fermentum porta. Praesent nunc metus, consequat sed neque sed, elementum vehicula mi. Suspendisse potenti. Aenean eu mollis neque. Ut dictum euismod sem, ut pharetra.', '2022-05-10 00:00:00'),
-(1, 1, 4, '8.0', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta justo ac ipsum fermentum porta. Praesent nunc metus, consequat sed neque sed, elementum vehicula mi. Suspendisse potenti. Aenean eu mollis neque. Ut dictum euismod sem, ut pharetra.', '2022-05-10 00:00:00'),
-(1, 1, 5, '4.0', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta justo ac ipsum fermentum porta. Praesent nunc metus, consequat sed neque sed, elementum vehicula mi. Suspendisse potenti. Aenean eu mollis neque. Ut dictum euismod sem, ut pharetra.', '2022-05-10 00:00:00'),
-(1, 1, 6, '5.5', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta justo ac ipsum fermentum porta. Praesent nunc metus, consequat sed neque sed, elementum vehicula mi. Suspendisse potenti. Aenean eu mollis neque. Ut dictum euismod sem, ut pharetra.', '2022-05-10 00:00:00'),
-(1, 1, 7, '7.0', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta justo ac ipsum fermentum porta. Praesent nunc metus, consequat sed neque sed, elementum vehicula mi. Suspendisse potenti. Aenean eu mollis neque. Ut dictum euismod sem, ut pharetra.', '2022-05-10 00:00:00'),
-(2, 2, 1, '8.0', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta justo ac ipsum fermentum porta. Praesent nunc metus, consequat sed neque sed, elementum vehicula mi. Suspendisse potenti. Aenean eu mollis neque. Ut dictum euismod sem, ut pharetra.', '2022-06-12 19:09:55'),
-(3, 3, 10, '5.0', '444444444444444444444444444', '2022-06-12 00:23:45'),
-(6, 3, 1, '9.4', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta justo ac ipsum fermentum porta. Praesent nunc metus, consequat sed neque sed, elementum vehicula mi. Suspendisse potenti. Aenean eu mollis neque. Ut dictum euismod sem, ut pharetra.', '2022-06-12 19:09:55');
-
 -- --------------------------------------------------------
 
 --
@@ -499,26 +417,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `user_name`, `user_email`, `user_pass`, `user_img`, `user_rol`, `user_state`, `user_wishlist`) VALUES
-(1, 'Usuario 1', 'usuario1@gmail.com', '$2y$13$ZWPufYV41vuE4fkPue.A6.Ks.9K64rOFfDlrTjIP3fkADex3cmthe', 'default', 'ROLE_USER', 'ACTIVE', 1),
-(2, 'Usuario 2', 'usuario2@gmail.com', '$2a$10$rtRzzL0PtMXebGJjlQTpbuLWNSpdfyjYjLIu8P.s95UcbMNghSfDi', 'default', 'ROLE_USER', 'ACTIVE', 2),
-(3, 'Usuario 3', 'usuario3@gmail.com', '$2a$10$RBTzjNTPCn6AelYEaGYcRu/PKadqFXczCyorGbNOSNQGhs6H6uRa.', 'default', 'ROLE_USER', 'ACTIVE', 3),
-(4, 'Usuario 4', 'usuario4@gmail.com', '$2a$10$Y8lklhtnC7Ca9/Um8xLR6uqQUehBdh3qFkLayAHwf7FCAltETI1hm', 'default', 'ROLE_USER', 'ACTIVE', 4),
-(5, 'Usuario 5', 'usuario5@gmail.com', ' $2a$10$JBQktfx3fF17/ZSs9iGhUe/VOZcXpiYCF9GY4cXxbAhw6gxEOkvH', 'default', 'ROLE_USER', 'ACTIVE', 5),
-(6, 'Usuario 6', 'usuario6@gmail.com', ' $2a$10$5yLnm6EsTPQ0DtoHINa.FuH8M6PxRchhle2KbT.giS5QVHvS6UN2', 'default', 'ROLE_USER', 'ACTIVE', 6),
-(7, 'Usuario 7', 'usuario7@gmail.com', ' $2a$10$cVRvLqM0eGR45kYXIWm/SeBGv29mPKmFv0GIAJoaiazWpmyb7R5a', 'default', 'ROLE_USER', 'ACTIVE', 7),
-(8, 'Usuario 8', 'usuario8@gmail.com', ' $2a$10$E139RnijNmvzLRuIDDTFmeGA/cT69NWfdxbno6nXMBv470GjcLnI', 'default', 'ROLE_USER', 'ACTIVE', 8),
-(9, 'registro', 'registro@gmail.com', '$2y$13$f2XP065Sh3.Vpld1M1O8PucTIlsFo6wt5T9jCGygsBpmAZJbCPBEm', 'default', 'ROLE_USER', 'ACTIVE', 9),
-(10, 'pruebaRegistro', 'pruebaregistro@gmail.com', '$2y$13$WMWDtr.PgDhino9XoXDGVe18CpPXR2PY74fglPakZ4rW3WhnKxTtm', 'default', 'ROLE_USER', 'ACTIVE', 10),
-(11, 'prueba2', 'prueba2@gmail.com', '$2y$13$QrOv8jP/jbMKEiiXgrV09epUuxXc9vILd4bGzSu9PeJ8dFdUlGGTy', 'default', '', '', 11),
-(12, 'prueba3', 'prueba3@gmail.com', '$2y$13$bxzyaaIhsOyvA9L9whB0Fuf03JOoj4NDNl3DRakV.l7UNyW7LA4zC', 'default', '', '', 12),
-(13, 'prueba4', 'prueba4@gmail.com', '$2y$13$7rjR1LENH8hoPCiqWhCk7uNLBE2nNC7bGAgWAy6fO/Aa0b8sGGwgK', 'default', 'ROLE_USER', 'ACTIVE', 13),
-(14, 'prueba5', 'prueba5@gmail.com', '$2y$13$IXnsJErSNNt1A2HP2oU4Ouj8gfJL3PJUbd7Ajnp4dhQHHyy.NC3Hm', '\'default\'', '', '', 15),
-(15, 'prueba6', 'prueba6@gmail.com', '$2y$13$/618bAQK4RebmKfC4INzfewzKfN7NnRJdIVXstaCUB7BOVJtyrYB6', 'default', 'ROLE_USER', 'ACTIVE', 16),
-(16, 'prueba7', 'prueba7@gmail.com', '$2y$13$UjEp9CY9JciwrsDmPP2xDejqGHI3KWr5WPX0xhumiir9zMX6k.lFW', 'default', 'ROLE_USER', 'ACTIVE', 17),
-(17, 'prueba8', 'prueba8@gmail.com', '$2y$13$12D9Tg9lRPeFDbwcqC5WP.WlYFEgHMxqODGSvG6BdWdBLN9Ib91aS', 'default', 'ROLE_USER', 'ACTIVE', 18),
-(18, '12345', 'usuario1@gamil.com', '$2y$13$/sps0OxO9ta0neudIqegxuCoyWWCdZP6gInp9UVj6KPvPmkWleIdK', 'default', 'ROLE_USER', 'ACTIVE', 19),
-(20, 'usuario19', 'usuario19@gmail.com', '$2y$13$Ol17E8hys9j/apj1hnTE6OVvc6PC37JGhKlng3rKrAhhpqMKgUv3K', 'default', 'ROLE_USER', 'ACTIVE', 21),
-(21, 'Sagaraque', 'sagaraque@gmail.com', '$2y$13$Gi0m8vb/fCXctHd3pZGFHOfH0T1InNhuS2t2MHcE/kRSVlWdtTeFa', 'default', 'ROLE_USER', 'ACTIVE', 22);
+(1, 'Usuario 1', 'usuario1@gmail.com', '$2y$13$mJabL5oWUfjKPjPhXA7AOutQbTHBgEyrT6ixCTrqEy.cC6RJQqN/2', 'default', 'ROLE_USER', 'ACTIVE', 23);
 
 -- --------------------------------------------------------
 
@@ -554,7 +453,8 @@ INSERT INTO `wishlist` (`id_wishlist`) VALUES
 (18),
 (19),
 (21),
-(22);
+(22),
+(23);
 
 -- --------------------------------------------------------
 
@@ -567,19 +467,6 @@ CREATE TABLE `wishlist_games` (
   `id_wishlist` int(10) UNSIGNED NOT NULL,
   `id_platform` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `wishlist_games`
---
-
-INSERT INTO `wishlist_games` (`id_game`, `id_wishlist`, `id_platform`) VALUES
-(1, 1, 1),
-(1, 3, 1),
-(2, 1, 2),
-(3, 1, 6),
-(4, 1, 3),
-(4, 1, 6),
-(6, 1, 3);
 
 --
 -- Índices para tablas volcadas
@@ -716,7 +603,7 @@ ALTER TABLE `wishlist_games`
 -- AUTO_INCREMENT de la tabla `billing`
 --
 ALTER TABLE `billing`
-  MODIFY `id_billing` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_billing` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `card`
@@ -728,7 +615,7 @@ ALTER TABLE `card`
 -- AUTO_INCREMENT de la tabla `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id_cart` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_cart` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `features`
@@ -758,7 +645,7 @@ ALTER TABLE `media`
 -- AUTO_INCREMENT de la tabla `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id_order` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_order` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `platforms`
@@ -770,13 +657,13 @@ ALTER TABLE `platforms`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_user` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `id_wishlist` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_wishlist` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Restricciones para tablas volcadas
