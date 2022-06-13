@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Cheapkeys | Sobre nosotros {% endblock %}
+
+{% block body %}
+
+<main class="main">
+
+    <section class="history">
+        <div class="history__container">
+            <h2 class="history__title">Nuestra historia</h2>
+            <p class="history__text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fringilla turpis vitae lorem blandit feugiat. Ut sodales semper feugiat. Sed interdum elit lacus, in interdum ante dapibus nec. Nullam elementum pellentesque eros. Integer interdum rhoncus dolor, eget tempor augue tincidunt vitae. Praesent fermentum consectetur lorem non hendrerit. Quisque tempus, sem nec consectetur pulvinar, erat massa facilisis quam, vitae volutpat ipsum dui a nisl.
+
+                Nunc mi eros, consequat sit amet ante nec, elementum bibendum tortor. Nulla suscipit leo a enim vehicula, ut condimentum augue euismod. Ut convallis porttitor purus aliquet tincidunt. Etiam nec quam nulla. Fusce condimentum vitae sapien non commodo. Aliquam iaculis sem quam, vitae mattis lacus tempor at. Duis ante nibh, suscipit nec gravida vestibulum, tristique vitae turpis. Maecenas quis efficitur turpis. 
+            </p>
+        </div>
+        
+        <img src="{{ asset('/static/img/aboutUsHistory.webp') }}" alt="" class="history__img">
+    </section>
+    {# Stats section start #}
+    <section class="stats">
+        <div class="stats__container">
+            {# Stats container start #}
+            <article class="stats__container--stat">
+                <i class="bi bi-bag stats__icon"></i>
+                <p class="stats__text">3M<span class="stats__span">Ventas</span></p>
+            </article>
+            {# Stats container end #}
+            {# Stats container start #}
+            <article class="stats__container--stat">
+                <i class="bi bi-controller stats__icon"></i>
+                <p class="stats__text">80K<span class="stats__span">Productos</span></p>
+            </article>
+            {# Stats container end #}
+            {# Stats container start #}
+            <article class="stats__container--stat">
+                <i class="bi bi-person stats__icon"></i>
+                <p class="stats__text">1.5M<span class="stats__span">Clientes</span></p>
+            </article>
+            {# Stats container end #}
+            {# Stats container start #}
+            <article class="stats__container--stat">
+                <i class="bi bi-search stats__icon"></i>
+                <p class="stats__text">20M<span class="stats__span">Visitas</span></p>
+            </article>
+            {# Stats container end #}
+        </div>
+    </section>
+    {# Stats section end #}
+    <section class="employees">
+         <img src="{{ asset('/static/img/aboutUsEmployee.webp') }}" alt="" class="history__img">
+
+        <div class="history__container">
+            <h2 class="history__title">El equipo de CheapKeys</h2>
+            <p class="history__text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis fringilla turpis vitae lorem blandit feugiat. Ut sodales semper feugiat. Sed interdum elit lacus, in interdum ante dapibus nec. Nullam elementum pellentesque eros. Integer interdum rhoncus dolor, eget tempor augue tincidunt vitae. Praesent fermentum consectetur lorem non hendrerit. Quisque tempus, sem nec consectetur pulvinar, erat massa facilisis quam, vitae volutpat ipsum dui a nisl.
+
+                Nunc mi eros, consequat sit amet ante nec, elementum bibendum tortor. Nulla suscipit leo a enim vehicula, ut condimentum augue euismod. Ut convallis porttitor purus aliquet tincidunt. Etiam nec quam nulla. Fusce condimentum vitae sapien non commodo. Aliquam iaculis sem quam, vitae mattis lacus tempor at. Duis ante nibh, suscipit nec gravida vestibulum, tristique vitae turpis. Maecenas quis efficitur turpis. 
+            </p>
+        </div>
+    </section>
+
+</main>
+
+{% endblock %}

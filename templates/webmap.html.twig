@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Cheapkeys | Mapa web {% endblock %}
+
+{% block body %}
+
+<main class="webmap">
+    <h2 class="webmap__title">Mapa web</h2>
+    <article class="webmap__container">
+        <a href="{{ path('index') }}" class="webmap__link"><i class="bi bi-house webmap__icon"></i> Index</a>
+        <a href="{{ path('cart') }}" class="webmap__link"><i class="bi bi-cart webmap__icon"></i> Carrito</a>
+        <a href="" class="webmap__link"><i class="bi bi-person webmap__icon"></i> Panel de control - datos</a>
+        <a href="" class="webmap__link"><i class="bi bi-heart webmap__icon"></i> Panel de control - wishlist</a>
+        <a href="" class="webmap__link"><i class="bi bi-box2 webmap__icon"></i> Panel de control - pedidos</a>
+        <a href="" class="webmap__link"><i class="bi bi-pencil-square webmap__icon"></i> Panel de control - opiniones</a>
+        <a href="{{ path('contact') }}" class="webmap__link"><i class="bi bi-info-circle webmap__icon"></i> FAQ y Contacto</a>
+        <a href="{{ path('web_map') }}" class="webmap__link"><i class="bi bi-map webmap__icon"></i> Mapa web</a>
+    </article>
+    <article class="webmap__container">
+        <a href="{{ path('category', { 'data':'pc' }) }}" class="webmap__link"><i class="bi bi-pc webmap__icon"></i> Juegos de PC</a>
+        <a href="{{ path('category', { 'data':'playstation' }) }}" class="webmap__link"><i class="bi bi-playstation webmap__icon"></i> Juegos de PlayStation</a>
+        <a href="{{ path('category', { 'data':'xbox' }) }}" class="webmap__link"><i class="bi bi-xbox webmap__icon"></i> Juegos de XBOX</a>
+        <a href="{{ path('category', { 'data':'switch' }) }}" class="webmap__link"><i class="bi bi-nintendo-switch webmap__icon"></i> Juegos de Nintendo</a>
+        <a href="{{ path('category', { 'data':'ofertas' }) }}" class="webmap__link"><i class="bi bi-currency-dollar webmap__icon"></i> Juegos en oferta</a>
+        <a href="{{ path('category', { 'data':'all' }) }}" class="webmap__link"><i class="bi bi-controller webmap__icon"></i> Todos los productos</a>
+        <a href="" class="webmap__link"><i class="bi bi-blockquote-left webmap__icon"></i> Términos y condiciones</a>
+        <a href="" class="webmap__link"><i class="bi bi-incognito webmap__icon"></i> Política de privacidad</a>
+    </article>
+</main>
+
+{% endblock %}
