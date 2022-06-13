@@ -1,9 +1,8 @@
 let checkbox = document.querySelectorAll('.store__checkBox'),
-    container = document.querySelector('.store__container--products'),
+    storeContainerProducts = document.querySelector('.store__container--products'),
     storeContainer = document.querySelector('.store__container--content'),
     select = document.querySelector('.store__select'),
     cardButtons = document.querySelectorAll('.card__button'),
-    cartNum = document.querySelector('.header__cartCant'),
     developerData = [],
     platformData = [],
     pegiData = [],
@@ -16,10 +15,7 @@ let filterButton = document.querySelector('.store__filter'),
     filterMenuBackground = document.querySelector('[class*="main__background"]');
 
 // Paginator variables
-let page = 1,
-    actualPage = document.querySelector('.paginator__actual'),
-    lastPage = document.querySelector('.paginator__last'),
-    pageBtnStore = document.querySelectorAll('[class*="paginator__button"]');
+let pageBtnStore = document.querySelectorAll('.paginator__button--store');
 
 
 // Filters listeners
@@ -92,7 +88,7 @@ function getData(pageValue = 1)
     xhr.send(data);
 
     let loading = setTimeout(()=>{
-        setLoading(container, 'store__loading');
+        setLoading(storeContainerProducts, 'store__loading');
     },200);
 
     xhr.onreadystatechange = ()=>{
@@ -128,8 +124,8 @@ function setError()
     div.appendChild(icon);
     div.appendChild(text);
     
-    container.innerHTML = "";
-    container.appendChild(div);
+    storeContainerProducts.innerHTML = "";
+    storeContainerProducts.appendChild(div);
 }
 
 function displayFiltersMenu(menu, background)
@@ -154,7 +150,7 @@ function hideFiltersMenu(menu, background)
  */
 function listeners()
 {
-    container = document.querySelector('.store__container--products');
+    storeContainerProducts = document.querySelector('.store__container--products');
 
     // Cards button
     cardButtons = document.querySelectorAll('.card__button'),
