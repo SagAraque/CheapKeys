@@ -204,8 +204,8 @@ class CartController extends AbstractController
             ->subject('Registro completado')
             ->htmlTemplate('email.html.twig')
             ->context([
-                'emailTitle' => 'Registro completado.',
-                'emailContent' => 'Gracias por registrarte en CheapKeys, la web de compra de videojuegos de confianza.'
+                'emailTitle' => 'Compra realizada por valor de '. $order->getOrderTotal(). '€',
+                'emailContent' => 'Gracias por comprar en CheapKeys. Para ver los detalles de su pedido acceda al panel de usuario.'
             ]);
 
         $mailer -> send($email);
