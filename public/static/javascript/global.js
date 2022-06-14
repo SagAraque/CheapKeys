@@ -130,7 +130,6 @@ if(pageBtnReviews != 'undefined' && pageBtnReviews != null){
 }
 
 if(pageBtnReviewsUser != 'undefined' && pageBtnReviewsUser != null){
-    console.log(pageBtnReviews);
     pageBtnReviewsUser.forEach(btn => {
         btn.addEventListener('click', ()=>{
             let direction = btn.getAttribute('direction');
@@ -224,6 +223,7 @@ if(productWishlist != 'undefined' && productWishlist != null){
 if(cartDeleteButton != 'undefined' && cartDeleteButton != null){
     cartDeleteButton.forEach(button => {
         button.addEventListener('click', () =>{
+            console.log(button);
             let container = button.parentNode;
             let card = container.parentNode;
             removeGameCart(card);
@@ -738,7 +738,7 @@ function changeCantCart(changeValue, card)
  */
 function getReviews(direction, container, buttons, id = null)
 {
-    direction == 'left'  ?     page -= 1 :     page += 1;
+    direction == 'left' ? page -= 1 : page += 1;
 
     xhr = new XMLHttpRequest();
     xhr.open('GET', id ==  null ? '/ajax/reviews_user?page='+page : '/ajax/reviews?id='+id+'&page='+page, true);
@@ -746,6 +746,7 @@ function getReviews(direction, container, buttons, id = null)
 
     setLoading(container);
     changeButtons(page, buttons[0], buttons[1], lastPage.textContent);
+    actual.innerHTML = page;
 
     xhr.onreadystatechange = ()=>{
         if(xhr.readyState == 4 && xhr.status == 200){
@@ -755,9 +756,7 @@ function getReviews(direction, container, buttons, id = null)
         }
     }
 
-    container.scrollIntoView({
-        behavior:"smooth"
-    });
+    container.scrollIntoView({ behavior:"smooth" });
 }
 
 /**
