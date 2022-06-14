@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Features
  *
  * @ORM\Table(name="features")
- * @ORM\Entity(repositoryClass="App\Repository\FeaturesRepository")
+ * @ORM\Entity@ORM\Entity(repositoryClass="App\Repository\FeaturesRepository")
  */
 class Features
 {
@@ -24,7 +24,7 @@ class Features
     /**
      * @var string
      *
-     * @ORM\Column(name="game_desc", type="text", length=0, nullable=false)
+     * @ORM\Column(name="game_desc", type="text", length=65535, nullable=false)
      */
     private $gameDesc;
 
@@ -50,25 +50,11 @@ class Features
     private $gameStock = '0';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="game_slug", type="text", length=65535, nullable=false)
-     */
-    private $gameSlug;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="game_date", type="date", nullable=false)
      */
     private $gameDate;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="game_state", type="string", length=0, nullable=false)
-     */
-    private $gameState;
 
     /**
      * @var string
@@ -165,18 +151,6 @@ class Features
         return $this;
     }
 
-    public function getGameSlug(): ?string
-    {
-        return $this->gameSlug;
-    }
-
-    public function setGameSlug(string $gameSlug): self
-    {
-        $this->gameSlug = $gameSlug;
-
-        return $this;
-    }
-
     public function getGameDate(): ?\DateTimeInterface
     {
         return $this->gameDate;
@@ -185,18 +159,6 @@ class Features
     public function setGameDate(\DateTimeInterface $gameDate): self
     {
         $this->gameDate = $gameDate;
-
-        return $this;
-    }
-
-    public function getGameState(): ?string
-    {
-        return $this->gameState;
-    }
-
-    public function setGameState(string $gameState): self
-    {
-        $this->gameState = $gameState;
 
         return $this;
     }
@@ -271,11 +233,6 @@ class Features
         $this->gamePegi = $gamePegi;
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->idFeature;
     }
 
 
