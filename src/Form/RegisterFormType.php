@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 class RegisterFormType extends AbstractType
 {
@@ -75,6 +76,18 @@ class RegisterFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Users::class,
+            'constraints' => [
+                new UniqueEntity([
+                    'message' => 'El email ya está en uso',
+                    'entityClass' => Users::class,
+                    'fields' => 'userEmail',
+                ]),
+                new UniqueEntity([
+                    'message' => 'El nombre de usuario ya está en uso',
+                    'entityClass' => Users::class,
+                    'fields' => 'userName',
+                ]),
+            ],
         ]);
     }
 }
