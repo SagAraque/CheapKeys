@@ -9,7 +9,7 @@
     <aside class="control__menu">
         {# User image start #}
         <div class="menu__container">
-            <form class="control__form--img">
+            <form class="control__form--img" method="post" action="{{ path('user_image') }}" enctype="multipart/form-data">
                 <label for="userImage" class="control__label--img">
                     <img src="{{ asset('static/img/users/' ~ app.user.userimg ~ '.webp') }}" alt="" class="control__img">
                     <span class="control__span--img">

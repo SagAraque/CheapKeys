@@ -466,12 +466,13 @@ class AjaxController extends AbstractController
     }
 
     /**
-     * @Route("/ajax/set_user_image")
+     * @Route("/ajax/set_user_image", name="user_image")
      */
     public function userImage(ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
     {
         $img = $request->files;
-        return new Response(1, 200);
+        
+        return new Response(pathinfo($img->getClientOriginalName(), PATHINFO_FILENAME), 200);
     }
 
     /**

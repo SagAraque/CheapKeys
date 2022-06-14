@@ -2,7 +2,7 @@ let buttons = document.querySelectorAll('.control__x'),
     imgFormInput = document.querySelector('.control__input--img');
 
 imgFormInput.addEventListener('change', ()=>{
-    changeImg(imgFormInput);
+    imgFormInput.parentNode.submit();
 });
 
 
