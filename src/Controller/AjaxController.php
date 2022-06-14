@@ -225,7 +225,7 @@ class AjaxController extends AbstractController
             'idPlatform' => $request->get('platform'),
         ));
 
-        if($gamePlatform[0]->getIdFeature()->getGameStock() == 0) return new Response('', 418);
+        if($gamePlatform[0]->getIdFeature()->getGameStock() == 0) return new Response('No hay suficiente stock', 418);
 
         $cart = $doctrine->getRepository(Cart::class)->findBy(array(
             'idUser' => $user->getIdUser(),
@@ -240,7 +240,7 @@ class AjaxController extends AbstractController
 
         $price = $this->getDiscountPrice($gamePlatform[0]);
 
-        $this->setProduct($cart[0], $gamePlatform[0]->getGame(), $gamePlatform[0]->getIdPlatform(), $productCart, $price, $entityManager, $doctrine);
+        $this->setProduct($cart[0], $gamePlatform[0], $productCart, $price, $entityManager, $doctrine);
 
         $count = intval($request->get('cartCount'));
         return new Response($count + 1, 200);
@@ -248,14 +248,14 @@ class AjaxController extends AbstractController
     }
 
 
-    private function setProduct($cart, $game, $platform, $productCart, $price, EntityManagerInterface $entityManager, ManagerRegistry $doctrine)
+    private function setProduct($cart, $gamePlatform, $productCart, $price, EntityManagerInterface $entityManager, ManagerRegistry $doctrine)
     {
         if($productCart == null){
             $newProduct = new CartProducts();
             
             $newProduct -> setIdCart($cart);
-            $newProduct -> setIdGame($game);
-            $newProduct -> setIdPlatform($platform);
+            $newProduct -> setIdGame($gamePlatform -> getGame());
+            $newProduct -> setIdPlatform($gamePlatform -> getIdPlatform());
             $newProduct -> setPrice($price);
 
             $entityManager->persist($newProduct);
@@ -269,18 +269,9 @@ class AjaxController extends AbstractController
             $entityManager->flush($productCart[0]);
         }
 
-        $gamePlatform = $doctrine->getRepository(GamesPlatform::class)->findBy(array(
-            'idPlatform' => $platform->getIdPlatform(),
-            'game' => $game->getIdGame(),
-        ));
-
-        $price = $gamePlatform[0]->getIdFeature()->getGamePrice();
-        $discount = $gamePlatform[0]->getIdFeature()->getGameDiscount();
         $total = $cart->getCartTotal();
-        
-        $priceDiscount = $price - ($price * ($discount / 100));
 
-        $cart->setCartTotal($total + $priceDiscount);
+        $cart->setCartTotal($total + $this -> getDiscountPrice($gamePlatform));
 
         $entityManager->persist($cart);
         $entityManager->flush();
@@ -368,6 +359,7 @@ class AjaxController extends AbstractController
 
         if(count($features) == 0) return new Response("No data", 404);
 
+        // Its necesary to specify the id platforms to avoid errors when we select a filter
         $games = $doctrine->getRepository(GamesPlatform::class)->findByFeatureNoQuery(
             array(
                 "idFeature" => $features, 
