@@ -1,11 +1,17 @@
 {% for reviews in reviews.items %}
 
+    {% set platformIcon = (reviews.idPlatform.platformName == 'switch' ? 'nintendo-switch' : reviews.idPlatform.platformName) %}
+
     <article class="reviews--user">
         <div class="reviews__header">
             {# Review image start #}
             {% for img in media | filter((img) => img.idGame.idGame == reviews.idGame.idGame and img.idPlatform.idPlatform == reviews.idPlatform.idPlatform) %}
                 <img src="{{ asset('static/img/games/' ~ img.idMedia.mediaUrl ~ '.webp') }}" alt="" class="reviews__img--game">
             {% endfor %}
+
+            <span class="control__platform">
+                <i class="{{'bi bi-' ~ platformIcon ~ ' control__icon--platform'}}"></i>
+            </span>
             {# Review image end #}
             <h3 class="reviews__game">{{ reviews.idGame.gameName }}</h3>
             <span class="reviews__cal--user">{{ reviews.reviewCalification }}</span>

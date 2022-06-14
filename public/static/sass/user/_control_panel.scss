@@ -179,7 +179,6 @@
     &__title
     {
         @extend .title25__class;
-        height: min-content;
         width: 100%;
         margin: 20px 0px 0px 0px;
         display: flex;
@@ -210,6 +209,11 @@
         &--primary
         {
             @extend .title__class;
+        }
+
+        &--form
+        {
+            @extend .title25__class;
         }
     }
 

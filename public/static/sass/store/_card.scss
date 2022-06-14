@@ -217,6 +217,10 @@
             cursor: pointer;
             display: none
         }
+        &--closeForm
+        {
+            @extend .card__icon--delete;
+        }
     }
 
     &__platform

@@ -54,7 +54,12 @@
                 </div>
                 {{ form_errors(userNameForm.userName, {'attr': {'class' : 'form__error'}}) }}
                 
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                {# Succes flash message #}
+                {% for flash in app.flashes('successName') %}
+                    <p class="form__success"> {{flash}} </p>
+                {% endfor %}
+
+                <input type="hidden" name="csrf_token" value="{{ csrf_token('APPLE-LISA') }}">
 
             {{ form_end(userNameForm) }}
             {# User name change form end #}
@@ -68,8 +73,13 @@
                     <input type="submit" value="Guardar" class="control__button">
                 </div>
                 {{ form_errors(userMailForm.userEmail, {'attr': {'class' : 'form__error'}}) }}
+
+                {# Succes flash message #}
+                {% for flash in app.flashes('successEmail') %}
+                    <p class="form__success"> {{flash }} </p>
+                {% endfor %}
                 
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token('APPLE-LISA') }}">
 
             {{ form_end(userMailForm) }}
             {# User email change form end #}
@@ -98,15 +108,18 @@
                     </div>
                 </div>
 
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-            
+                <input type="hidden" name="csrf_token" value="{{ csrf_token('APPLE-LISA') }}">
             {{ form_end(userPassForm) }}
             {# User password change form end #}
-
+            
+            {# Error flash message #}
             {% for flash in app.flashes('error') %}
-                <span class="form__error">  
-                    {{flash }}
-                </span>
+                <span class="form__error"> {{flash }} </span>
+            {% endfor %}
+
+            {# Succes flash message #}
+            {% for flash in app.flashes('successPass') %}
+                <p class="form__success"> {{flash }} </p>
             {% endfor %}
         </div>   
     </article>
@@ -115,8 +128,8 @@
     <article class="control__container--full {{ userNewCard.vars.valid ? 'control__container--none' : '' }}">
         {{ form_start(userNewCard, {'attr' : {'action' : path('add_card'), 'class': 'control__form--card' }}) }}
 
-            <i class="bi bi-x card__icon--delete card__icon--closeForm"></i>
-            <h2 class="control__title">Nueva Tarjeta</h2>
+            <i class="bi bi-x card__icon--closeForm"></i>
+            <h2 class="control__title--form">Nueva Tarjeta</h2>
             
             <div class="control__container--card">
                 {{ form_label(userNewCard.cardNumber) }}
@@ -153,8 +166,8 @@
     <article class="control__container--full {{ userNewBilling.vars.valid ? 'control__container--none' : '' }}">
         {{ form_start(userNewBilling, {'attr' : {'action' : path('add_billing_direction'), 'class': 'control__form--billing' }}) }}
 
-            <i class="bi bi-x card__icon--delete card__icon--closeForm"></i>
-            <h2 class="control__title">Nueva dirección</h2>
+            <i class="bi bi-x card__icon--closeForm"></i>
+            <h2 class="control__title--form">Nueva dirección</h2>
 
             <div class="control__container--card">
                 {{ form_label(userNewBilling.billingName) }}
