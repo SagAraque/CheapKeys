@@ -21,6 +21,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Proxies\__CG__\App\Entity\Orders;
 
 class Controller extends AbstractController
 {
@@ -182,7 +183,13 @@ class Controller extends AbstractController
             $user == null ? null : $user -> getIdUser()
         );
 
-        if($numReviews == null){
+        $numSolds = $doctrine -> getRepository(Orders::class) -> checkUserGamesSold(
+            $game[0] -> getIdGame(),
+            $platform -> getIdPlatform(),
+            $user == null ? null : $user -> getIdUser()
+        );
+
+        if($numReviews == null && $numSolds != null){
             $newReview = new Reviews();
             $reviewForm = $this -> createForm(ReviewsType::class, $newReview);
             $reviewForm -> handleRequest($request);
@@ -222,6 +229,7 @@ class Controller extends AbstractController
     public function category($data, Paginator $paginator, ManagerRegistry $doctrine, Request $request, Security $security):Response
     {
         $games = $doctrine -> getRepository(GamesPlatform::class) -> findAllNoQueryByPlatform($data);
+        $countFilters = $games ->getQuery()->getResult();
         $platformFilter = 0;
         
         $paginator->paginate($games, 1, 12);
@@ -236,7 +244,7 @@ class Controller extends AbstractController
         $pegi = [];
         $stock = ["En Stock" => 0, "Sin Stock" => 0];
 
-        foreach ($paginator->getItems() as $game) {
+        foreach ($countFilters as $game) {
             // Get games id
             array_push($gamesId, strval($game->getGame()->getIdGame()));
             // Get platforms id

@@ -167,6 +167,10 @@
         white-space: nowrap;
         margin-left: 50px;
         
+        &:hover{
+            background-color: transparent;
+        }
+        
     }
 
     &__img

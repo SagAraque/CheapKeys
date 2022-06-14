@@ -2,7 +2,7 @@ let checkbox = document.querySelectorAll('.store__checkBox'),
     storeContainerProducts = document.querySelector('.store__container--products'),
     storeContainer = document.querySelector('.store__container--content'),
     select = document.querySelector('.store__select'),
-    cardButtons = document.querySelectorAll('.card__button'),
+    cardButtonsStore = document.querySelectorAll('.card__button--store'),
     developerData = [],
     platformData = [],
     pegiData = [],
@@ -135,7 +135,7 @@ function setError()
  */
 function displayFiltersMenu(menu, background)
 {
-    menu.style.width = '210px';
+    menu.style.width = '230px';
     background.classList.replace('main__background', 'main__background--visible');
 
 }
@@ -163,9 +163,9 @@ function listeners()
     storeContainerProducts = document.querySelector('.store__container--products');
 
     // Cards button
-    cardButtons = document.querySelectorAll('.card__button'),
+    cardButtonsStore = document.querySelectorAll('.card__button--store'),
 
-    cardButtons.forEach(button => {
+    cardButtonsStore.forEach(button => {
         button.addEventListener('click', ()=>{
             let game = button.getAttribute('game');
             let platform = button.getAttribute('platform');

@@ -82,15 +82,9 @@ class ReviewsRepository extends ServiceEntityRepository
 
         $sql =  $em->createQuery(
             'SELECT r FROM App\Entity\Reviews r
-            JOIN App\Entity\Orders o
-            JOIN App\Entity\GameKeys gk
-            WHERE o.idOrder = gk.idOrder 
-            AND r.idUser = :idUser
-            AND r.idPlatform = gk.idPlatform
-            AND r.idGame = gk.idGame
-            AND o.idUser = :idUser
-            AND gk.idPlatform = :idPlatform
-            AND gk.idGame = :idGame'
+            WHERE r.idUser = :idUser
+            AND r.idPlatform = :idPlatform
+            AND r.idGame = :idGame'
         )->setParameter('idUser', $id_user)
         ->setParameter('idPlatform', $id_platform)
         ->setParameter('idGame', $id_game);

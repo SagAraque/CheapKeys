@@ -38,7 +38,14 @@
 
     &__select
     {
+        background-color: var(--background_secondary);
+        padding:2px 10px;
+        color: var(--white);
+        border: none;
+        border-radius: 8px;
+        width: fit-content;
         justify-self: end;
+        cursor: pointer;
     }
 
     &__count
@@ -57,6 +64,7 @@
 
     &__list
     {
+        width: 100%;
         list-style: none;
         color: var(--white);
         padding: 0;
@@ -73,6 +81,7 @@
     &__span
     {
         @extend .text__class;
+        margin-right: 20px;
 
         &--light
         {

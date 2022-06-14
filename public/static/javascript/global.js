@@ -10,7 +10,7 @@ let movileIcon = document.querySelector('.header__icon--menu')
     searchXhr = "";
 
 // Index variables
-let indexCardButton = document.querySelectorAll('.card__button'),
+let indexCardButton = document.querySelectorAll('.card__button--index'),
     indexGallery = document.querySelector('.index__gallery'),
     indexWrapper = document.querySelector('.gallery__wrapper'),
     indexGalleryImg = document.querySelectorAll('.gallery__asset--index'),

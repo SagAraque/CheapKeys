@@ -5,7 +5,6 @@
         <ul class="footer__list">
             <li class="footer__item--title"><strong>CheapKeys</strong></li>
             <li class="footer__item"><a href="{{ path('about_us') }}" class="footer__link">Sobre nosotros</a></li>
-            <li class="footer__item"><a href="{{ path('contact') }}" class="footer__link">Contacto</a></li>
             <li class="footer__item"><a href="{{ path('web_map') }}" class="footer__link">Mapa web</a></li>
         </ul>
         {# Footer list end #}
@@ -13,15 +12,13 @@
         <ul class="footer__list">
             <li class="footer__item--title"><strong>Ayuda</strong></li>
             <li class="footer__item"><a href="{{ path('contact') }}" class="footer__link">FAQ</a></li>
-            <li class="footer__item"><a href="" class="footer__link">Terminos y condiciones</a></li>
-            <li class="footer__item"><a href="" class="footer__link">Política y privacidad</a></li>
+            <li class="footer__item"><a href="{{ path('contact') }}" class="footer__link">Contacto</a></li>
         </ul>
         {# Footer list end #}
         {# Footer list start #}
          <ul class="footer__list">
             <li class="footer__item--title"><strong>Comprar</strong></li>
             <li class="footer__item"><a href="{{ path('contact', {'_fragment': 'como_comprar'}) }}" class="footer__link">Como comprar</a></li>
-            <li class="footer__item"><a href="{{ path('contact', {'_fragment': 'como_activar'}) }}" class="footer__link">Como activar las keys</a></li>
             <li class="footer__item"><a href="{{ path('contact', {'_fragment': 'metodos_pago'}) }}" class="footer__link">Métodos de pago</a></li>
         </ul>
         {# Footer list end #}

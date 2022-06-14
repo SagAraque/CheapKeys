@@ -96,6 +96,7 @@ class GamesPlatformRepository extends ServiceEntityRepository
         return $sql;
     }
 
+
     public function findByFeatureNoQuery($params, $order)
     {
         $index = 0;
@@ -184,7 +185,8 @@ class GamesPlatformRepository extends ServiceEntityRepository
         ->andWhere('gp.game = gk.idGame')
         ->andWhere('gp.idPlatform = gk.idPlatform')
         ->groupBy('gp.idPlatform, gp.game')
-        ->orderBy('COUNT(gk)', 'DESC');
+        ->orderBy('COUNT(gk)', 'DESC')
+        ->setMaxResults(8);
 
         return $sql->getQuery()->getResult();
     }

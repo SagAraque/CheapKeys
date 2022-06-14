@@ -32,7 +32,7 @@
                 </div>
                 {# Card content end #}
             </a>
-            <button class="card__button" game="{{ product.idGame }}" platform="{{ platform.idPlatform }}">
+            <button class="card__button card__button--store" game="{{ product.idGame }}" platform="{{ platform.idPlatform }}">
                 {{feature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito'}}
             </button>
         </div>

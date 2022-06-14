@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Orders;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\Query;
+
 
 /**
  * @extends ServiceEntityRepository<Orders>
@@ -51,6 +51,24 @@ class OrdersRepository extends ServiceEntityRepository
         )->setParameter('id', $id);
 
         return $sql;
+    }
+
+    public function checkUserGamesSold($id_game, $id_platform, $id_user)
+    {
+        $em = $this->getEntityManager();
+
+        $sql =  $em->createQuery(
+            'SELECT o FROM App\Entity\Orders o
+            JOIN App\Entity\CartProducts cp
+            WHERE o.idCart = cp.idCart
+            AND o.idUser = :idUser
+            AND cp.idPlatform = :idPlatform
+            AND cp.idGame = :idGame'
+        )->setParameter('idUser', $id_user)
+        ->setParameter('idPlatform', $id_platform)
+        ->setParameter('idGame', $id_game);
+
+        return $sql->getOneOrNullResult();
     }
 
 //    /**

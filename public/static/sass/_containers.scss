@@ -221,7 +221,7 @@
 {
     @extend .text18__class;
     @include mixin.flex-style($align:center, $justify:center);
-    transition: all 0.4s linear;
+    transition: background-color 0.4s linear;
     width: 100%;
     height: 40px;
     font-weight: 600;

@@ -36,7 +36,7 @@
     }
 
     &__arrow{
-        transition: all 0.25s;
+        transition: background-color 0.25s;
         height: 45px;
         width: 45px;
         border-radius: 100%;
@@ -47,7 +47,7 @@
         cursor: pointer;
 
         &:hover{
-            transition: all 0.25s;
+            transition: background-color 0.25s;
             background-color: var(--background_pink_dark);
         }
     }
@@ -97,7 +97,7 @@
     {
         height: 10px;
         width: 10px;
-        transition: all 0.15s linear;
+        transition: background-color 0.15s linear;
         background-color: var(--background_secondary);
         border: 2px solid var(--background_primary);
         border-radius: 100%;
@@ -175,7 +175,7 @@
             width: 80%;
 
             &:hover{
-                transition: all 0.25s;
+                transition: background-color 0.25s;
                 background-color: var(--background_pink_dark);
             }
         }
@@ -186,7 +186,7 @@
             @include mixin.flex-style($justify:center, $align:center);
 
             &:hover{
-                transition: all 0.25s;
+                transition: background-color 0.25s;
                 background-color: var(--background_pink_dark);
             }
         }

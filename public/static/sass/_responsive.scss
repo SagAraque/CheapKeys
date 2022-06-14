@@ -372,7 +372,12 @@
             &--secondary
             {
                 display: flex;
+                width: 90%;
             }
+        }
+        &__list
+        {
+            width: 90%;
         }
     }
 

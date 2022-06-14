@@ -121,18 +121,3 @@
 </main>
 
 {% endblock %}
-
-
-{% block javascript %}
-    <script>
-    if(window.location.hash){
-        let parent = faqHeader[0].parentNode;
-        let text = parent.querySelector('.faq__answer');
-        text.classList.add('collapsed');
-
-        let anchor = document.querySelectorAll["a[name='como_comprar']"];
-        console.log(anchor)
-    }
-    </script>
-    
-{% endblock %}

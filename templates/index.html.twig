@@ -59,7 +59,7 @@
                     </div>
                     {# Card content end #}
                 </a>
-                <button class="card__button" game="{{ product.idGame }}" platform="{{ platform.idPlatform }}">
+                <button class="card__button card__button--index" game="{{ product.idGame }}" platform="{{ platform.idPlatform }}">
                     {{feature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito'}}
                 </button>
             </div>
@@ -67,7 +67,7 @@
         {% endfor %}
         
     </section>
-    <section class="index__banner">
+    <section class="index__banner  index__banner--1">
 
     </section>
 
@@ -107,7 +107,7 @@
                     </div>
                     {# Card content end #}
                 </a>
-                <button class="card__button" game="{{ product.idGame }}" platform="{{ platform.idPlatform }}">
+                <button class="card__button card__button--index" game="{{ product.idGame }}" platform="{{ platform.idPlatform }}">
                     {{feature.gameStock == 0 ? 'Sin stock' : 'Añadir al carrito'}}
                 </button>
             </div>
@@ -115,7 +115,7 @@
         {% endfor %}
     </section>
 
-    <section class="index__banner">
+    <section class="index__banner index__banner--2">
 
     </section>
 

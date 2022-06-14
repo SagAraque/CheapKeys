@@ -143,7 +143,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
 
         $orders = $doctrine->getRepository(Orders::class)->findAllByUser($user->getIdUser());
-        $paginator -> paginate($orders, 1, 2);
+        $paginator -> paginate($orders, 1, 6);
 
         $ordersId = [];
         $cartsId = [];
@@ -344,7 +344,7 @@ class UserController extends AbstractController
 
         $userReviews = $doctrine -> getRepository(Reviews::class) -> findNoResults($user -> getIdUser() );
 
-        $paginator -> paginate($userReviews, 1, 2);
+        $paginator -> paginate($userReviews, 1, 6);
 
         $gamesId = [];
         $platformsId = [];
