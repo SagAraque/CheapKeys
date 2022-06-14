@@ -50,14 +50,16 @@ class ReviewsRepository extends ServiceEntityRepository
         return $this->findByGame($id_game) -> getResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
 
-    public function findByGameNoResults($id_game)
+    public function findByGameNoResults($id_game, $id_platform)
     {
         $em = $this->getEntityManager();
 
         $sql =  $em->createQuery(
             'SELECT r FROM App\Entity\Reviews r
-             WHERE r.idGame = :value'
-        )->setParameter('value', $id_game);
+             WHERE r.idGame = :game
+             AND r.idPlatform = :platform'
+        )->setParameter('game', $id_game)
+        ->setParameter('platform', $id_platform);
 
         return $sql;
     }
