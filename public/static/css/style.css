@@ -290,7 +290,7 @@ body {
   font-weight: 700;
 }
 
-.title25__class, .keys__title, .contact__title, .card__price, .store__title--secondary, .control__title, .order__title, .wish__title, .billing__title, .pay__title, .control__title--user, .control__title--mobile, .control__icon--collapse, .control__icon--menu {
+.title25__class, .keys__title, .contact__title, .card__price, .store__title--secondary, .control__title--form, .control__title, .order__title, .wish__title, .billing__title, .pay__title, .control__title--user, .control__title--mobile, .control__icon--collapse, .control__icon--menu {
   color: var(--white);
   font-size: var(--title25);
   font-weight: 600;
@@ -320,7 +320,7 @@ body {
   font-weight: initial;
 }
 
-.icon__class, .webmap__icon, .store__filter, .index__arrow, .icon__class--pink, .faq__icon, .card__icon--review, .card__icon--delete, .billing__icon--delete, .pay__icon--delete, .wish__icon--x, .store__icon--close {
+.icon__class, .webmap__icon, .store__filter, .index__arrow, .icon__class--pink, .faq__icon, .card__icon--review, .card__icon--delete, .card__icon--closeForm, .billing__icon--delete, .pay__icon--delete, .wish__icon--x, .store__icon--close {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -331,7 +331,7 @@ body {
   height: min-content;
 }
 
-.icon__class--pink, .faq__icon, .card__icon--review, .card__icon--delete, .billing__icon--delete, .pay__icon--delete, .wish__icon--x, .store__icon--close {
+.icon__class--pink, .faq__icon, .card__icon--review, .card__icon--delete, .card__icon--closeForm, .billing__icon--delete, .pay__icon--delete, .wish__icon--x, .store__icon--close {
   color: var(--background_pink);
 }
 
@@ -1242,7 +1242,6 @@ body {
   cursor: pointer;
 }
 .control__title, .order__title, .wish__title, .billing__title, .pay__title, .control__title--user, .control__title--mobile {
-  height: min-content;
   width: 100%;
   margin: 20px 0px 0px 0px;
   display: flex;
@@ -1955,7 +1954,7 @@ body {
   margin: 0;
   cursor: pointer;
 }
-.card__icon--delete, .billing__icon--delete, .pay__icon--delete, .wish__icon--x {
+.card__icon--delete, .card__icon--closeForm, .billing__icon--delete, .pay__icon--delete, .wish__icon--x {
   position: absolute;
   top: 8px;
   right: 10px;
