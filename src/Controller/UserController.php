@@ -191,13 +191,14 @@ class UserController extends AbstractController
         $userNameForm = $this->createForm(UserNameType::class);
         $userNameForm -> handleRequest($request);
 
-        if($userNameForm->isValid() ){
+        if($userNameForm->isValid() && $this->isCsrfTokenValid('APPLE-LISA', $request -> request -> get('csrf_token')) ){
             $user->setUserName($request->request->get('userName'));
             $entityManager -> persist($user);
             $entityManager ->flush();
 
             $request -> getSession()-> migrate(true);
             $request->overrideGlobals();
+            $this->addFlash('successName', 'Su nombre de usuario ha sido modificado!');
         }
 
         return $this->redirectToRoute('user_control_panel_data', [], 308);
@@ -209,10 +210,11 @@ class UserController extends AbstractController
     public function changeEmail(Request $request, UserAuthenticatorInterface $userAuthenticator, UsersAuthAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
+        $lastUserEmail = $user->getUserEmail();
         $userMailForm = $this->createForm(UserMailType::class, $user);
         $userMailForm -> handleRequest($request);
-
-        if($userMailForm->isValid()){
+        
+        if($userMailForm->isValid() && $this->isCsrfTokenValid('APPLE-LISA', $request -> request -> get('csrf_token'))){
             $entityManager -> persist($user);
             $entityManager ->flush();
 
@@ -220,6 +222,10 @@ class UserController extends AbstractController
 
             $request -> getSession()-> migrate(true);
             $request->overrideGlobals();
+            $this->addFlash('successEmail', 'Su email ha sido modificado!');
+        }else{
+            $user->setUserEmail($lastUserEmail);
+            $userAuthenticator->authenticateUser($user, $authenticator, $request);
         }
 
         return $this->redirectToRoute('user_control_panel_data', [], 308);
@@ -234,7 +240,7 @@ class UserController extends AbstractController
         $userPassForm = $this->createForm(UserPassType::class, $user);
         $userPassForm -> handleRequest($request);
 
-        if($userPassForm->isValid()){
+        if($userPassForm->isValid() && $this->isCsrfTokenValid('APPLE-LISA', $request -> request -> get('csrf_token'))){
             if($passwordEncoder->isPasswordValid($user, $userPassForm->get('password')->getData())){
                 $newPassword = $passwordEncoder->hashPassword($user, $userPassForm->get('newPass')->getData());
                 $user -> setUserPass($newPassword);
@@ -242,6 +248,7 @@ class UserController extends AbstractController
                 $entityManager ->flush();
                 $request -> getSession()-> migrate(true);
                 $request->overrideGlobals();
+                $this->addFlash('successPass', 'Su contraseña ha sido modificada!');
             }else{
                 $this->addFlash('error', 'La contraseña es incorrecta');
             }  
@@ -265,7 +272,6 @@ class UserController extends AbstractController
             $entityManager -> persist($card);
             $entityManager ->flush();
             $card = new Card();
-            $userNewCard = $this->createForm(CardType::class, $card);
             $request->overrideGlobals();
         }
 
