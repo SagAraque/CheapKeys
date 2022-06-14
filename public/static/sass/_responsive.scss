@@ -148,6 +148,13 @@
 
 @media (max-width: 992px) 
 {
+    .index
+    {
+        &__banner
+        {
+            height: 120px;
+        }
+    }
     .main
     {
         margin-top: 150px;
@@ -935,6 +942,7 @@
             {
                 width: min-content;
                 @include mixin.flex-style($align:center, $justify:space-between, $direction: column);
+                margin: auto;
             }
         }
 

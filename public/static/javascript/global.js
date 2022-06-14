@@ -145,6 +145,10 @@ if(pageBtnReviewsUser != 'undefined' && pageBtnReviewsUser != null){
 
 
  if(indexWrapper != 'undefined' && indexWrapper != null){
+    indexWrapper.addEventListener('touchstart',  (e)=> {
+        wrapGallery(indexGalleryImg, indexWrapper, e.touches[0].pageX, indexPaginatorGallery);
+    });
+
     indexWrapper.addEventListener('dragstart',  (e)=> {
         wrapGallery(indexGalleryImg, indexWrapper, e.pageX, indexPaginatorGallery);
     });
@@ -205,6 +209,10 @@ if(productCartButton != 'undefined' && productCartButton != null){
  * Mobile product gallery wrapper
  */
 if(wrapper != 'undefined' && wrapper != null){
+    wrapper.addEventListener('touchstart',  (e)=> {
+        wrapGallery(wrapperImg, wrapper, e.touches[0].pageX, sliderPaginator);
+    });
+
     wrapper.addEventListener('dragstart',  (e)=> {
         wrapGallery(wrapperImg, wrapper, e.pageX, sliderPaginator);
     });
@@ -429,9 +437,14 @@ function changeButtons(page, btnLeft, btnRight, lastPage)
  */
 function wrapGallery(imgs, wrapper, initialPos, paginator = null)
 {
+    wrapper.addEventListener('touchmove', (e)=>{
+        e.touches[0].pageX > initialPos ? direction = -1 : direction = 1;
+        moveGalleryWrapper(wrapper, imgs, direction, paginator);
+
+    }, {once : true});
+
     wrapper.addEventListener('mousemove', (e)=>{
         e.pageX > initialPos ? direction = -1 : direction = 1;
-
         moveGalleryWrapper(wrapper, imgs, direction, paginator);
 
     }, {once : true});

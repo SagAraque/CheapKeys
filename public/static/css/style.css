@@ -1060,6 +1060,8 @@ body {
   height: 250px;
   margin-top: 40px;
   border-radius: 8px;
+  background-position: center;
+  background-size: cover;
 }
 .index__banner--1 {
   background-image: url("../img/indexBanner1.webp");
@@ -2451,6 +2453,10 @@ body {
   }
 }
 @media (max-width: 992px) {
+  .index__banner {
+    height: 120px;
+  }
+
   .main, .main__form, .product, .cart, .store, .index, .control, .control--orders, .contact, .keys, .webmap {
     margin-top: 150px;
   }
@@ -2941,6 +2947,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    margin: auto;
   }
   .footer__icon {
     margin: 0px 10px;
