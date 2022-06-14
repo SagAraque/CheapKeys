@@ -2,8 +2,6 @@
 
 namespace App\Utils;
 
-use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator as OrmPaginator;
 
 class Paginator

@@ -85,20 +85,19 @@ class FeaturesRepository extends ServiceEntityRepository
 
         $offers == 'true' ? $sql->where('f.gameDiscount > 0') : $sql->where('f.gameDiscount >= 0');
 
+        // Params like pegi or game developer
         foreach ($params as $key => $value) {
             $index++;
             if(count(array_filter($value)) != 0){
                 $sql->andWhere('f.'.$key.' in (:field'.$index.')');
-                
                 $sql->setParameter('field'.$index, $value, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
             }
         }
 
-        if(count(array_filter($stock)) != 2 && count(array_filter($stock)) != 0)
-        {
+        // Where statement for stock filter
+        if(count(array_filter($stock)) != 2 && count(array_filter($stock)) != 0){
             foreach($stock as $value){
                 strcmp($value, "En Stock") ? $query = 'f.gameStock = 0' : $query = 'f.gameStock > 0';
-                    
                 $sql ->andWhere($query);
             }
         }

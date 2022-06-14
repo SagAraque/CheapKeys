@@ -42,7 +42,6 @@
                         {% for img in media | filter((img) => img.idGame == product and img.idPlatform == platform) %}
                             <img src="{{ asset('static/img/games/' ~ img.idMedia.mediaUrl ~ '.webp') }}" alt="" class="card__img">
                         {% endfor %}
-                        {# <img src="{{ asset('static/img/games/'~ media[counter - 1].idMedia.mediaUrl ~'-min.webp') }}" alt="{{ media[counter - 1].idMedia.mediaAlt }}" class="card__img"> #}
                         <span class="card__img--span"><i class="{{'bi bi-' ~ platformIcon ~ ' info__icon--data'}}"></i>{{ platform.platformName }}</span>
                     </div>
                     {# Card image end #}
@@ -91,7 +90,6 @@
                         {% for img in media | filter((img) => img.idGame == product and img.idPlatform == platform) %}
                             <img src="{{ asset('static/img/games/' ~ img.idMedia.mediaUrl ~ '.webp') }}" alt="" class="card__img">
                         {% endfor %}
-                        {# <img src="{{ asset('static/img/games/'~ media[counter - 1].idMedia.mediaUrl ~'-min.webp') }}" alt="{{ media[counter - 1].idMedia.mediaAlt }}" class="card__img"> #}
                         <span class="card__img--span"><i class="{{'bi bi-' ~ platformIcon ~ ' info__icon--data'}}"></i>{{ platform.platformName }}</span>
                     </div>
                     {# Card image end #}

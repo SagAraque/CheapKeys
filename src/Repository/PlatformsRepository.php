@@ -60,12 +60,14 @@ class PlatformsRepository extends ServiceEntityRepository
         ->select('p.idPlatform')
         ->from(Platforms::class, 'p');
 
+        // If platform array is not empty, we add the where statement with the content of that array
         if(count(array_filter($name)) != 0){
             $sql->where('p.platformName in (:name)')
             ->setParameter('name', $name,\Doctrine\DBAL\Connection::PARAM_STR_ARRAY );
             $first = 1;
         }
 
+        // Where statements for pc games, all and offers
         if($platform == 'pc'){
             $query = "p.platformName NOT IN ('playstation', 'xbox', 'switch')";
             $first == 1 ? $sql -> andWhere($query) : $sql->where($query);

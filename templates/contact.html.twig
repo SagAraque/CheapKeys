@@ -114,9 +114,7 @@
             <input type="submit" value="Enviar" class="contact__button">
 
             {% for flash in app.flashes('success') %}
-                <p class="form__success">  
-                    {{flash }}
-                </p>
+                <p class="form__success"> {{flash }} </p>
             {% endfor %}
         {{ form_end(form) }}
     </section>
