@@ -153,7 +153,7 @@
         {# Specs container end #}
         {# Reviews container start #}
         <a name="reviews"></a>
-        <section class="reviews" target="{{ game.idGame }}">
+        <section class="reviews" game="{{ game.idGame }}" platform="{{ features.idPlatform.idPlatform }}">
             <div class="reviews__container--title">
                 <h2 class="reviews__title">Opiniones ({{ reviews.total }})</h2>
                 {# Check if variable is null. If so, means that user is not logged in #}

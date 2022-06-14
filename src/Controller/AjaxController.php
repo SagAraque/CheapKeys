@@ -34,7 +34,7 @@ class AjaxController extends AbstractController
     public function reviews(ManagerRegistry $doctrine, Paginator $paginator, Request $request): Response
     {
         $params = $request->query;
-        $reviews = $doctrine->getRepository(Reviews::class)->findByGameNoResults(array("id_game" => $params->get('id'),));
+        $reviews = $doctrine->getRepository(Reviews::class)->findByGameNoResults($params->get('id'), $params->get('platform'));
 
         $page = $params->getInt('page');
         $paginator->paginate($reviews, $page);

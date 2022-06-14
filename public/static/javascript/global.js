@@ -120,10 +120,11 @@ if(reviewsButton != 'undefined' && reviewsButton != null){
 if(pageBtnReviews != 'undefined' && pageBtnReviews != null){
     pageBtnReviews.forEach(btn => {
         btn.addEventListener('click', ()=>{
-            let id = reviewsSection.getAttribute('target');
+            let game = reviewsSection.getAttribute('game');
+            let platform = reviewsSection.getAttribute('platform');
             let direction = btn.getAttribute('direction');
     
-            if (!btn.classList.contains('paginator__button--disabled')) getReviews(direction, reviewsContainer, pageBtnReviews, id);
+            if (!btn.classList.contains('paginator__button--disabled')) getReviews(direction, reviewsContainer, pageBtnReviews, game, platform);
     
         });
     });
@@ -736,12 +737,12 @@ function changeCantCart(changeValue, card)
  * @param {*} buttons  Paginator buttons
  * @param {*} id  Game id. Can be null if you want to load all reviews by user
  */
-function getReviews(direction, container, buttons, id = null)
+function getReviews(direction, container, buttons, id = null, platform = null)
 {
     direction == 'left' ? page -= 1 : page += 1;
 
     xhr = new XMLHttpRequest();
-    xhr.open('GET', id ==  null ? '/ajax/reviews_user?page='+page : '/ajax/reviews?id='+id+'&page='+page, true);
+    xhr.open('GET', id ==  null ? '/ajax/reviews_user?page='+page : '/ajax/reviews?id='+id+'&platform='+platform+'&page='+page, true);
     xhr.send();
 
     setLoading(container);
