@@ -173,7 +173,7 @@ class Controller extends AbstractController
         $features = $doctrine->getRepository(GamesPlatform::class)->findFeature($game[0], $platform);
 
 
-        $reviews = $doctrine->getRepository(Reviews::class)->findByGameNoResults(array("id_game" => $game[0]->getIdGame()));
+        $reviews = $doctrine->getRepository(Reviews::class)->findByGameNoResults($game[0]->getIdGame(), $platform -> getIdPlatform());
 
         // Check if user has reviews of that product. In that case, reviews button and form are not printed
         $numReviews = $doctrine -> getRepository(Reviews::class) -> checkUserReview(
@@ -224,7 +224,7 @@ class Controller extends AbstractController
         $games = $doctrine -> getRepository(GamesPlatform::class) -> findAllNoQueryByPlatform($data);
         $platformFilter = 0;
         
-        $paginator->paginate($games, 1, 8);
+        $paginator->paginate($games, 1, 12);
 
         $cartCount = new CartCount($doctrine, $security);
         $cart = $cartCount->getCount();
