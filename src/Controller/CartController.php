@@ -175,6 +175,7 @@ class CartController extends AbstractController
             $feature = $gamesPlatform[$index]->getIdFeature();
             $feature -> setGameStock($feature -> getGameStock() - $product -> getCant());
 
+            // Product cant = query limit
             $keys = $doctrine->getRepository(GameKeys::class)->findBy(array(
                 'idPlatform' => $product->getIdPlatform(),
                 'idGame' => $product->getIdGame(),
@@ -207,7 +208,7 @@ class CartController extends AbstractController
                 'emailContent' => 'Gracias por registrarte en CheapKeys, la web de compra de videojuegos de confianza.'
             ]);
 
-            $mailer -> send($email);
+        $mailer -> send($email);
 
         return $this->redirectToRoute('index', [], 302);
     }
