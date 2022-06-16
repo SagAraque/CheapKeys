@@ -190,4 +190,13 @@ class GamesPlatformRepository extends ServiceEntityRepository
 
         return $sql->getQuery()->getResult();
     }
+
+    public function getTotalGames()
+    {
+        $em = $this -> getEntityManager();
+        
+        $sql = $em->createQuery('SELECT COUNT(g.game) FROM App\Entity\GamesPlatform g');
+
+        return $sql->getArrayResult();
+    }
 }

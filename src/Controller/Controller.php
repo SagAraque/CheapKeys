@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Proxies\__CG__\App\Entity\Orders;
+use App\Entity\Orders;
 
 class Controller extends AbstractController
 {

@@ -1,0 +1,46 @@
+@use '../mixins' as mixin;
+
+.admin
+{
+    &__header
+    {
+        @include mixin.flex-style($justify:center, $align:center);
+        width: 100%;
+        height: 100px;
+        background-color: var(--background_secondary);
+
+        &__img
+        {
+            &--admin
+            {
+                height: 100%;
+            }
+        }
+    }
+
+    &__main
+    {
+        @include mixin.flex-style($justify:center, $align:center);
+        width: 100%;
+        height: calc(100vh - 100px);
+    }
+
+    &__footer
+    {
+        width: 100%;
+        height: 80px;
+        background-color: var(--background_secondary);
+    }
+}
+
+.form
+{
+    &--admin
+    {
+        @extend .card__class;
+        @include mixin.flex-style($direction:column, $align:center);
+        @include mixin.padding(20px);
+        width: 350px;
+
+    }
+}

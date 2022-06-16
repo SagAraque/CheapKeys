@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Users
  *
  * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="EmailIndex", columns={"user_email"}), @ORM\UniqueConstraint(name="user_name", columns={"user_name"})}, indexes={@ORM\Index(name="FK4", columns={"user_wishlist"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
  */
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {

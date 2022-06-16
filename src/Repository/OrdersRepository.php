@@ -70,29 +70,22 @@ class OrdersRepository extends ServiceEntityRepository
 
         return $sql->getOneOrNullResult();
     }
+    
+    public function getTotalOrders()
+    {
+        $em = $this -> getEntityManager();
+        
+        $sql = $em->createQuery('SELECT COUNT(o.idOrder) FROM App\Entity\Orders o');
 
-//    /**
-//     * @return Orders[] Returns an array of Orders objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('o.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        return $sql->getArrayResult();
+    }
 
-//    public function findOneBySomeField($value): ?Orders
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getTotalOrdersSum()
+    {
+        $em = $this -> getEntityManager();
+        
+        $sql = $em->createQuery('SELECT SUM(o.orderTotal) FROM App\Entity\Orders o');
+
+        return $sql->getArrayResult();
+    }
 }

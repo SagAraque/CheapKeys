@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración | Login</title>
+    <link rel="stylesheet" href="{{ asset('/static/css/normalize.css') }}">
+    <link rel="stylesheet" href="{{ asset('/static/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="shortcut icon" href="{{ asset('/static/img/favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+    <header class="admin__header">
+        <img src="{{ asset('/static/img/logo.webp') }}" alt="" class="header__img--admin">
+    </header>
+    <main class="admin__main">
+
+        {{ form_start(form, {'attr' : {'class' : 'form--admin'}}) }}
+
+            <h2 class="form__title">Iniciar sesión</h2>
+
+            {{ form_label(form.userEmail) }}
+            {{ form_errors(form.userEmail) }}
+            {{ form_widget(form.userEmail, {'full_name':'userEmail'}) }}
+            
+            {{ form_label(form.password) }}
+            {{ form_errors(form.password) }}
+            {{ form_widget(form.password, {'full_name':'password'}) }}
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <button type="submit" class="form__button">Login</button>
+
+            {% if error %}
+                <span class="form__error">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+            {% endif %}
+            
+        {{ form_end(form) }}
+
+    </main>
+</body>
+</html>

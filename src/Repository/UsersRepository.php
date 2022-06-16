@@ -39,6 +39,15 @@ class UsersRepository extends ServiceEntityRepository
         }
     }
 
+    public function getTotalUsers()
+    {
+        $em = $this -> getEntityManager();
+        
+        $sql = $em->createQuery('SELECT COUNT(u.idUser) FROM App\Entity\Users u');
+
+        return $sql->getArrayResult();
+    }
+
 //    /**
 //     * @return Users[] Returns an array of Users objects
 //     */

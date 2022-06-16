@@ -219,7 +219,7 @@ body {
   gap: 20px;
 }
 
-.button--full, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
+.button--full, .menu__button, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -261,7 +261,7 @@ body {
   cursor: default;
 }
 
-.card__class, .stats, .keys__container, .faq__header, .contact__form, .reviews__form, .cart__data, .cart__product, .header__card, .index__card, .store__card, .index__card--review, .reviews--user, .order__product, .order__top, .content__billing, .content__pay, .content__data, .control__form--card, .control__form--billing, .control__card, .control__card--wish, .control__menu--mobile, .control__menu, .reviews__card, .info, .card__class--primary, .cart__billing, .cart__pay, .billing__card, .pay__card, .store__container--menu {
+.card__class, .data__container, .form--admin, .stats, .keys__container, .faq__header, .contact__form, .reviews__form, .cart__data, .cart__product, .header__card, .index__card, .store__card, .index__card--review, .reviews--user, .order__product, .order__top, .content__billing, .content__pay, .content__data, .control__form--card, .control__form--billing, .control__card, .control__card--wish, .control__menu--mobile, .control__menu, .reviews__card, .info, .card__class--primary, .cart__billing, .cart__pay, .billing__card, .pay__card, .store__container--menu {
   width: min-content;
   height: min-content;
   background-color: var(--background_secondary);
@@ -284,19 +284,19 @@ body {
   border: 3px solid var(--input_border);
 }
 
-.title__class, .webmap__title, .stats__text, .history__title, .store__title, .control__title--primary, .control__icon--img, .index__title, .desc__title--primary, .reviews__title, .specs__title--primary, .title {
+.title__class, .data__icon, .webmap__title, .stats__text, .history__title, .store__title, .control__title--primary, .control__icon--img, .index__title, .desc__title--primary, .reviews__title, .specs__title--primary, .title {
   color: var(--white);
   font-size: var(--title);
   font-weight: 700;
 }
 
-.title25__class, .keys__title, .contact__title, .card__price, .store__title--secondary, .control__title--form, .control__title, .order__title, .wish__title, .billing__title, .pay__title, .control__title--user, .control__title--mobile, .control__icon--collapse, .control__icon--menu {
+.title25__class, .data__span--num, .menu__user, .keys__title, .contact__title, .card__price, .store__title--secondary, .control__title--form, .control__title, .order__title, .wish__title, .billing__title, .pay__title, .control__title--user, .control__title--mobile, .control__icon--collapse, .control__icon--menu {
   color: var(--white);
   font-size: var(--title25);
   font-weight: 600;
 }
 
-.text18__class, .history__text, .faq__answer, .contact__label, .reviews__label, .card__title, .card__title--search, .card__title--long, .reviews__cal--user, .reviews__cal--userMin, .reviews__game, .wish__icon--cart, .wish__icon--delete, .reviews__input--cal, .button--full, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
+.text18__class, .data__span, .menu__icon, .history__text, .faq__answer, .contact__label, .reviews__label, .card__title, .card__title--search, .card__title--long, .reviews__cal--user, .reviews__cal--userMin, .reviews__game, .wish__icon--cart, .wish__icon--delete, .reviews__input--cal, .button--full, .menu__button, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
   color: var(--white);
   font-size: var(--label);
   font-weight: initial;
@@ -2366,6 +2366,137 @@ body {
 }
 .webmap__icon {
   font-size: var(--title25);
+}
+
+.admin__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100px;
+  background-color: var(--background_secondary);
+}
+.admin__header__img--admin {
+  height: 100%;
+}
+.admin__main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100vh - 100px);
+}
+.admin__footer {
+  width: 100%;
+  height: 80px;
+  background-color: var(--background_secondary);
+}
+
+.form--admin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  width: 350px;
+}
+
+.admin--panel {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 100vh;
+}
+.admin__menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0px;
+  box-sizing: border-box;
+  width: 280px;
+  height: 100vh;
+  background-color: var(--background_secondary);
+}
+
+.menu__img {
+  height: 80px;
+  border-radius: 100px;
+}
+.menu__img--logo {
+  width: 90%;
+  margin-bottom: 30px;
+}
+.menu__user {
+  margin-top: 10px;
+}
+.menu__list {
+  padding: 10px 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  background-color: var(--background_body);
+  list-style: none;
+}
+.menu__icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: fit-content;
+  gap: 20px;
+  margin-left: 50px;
+}
+.menu__link, .menu__link--selected {
+  padding: 10px 0px;
+  box-sizing: border-box;
+  background-color: var(--background_secondary);
+  text-decoration: none;
+}
+.menu__link:hover, .menu__link--selected:hover {
+  transition: background-color 0.25s;
+  background-color: var(--background_pink_dark);
+}
+.menu__link--selected {
+  background-color: var(--background_pink);
+}
+.menu__button {
+  width: 80%;
+  margin-top: auto;
+}
+
+.dashboard {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 20px 0px;
+  box-sizing: border-box;
+  width: 1000px;
+  height: fit-content;
+  min-height: 100vh;
+  background-color: var(--background_body);
+  margin: 0 auto;
+}
+.dashboard__data {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.data__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200px;
+  width: 200px;
+}
+.data__icon {
+  font-size: 80px;
+}
+.data__span--num {
+  font-size: 30px;
+  margin: auto 0;
 }
 
 @media (max-width: 1480px) {
