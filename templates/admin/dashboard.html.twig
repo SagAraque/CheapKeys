@@ -1,1 +1,80 @@
 {% extends 'admin/base_admin.html.twig' %}
+
+{% block content %}
+
+<section class="dashboard">
+            <article class="dashboard__data ">
+                <div class="data__container">
+                    <i class="bi bi-person data__icon"></i>
+                    <span class="data__span">Usuarios</span>
+                    <span class="data__span--num">{{ nUsers[0][1] }}</span>
+                </div>
+                <div class="data__container">
+                    <i class="bi bi-controller data__icon"></i>
+                    <span class="data__span">Juegos</span>
+                    <span class="data__span--num">{{ nGames[0][1] }}</span>
+                </div>
+                <div class="data__container">
+                    <i class="bi bi-cart data__icon"></i>
+                    <span class="data__span">Pedidos</span>
+                    <span class="data__span--num">{{ nOrders[0][1] }}</span>
+                </div>
+                <div class="data__container">
+                    <i class="bi bi-currency-euro data__icon"></i>
+                    <span class="data__span">Ventas</span>
+                    <span class="data__span--num">{{ totalOrders[0][1] }} €</span>
+                </div>
+            </article>
+
+            <article class="dashboard__container">
+                <h2 class="dashboard__title">Últimos pedidos</h2>
+                <table class="dashboard__table">
+                    <thead class="table__head">
+                        <tr class="table__row">
+                            <td class="table__column">Nº</td>
+                            <td class="table__column">Usuario</td>
+                            <td class="table__column">Carrito</td>
+                            <td class="table__column">Total</td>
+                            <td class="table__column">Fecha</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in lastOrders %}
+                        <tr class="table__row">
+                            <td class="table__column">{{ order.idOrder }}</td>
+                            <td class="table__column">{{ order.idUser.idUser }}</td>
+                            <td class="table__column">{{ order.idCart.idCart }}</td>
+                            <td class="table__column">{{ order.orderTotal }}€</td>
+                            <td class="table__column">{{ order.orderDate | date('d-M-Y') }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a href="" class="admin__button">Ver más</a>
+            </article>
+            <article class="dashboard__container">
+                <h2 class="dashboard__title">Juegos sin stock</h2>
+                <table class="dashboard__table">
+                    <thead class="table__head">
+                        <tr class="table__row">
+                            <td class="table__column">Nº</td>
+                            <td class="table__column">Nombre</td>
+                            <td class="table__column">Plataforma</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for game in noStock %}
+                            <tr class="table__row">
+                                <td class="table__column">{{ game.game.idGame }}</td>
+                                <td class="table__column">{{ game.game.gameName }}</td>
+                                <td class="table__column">{{ game.idPlatform.platformName }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <a href="" class="admin__button">Añadir stock</a>
+            </article>
+        </section>
+    </main>
+
+{% endblock %}

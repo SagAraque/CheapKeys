@@ -20,46 +20,24 @@
             </div>
 
             <ul class="menu__list">
-                <a href="" class="menu__link--selected">
+                <a href="{{ path('admin_dashboard') }}" class="menu__link{{ button == 'dashboard' ? '--selected' : '' }}">
                     <li class="menu__item"><i class="bi bi-layout-text-sidebar-reverse menu__icon">Dashboard</i></li>
                 </a>
-                <a href="" class="menu__link">
+                <a href="{{ path('admin_products') }}" class="menu__link{{ button == 'products' ? '--selected' : '' }}">
                     <li class="menu__item"><i class="bi bi-controller menu__icon">Productos</i></li>
                 </a>
-                <a href="" class="menu__link">
+                <a href="" class="menu__link{{ button == 'orders' ? '--selected' : '' }}">
                     <li class="menu__item"><i class="bi bi-cart menu__icon">Pedidos</i></li>
                 </a>
-                <a href="" class="menu__link">
+                <a href="{{ path('admin_users') }}" class="menu__link{{ button == 'users' ? '--selected' : '' }}">
                     <li class="menu__item"><i class="bi bi-person menu__icon">Usuarios</i></li>
                 </a>
             </ul>
             <a href="{{ path('app_logout') }}" class="menu__button">Cerrar sesión</a>
         </nav>
 
-        <section class="dashboard">
-            <article class="dashboard__data ">
-                <div class="data__container">
-                    <i class="bi bi-person data__icon"></i>
-                    <span class="data__span">Usuarios</span>
-                    <span class="data__span--num">{{ nUsers[0][1] }}</span>
-                </div>
-                <div class="data__container">
-                    <i class="bi bi-controller data__icon"></i>
-                    <span class="data__span">Juegos</span>
-                    <span class="data__span--num">{{ nGames[0][1] }}</span>
-                </div>
-                <div class="data__container">
-                    <i class="bi bi-cart data__icon"></i>
-                    <span class="data__span">Pedidos</span>
-                    <span class="data__span--num">{{ nOrders[0][1] }}</span>
-                </div>
-                <div class="data__container">
-                    <i class="bi bi-currency-euro data__icon"></i>
-                    <span class="data__span">Ventas</span>
-                    <span class="data__span--num">{{ totalOrders[0][1] }} €</span>
-                </div>
-            </article>
-        </section>
-    </main>
+        {% block content %}{% endblock %}
+
+        <script src="{{ asset('static/javascript/admin.js') }}"></script>
 </body>
 </html>

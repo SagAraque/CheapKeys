@@ -86,7 +86,7 @@ class UserController extends AbstractController
             'cards' => $cards,
             'class' => 'control__content--data',
             'menu' => 'data'
-           ]);
+        ]);
 
         $response->setEtag(md5($response->getContent()));
         $response->setPrivate();

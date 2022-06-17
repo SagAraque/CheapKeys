@@ -199,4 +199,29 @@ class GamesPlatformRepository extends ServiceEntityRepository
 
         return $sql->getArrayResult();
     }
+
+    public function getNoStock()
+    {
+        $em = $this -> getEntityManager();
+
+        $sql = $em->createQuery(
+            'SELECT gp FROM App\Entity\GamesPlatform gp
+            JOIN App\Entity\Features f
+            WHERE gp.idFeature = f.idFeature
+            AND f.gameStock = 0'
+        )->setMaxResults(12);
+
+        return $sql -> getResult();
+    }
+
+    public function getAllGamesNoQuery()
+    {
+        $em = $this -> getEntityManager();
+
+        $sql = $em -> createQuery(
+            'SELECT gp FROM App\Entity\GamesPlatform gp'
+        );
+
+        return $sql;
+    }
 }

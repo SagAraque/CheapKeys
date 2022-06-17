@@ -7,6 +7,7 @@
         @include mixin.flex-style($justify:space-between);
         width: 100%;
         min-height: 100vh;
+        position: relative;
     }
 
     &__menu
@@ -16,8 +17,16 @@
         width: 280px;
         height: 100vh;
         background-color: var(--background_secondary);
+        position: sticky;
+        top: 0px
     }
 
+    &__button
+    {
+        @extend .button--full;
+        width: 130px;
+        margin: 10px auto;
+    }
 
 }
 
@@ -81,7 +90,7 @@
 
     &__button
     {
-        @extend .button--full;
+        @extend .admin__button;
         width: 80%;
         margin-top: auto;
     }
@@ -90,18 +99,42 @@
 
 .dashboard
 {
-    @include mixin.flex-style($justify:space-between, $wrap:wrap);
+    @include mixin.flex-style($justify:space-between, $align:start, $wrap:wrap);
     @include mixin.padding(20px 0px);
     width: 1000px;
     height: fit-content;
-    min-height: 100vh;
     background-color: var(--background_body);
     margin: 0 auto;
+    gap:40px;
 
     &__data
     {
         width: 100%;
+        height: fit-content;
         @include mixin.flex-style($justify:space-between, $wrap:wrap);
+    }
+
+    &__container
+    {
+        width: 45%;
+        height: min-content;
+    }
+
+    &__table
+    {
+       width: 100%;
+       color: var(--light_white);
+       border-collapse: collapse; 
+    }
+
+    &__title
+    {
+        @extend .title25__class;
+        @include mixin.padding(10px 5px);
+        width: 100%;
+        background-color: var(--background_secondary);
+        border-radius: 8px;
+        text-align: center;
     }
 }
 
@@ -131,5 +164,183 @@
             font-size: 30px;
             margin: auto 0;
         }
+    }
+}
+
+.table
+{
+    &__column
+    {
+        @include mixin.padding(10px 5px);
+        text-align: start;
+        border-bottom: 1px solid var(--light_white);
+    }
+}
+
+.users
+{
+    @extend .dashboard;
+
+    &__container
+    {
+        @extend .dashboard__container;
+        @include mixin.flex-style($direction:column);
+        gap: 20px;
+
+        &--column
+        {
+            @include mixin.flex-style($direction:column);
+            gap: 10px;
+            margin-top: 10px
+        }
+
+        
+    }
+
+    &__card
+    {
+        @extend .card__class;
+        @include mixin.padding(10px);
+        @include mixin.flex-style($align:center);
+        height: 75px;
+        width: 100%;
+        cursor: pointer;
+    }
+
+    &__img
+    {
+        height: 100%;
+        border-radius: 100%;
+    }
+
+    &__title
+    {
+        @extend .text__class;
+        font-weight: 600;
+        margin: 5px 0 5px 0;
+
+        &--section
+        {
+            @extend .text20__class;
+            @include mixin.padding(5px 0);
+            background-color: var(--background_secondary);
+            border-radius: 8px;
+            margin: 10px 0 20px 0;
+            text-align: center
+        }
+    }
+
+    &__span
+    {
+        font-weight: 400;
+    }
+    
+    &__text
+    {
+        @extend .text14__class;
+        margin: 0;
+    }
+
+    &__data
+    {
+        @extend .card__class;
+        @include mixin.padding(10px);
+        @include mixin.flex-style($direction: column);
+        width: 100%;
+        max-height: 300px;
+        overflow-y: auto
+    }
+
+    &__orders
+    {
+        @include mixin.padding(10px);
+        @include mixin.flex-style($direction: column);
+        width: 100%;
+    }
+
+    &__pay
+    {
+        @extend .users__orders;
+    }
+
+    &__directions
+    {
+        @extend .users__orders;
+    }
+
+    &__table
+    {
+        @extend .dashboard__table;
+    }
+}
+
+.search
+{
+    width: 100%;
+    background-color: var(--white);
+    height: 40px;
+    border-radius: 20px;
+}
+
+.card
+{
+    &__container
+    {
+        @include mixin.flex-style($direction:column, $justify:space-between);
+        height: 100%;
+        margin-left: 10px;
+
+        &--icons
+        {
+            @include mixin.flex-style($direction:column, $justify:space-between);
+            height: 100%;
+            margin-left: auto;
+        }
+    }
+
+    &__icon
+    {
+        @extend .text__class;
+        color: var(--white);
+        background-color: var(--background_pink);
+        padding: 2px 5px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+}
+
+.products
+{
+    @extend .users;
+
+    &__container
+    {
+        @extend .users__container;
+
+        &--column
+        {
+            @extend .users__container--column;
+        }
+
+        &--row
+        {
+            @include mixin.flex-style($justify:space-between);
+            gap: 10px;
+        }
+    }
+
+    &__title
+    {
+        @extend .users__title;
+    }
+
+    &__text
+    {
+        @extend .users__text;
+    }
+
+    &__card
+    {
+        @extend .users__card;
     }
 }

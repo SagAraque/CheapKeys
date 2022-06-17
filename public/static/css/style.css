@@ -219,7 +219,7 @@ body {
   gap: 20px;
 }
 
-.button--full, .menu__button, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
+.button--full, .admin__button, .menu__button, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -261,7 +261,7 @@ body {
   cursor: default;
 }
 
-.card__class, .data__container, .form--admin, .stats, .keys__container, .faq__header, .contact__form, .reviews__form, .cart__data, .cart__product, .header__card, .index__card, .store__card, .index__card--review, .reviews--user, .order__product, .order__top, .content__billing, .content__pay, .content__data, .control__form--card, .control__form--billing, .control__card, .control__card--wish, .control__menu--mobile, .control__menu, .reviews__card, .info, .card__class--primary, .cart__billing, .cart__pay, .billing__card, .pay__card, .store__container--menu {
+.card__class, .users__data, .users__card, .products__card, .data__container, .form--admin, .stats, .keys__container, .faq__header, .contact__form, .reviews__form, .cart__data, .cart__product, .header__card, .index__card, .store__card, .index__card--review, .reviews--user, .order__product, .order__top, .content__billing, .content__pay, .content__data, .control__form--card, .control__form--billing, .control__card, .control__card--wish, .control__menu--mobile, .control__menu, .reviews__card, .info, .card__class--primary, .cart__billing, .cart__pay, .billing__card, .pay__card, .store__container--menu {
   width: min-content;
   height: min-content;
   background-color: var(--background_secondary);
@@ -290,31 +290,31 @@ body {
   font-weight: 700;
 }
 
-.title25__class, .data__span--num, .menu__user, .keys__title, .contact__title, .card__price, .store__title--secondary, .control__title--form, .control__title, .order__title, .wish__title, .billing__title, .pay__title, .control__title--user, .control__title--mobile, .control__icon--collapse, .control__icon--menu {
+.title25__class, .data__span--num, .dashboard__title, .menu__user, .keys__title, .contact__title, .card__price, .store__title--secondary, .control__title--form, .control__title, .order__title, .wish__title, .billing__title, .pay__title, .control__title--user, .control__title--mobile, .control__icon--collapse, .control__icon--menu {
   color: var(--white);
   font-size: var(--title25);
   font-weight: 600;
 }
 
-.text18__class, .data__span, .menu__icon, .history__text, .faq__answer, .contact__label, .reviews__label, .card__title, .card__title--search, .card__title--long, .reviews__cal--user, .reviews__cal--userMin, .reviews__game, .wish__icon--cart, .wish__icon--delete, .reviews__input--cal, .button--full, .menu__button, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
+.text18__class, .data__span, .menu__icon, .history__text, .faq__answer, .contact__label, .reviews__label, .card__title, .card__title--search, .card__title--long, .reviews__cal--user, .reviews__cal--userMin, .reviews__game, .wish__icon--cart, .wish__icon--delete, .reviews__input--cal, .button--full, .admin__button, .menu__button, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
   color: var(--white);
   font-size: var(--label);
   font-weight: initial;
 }
 
-.text__class, .keys__text, .keys__text--help, .card__platform, .card__platform--search, .card__text, .store__span, .store__span--light, .order__platform, .order__number, .order__total, .order__text, .order__text--cant, .order__pay, .order__date, .order__span, .wish__text, .control__title--userMobile, .control__icon--platform, .reviews__text, .reviews__text--info, .reviews__text--date, .desc__text, .info__span--discount, .card__discount, .footer__link, .footer__copy, .header__cartCant {
+.text__class, .card__icon, .users__title, .products__title, .keys__text, .keys__text--help, .card__platform, .card__platform--search, .card__text, .store__span, .store__span--light, .order__platform, .order__number, .order__total, .order__text, .order__text--cant, .order__pay, .order__date, .order__span, .wish__text, .control__title--userMobile, .control__icon--platform, .reviews__text, .reviews__text--info, .reviews__text--date, .desc__text, .info__span--discount, .card__discount, .footer__link, .footer__copy, .header__cartCant {
   color: var(--white);
   font-size: var(--text);
   font-weight: initial;
 }
 
-.text14__class, .order__cant--min, .billing__text, .pay__text {
+.text14__class, .users__text, .products__text, .order__cant--min, .billing__text, .pay__text {
   color: var(--white);
   font-size: var(--text14);
   font-weight: initial;
 }
 
-.text20__class, .webmap__link, .faq__question, .cart__button, .card__price--long, .card__price--search, .store__title--list, .info__title, .header__link, .header__link--list, .header__link--m10--list, .header__link--m10, .header__login {
+.text20__class, .users__title--section, .webmap__link, .faq__question, .cart__button, .card__price--long, .card__price--search, .store__title--list, .info__title, .header__link, .header__link--list, .header__link--m10--list, .header__link--m10, .header__login {
   color: var(--white);
   font-size: var(--text20);
   font-weight: initial;
@@ -2406,6 +2406,7 @@ body {
   justify-content: space-between;
   width: 100%;
   min-height: 100vh;
+  position: relative;
 }
 .admin__menu {
   display: flex;
@@ -2416,6 +2417,12 @@ body {
   width: 280px;
   height: 100vh;
   background-color: var(--background_secondary);
+  position: sticky;
+  top: 0px;
+}
+.admin__button, .menu__button {
+  width: 130px;
+  margin: 10px auto;
 }
 
 .menu__img {
@@ -2465,23 +2472,42 @@ body {
   margin-top: auto;
 }
 
-.dashboard {
+.dashboard, .users, .products {
   display: flex;
+  align-items: start;
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 20px 0px;
   box-sizing: border-box;
   width: 1000px;
   height: fit-content;
-  min-height: 100vh;
   background-color: var(--background_body);
   margin: 0 auto;
+  gap: 40px;
 }
 .dashboard__data {
   width: 100%;
+  height: fit-content;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+.dashboard__container, .users__container, .products__container {
+  width: 45%;
+  height: min-content;
+}
+.dashboard__table, .users__table {
+  width: 100%;
+  color: var(--light_white);
+  border-collapse: collapse;
+}
+.dashboard__title {
+  padding: 10px 5px;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: var(--background_secondary);
+  border-radius: 8px;
+  text-align: center;
 }
 
 .data__container {
@@ -2499,6 +2525,105 @@ body {
   margin: auto 0;
 }
 
+.table__column {
+  padding: 10px 5px;
+  box-sizing: border-box;
+  text-align: start;
+  border-bottom: 1px solid var(--light_white);
+}
+
+.users__container, .products__container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.users__container--column, .products__container--column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+.users__card, .products__card {
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 75px;
+  width: 100%;
+  cursor: pointer;
+}
+.users__img {
+  height: 100%;
+  border-radius: 100%;
+}
+.users__title, .products__title {
+  font-weight: 600;
+  margin: 5px 0 5px 0;
+}
+.users__title--section {
+  padding: 5px 0;
+  box-sizing: border-box;
+  background-color: var(--background_secondary);
+  border-radius: 8px;
+  margin: 10px 0 20px 0;
+  text-align: center;
+}
+.users__span {
+  font-weight: 400;
+}
+.users__text, .products__text {
+  margin: 0;
+}
+.users__data {
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.users__orders, .users__directions, .users__pay {
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.search {
+  width: 100%;
+  background-color: var(--white);
+  height: 40px;
+  border-radius: 20px;
+}
+
+.card__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  margin-left: 10px;
+}
+.card__container--icons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  margin-left: auto;
+}
+.card__icon {
+  color: var(--white);
+  background-color: var(--background_pink);
+  padding: 2px 5px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.products__container--row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
 @media (max-width: 1480px) {
   .header__top, .header__bottom {
     width: 1280px;

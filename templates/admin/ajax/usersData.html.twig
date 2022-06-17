@@ -1,0 +1,84 @@
+<div class="users__data">
+    <p class="users__title">Nombre de usuario: <span class="users__span">{{user.userName}} </span></p>
+    <p class="users__title">Email: <span class="users__span"> {{ user.userEmail }} </span></p>
+</div>
+
+<div class="users__orders">
+    <h2 class="users__title--section">Pedidos</h2>
+    <table class="users__table">
+        <thead class="table__head">
+            <tr class="table__row">
+                <td class="table__column">ID</td>
+                <td class="table__column">Carrito</td>
+                <td class="table__column">Facturacion</td>
+                <td class="table__column">Pago</td>
+                <td class="table__column">Total</td>
+                <td class="table__column">Fecha</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr class="table__row">
+                    <td class="table__column">{{ order.idOrder }}</td>
+                    <td class="table__column">{{ order.idUser.idUser }}</td>
+                    <td class="table__column">{{ order.idBilling.idBilling }}</td>
+                    <td class="table__column">{{ order.idCart.idCart }}</td>
+                    <td class="table__column">{{ order.orderTotal }}€</td>
+                    <td class="table__column">{{ order.orderDate | date('d-M-Y') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="users__pay">
+    <h2 class="users__title--section">Métodos de pago</h2>
+    <table class="users__table">
+        <thead class="table__head">
+            <tr class="table__row">
+                <td class="table__column">ID</td>
+                <td class="table__column">Titular</td>
+                <td class="table__column">Numero</td>
+                <td class="table__column">Fecha</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for card in cards %}
+                <tr class="table__row">
+                    <td class="table__column">{{ card.idCard }}</td>
+                    <td class="table__column">{{ card.cardName }}</td>
+                    <td class="table__column">Termina en {{ card.cardNumber | slice((card.cardNumber | length) - 4, card.cardNumber | length) }}</td>
+                    <td class="table__column">{{ card.cardExpire }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="users__directions">
+    <h2 class="users__title--section">Facturación</h2>
+    <table class="users__table">
+        <thead class="table__head">
+            <tr class="table__row">
+                <td class="table__column">ID</td>
+                <td class="table__column">Nombre</td>
+                <td class="table__column">Direccion</td>
+                <td class="table__column">Poblacion</td>
+                <td class="table__column">Provicia</td>
+                <td class="table__column">Teléfono</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in billing %}
+                <tr class="table__row">
+                    <td class="table__column">{{ bill.idBilling }}</td>
+                    <td class="table__column">{{ bill.billingName }}</td>
+                    <td class="table__column">{{ bill.billingDirection }}</td>
+                    <td class="table__column">{{ bill.billingPoblation }}</td>
+                    <td class="table__column">{{ bill.billingProvince }}</td>
+                    <td class="table__column">{{ bill.billingProvince }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
