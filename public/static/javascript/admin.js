@@ -8,10 +8,17 @@ let usersBtn = document.querySelectorAll('.paginator__button--users'),
 //Users variables
 let userContainer = document.querySelector('.users__container--column'),
     usersContainerData = document.querySelector('.users__container--data'),
+    modifyUserButtons = document.querySelectorAll('.modify__user'),
+    deleteUserButtons = document.querySelectorAll('.delete__user'),
+    userFormButton = document.querySelector('.admin__button--form'),
+    usersButtonsMenu = document.querySelectorAll('.users__button--menu'),
     userCard = document.querySelectorAll('.users__card');
 
 //Products variables
 let productsContainer = document.querySelector('.products__container--column');
+
+let  userController = null;
+
 
 
 try {
@@ -33,6 +40,7 @@ async function changePage(direction, container, route)
     let response = await fetch(route+ actualPage);
     await response.text().then((data) => {container.innerHTML = data});
 }
+
 
 /**
  *  Changes the buttons of the pager depending on the current page
@@ -74,10 +82,18 @@ function setLoading(div, elementClass = 'reviews__loading')
 
 async function getUserData(id)
 {
+    if(userController) userController.abort();
+
+    userController = new AbortController();
+
     setLoading(usersContainerData);
 
-    let response = await fetch('/administracion/user_data?id='+id);
-    await response.text().then((data) => {usersContainerData.innerHTML = data}) 
+    let response = await fetch(`/administracion/user_data?id=${id}`, {
+        signal : userController.signal
+    });
+    await response.text().then((data) => {usersContainerData.innerHTML = data}).then(()=>{userController = null});
+    reloadUsersData();
+
 }
 
 
@@ -105,6 +121,32 @@ async function initProductsChangePage(button)
     changeButtons(actualPage, productsBtn[0], productsBtn[1], lastPage.textContent);
 }
 
+function deleteUser(id, container)
+{
+    fetch(`/administracion/user_delete?id=${id}`);
+    let state = container.querySelector('.users__state');
+    state.classList.replace('users__state', 'users__state--red');
+}
+
+function changeUserView(button)
+{
+    let buttonActive = document.querySelector('.users__button--active');
+    let target = button.getAttribute('target');
+    let targetSections = document.querySelectorAll(`[data="${target}"]`);
+    let sections = document.querySelectorAll('.users__container--info');
+
+    sections.forEach(section =>{
+        if(!section.classList.contains('displayNone')) section.classList.add('displayNone');
+    });
+
+    targetSections.forEach(section => {
+        section.classList.remove('displayNone');
+    });
+
+    buttonActive.classList.remove('users__button--active');
+    button.classList.toggle('users__button--active');
+}
+
 // ----- Paginator init functions end ----- //
 
 
@@ -115,6 +157,9 @@ function reloadUsersData()
     userContainer = document.querySelector('.users__container--column');
     usersBtn = document.querySelectorAll('.paginator__button--users');
     userCard = document.querySelectorAll('.users__card');
+    modifyUserButtons = document.querySelectorAll('.modify__user');
+    usersButtonsMenu = document.querySelectorAll('.users__button--menu');
+    deleteUserButtons = document.querySelectorAll('.delete__user');
     reloadPaginator();
     usersListeners();
 }
@@ -146,10 +191,34 @@ function usersListeners()
     });
 
     userCard.forEach(card =>{
-        card.addEventListener('click', () => {
-            let id = card.getAttribute('user');
-            getUserData(id);
+        card.addEventListener('click', (event) => {
+            if(event.target != modifyUserButtons[0] && event.target !=deleteUserButtons[0] ){
+                let id = card.getAttribute('user');
+                getUserData(id);
+            }
         });
+    });
+
+    modifyUserButtons.forEach(modifyButton => {
+        modifyButton.addEventListener('click', ()=>{
+            let id = modifyButton.getAttribute('user');
+            setUserForm(id);
+        });
+    });
+
+    deleteUserButtons.forEach(deleteButton => {
+        deleteButton.addEventListener('click', ()=>{
+            let id = deleteButton.getAttribute('user');
+            let container = deleteButton.parentNode.parentNode;
+            deleteUser(id, container)
+        });
+    });
+
+    usersButtonsMenu.forEach(button => {
+        button.addEventListener('click', ()=>{
+            changeUserView(button);
+        })
+        
     });
 }
 

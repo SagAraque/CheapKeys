@@ -219,7 +219,7 @@ body {
   gap: 20px;
 }
 
-.button--full, .admin__button, .menu__button, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
+.button--full, .admin__button--form, .admin__button, .menu__button, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -261,7 +261,7 @@ body {
   cursor: default;
 }
 
-.card__class, .users__data, .users__card, .products__card, .data__container, .form--admin, .stats, .keys__container, .faq__header, .contact__form, .reviews__form, .cart__data, .cart__product, .header__card, .index__card, .store__card, .index__card--review, .reviews--user, .order__product, .order__top, .content__billing, .content__pay, .content__data, .control__form--card, .control__form--billing, .control__card, .control__card--wish, .control__menu--mobile, .control__menu, .reviews__card, .info, .card__class--primary, .cart__billing, .cart__pay, .billing__card, .pay__card, .store__container--menu {
+.card__class, .users__data, .users__card, .products__card, .orders__card, .data__container, .form--admin, .stats, .keys__container, .faq__header, .contact__form, .reviews__form, .cart__data, .cart__product, .header__card, .index__card, .store__card, .index__card--review, .reviews--user, .order__product, .order__top, .content__billing, .content__pay, .content__data, .control__form--card, .control__form--billing, .control__card, .control__card--wish, .control__menu--mobile, .control__menu, .reviews__card, .info, .card__class--primary, .cart__billing, .cart__pay, .billing__card, .pay__card, .store__container--menu {
   width: min-content;
   height: min-content;
   background-color: var(--background_secondary);
@@ -290,25 +290,25 @@ body {
   font-weight: 700;
 }
 
-.title25__class, .data__span--num, .dashboard__title, .menu__user, .keys__title, .contact__title, .card__price, .store__title--secondary, .control__title--form, .control__title, .order__title, .wish__title, .billing__title, .pay__title, .control__title--user, .control__title--mobile, .control__icon--collapse, .control__icon--menu {
+.title25__class, .form__title--admin, .data__span--num, .dashboard__title, .menu__user, .keys__title, .contact__title, .card__price, .store__title--secondary, .control__title--form, .control__title, .order__title, .wish__title, .billing__title, .pay__title, .control__title--user, .control__title--mobile, .control__icon--collapse, .control__icon--menu {
   color: var(--white);
   font-size: var(--title25);
   font-weight: 600;
 }
 
-.text18__class, .data__span, .menu__icon, .history__text, .faq__answer, .contact__label, .reviews__label, .card__title, .card__title--search, .card__title--long, .reviews__cal--user, .reviews__cal--userMin, .reviews__game, .wish__icon--cart, .wish__icon--delete, .reviews__input--cal, .button--full, .admin__button, .menu__button, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
+.text18__class, .data__span, .menu__icon, .history__text, .faq__answer, .contact__label, .reviews__label, .card__title, .card__title--search, .card__title--long, .reviews__cal--user, .reviews__cal--userMin, .reviews__game, .wish__icon--cart, .wish__icon--delete, .reviews__input--cal, .button--full, .admin__button--form, .admin__button, .menu__button, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
   color: var(--white);
   font-size: var(--label);
   font-weight: initial;
 }
 
-.text__class, .card__icon, .users__title, .products__title, .keys__text, .keys__text--help, .card__platform, .card__platform--search, .card__text, .store__span, .store__span--light, .order__platform, .order__number, .order__total, .order__text, .order__text--cant, .order__pay, .order__date, .order__span, .wish__text, .control__title--userMobile, .control__icon--platform, .reviews__text, .reviews__text--info, .reviews__text--date, .desc__text, .info__span--discount, .card__discount, .footer__link, .footer__copy, .header__cartCant {
+.text__class, .card__icon, .users__button--menu, .users__button--active, .users__title, .products__title, .orders__title, .keys__text, .keys__text--help, .card__platform, .card__platform--search, .card__text, .store__span, .store__span--light, .order__platform, .order__number, .order__total, .order__text, .order__text--cant, .order__pay, .order__date, .order__span, .wish__text, .control__title--userMobile, .control__icon--platform, .reviews__text, .reviews__text--info, .reviews__text--date, .desc__text, .info__span--discount, .card__discount, .footer__link, .footer__copy, .header__cartCant {
   color: var(--white);
   font-size: var(--text);
   font-weight: initial;
 }
 
-.text14__class, .users__text, .products__text, .order__cant--min, .billing__text, .pay__text {
+.text14__class, .users__text, .products__text, .orders__text, .order__cant--min, .billing__text, .pay__text {
   color: var(--white);
   font-size: var(--text14);
   font-weight: initial;
@@ -1090,7 +1090,7 @@ body {
 .gallery__asset--index {
   width: 1280px;
 }
-.form--login {
+.form--login, .users__form {
   width: 80%;
   background-color: var(--background_secondary);
   display: flex;
@@ -1115,7 +1115,7 @@ body {
   transition: background-color 0.25s;
   background-color: var(--background_pink_dark);
 }
-.form__input, .control__input, .control__input--full {
+.form__input, .control__input, .control__input--full, .admin__input {
   width: 100%;
   color: var(--white);
   background-color: var(--background_body);
@@ -1348,12 +1348,12 @@ body {
   cursor: pointer;
   display: none;
 }
-.control__input, .control__input--full {
+.control__input, .control__input--full, .admin__input {
   height: 40px;
   width: 200px;
   margin: 15px 20px 15px 0px;
 }
-.control__input--full {
+.control__input--full, .admin__input {
   width: 100%;
   margin-top: 0;
 }
@@ -2424,6 +2424,9 @@ body {
   width: 130px;
   margin: 10px auto;
 }
+.admin__input {
+  margin: 20px 0px;
+}
 
 .menu__img {
   height: 80px;
@@ -2543,7 +2546,14 @@ body {
   gap: 10px;
   margin-top: 10px;
 }
-.users__card, .products__card {
+.users__container--info {
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.users__card, .products__card, .orders__card {
   padding: 10px;
   box-sizing: border-box;
   display: flex;
@@ -2556,9 +2566,11 @@ body {
   height: 100%;
   border-radius: 100%;
 }
-.users__title, .products__title {
+.users__title, .products__title, .orders__title {
+  display: flex;
+  align-items: center;
   font-weight: 600;
-  margin: 5px 0 5px 0;
+  margin: 5px 10px;
 }
 .users__title--section {
   padding: 5px 0;
@@ -2570,26 +2582,59 @@ body {
 }
 .users__span {
   font-weight: 400;
+  margin-left: 10px;
 }
-.users__text, .products__text {
-  margin: 0;
+.users__text, .products__text, .orders__text {
+  margin: 5px 10px;
 }
 .users__data {
-  padding: 10px;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   width: 100%;
   max-height: 300px;
   overflow-y: auto;
 }
-.users__orders, .users__directions, .users__pay {
+.users__form {
   padding: 10px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
   width: 100%;
 }
+.users__state, .users__state--red {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  margin-left: 10px;
+  background-color: var(--green);
+}
+.users__state--red {
+  background-color: var(--red);
+}
+.users__buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.users__button--menu, .users__button--active {
+  padding: 5px 0px;
+  box-sizing: border-box;
+  transition: filter 0.2s linear;
+  background-color: var(--background_pink);
+  flex-grow: 1;
+  filter: contrast(50%);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+}
+.users__button--menu:hover, .users__button--active:hover {
+  transition: filter 0.2s linear;
+  filter: contrast(100%);
+}
+.users__button--active {
+  background-color: var(--background_pink);
+  color: white;
+  filter: contrast(100%);
+  box-shadow: none;
+}
+
 .search {
   width: 100%;
   background-color: var(--white);
@@ -2619,11 +2664,18 @@ body {
   cursor: pointer;
 }
 
-.products__container--row {
+.products__container--row, .orders__container--row {
   display: flex;
   justify-content: space-between;
   gap: 10px;
 }
+.orders__container--row {
+  align-items: center;
+}
+.form__title--admin {
+  text-align: center;
+}
+
 @media (max-width: 1480px) {
   .header__top, .header__bottom {
     width: 1280px;
@@ -2883,7 +2935,7 @@ body {
     display: none;
   }
 
-  .form--login {
+  .form--login, .users__form {
     max-width: 600px;
   }
 
@@ -3213,7 +3265,7 @@ body {
     width: 100%;
   }
 
-  .form--login {
+  .form--login, .users__form {
     width: calc(100% - 20px);
   }
 
@@ -3242,7 +3294,7 @@ body {
   .control__title--user {
     margin-top: 0;
   }
-  .control__input, .control__input--full {
+  .control__input, .control__input--full, .admin__input {
     width: 100%;
     margin-right: 0;
   }

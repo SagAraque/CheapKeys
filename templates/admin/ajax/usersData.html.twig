@@ -1,9 +1,14 @@
 <div class="users__data">
-    <p class="users__title">Nombre de usuario: <span class="users__span">{{user.userName}} </span></p>
+    <div class="users__buttons">
+        <button class="users__button--menu users__button--active" target="orders">Pedidos</button>
+        <button class="users__button--menu" target="data">Datos</button>
+        <button class="users__button--menu" target="reviews">Reseñas</button>
+    </div>
+    <p class="users__title">Nombre de usuario:  <span class="users__span">{{user.userName}} </span></p>
     <p class="users__title">Email: <span class="users__span"> {{ user.userEmail }} </span></p>
 </div>
 
-<div class="users__orders">
+<div class="users__container--info" data="orders">
     <h2 class="users__title--section">Pedidos</h2>
     <table class="users__table">
         <thead class="table__head">
@@ -31,7 +36,7 @@
     </table>
 </div>
 
-<div class="users__pay">
+<div class="users__container--info displayNone" data="data">
     <h2 class="users__title--section">Métodos de pago</h2>
     <table class="users__table">
         <thead class="table__head">
@@ -55,7 +60,7 @@
     </table>
 </div>
 
-<div class="users__directions">
+<div class="users__container--info displayNone" data="data">
     <h2 class="users__title--section">Facturación</h2>
     <table class="users__table">
         <thead class="table__head">

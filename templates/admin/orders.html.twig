@@ -1,0 +1,17 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block content %}
+
+<section class="products">
+
+    <article class="products__container">
+        <div class="search"></div>
+        <div class="products__container--column">
+            {% include 'admin/ajax/adminOrders.html.twig' %}
+        </div>
+    </article>
+    <article class="products__container"></article>
+
+</section>
+
+{% endblock %}

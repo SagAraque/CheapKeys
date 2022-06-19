@@ -26,6 +26,17 @@
         @extend .button--full;
         width: 130px;
         margin: 10px auto;
+
+        &--form
+        {
+            @extend .button--full;
+        }
+    }
+
+    &__input
+    {
+        @extend .control__input--full;
+        margin: 20px 0px;
     }
 
 }
@@ -194,6 +205,12 @@
             margin-top: 10px
         }
 
+        &--info
+        {
+            @include mixin.padding(10px);
+            @include mixin.flex-style($direction: column);
+            width: 100%;
+        }
         
     }
 
@@ -216,8 +233,9 @@
     &__title
     {
         @extend .text__class;
+        @include mixin.flex-style($align:center);
         font-weight: 600;
-        margin: 5px 0 5px 0;
+        margin: 5px 10px;
 
         &--section
         {
@@ -233,44 +251,86 @@
     &__span
     {
         font-weight: 400;
+        margin-left: 10px;
     }
     
     &__text
     {
         @extend .text14__class;
-        margin: 0;
+        margin: 5px 10px;
     }
 
     &__data
     {
         @extend .card__class;
-        @include mixin.padding(10px);
         @include mixin.flex-style($direction: column);
         width: 100%;
         max-height: 300px;
         overflow-y: auto
     }
 
-    &__orders
-    {
-        @include mixin.padding(10px);
-        @include mixin.flex-style($direction: column);
-        width: 100%;
-    }
-
-    &__pay
-    {
-        @extend .users__orders;
-    }
-
-    &__directions
-    {
-        @extend .users__orders;
-    }
-
     &__table
     {
         @extend .dashboard__table;
+    }
+
+    &__form
+    {
+        @extend .form--login;
+        padding: 10px;
+        width: 100%;
+    }
+
+    &__state
+    {
+        width: 10px;
+        height: 10px;
+        border-radius: 100%;
+        margin-left: 10px;
+        background-color: var(--green);
+
+        &--red
+        {
+            @extend .users__state;
+            background-color: var(--red);
+        }
+    }
+
+    &__buttons
+    {
+        @include mixin.flex-style($justify:space-between);
+        width: 100%;
+
+    }
+
+    &__button
+    {
+        &--menu
+        {
+            @extend .text__class;
+            @include mixin.padding(5px 0px);
+            transition: filter 0.2s linear;
+            background-color: var(--background_pink);
+            flex-grow: 1;
+            filter: contrast(50%);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+
+            &:hover{
+                transition: filter 0.2s linear;
+                filter: contrast(100%);
+            }
+        }
+
+        &--active
+        {
+            @extend .users__button--menu;
+            background-color: var(--background_pink);
+            color: white;
+            filter: contrast(100%);
+            box-shadow: none;
+        }
     }
 }
 
@@ -342,5 +402,44 @@
     &__card
     {
         @extend .users__card;
+    }
+}
+
+.orders
+{
+    &__card
+    {
+        @extend .products__card;
+    }
+
+    &__container
+    {
+        &--row
+        {
+            @extend .products__container--row;
+            align-items: center
+        }
+    }
+
+    &__title
+    {
+        @extend .products__title;
+    }
+
+    &__text
+    {
+        @extend .products__text;
+    }
+}
+
+.form
+{
+    &__title
+    {
+        &--admin
+        {
+            @extend .title25__class;
+            text-align: center;
+        }
     }
 }

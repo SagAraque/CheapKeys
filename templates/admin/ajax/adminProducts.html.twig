@@ -1,0 +1,30 @@
+{% for product in products.items %}
+
+    <div class="products__card">
+        <div class="card__container">
+            <h2 class="products__title">{{ product.game.idGame }} - {{ product.game.gameName }}</h2>
+            <div class="products__container--row">
+                <p class="products__text">{{ product.idPlatform.platformName | capitalize }}</p>
+                <p class="products__text">{{ product.idFeature.gamePrice }}€</p>
+                <p class="products__text">Stock: {{ product.idFeature.gameStock }}</p>
+            </div>
+        </div>
+        <div class="card__container--icons">
+            <i class="bi bi-trash card__icon"></i>
+            <i class="bi bi-pencil card__icon"></i>
+        </div>
+    </div>
+
+{% endfor %}
+{% if products.total != 0 %}
+    <div class="reviews__paginator">
+    {# Check if last page of paginator is different 1 #}
+    {% if products.lastPage > 1 %}
+        <i class="bi bi-chevron-left paginator__button--disabled paginator__button--products" direction="left"></i>
+        <span class="paginator__page">
+            Página <span class="paginator__actual">1</span> de <span class="paginator__last">{{ products.lastPage }}</span>
+        </span>
+        <i class="bi bi-chevron-right paginator__button paginator__button--products" direction="right"></i>
+    {% endif %}
+    </div>
+{% endif %}

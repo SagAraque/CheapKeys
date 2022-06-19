@@ -88,4 +88,11 @@ class OrdersRepository extends ServiceEntityRepository
 
         return $sql->getArrayResult();
     }
+
+    public function allOrdersNoQuery()
+    {
+        $em = $this -> getEntityManager();
+
+        return $em -> createQuery('SELECT o FROM App\Entity\Orders o');
+    }
 }

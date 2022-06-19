@@ -23,6 +23,7 @@ security:
             pattern: ^/administracion/
             custom_authenticator:
                 - App\Security\AdminAuthAuthenticator
+            user_checker: App\Security\UserChecker
         main:
             lazy: true
             remember_me:
@@ -33,6 +34,7 @@ security:
                 path: app_logout
             custom_authenticator:
                 - App\Security\UsersAuthAuthenticator
+            user_checker: App\Security\UserChecker
         
 
 

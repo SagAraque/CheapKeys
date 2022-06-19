@@ -15,6 +15,8 @@ use App\Entity\Orders;
 use App\Utils\Paginator;
 use App\Entity\Card;
 use App\Entity\Billing;
+use App\Form\AdminUsersType;
+use Doctrine\ORM\EntityManagerInterface;
 
 class AdminController extends AbstractController
 {
@@ -89,7 +91,7 @@ class AdminController extends AbstractController
 
         $paginator -> paginate($games, $request -> get('page'), 8);
 
-        $response = $this -> render('ajax/adminProducts.html.twig', [
+        $response = $this -> render('admin/ajax/adminProducts.html.twig', [
             'products' => $paginator,
         ]);
 
@@ -101,7 +103,17 @@ class AdminController extends AbstractController
      */
     public function adminOrders(Request $request, ManagerRegistry $doctrine, Paginator $paginator): Response
     {
-        
+        $orders = $doctrine -> getRepository(Orders::class) -> allOrdersNoQuery();
+
+        $paginator -> paginate($orders, 1,8);
+
+        $response = $this -> render('admin/orders.html.twig', [
+            'orders' => $paginator,
+            'button' => 'orders'
+        ]);
+
+        return $response;
+
     }
 
     /**
@@ -113,9 +125,25 @@ class AdminController extends AbstractController
 
         $paginator -> paginate($users, 1, 8);
 
+        $id = null;
+
+        foreach ($paginator->getItems() as $firstUser) {
+            $id = $firstUser -> getIdUser();   
+            break;
+        }
+
+        $user = $doctrine -> getRepository(Users::class) -> findBy(array('idUser' => $id));
+        $orders = $doctrine -> getRepository(Orders::class) -> findBy(array('idUser' => $id));
+        $cards = $doctrine -> getRepository(Card::class) -> findBy(array('cardUser' => $id));
+        $billing = $doctrine -> getRepository(Billing::class) -> findBy(array('idUser' => $id));
+
         $response = $this -> render('admin/users.html.twig', [
             'users' => $paginator,
-            'button' => 'users'
+            'button' => 'users',
+            'user' => $user[0],
+            'orders' => $orders,
+            'cards' => $cards,
+            'billing' => $billing
         ]);
 
         return $response;
@@ -130,7 +158,7 @@ class AdminController extends AbstractController
 
         $paginator -> paginate($users, $request -> get('page'), 8);
 
-        $response = $this -> render('ajax/adminUsers.html.twig', [
+        $response = $this -> render('admin/ajax/adminUsers.html.twig', [
             'users' => $paginator,
         ]);
 
@@ -156,5 +184,37 @@ class AdminController extends AbstractController
         ]);
 
         return $response;
+    }
+
+    /**
+     * @Route("/administracion/modify_user")
+     */
+    public function modifyUser(Request $request, ManagerRegistry $doctrine): Response
+    {
+        $id = $request -> get('user');
+        $user = $doctrine -> getRepository(Users::class) -> find($id);
+
+
+        $userForm = $this -> createForm(AdminUsersType::class, $user);
+
+        return $this -> render('admin/ajax/usersForm.html.twig',[
+            'adminUserForm' => $userForm -> createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/administracion/user_delete")
+     */
+    public function deleteUser(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager): Response
+    {
+        $id = $request -> get('id');
+        $user = $doctrine -> getRepository(Users::class) -> find($id);
+
+        $user -> setUserState('DELETED');
+        $entityManager -> persist($user);
+        $entityManager -> flush();
+
+        return new Response('', 200);
+        
     }
 }
