@@ -5,12 +5,24 @@
 <section class="products">
 
     <article class="products__container">
-        <div class="search"></div>
+
+        <div class="products__container--top">
+            <div class="search">
+                <input type="text" name="search" placeholder="Buscar..." class="search__input search__input--products">
+                <i class="bi bi-search search__icon"></i>
+            </div>
+            <a href="{{ path('admin_add_product') }}" class="card__link">
+                <i class="bi bi-plus admin__icon"></i>
+            </a>
+        </div>
+        
         <div class="products__container--column">
             {% include 'admin/ajax/adminProducts.html.twig' %}
         </div>
     </article>
-    <article class="products__container"></article>
+    <article class="products__container products__container--data">
+            {% include 'admin/ajax/gameData.html.twig' %}
+    </article>
 
 </section>
 

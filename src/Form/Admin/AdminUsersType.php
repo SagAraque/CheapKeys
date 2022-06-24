@@ -74,10 +74,11 @@ class AdminUsersType extends AbstractType
                        'class' => 'admin__input', 
                     ]
                 ],
+                'required' => false,
+                'mapped'=>false,
                 'first_options'  => ['label' => 'Nueva contraseña', 'label_attr' =>['class' => 'control__label'],],
                 'second_options' => ['label' => 'Repetir contraseña', 'label_attr' =>['class' => 'control__label'],],
                 'constraints' => [
-                    new NotBlank(),
                     new Length(['min' => 6, 'max' => 16])
                 ]
             ])
@@ -93,6 +94,20 @@ class AdminUsersType extends AbstractType
                  'choices' => [
                     'ROLE_USER' => 'ROLE_USER',
                     'ROLE_ADMIN' => 'ROLE_ADMIN'
+                 ]
+            ])
+            ->add('userState', ChoiceType::class, [
+                'label' => 'Estado',
+                'label_attr' => [
+                    'class' => 'control__label'
+                ],
+                'attr' => [
+                    'class' => 'admin__input'
+                ],
+                 'empty_data' => '',
+                 'choices' => [
+                    'ACTIVE' => 'ACTIVE',
+                    'DELETED' => 'DELETED'
                  ]
             ])
         ;

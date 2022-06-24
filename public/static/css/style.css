@@ -219,7 +219,7 @@ body {
   gap: 20px;
 }
 
-.button--full, .admin__button--form, .admin__button, .menu__button, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
+.button--full, .admin__button--form, .admin__button, .menu__button, .admin__button--textarea, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -261,7 +261,7 @@ body {
   cursor: default;
 }
 
-.card__class, .users__data, .users__card, .products__card, .orders__card, .data__container, .form--admin, .stats, .keys__container, .faq__header, .contact__form, .reviews__form, .cart__data, .cart__product, .header__card, .index__card, .store__card, .index__card--review, .reviews--user, .order__product, .order__top, .content__billing, .content__pay, .content__data, .control__form--card, .control__form--billing, .control__card, .control__card--wish, .control__menu--mobile, .control__menu, .reviews__card, .info, .card__class--primary, .cart__billing, .cart__pay, .billing__card, .pay__card, .store__container--menu {
+.card__class, .users__form, .users__data, .orders__data, .products__data, .users__card, .products__card, .orders__card, .data__container, .form--admin, .stats, .keys__container, .faq__header, .contact__form, .reviews__form, .cart__data, .cart__product, .header__card, .index__card, .store__card, .index__card--review, .reviews--user, .order__product, .order__top, .content__billing, .content__pay, .content__data, .control__form--card, .control__form--billing, .control__card, .control__card--wish, .control__menu--mobile, .control__menu, .reviews__card, .info, .card__class--primary, .cart__billing, .cart__pay, .billing__card, .pay__card, .store__container--menu {
   width: min-content;
   height: min-content;
   background-color: var(--background_secondary);
@@ -284,25 +284,25 @@ body {
   border: 3px solid var(--input_border);
 }
 
-.title__class, .data__icon, .webmap__title, .stats__text, .history__title, .store__title, .control__title--primary, .control__icon--img, .index__title, .desc__title--primary, .reviews__title, .specs__title--primary, .title {
+.title__class, .error__icon, .data__icon, .webmap__title, .stats__text, .history__title, .store__title, .control__title--primary, .control__icon--img, .index__title, .desc__title--primary, .reviews__title, .specs__title--primary, .title {
   color: var(--white);
   font-size: var(--title);
   font-weight: 700;
 }
 
-.title25__class, .form__title--admin, .data__span--num, .dashboard__title, .menu__user, .keys__title, .contact__title, .card__price, .store__title--secondary, .control__title--form, .control__title, .order__title, .wish__title, .billing__title, .pay__title, .control__title--user, .control__title--mobile, .control__icon--collapse, .control__icon--menu {
+.title25__class, .form__title--admin, .data__span--num, .dashboard__title, .menu__user, .admin__icon, .keys__title, .contact__title, .card__price, .store__title--secondary, .control__title--form, .control__title, .order__title, .wish__title, .billing__title, .pay__title, .control__title--user, .control__title--mobile, .control__icon--collapse, .control__icon--menu {
   color: var(--white);
   font-size: var(--title25);
   font-weight: 600;
 }
 
-.text18__class, .data__span, .menu__icon, .history__text, .faq__answer, .contact__label, .reviews__label, .card__title, .card__title--search, .card__title--long, .reviews__cal--user, .reviews__cal--userMin, .reviews__game, .wish__icon--cart, .wish__icon--delete, .reviews__input--cal, .button--full, .admin__button--form, .admin__button, .menu__button, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
+.text18__class, .error__text, .search__icon, .search__input, .data__span, .menu__icon, .history__text, .faq__answer, .contact__label, .reviews__label, .card__title, .card__title--search, .card__title--long, .reviews__cal--user, .reviews__cal--userMin, .reviews__game, .wish__icon--cart, .wish__icon--delete, .reviews__input--cal, .button--full, .admin__button--form, .admin__button, .menu__button, .admin__button--textarea, .keys__button, .contact__button, .card__button, .order__button--min, .order__button, .control__button, .order__button--external, .control__button--menu, .control__button--wish, .reviews__button, .info__button, .control__link, .form__button, .info__button--wish, .info__button--buy, .paginator__button, .paginator__button--wish, .paginator__button--orders, .paginator__button--disabled {
   color: var(--white);
   font-size: var(--label);
   font-weight: initial;
 }
 
-.text__class, .card__icon, .users__button--menu, .users__button--active, .users__title, .products__title, .orders__title, .keys__text, .keys__text--help, .card__platform, .card__platform--search, .card__text, .store__span, .store__span--light, .order__platform, .order__number, .order__total, .order__text, .order__text--cant, .order__pay, .order__date, .order__span, .wish__text, .control__title--userMobile, .control__icon--platform, .reviews__text, .reviews__text--info, .reviews__text--date, .desc__text, .info__span--discount, .card__discount, .footer__link, .footer__copy, .header__cartCant {
+.text__class, .card__icon, .users__button--menu, .orders__button--menu, .products__button--menu, .users__button--active, .orders__button--active, .products__button--active, .users__title, .products__title, .orders__title, .keys__text, .keys__text--help, .card__platform, .card__platform--search, .card__text, .store__span, .store__span--light, .order__platform, .order__number, .order__total, .order__text, .order__text--cant, .order__pay, .order__date, .order__span, .wish__text, .control__title--userMobile, .control__icon--platform, .reviews__text, .reviews__text--info, .reviews__text--date, .desc__text, .info__span--discount, .card__discount, .footer__link, .footer__copy, .header__cartCant {
   color: var(--white);
   font-size: var(--text);
   font-weight: initial;
@@ -314,7 +314,7 @@ body {
   font-weight: initial;
 }
 
-.text20__class, .users__title--section, .webmap__link, .faq__question, .cart__button, .card__price--long, .card__price--search, .store__title--list, .info__title, .header__link, .header__link--list, .header__link--m10--list, .header__link--m10, .header__login {
+.text20__class, .users__title--section, .orders__title--section, .products__title--section, .webmap__link, .faq__question, .cart__button, .card__price--long, .card__price--search, .store__title--list, .info__title, .header__link, .header__link--list, .header__link--m10--list, .header__link--m10, .header__login {
   color: var(--white);
   font-size: var(--text20);
   font-weight: initial;
@@ -1090,7 +1090,7 @@ body {
 .gallery__asset--index {
   width: 1280px;
 }
-.form--login, .users__form {
+.form--login {
   width: 80%;
   background-color: var(--background_secondary);
   display: flex;
@@ -1115,7 +1115,7 @@ body {
   transition: background-color 0.25s;
   background-color: var(--background_pink_dark);
 }
-.form__input, .control__input, .control__input--full, .admin__input {
+.form__input, .control__input, .control__input--full, .admin__textArea, .admin__input, .admin__input--date {
   width: 100%;
   color: var(--white);
   background-color: var(--background_body);
@@ -1348,12 +1348,12 @@ body {
   cursor: pointer;
   display: none;
 }
-.control__input, .control__input--full, .admin__input {
+.control__input, .control__input--full, .admin__textArea, .admin__input, .admin__input--date {
   height: 40px;
   width: 200px;
   margin: 15px 20px 15px 0px;
 }
-.control__input--full, .admin__input {
+.control__input--full, .admin__textArea, .admin__input, .admin__input--date {
   width: 100%;
   margin-top: 0;
 }
@@ -2420,12 +2420,46 @@ body {
   position: sticky;
   top: 0px;
 }
-.admin__button, .menu__button {
+.admin__button, .menu__button, .admin__button--textarea {
   width: 130px;
   margin: 10px auto;
 }
-.admin__input {
-  margin: 20px 0px;
+.admin__button--textarea {
+  height: fit-content;
+  margin: 0px auto 50px auto;
+}
+.admin__input, .admin__input--date {
+  margin: 15px 0px 20px 0px;
+}
+.admin__input--date {
+  display: flex;
+  justify-content: space-between;
+}
+.admin__input--image {
+  margin: 15px 0px 20px 0px;
+  color: white;
+}
+.admin__textArea {
+  height: 300px;
+  resize: none;
+  margin-bottom: 20px;
+}
+.admin__container--form {
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  gap: 40px;
+}
+.admin__icon {
+  color: var(--white);
+  background-color: var(--background_pink);
+  padding: 5px 8px;
+  border-radius: 8px;
 }
 
 .menu__img {
@@ -2499,7 +2533,7 @@ body {
   width: 45%;
   height: min-content;
 }
-.dashboard__table, .users__table {
+.dashboard__table, .users__table, .orders__table, .products__table {
   width: 100%;
   color: var(--light_white);
   border-collapse: collapse;
@@ -2534,19 +2568,22 @@ body {
   text-align: start;
   border-bottom: 1px solid var(--light_white);
 }
+.table__column--delete {
+  text-align: center;
+}
 
 .users__container, .products__container {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-.users__container--column, .products__container--column {
+.users__container--column, .orders__container--columnBackground, .orders__container--column, .products__container--columnBackground, .products__container--column {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 10px;
 }
-.users__container--info {
+.users__container--info, .products__container--info {
   padding: 10px;
   box-sizing: border-box;
   display: flex;
@@ -2572,7 +2609,7 @@ body {
   font-weight: 600;
   margin: 5px 10px;
 }
-.users__title--section {
+.users__title--section, .orders__title--section, .products__title--section {
   padding: 5px 0;
   box-sizing: border-box;
   background-color: var(--background_secondary);
@@ -2580,14 +2617,14 @@ body {
   margin: 10px 0 20px 0;
   text-align: center;
 }
-.users__span {
+.users__span, .orders__span, .products__span {
   font-weight: 400;
   margin-left: 10px;
 }
 .users__text, .products__text, .orders__text {
   margin: 5px 10px;
 }
-.users__data {
+.users__data, .orders__data, .products__data {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -2596,24 +2633,28 @@ body {
 }
 .users__form {
   padding: 10px;
-  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 60%;
 }
-.users__state, .users__state--red {
+.users__state, .products__state, .users__state--red, .products__state--red {
   width: 10px;
   height: 10px;
   border-radius: 100%;
   margin-left: 10px;
   background-color: var(--green);
 }
-.users__state--red {
+.users__state--red, .products__state--red {
   background-color: var(--red);
 }
-.users__buttons {
+.users__buttons, .orders__buttons, .products__buttons {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
-.users__button--menu, .users__button--active {
+.users__button--menu, .orders__button--menu, .products__button--menu, .users__button--active, .orders__button--active, .products__button--active {
   padding: 5px 0px;
   box-sizing: border-box;
   transition: filter 0.2s linear;
@@ -2624,11 +2665,11 @@ body {
   border: none;
   cursor: pointer;
 }
-.users__button--menu:hover, .users__button--active:hover {
+.users__button--menu:hover, .orders__button--menu:hover, .products__button--menu:hover, .users__button--active:hover, .orders__button--active:hover, .products__button--active:hover {
   transition: filter 0.2s linear;
   filter: contrast(100%);
 }
-.users__button--active {
+.users__button--active, .orders__button--active, .products__button--active {
   background-color: var(--background_pink);
   color: white;
   filter: contrast(100%);
@@ -2636,10 +2677,28 @@ body {
 }
 
 .search {
+  padding: 0 10px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   background-color: var(--white);
   height: 40px;
   border-radius: 20px;
+  overflow: hidden;
+}
+.search__input {
+  height: 100%;
+  flex-grow: 1;
+  border: none;
+  color: black;
+}
+.search__input:focus {
+  outline: none;
+}
+.search__icon {
+  color: black;
 }
 
 .card__container {
@@ -2664,16 +2723,75 @@ body {
   cursor: pointer;
 }
 
+.products__container--columnBackground {
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: var(--background_secondary);
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.2);
+  max-height: 500px;
+  overflow-y: auto;
+}
 .products__container--row, .orders__container--row {
   display: flex;
   justify-content: space-between;
   gap: 10px;
 }
+.products__container--top {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  gap: 10px;
+}
+.products__input--none {
+  display: none;
+}
 .orders__container--row {
   align-items: center;
 }
+.orders__container--columnBackground {
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: var(--background_secondary);
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.2);
+  max-height: 500px;
+  overflow-y: auto;
+}
 .form__title--admin {
   text-align: center;
+  width: 100%;
+  margin: 10px 0 40px 0;
+}
+.form__group {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  margin-bottom: 10px;
+  flex: 1 1 0px;
+}
+.form__group--full {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+  gap: 20px;
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: auto 0;
+}
+.error__icon {
+  color: var(--background_pink);
+}
+.error__text {
+  color: var(--background_pink);
 }
 
 @media (max-width: 1480px) {
@@ -2935,7 +3053,7 @@ body {
     display: none;
   }
 
-  .form--login, .users__form {
+  .form--login {
     max-width: 600px;
   }
 
@@ -3265,7 +3383,7 @@ body {
     width: 100%;
   }
 
-  .form--login, .users__form {
+  .form--login {
     width: calc(100% - 20px);
   }
 
@@ -3294,7 +3412,7 @@ body {
   .control__title--user {
     margin-top: 0;
   }
-  .control__input, .control__input--full, .admin__input {
+  .control__input, .control__input--full, .admin__input, .admin__input--date, .admin__textArea {
     width: 100%;
     margin-right: 0;
   }

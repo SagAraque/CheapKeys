@@ -1,0 +1,44 @@
+<div class="orders__data">
+    <div class="orders__buttons">
+        <button class="orders__button--menu orders__button--active" target="data">Datos</button>
+        <button class="orders__button--menu" target="keys">Productos</button>
+    </div>
+    <p class="orders__title">Pedido:  <span class="orders__span">{{ "%010d" | format(order.idOrder) }}</span></p>
+    <p class="orders__title">Usuario: <span class="orders__span"> {{order.idUser.userName }} </span></p>
+    <p class="orders__title">Fecha: <span class="orders__span"> {{order.orderDate | date('d-m-Y') }} </span></p>
+    <p class="orders__title">Total: <span class="orders__span"> {{order.orderTotal }}€ </span></p>
+</div>
+
+<div class="orders__container--info" data="data">
+    <h2 class="orders__title--section">Método de pago</h2>
+
+    <div class="orders__container--columnBackground">
+        <p class="orders__title">Titular: <span class="orders__span">{{ order.idCard.cardName }}</span> </p>
+        <p class="orders__title">Número: <span class="orders__span">{{ order.idCard.cardNumber }}</span> </p>
+        <p class="orders__title">Fecha: <span class="orders__span">{{ order.idCard.cardExpire }}</span> </p>
+    </div>
+</div>
+
+<div class="orders__container--info" data="data">
+    <h2 class="orders__title--section">Facturación</h2>
+
+    <div class="orders__container--columnBackground">
+        <p class="orders__title">Nombre: <span class="orders__span">{{ order.idBilling.billingName }}</span> </p>
+        <p class="orders__title">Dirección: <span class="orders__span">{{ order.idBilling.billingDirection }}</span> </p>
+        <p class="orders__title">CP: <span class="orders__span">{{ order.idBilling.billingPostal }}</span> </p>
+        <p class="orders__title">Población: <span class="orders__span">{{ order.idBilling.billingPoblation }}</span> </p>
+        <p class="orders__title">Provincia: <span class="orders__span">{{ order.idBilling.billingProvince }}</span> </p>
+        <p class="orders__title">Teléfono: <span class="orders__span">{{ order.idBilling.billinTlfo }}</span> </p>
+
+    </div>
+</div>
+
+<div class="orders__container--info displayNone" data="keys">
+    <h2 class="orders__title--section">Productos</h2>
+
+    <div class="orders__container--columnBackground">
+
+
+    </div>
+</div>
+

@@ -8,11 +8,23 @@
         </div>
         <div class="card__container--icons">
             <i class="bi bi-trash card__icon delete__user" user="{{ user.idUser }}"></i>
-            <i class="bi bi-pencil card__icon modify__user"></i>
+            <a href="{{ path('modify_user', {'user': user.idUser}) }}" class="card__link">
+                <i class="bi bi-pencil card__icon modify__user"></i>
+            </a>
         </div>
     </div>
 
 {% endfor %}
+
+{% if users.total == 0 %}
+
+<div class="error">
+    <i class="bi bi-info-circle error__icon"></i>
+    <p class="error__text">Parece que no encontramos lo que buscas</p>
+</div>
+
+{% endif %}
+
 {% if users.total != 0 %}
     <div class="reviews__paginator">
     {# Check if last page of paginator is different 1 #}

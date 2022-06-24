@@ -1,8 +1,8 @@
 {% for product in products.items %}
 
-    <div class="products__card">
+    <div class="products__card" game="{{product.game.idGame}}" platform="{{ product.idPlatform.idPlatform }}">
         <div class="card__container">
-            <h2 class="products__title">{{ product.game.idGame }} - {{ product.game.gameName }}</h2>
+            <h2 class="products__title">{{ product.game.idGame }} - {{ product.game.gameName }} <span class="products__state{{ product.state == 0 ? '--red' : '' }}"></span></h2>
             <div class="products__container--row">
                 <p class="products__text">{{ product.idPlatform.platformName | capitalize }}</p>
                 <p class="products__text">{{ product.idFeature.gamePrice }}€</p>
@@ -10,13 +10,15 @@
             </div>
         </div>
         <div class="card__container--icons">
-            <i class="bi bi-trash card__icon"></i>
-            <i class="bi bi-pencil card__icon"></i>
+            <i class="bi bi-trash card__icon delete__product" game="{{ product.game.idGame }}" platform="{{ product.idPlatform.idPlatform }}"></i>
+            <a href="{{ path('admin_modify_product', {'game': product.game.idGame, 'platform': product.idPlatform.idPlatform}) }}" class="card__link">
+                <i class="bi bi-pencil card__icon modify__product"></i>
+            </a>
         </div>
     </div>
 
 {% endfor %}
-{% if products.total != 0 %}
+{% if products.total > 1 %}
     <div class="reviews__paginator">
     {# Check if last page of paginator is different 1 #}
     {% if products.lastPage > 1 %}

@@ -1,0 +1,93 @@
+{% set minSpec =  json_decode(game.idFeature.minReq, true) %}
+{% set maxSpec =  json_decode(game.idFeature.maxReq, true) %}
+
+<div class="products__data">
+    <div class="products__buttons">
+        <button class="products__button--menu products__button--active" target="info">Info</button>
+        <button class="products__button--menu" target="desc">Desc</button>
+        <button class="products__button--menu" target="req">Requisitos</button>
+        <button class="products__button--menu" target="keys">Keys</button>
+    </div>
+    <p class="products__title">Juego:  <span class="products__span">{{ game.game.gameName }}</span></p>
+    <p class="products__title">Plataforma: <span class="products__span"> {{game.idPlatform.platformName | capitalize }} </span></p>
+</div>
+
+<div class="products__container--info" data="info">
+    <h2 class="products__title--section">Info</h2>
+
+    <div class="products__container--columnBackground">
+        <p class="products__title">Slug: <span class="products__span">{{ game.game.gameSlug }}</span> </p>
+        <p class="products__title">Fecha: <span class="products__span">{{ game.idFeature.gameDate | date('d-m-Y') }}</span> </p>
+        <p class="products__title">Distribuidor: <span class="products__span">{{ game.idFeature.gameDistributor }}</span> </p>
+        <p class="products__title">Desarrollador: <span class="products__span">{{ game.idFeature.gameDeveloper }}</span> </p>
+        <p class="products__title">Precio: <span class="products__span">{{ game.idFeature.gamePrice }}€</span> </p>
+        <p class="products__title">Descuento: <span class="products__span">{{ game.idFeature.gameDiscount }}%</span> </p>
+        <p class="products__title">Pegi: <span class="products__span">{{ game.idFeature.gamePegi }}</span> </p>
+        <p class="products__title">Valoración: <span class="products__span">{{ game.idFeature.gameValoration }}/10</span> </p>
+    </div>
+</div>
+
+<div class="products__container--info displayNone" data="desc">
+    <h2 class="products__title--section">Descripción</h2>
+
+    <div class="products__container--columnBackground">
+        {{ game.idFeature.gameDesc | raw }}
+    </div>
+</div>
+
+<div class="products__container--info displayNone" data="req">
+    <h2 class="products__title--section">Requisitos mínimos</h2>
+
+    <div class="products__container--columnBackground">
+        {% for key, value in minSpec %}
+            <p class="products__title">{{ key }}: <span class="products__span">{{ value }}</span> </p>
+        {% endfor %}
+    </div>
+    
+</div>
+
+<div class="products__container--info displayNone" data="req">
+    <h2 class="products__title--section">Requisitos máximos</h2>
+
+    <div class="products__container--columnBackground">
+        {% for key, value in maxSpec %}
+            <p class="products__title">{{ key }}: <span class="products__span">{{ value }}</span> </p>
+        {% endfor %}
+    </div>
+
+</div>
+
+<div class="products__container--info displayNone" data="keys">
+    <h2 class="products__title--section">Keys</h2>
+
+    <table class="products__table">
+        <thead class="table__head">
+            <tr class="table__row">
+                <td class="table__column">ID</td>
+                <td class="table__column">Key</td>
+                <td class="table__column">Pedido</td>
+                <td class="table__column">Eliminar</td>
+            </tr>
+        </thead>
+        <tbody class="keys__body">
+            {% for key in keys %}
+                <tr class="table__row">
+                    <td class="table__column">{{ key.idKey }}</td>
+                    <td class="table__column">{{ key.keyValue }}</td>
+                    <td class="table__column">{{ key.idOrder == null ? 'Sin pedido' : key.idOrder.idOrder }}</td>
+                    <td class="table__column table__column--delete">
+                    {% if key.idOrder == null %}
+                        <i class="bi bi-trash card__icon delete__product"></i>
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form action="" class="products__form--keys" enctype="multipart/form-data">
+        <input type="button" for="keys" value="Añadir" class="admin__button">
+        <input type="file" name="keys" id="keys" class="products__input--none">
+        <input type="hidden" name="game" value={{ game.game.idGame }}>
+        <input type="hidden" name="platform" value={{ game.idPlatform.idPlatform }}>
+    </form>
+</div>

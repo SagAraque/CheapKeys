@@ -67,6 +67,7 @@ class WishlistGamesRepository extends ServiceEntityRepository
             WHERE w.idPlatform = g.idPlatform
             AND w.idGame = g.game
             AND w.idWishlist = :wishlist
+            AND g.state = 1
             GROUP BY w.idGame'
         )->setParameter('wishlist', $value);
 

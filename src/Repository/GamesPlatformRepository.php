@@ -48,11 +48,12 @@ class GamesPlatformRepository extends ServiceEntityRepository
         $sql =  $em->createQuery(
             'SELECT f FROM App\Entity\GamesPlatform f
             WHERE f.game = :game
-            AND f.idPlatform = :platform'
+            AND f.idPlatform = :platform
+            AND f.state = 1'
         )->setParameter('platform', $platform)
         ->setParameter('game', $game);
 
-        return $sql->getSingleResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
+        return $sql->getOneOrNullResult(\Doctrine\ORM\Query::HYDRATE_OBJECT);
     }
 
     public function getPlatforms()
@@ -76,20 +77,21 @@ class GamesPlatformRepository extends ServiceEntityRepository
 
         $sql =  $em->createQueryBuilder()
         ->select('g')
-        ->from(GamesPlatform::class, 'g');
+        ->from(GamesPlatform::class, 'g')
+        ->where('g.state = 1');
 
         if($platform == 'pc'){
             $sql->innerJoin(Platforms::class, 'p')
-            ->where('g.idPlatform = p.idPlatform')
+            ->andWhere('g.idPlatform = p.idPlatform')
             ->andWhere("p.platformName NOT IN ('playstation', 'xbox', 'switch')");
         }elseif($platform != 'all' && $platform != 'ofertas'){
             $sql->innerJoin(Platforms::class, 'p')
-            ->where('g.idPlatform = p.idPlatform')
+            ->andWhere('g.idPlatform = p.idPlatform')
             ->andWhere('p.platformName = :platform')
             ->setParameter('platform', $platform);
         }elseif($platform == 'ofertas' ){
             $sql->innerJoin(Features::class, 'f')
-            ->where('g.idFeature = f.idFeature')
+            ->andWhere('g.idFeature = f.idFeature')
             ->andWhere('f.gameDiscount > 0');
         }
 
@@ -106,7 +108,8 @@ class GamesPlatformRepository extends ServiceEntityRepository
         ->select('p')
         ->from(GamesPlatform::class, 'p')
         ->join(Features::class, 'f')
-        ->where('p.idFeature = f.idFeature');
+        ->where('p.idFeature = f.idFeature')
+        ->andWhere('p.state = 1');
 
         foreach ($params as $key => $value) {
             $index++;
@@ -133,7 +136,8 @@ class GamesPlatformRepository extends ServiceEntityRepository
             FROM App\Entity\GamesPlatform gp
             JOIN App\Entity\Games g
             WHERE gp.game = g.idGame
-            AND g.gameName LIKE :word'
+            AND g.gameName LIKE :word
+            AND gp.state = 1'
         )
         ->setParameter('word', '%'.$word.'%')
         ->setMaxResults(6);
@@ -151,6 +155,7 @@ class GamesPlatformRepository extends ServiceEntityRepository
              WHERE w.idWishlist = :wishlist
              AND gp.game = w.idGame
              AND gp.idPlatform = w.idPlatform
+             AND gp.state = 1
              '
         )->setParameter('wishlist', $id);
 
@@ -165,7 +170,8 @@ class GamesPlatformRepository extends ServiceEntityRepository
             'SELECT gp FROM App\Entity\GamesPlatform gp
             JOIN App\Entity\Features f
             WHERE gp.idFeature = f.idFeature
-            AND f.gameDiscount > :min'
+            AND f.gameDiscount > :min
+            AND gp.state = 1'
         )
         ->setParameter('min', strval($min))
         ->setMaxResults(8);
@@ -184,6 +190,7 @@ class GamesPlatformRepository extends ServiceEntityRepository
         ->where('gp.idPlatform = gk.idPlatform')
         ->andWhere('gp.game = gk.idGame')
         ->andWhere('gp.idPlatform = gk.idPlatform')
+        ->andWhere('gp.state = 1')
         ->groupBy('gp.idPlatform, gp.game')
         ->orderBy('COUNT(gk)', 'DESC')
         ->setMaxResults(8);
@@ -195,7 +202,7 @@ class GamesPlatformRepository extends ServiceEntityRepository
     {
         $em = $this -> getEntityManager();
         
-        $sql = $em->createQuery('SELECT COUNT(g.game) FROM App\Entity\GamesPlatform g');
+        $sql = $em->createQuery('SELECT COUNT(g.game) FROM App\Entity\GamesPlatform g WHERE g.state = 1');
 
         return $sql->getArrayResult();
     }
@@ -208,7 +215,8 @@ class GamesPlatformRepository extends ServiceEntityRepository
             'SELECT gp FROM App\Entity\GamesPlatform gp
             JOIN App\Entity\Features f
             WHERE gp.idFeature = f.idFeature
-            AND f.gameStock = 0'
+            AND f.gameStock = 0
+            AND gp.state = 1'
         )->setMaxResults(12);
 
         return $sql -> getResult();
@@ -219,8 +227,24 @@ class GamesPlatformRepository extends ServiceEntityRepository
         $em = $this -> getEntityManager();
 
         $sql = $em -> createQuery(
-            'SELECT gp FROM App\Entity\GamesPlatform gp'
+            'SELECT gp FROM App\Entity\GamesPlatform gp WHERE gp.state = 1 ORDER BY gp.game'
         );
+
+        return $sql;
+    }
+
+    public function searchProducts($searchValue)
+    {
+        $em = $this -> getEntityManager();
+
+        $sql = $em -> createQuery(
+            'SELECT gp FROM App\Entity\GamesPlatform gp
+            JOIN App\Entity\Games g
+            JOIN app\Entity\Platforms p
+            WHERE g.gameName like :gName
+            AND g.idGame = gp.game
+            AND p.idPlatform = gp.idPlatform'
+        )->setParameter('gName', '%'.$searchValue.'%');
 
         return $sql;
     }

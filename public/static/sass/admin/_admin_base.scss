@@ -31,12 +31,60 @@
         {
             @extend .button--full;
         }
+
+        &--textarea
+        {
+            @extend .admin__button;
+            height: fit-content;
+            margin: 0px auto 50px auto;
+        }
     }
 
     &__input
     {
         @extend .control__input--full;
-        margin: 20px 0px;
+        margin: 15px 0px 20px 0px;
+
+        &--date
+        {
+            @extend .admin__input;
+            @include mixin.flex-style($justify:space-between);
+        }
+
+        &--image
+        {
+            margin: 15px 0px 20px 0px;
+            color: white;
+        }
+    }
+
+    &__textArea
+    {
+        @extend .control__input--full;
+        height: 300px;
+        resize: none;
+        margin-bottom: 20px;
+    }
+
+    &__container
+    {
+        &--form
+        {
+            @include mixin.padding(10px);
+            @include mixin.flex-style($justify:center, $align:center, $direction:column);
+            width: 100%;
+            min-height: 100vh;
+            gap: 40px;
+        }
+    }
+
+    &__icon
+    {
+        @extend .title25__class;
+        color:var(--white);
+        background-color: var(--background_pink);
+        padding: 5px 8px;
+        border-radius: 8px;
     }
 
 }
@@ -185,6 +233,10 @@
         @include mixin.padding(10px 5px);
         text-align: start;
         border-bottom: 1px solid var(--light_white);
+        &--delete
+        {
+            text-align: center;
+        }
     }
 }
 
@@ -276,9 +328,10 @@
 
     &__form
     {
-        @extend .form--login;
-        padding: 10px;
-        width: 100%;
+        @extend .card__class;
+        @include mixin.padding(10px);
+        @include mixin.flex-style($justify:space-between, $wrap:wrap);
+        width: 60%;
     }
 
     &__state
@@ -336,10 +389,33 @@
 
 .search
 {
+    @include mixin.padding(0 10px);
+    @include mixin.flex-style($justify:space-between, $align:center);
     width: 100%;
     background-color: var(--white);
     height: 40px;
     border-radius: 20px;
+    overflow: hidden;
+
+    &__input
+    {
+        @extend .text18__class;
+        height: 100%;
+        flex-grow: 1;
+        border: none;
+        color: black;
+
+        &:focus
+        {
+            outline: none;
+        }
+    }
+
+    &__icon
+    {
+        @extend .text18__class;
+        color: black;
+    }
 }
 
 .card
@@ -380,6 +456,17 @@
         &--column
         {
             @extend .users__container--column;
+            
+            &Background
+            {
+                @extend .users__container--column;
+                @include mixin.padding(10px);
+                background-color: var(--background_secondary);
+                border-radius: 8px;
+                box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.2);
+                max-height: 500px;
+                overflow-y: auto;
+            }
         }
 
         &--row
@@ -387,11 +474,29 @@
             @include mixin.flex-style($justify:space-between);
             gap: 10px;
         }
+
+        &--info
+        {
+            @extend .users__container--info;
+        }
+
+        &--top
+        {
+            @include mixin.flex-style($justify:start, $align:center);
+            width: 100%;
+            gap:10px;
+        }
+
     }
 
     &__title
     {
         @extend .users__title;
+
+        &--section
+        {
+            @extend .users__title--section
+        }
     }
 
     &__text
@@ -402,6 +507,62 @@
     &__card
     {
         @extend .users__card;
+    }
+
+    &__data
+    {
+        @extend .users__data;
+    }
+
+    &__buttons
+    {
+        @extend .users__buttons;
+    }
+
+    &__button
+    {
+        &--menu
+        {
+            @extend .users__button--menu;
+        }
+
+        &--active
+        {
+            @extend .users__button--active;
+        }
+    }
+
+    &__title
+    {
+        @extend .users__title;
+    }
+
+    &__span
+    {
+        @extend .users__span;
+    }
+
+    &__table
+    {
+        @extend .users__table;
+    }
+
+    &__input
+    {
+        &--none
+        {
+            display: none;
+        }
+    }
+
+    &__state
+    {
+        @extend .users__state;
+
+        &--red
+        {
+            @extend .users__state--red;
+        }
     }
 }
 
@@ -419,6 +580,22 @@
             @extend .products__container--row;
             align-items: center
         }
+
+        &--column
+        {
+            @extend .users__container--column;
+            
+            &Background
+            {
+                @extend .users__container--column;
+                @include mixin.padding(10px);
+                background-color: var(--background_secondary);
+                border-radius: 8px;
+                box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.2);
+                max-height: 500px;
+                overflow-y: auto;
+            }
+        }
     }
 
     &__title
@@ -430,6 +607,64 @@
     {
         @extend .products__text;
     }
+
+    &__title
+    {
+        @extend .users__title;
+
+        &--section
+        {
+            @extend .users__title--section
+        }
+    }
+
+    &__text
+    {
+        @extend .users__text;
+    }
+
+    &__card
+    {
+        @extend .users__card;
+    }
+
+    &__data
+    {
+        @extend .users__data;
+    }
+
+    &__buttons
+    {
+        @extend .users__buttons;
+    }
+
+    &__button
+    {
+        &--menu
+        {
+            @extend .users__button--menu;
+        }
+
+        &--active
+        {
+            @extend .users__button--active;
+        }
+    }
+
+    &__title
+    {
+        @extend .users__title;
+    }
+
+    &__span
+    {
+        @extend .users__span;
+    }
+
+    &__table
+    {
+        @extend .users__table;
+    }
 }
 
 .form
@@ -440,6 +675,43 @@
         {
             @extend .title25__class;
             text-align: center;
+            width: 100%;
+            margin: 10px 0 40px 0;
         }
+    }
+
+    &__group
+    {
+        @include mixin.flex-style($direction:column);
+        width: auto;
+        margin-bottom: 10px;
+        flex:1 1 0px;
+
+        &--full
+        {
+            @include mixin.flex-style($align:start, $justify:space-between);
+            width: 100%;
+            margin-bottom: 10px;
+            gap:20px;
+        }
+    }
+}
+
+.error
+{
+    @include mixin.flex-style($direction:column, $align:center);
+    width: 100%;
+    margin: auto 0;
+
+    &__icon
+    {
+        @extend .title__class;
+        color: var(--background_pink);
+    }
+
+    &__text
+    {
+        @extend .text18__class;
+        color: var(--background_pink);
     }
 }

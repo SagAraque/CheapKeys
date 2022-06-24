@@ -89,7 +89,7 @@ class Features
      *
      * @ORM\Column(name="game_valoration", type="decimal", precision=2, scale=1, nullable=false)
      */
-    private $gameValoration;
+    private $gameValoration = '0';
 
     /**
      * @var int

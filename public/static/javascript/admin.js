@@ -15,29 +15,54 @@ let userContainer = document.querySelector('.users__container--column'),
     userCard = document.querySelectorAll('.users__card');
 
 //Products variables
-let productsContainer = document.querySelector('.products__container--column');
+let productsContainer = document.querySelector('.products__container--column'),
+    productsContainerData = document.querySelector('.products__container--data'),
+    productsButtonsMenu = document.querySelectorAll('.products__button--menu'),
+    deleteProductsButtons = document.querySelectorAll('.delete__product'),
+    keysForm = document.querySelector('.products__form--keys'),
+    keysInput = document.querySelector('.products__input--none'),
+    productCard = document.querySelectorAll('.products__card');
 
-let  userController = null;
+//Add products variables
+let textArea = document.querySelector('.admin__textArea'),
+    buttonTitle = document.querySelector('.form__button--title'),
+    buttonText = document.querySelector('.form__button--text');
 
+// Orders variables
+let ordersButtonsMenu = document.querySelectorAll('.orders__button--menu');
 
+let userController = null,
+    productController = null;
+
+let searchInputUsers = document.querySelector('.search__input--users'),
+    searchInputProducts = document.querySelector('.search__input--products');
 
 try {
     usersListeners();
+    reloadUsersInfoData();
 } catch (error) {}
 
 try {
     productsListeners();
+    reloadProductsInfoData();
+} catch (error) {}
+
+try {
+    addProductsListeners();
+} catch (error) {}
+
+try {
+    ordersListeners();
 } catch (error) {}
 
 
-
-async function changePage(direction, container, route)
+async function changePage(direction, container, route, search)
 {
     direction == 'left'  ?     actualPage -= 1 :     actualPage += 1;
 
     setLoading(container);
 
-    let response = await fetch(route+ actualPage);
+    let response = await fetch(route+ actualPage + `&search=${search}`);
     await response.text().then((data) => {container.innerHTML = data});
 }
 
@@ -65,6 +90,13 @@ async function changePage(direction, container, route)
 
      paginatorActual.innerHTML = page;
  }
+
+function setTag(tag, text, selected)
+{
+    let tagText = tag == 'title' ? `<h2 class="desc__title">\r\t${selected}\r</h2> \r\r` : `<p class="desc__text">\r\t${selected}\r</p> \r\r`;
+
+    return text.replace(selected, tagText);
+}
  
 
  /**
@@ -92,8 +124,22 @@ async function getUserData(id)
         signal : userController.signal
     });
     await response.text().then((data) => {usersContainerData.innerHTML = data}).then(()=>{userController = null});
-    reloadUsersData();
+    reloadUsersInfoData();
+}
 
+async function getGameData(game, platform)
+{
+    if(productController) productController.abort();
+
+    productController = new AbortController();
+
+    setLoading(productsContainerData);
+
+    let response = await fetch(`/administracion/product_data?game=${game}&platform=${platform}`, {
+        signal : productController.signal
+    });
+    await response.text().then((data) => {productsContainerData.innerHTML = data}).then(()=>{productController = null});
+    reloadProductsInfoData();
 }
 
 
@@ -104,7 +150,7 @@ async function initUsearChangePage(button)
     let direction = button.getAttribute('direction');
     let route = '/administracion/getUsers?page=';
     if (!button.classList.contains('paginator__button--disabled')) 
-        await changePage(direction, userContainer, route); 
+        await changePage(direction, userContainer, route, searchInputUsers.value); 
 
     await reloadUsersData();
     changeButtons(actualPage, usersBtn[0], usersBtn[1], lastPage.textContent);
@@ -123,17 +169,24 @@ async function initProductsChangePage(button)
 
 function deleteUser(id, container)
 {
-    fetch(`/administracion/user_delete?id=${id}`);
     let state = container.querySelector('.users__state');
+    fetch(`/administracion/user_delete?id=${id}`);
     state.classList.replace('users__state', 'users__state--red');
 }
 
-function changeUserView(button)
+function deleteGame(game, platform, container)
 {
-    let buttonActive = document.querySelector('.users__button--active');
+    fetch(`/administracion/product_delete?game=${game}&platform=${platform}`);
+    let state = container.querySelector('.products__state');
+    state.classList.replace('products__state', 'products__state--red');
+}
+
+function changeView(button, section)
+{
+    let buttonActive = document.querySelector(`.${section}__button--active`);
     let target = button.getAttribute('target');
     let targetSections = document.querySelectorAll(`[data="${target}"]`);
-    let sections = document.querySelectorAll('.users__container--info');
+    let sections = document.querySelectorAll(`.${section}__container--info`);
 
     sections.forEach(section =>{
         if(!section.classList.contains('displayNone')) section.classList.add('displayNone');
@@ -143,8 +196,72 @@ function changeUserView(button)
         section.classList.remove('displayNone');
     });
 
-    buttonActive.classList.remove('users__button--active');
-    button.classList.toggle('users__button--active');
+    buttonActive.classList.remove(`${section}__button--active`);
+    button.classList.toggle(`${section}__button--active`);
+}
+
+async function search(value, container, route, reloadFunction)
+{
+    if(userController) userController.abort();
+
+    userController = new AbortController();
+
+    setLoading(container);
+
+    let response = await fetch(`/administracion/${route}?search=${value}`, {
+        signal: userController.signal
+    });
+    await response.text().then(data => {container.innerHTML = data});
+    reloadFunction();
+}
+
+async function uploadKeys(form)
+{
+    let formData = new FormData(form);
+    let tableBody = document.querySelector('.keys__body');
+    
+    let response = await fetch('/administracion/upload_keys',{
+        method: 'post',
+        body: formData,
+    });
+
+    await response.json().then(data =>{
+        while(tableBody.hasChildNodes())
+        {
+            tableBody.removeChild(tableBody.firstChild);
+        }
+
+        data.forEach(key => {
+            let row = document.createElement('tr'),
+                idCol= document.createElement('td'),
+                valueCol = document.createElement('td'),
+                orderCol = document.createElement('td'),
+                icon = document.createAttribute('i'),
+                iconCol = document.createElement('td');
+
+            row.classList.add('table__row');
+            idCol.classList.add('table__column');
+            valueCol.classList.add('table__column');
+            orderCol.classList.add('table__column');
+            icon.classList.add('bi bi-trash card__icon delete__product')
+
+            idCol.textContent = key.idKey;
+            valueCol.textContent = key.keyValue;
+            orderCol.textContent = 'Sin pedido';
+            iconCol.appendChild(icon);
+
+            row.appendChild(idCol);
+            row.appendChild(valueCol);
+            row.appendChild(orderCol);
+            row.appendChild(iconCol);
+            tableBody.appendChild(row);
+        });
+    }).catch(()=>{
+        let error = document.createElement('p');
+        error.classList.add('form__error');
+        error.textContent = 'Entradas duplicadas';
+        tableBody.parentNode.parentNode.appendChild(error);
+    });
 }
 
 // ----- Paginator init functions end ----- //
@@ -158,7 +275,6 @@ function reloadUsersData()
     usersBtn = document.querySelectorAll('.paginator__button--users');
     userCard = document.querySelectorAll('.users__card');
     modifyUserButtons = document.querySelectorAll('.modify__user');
-    usersButtonsMenu = document.querySelectorAll('.users__button--menu');
     deleteUserButtons = document.querySelectorAll('.delete__user');
     reloadPaginator();
     usersListeners();
@@ -168,8 +284,34 @@ function reloadProductsData()
 {
     productsContainer = document.querySelector('.products__container--column');
     productsBtn = document.querySelectorAll('.paginator__button--products');
+    deleteProductsButtons = document.querySelectorAll('.delete__product');
+    productCard = document.querySelectorAll('.products__card');
     reloadPaginator();
     productsListeners();
+}
+
+function reloadUsersInfoData()
+{
+    usersButtonsMenu = document.querySelectorAll('.users__button--menu');
+    usersButtonsMenu.forEach(button => {
+        button.addEventListener('click', ()=>{ changeView(button, 'users') })
+    });
+}
+
+function reloadProductsInfoData()
+{
+    productsButtonsMenu = document.querySelectorAll('.products__button--menu');
+    keysForm = document.querySelector('.products__form--keys');
+    keysButton = keysForm.querySelector('.admin__button');
+    keysInput = document.querySelector('.products__input--none');
+
+    productsButtonsMenu.forEach(button => {
+        button.addEventListener('click', ()=>{ changeView(button, 'products') })
+    });
+
+    keysButton.addEventListener('click', ()=>{ keysInput.click() });
+
+    keysInput.addEventListener('change', ()=>{ uploadKeys(keysForm) })
 }
 
 
@@ -192,9 +334,12 @@ function usersListeners()
 
     userCard.forEach(card =>{
         card.addEventListener('click', (event) => {
-            if(event.target != modifyUserButtons[0] && event.target !=deleteUserButtons[0] ){
-                let id = card.getAttribute('user');
-                getUserData(id);
+
+            let modifyButton = card.querySelector('.modify__user'),
+                deleteButton = card.querySelector('.delete__user');
+
+            if(event.target != deleteButton && event.target != modifyButton ){
+                getUserData(card.getAttribute('user'));
             }
         });
     });
@@ -214,18 +359,69 @@ function usersListeners()
         });
     });
 
-    usersButtonsMenu.forEach(button => {
-        button.addEventListener('click', ()=>{
-            changeUserView(button);
-        })
-        
+    searchInputUsers.addEventListener('input', ()=>{
+        search(searchInputUsers.value, userContainer, 'search_users', () =>{reloadUsersData()});
     });
 }
 
 function productsListeners()
 {
+    keysButton = keysForm.querySelector('.admin__button');
+    
     productsBtn.forEach(button => {
         button.addEventListener('click', ()=> {initProductsChangePage(button)});
+    });
+
+    productCard.forEach(card =>{
+        card.addEventListener('click', (event) => {
+
+            let modifyButton = card.querySelector('.modify__product'),
+                deleteButton = card.querySelector('.delete__product');
+
+            if(event.target != deleteButton && event.target != modifyButton ){
+                let game = card.getAttribute('game');
+                let platform = card.getAttribute('platform');
+                getGameData(game, platform);
+            }
+        });
+    });
+
+    deleteProductsButtons.forEach(deleteButton => {
+        deleteButton.addEventListener('click', ()=>{
+            let game = deleteButton.getAttribute('game')
+                platform = deleteButton.getAttribute('platform'),
+                container = deleteButton.parentNode.parentNode;
+
+            deleteGame(game, platform, container);
+        });
+    });
+
+    searchInputProducts.addEventListener('input', ()=>{
+        search(searchInputProducts.value, productsContainer, 'search_products', () =>{reloadProductsData()});
+    });
+}
+
+function addProductsListeners()
+{
+    buttonTitle.addEventListener('click', ()=>{
+        let selected = window.getSelection().toString();
+        let text = textArea.value;
+    
+        textArea.value=setTag('title', text, selected);
+    });
+    
+    buttonText.addEventListener('click', ()=>{
+        let selected = window.getSelection().toString();
+        let text = textArea.value;
+    
+        textArea.value=setTag('text', text, selected);
+    });
+}
+
+function ordersListeners()
+{
+    ordersButtonsMenu.forEach(button => {
+        button.addEventListener('click', ()=>{ changeView(button, 'orders') })
     });
 }
 

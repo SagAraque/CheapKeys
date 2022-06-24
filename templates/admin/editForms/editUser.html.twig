@@ -1,0 +1,55 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block content %}
+
+    <section class="admin__container--form">
+        {{ form_start(adminUserForm, {'attr' : {'class' : 'users__form', 'action': path('modify_user', {'user': app.request.get('user')})}}) }}
+
+            <h2 class="form__title--admin">Modificación de usuario</h2>
+            
+            <div class="form__group">
+                {{ form_label(adminUserForm.userName) }}
+                {{ form_widget(adminUserForm.userName) }}
+                {{ form_errors(adminUserForm.userName) }}
+            </div>
+            <div class="form__group">
+                {{ form_label(adminUserForm.userEmail) }}
+                {{ form_widget(adminUserForm.userEmail) }}
+                {{ form_errors(adminUserForm.userEmail) }}
+            </div>
+            
+            <div class="form__group">
+                {{ form_label(adminUserForm.userPass.first) }}
+                {{ form_widget(adminUserForm.userPass.first) }}
+                {{ form_errors(adminUserForm.userPass.first) }}
+            </div>
+
+            <div class="form__group">
+                {{ form_label(adminUserForm.userPass.second) }}
+                {{ form_widget(adminUserForm.userPass.second) }}
+                {{ form_errors(adminUserForm.userPass.second) }}
+            </div>
+
+            <div class="form__group">
+                {{ form_label(adminUserForm.userRol) }}
+                {{ form_widget(adminUserForm.userRol) }}
+                {{ form_errors(adminUserForm.userRol) }}
+            </div>
+
+            <div class="form__group">
+                {{ form_label(adminUserForm.userState) }}
+                {{ form_widget(adminUserForm.userState) }}
+                {{ form_errors(adminUserForm.userState) }}
+            </div>
+            
+            <button type="submit" class="admin__button--form">Modificar</button>
+            
+            {% for flash in app.flashes('success') %}
+                <p class="form__success"> {{flash }} </p>
+            {% endfor %}
+
+        {{ form_end(adminUserForm) }}
+        <a href="{{ path('admin_users') }}" class="admin__button">Volver</a>
+    </section>
+
+{% endblock %}

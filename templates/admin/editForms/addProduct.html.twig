@@ -1,0 +1,97 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block content %}
+
+    <section class="admin__container--form">
+        {{ form_start(form, {'attr' : {'enctype':'multipart/form-data','class' : 'users__form', 'action': path('admin_add_product', {'user': app.request.get('user')})}}) }}
+
+            <h2 class="form__title--admin">Añadir producto</h2>
+
+            <div class="form__group--full">
+                <div class="form__group">
+                    {{ form_label(form.gameName) }}
+                    {{ form_widget(form.gameName) }}
+                    {{ form_errors(form.gameName) }}
+                </div>
+                <div class="form__group">
+                    {{ form_label(form.gamePlatform) }}
+                    {{ form_widget(form.gamePlatform) }}
+                    {{ form_errors(form.gamePlatform) }}
+                </div>
+            </div>
+
+            <div class="form__group--full">
+                <div class="form__group">
+                    {{ form_label(form.gameDeveloper) }}
+                    {{ form_widget(form.gameDeveloper) }}
+                    {{ form_errors(form.gameDeveloper) }}
+                </div>
+                
+                <div class="form__group">
+                    {{ form_label(form.gameDistributor) }}
+                    {{ form_widget(form.gameDistributor) }}
+                    {{ form_errors(form.gameDistributor) }}
+                </div>
+            </div>
+
+            <div class="form__group--full">
+                <div class="form__group">
+                    {{ form_label(form.gameDate) }}
+                    {{ form_widget(form.gameDate) }}
+                    {{ form_errors(form.gameDate) }}
+                </div>
+
+                <div class="form__group">
+                    {{ form_label(form.gamePrice) }}
+                    {{ form_widget(form.gamePrice) }}
+                    {{ form_errors(form.gamePrice) }}
+                </div>
+
+                <div class="form__group">
+                    {{ form_label(form.gamePegi) }}
+                    {{ form_widget(form.gamePegi) }}
+                    {{ form_errors(form.gamePegi) }}
+                </div>
+            </div>
+
+            <div class="form__group--full">
+                <div class="form__group">
+                    {{ form_label(form.gameDesc) }}
+                    {{ form_widget(form.gameDesc) }}
+                    {{ form_errors(form.gameDesc) }}
+                </div>
+            </div>
+            <div class="form__group--full">
+                <input type="button" class="admin__button--textarea form__button--title" value="Título">
+                <input type="button" class="admin__button--textarea form__button--text" value="Texto">
+            </div>
+
+            <div class="form__group--full">
+                <div class="form__group">
+                    {{ form_label(form.gameImages) }}
+                    {{ form_widget(form.gameImages) }}
+                    {{ form_errors(form.gameImages) }}
+                </div>
+                <div class="form__group">
+                    {{ form_label(form.gameMainImage) }}
+                    {{ form_widget(form.gameMainImage) }}
+                    {{ form_errors(form.gameMainImage) }}
+                </div>
+            </div>
+
+            <div class="form__group--full">
+                <div class="form__group">
+                    {{ form_label(form.gameInfoImage) }}
+                    {{ form_widget(form.gameInfoImage) }}
+                    {{ form_errors(form.gameInfoImage) }}
+                </div>
+            </div>
+
+            <button type="submit" class="admin__button--form">Añadir</button>
+            
+
+        {{ form_end(form) }}
+        <a href="{{ path('admin_products') }}" class="admin__button">Volver</a>
+    </section>
+
+{% endblock %}

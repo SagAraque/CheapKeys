@@ -48,11 +48,30 @@ class UsersRepository extends ServiceEntityRepository
         return $sql->getArrayResult();
     }
 
-    public function allUsersNoQuery()
+    public function allUsersNoQuery($searchValue)
     {
         $em = $this -> getEntityManager();
 
-        $sql = $em -> createQuery('SELECT u FROM App\Entity\Users u');
+        $sql = $em -> createQuery(
+            'SELECT u FROM App\Entity\Users u
+            WHERE u.userName like :name
+            OR u.idUser like :id'
+        )->setParameter('name', '%'.$searchValue.'%')
+        ->setParameter('id', '%'.$searchValue.'%');
+
+        return $sql;
+    }
+
+    public function searchUsers($searchValue)
+    {
+        $em = $this -> getEntityManager();
+
+        $sql = $em -> createQuery(
+            'SELECT u FROM App\Entity\Users u
+            WHERE u.userName like :name
+            OR u.idUser like :id'
+        )->setParameter('name', '%'.$searchValue.'%')
+        ->setParameter('id', '%'.$searchValue.'%');
 
         return $sql;
     }

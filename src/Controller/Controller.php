@@ -155,6 +155,10 @@ class Controller extends AbstractController
         $game = $doctrine->getRepository(Games::class)->findBy(array("gameSlug" => $gameSlug));
         $platform = $doctrine->getRepository(Platforms::class)->findByName(array('platform' => $platform));
 
+        $features = $doctrine->getRepository(GamesPlatform::class)->findFeature($game[0], $platform);
+        if($features == null) return $this -> redirectToRoute('index', [] ,302);
+
+
         if($user != null){
             $wishlist = $doctrine->getRepository(WishlistGames::class)->findGameByUser($game[0]->getIdGame(), $platform->getIdPlatform(), $user->getUserWishlist());
             $wish = $wishlist == null ? false : true;
@@ -170,8 +174,6 @@ class Controller extends AbstractController
             $game[0]->getIdGame(),
             $platform->getIdPlatform(),
         );
-
-        $features = $doctrine->getRepository(GamesPlatform::class)->findFeature($game[0], $platform);
 
 
         $reviews = $doctrine->getRepository(Reviews::class)->findByGameNoResults($game[0]->getIdGame(), $platform -> getIdPlatform());

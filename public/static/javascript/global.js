@@ -505,6 +505,7 @@ function slide(direction)
 {
     let minSelected = document.querySelector('.gallery__min--selected');
     let index = Array.prototype.indexOf.call(min, minSelected);
+    let max = images.length >= 4 ? 4 : images.lenght;
 
     if(direction == 'right'){
         index += 1;
@@ -516,7 +517,7 @@ function slide(direction)
         }else if(objectIndex >= images.length){
             objectIndex = 0;
             index = 0;
-            changeMinImg(0, 4);   
+            changeMinImg(0, max);   
         }
     }else{
         index -= 1;
@@ -524,11 +525,11 @@ function slide(direction)
 
         if(index < 0){ 
             if(objectIndex < 0){
-                changeMinImg(images.length - 4, images.length);
+                if(images.lenght > 4) changeMinImg(images.length - 4, max);
                 index = 3;
                 objectIndex = images.length - 1;
             }else{
-                changeMinImg(0, 4);
+                changeMinImg(0, max);
                 index = 0;
                 objectIndex = 0;
             }
@@ -545,6 +546,7 @@ function slide(direction)
  */
  function changeMinImg(init, max)
  {   
+    console.log(init);
      let minindex = 0;
      for (let i = init; i < max; i++) {
          img = min[minindex].querySelector('.gallery__asset');

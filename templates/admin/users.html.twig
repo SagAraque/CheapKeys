@@ -5,7 +5,10 @@
 <section class="users">
 
     <article class="users__container">
-        <div class="search"></div>
+        <div class="search">
+            <input type="text" name="search" placeholder="Buscar..." class="search__input search__input--users">
+            <i class="bi bi-search search__icon"></i>
+        </div>
         <div class="users__container--column">
             {% include 'admin/ajax/adminUsers.html.twig' %}
         </div>

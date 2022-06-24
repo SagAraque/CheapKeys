@@ -13,7 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
 class GamesPlatform
 {
     /**
-     * @var \Features::class
+     * @var bool
+     *
+     * @ORM\Column(name="state", type="boolean", nullable=false, options={"default"="1"})
+     */
+    private $state = true;
+
+    /**
+     * @var \Features
      *
      * @ORM\ManyToOne(targetEntity="Features")
      * @ORM\JoinColumns({
@@ -23,7 +30,7 @@ class GamesPlatform
     private $idFeature;
 
     /**
-     * @var \Platforms::class
+     * @var \Platforms
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -35,7 +42,7 @@ class GamesPlatform
     private $idPlatform;
 
     /**
-     * @var \Games::class
+     * @var \Games
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -45,6 +52,18 @@ class GamesPlatform
      * })
      */
     private $game;
+
+    public function isState(): ?bool
+    {
+        return $this->state;
+    }
+
+    public function setState(bool $state): self
+    {
+        $this->state = $state;
+
+        return $this;
+    }
 
     public function getIdFeature(): ?Features
     {
